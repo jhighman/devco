@@ -1,0 +1,114 @@
+# Chapter 2: Insignia of the Sun - Story Content
+title: "Insignia of the Sun"
+subtitle: "Pop Song Summer, Track 2"
+intro_quote: "She comes. What do you return?"
+audio_file: "music/Chapter 2_Insignia of the Sun.mp3"
+audio_duration: 510 # 8 minutes and 30 seconds, assuming similar length to Chapter 1
+
+panels:
+  - id: 1
+    title: "MORGUE"
+    background: "bg-gradient-to-b from-[#1A1A1A] via-[#4A4A4A] to-[#1A1A1A]"
+    text: "The first time I saw the insignia was on a body bag. White vinyl, zipped to the chin, toes tagged. On the sleeve: a sunburst in gold thread, twelve rays, perfect circle, too clean for a morgue. The coroner, chewing a burrito over an EVIDENCE folder, catches me staring. 'Not county,' he says, voice like sandpaper. 'Some club, maybe.' I tell him clubs don’t stitch couture onto body bags. He shrugs, uninterested."
+    has_insignia: true
+
+  - id: 2
+    title: "PHOTO FLASH"
+    background: "bg-gradient-to-b from-[#4A4A4A] via-[#2D2D2D] to-[#4A4A4A]"
+    text: "I’m a stringer, chasing tragedies for gas money. The patch burns a hole in my vision. 'Mind if I shoot it?' I ask. The coroner smirks, 'Shoot anything that can’t shoot back.' I take three photos: wide for context, close for thread, angled for pop. On my camera screen, the gold moirés into a halo, like it knows it’s being watched."
+
+  - id: 3
+    title: "INDEX CARD"
+    background: "bg-gradient-to-b from-[#1A2A44] via-[#000000] to-[#1A2A44]"
+    text: "On the morgue’s bulletin board, among missing persons and grief group flyers, a 3×5 index card: TWELVE RAYS / TWELVE DOORS / SHE COMES WITH THE SUN. Below, a number: 555-0199. No name, just cult-startup confidence. I’ve seen the mark before—gas station graffiti, a thrift store book, a flyer for a band that never played. It’s a breadcrumb I can’t unsee."
+
+  - id: 4
+    title: "DEAD LINE"
+    background: "bg-gradient-to-b from-[#2D2D2D] via-[#1A1A1A] to-[#2D2D2D]"
+    text: "In my car, I call the number. One ring, then a dial tone like a flatline. The city flickers outside, an arcade left on after hours. I drive to the overpass by the old mall, where the body was found. A shrine waits: candles, a wax-splotched Polaroid, bodega flowers. On the concrete pillar, a spray-painted sunburst, twelve rays, glitter and ash caught in the paint."
+
+  - id: 5
+    title: "SHRINE MESSAGE"
+    background: "bg-gradient-to-b from-[#800020] via-[#4A0000] to-[#800020]"
+    text: "Under the spray paint, in felt-tip: WE RETURN WHAT WE TAKE. My shoe slides on candle wax, and my palm catches the pillar, leaving a crescent of black. Across the street, a woman’s silhouette passes a TV’s blue glow. Not in red. I exhale. The morgue shots on my camera make the gold thread brighter than the world around it."
+    has_insignia: true
+
+  - id: 6
+    title: "APARTMENT 3B"
+    background: "bg-gradient-to-b from-[#1A0E25] via-[#2D0A31] to-[#1A0E25]"
+    text: "A tip leads me to the dead man’s apartment. Room 3B is urban decay in a mold: empty cabinets, mattress on the floor, cinder-block bookshelf. Twelve books, counted on reflex: Neuromancer, Valis, a zine titled INSIGNIA with a gold-leaf sunburst. Its pages are poem-prayers, each ending with 555-0199. A shoebox under the mattress holds pay stubs, a yearbook photo, and three gold-thread patches."
+    has_insignia: true
+
+  - id: 7
+    title: "HIDDEN NOTE"
+    background: "bg-gradient-to-b from-[#2D0A31] via-[#4A0000] to-[#2D0A31]"
+    text: "Inside the shoebox lid: RETURN LIGHT / RETURN BODY / RETURN NAME. Below: WED, 9PM, UNIT 413. No address, but I know a self-storage place nearby with a unit 413. I pocket the note, not the patch, though shame and thrill fight under my tongue. The zine’s first poem haunts: 'Draw the circle, count the rays. She comes.'"
+    has_insignia: true
+
+  - id: 8
+    title: "STORAGE UNIT"
+    background: "bg-gradient-to-b from-[#1A2A44] via-[#000000] to-[#1A2A44]"
+    text: "The storage place is a tin-box maze. I slip past the gate and roll under unit 413’s half-open door. Inside: twelve red candles in a circle, a milk crate altar with a duct-taped cassette player, INSIGNIA zines, and a jar of sunburst patches. A woman’s voice from the cassette: 'She comes. What do you return?' Name, light, body. The tape stops. Silence."
+    has_insignia: true
+
+  - id: 9
+    title: "HELIOGRAPH"
+    background: "bg-gradient-to-b from-[#2D0A31] via-[#1A0E25] to-[#2D0A31]"
+    text: "Footsteps. The door rolls up. A tall, androgynous figure with a sunburst jacket steps in. 'You’re early,' they say. 'Or late.' They call it Heliograph—an instrument to talk to the sun. 'We don’t own the insignia,' they say. 'It owns us.' A second figure sets up a folding table, wax on their cuff. 'Meeting’s at nine,' they warn. I leave before it starts."
+    has_insignia: true
+    neon_title: true
+    neon_color: "gold"
+
+  - id: 10
+    title: "SUNBURST SIGHTINGS"
+    background: "bg-gradient-to-b from-[#1A2A44] via-[#FFC107] to-[#1A2A44]"
+    text: "The insignia stalks me. On a painter’s cuff, a web ad, a thrift store jacket. A disco song about horizons hums on the radio. At a coffee shop, a guy with a sunburst patch calls it 'vintage.' His calendar has twelve events marked 'return.' The air wobbles. I’m chasing a symbol that’s chasing me back."
+    has_insignia: true
+
+  - id: 11
+    title: "LIBRARY DIG"
+    background: "bg-gradient-to-b from-[#4A4A4A] via-[#2D2D2D] to-[#4A4A4A]"
+    text: "At the library, Mari pulls microfiche. We find twelve house fires over eleven summers, a band called Insignia of the Sun that blacked out a grid, a singer with a gold-thread sunburst. Two fires at storage units, one near a freeway. A bulletin board card reads: RETURN LIGHT / RETURN NAME / RETURN BODY. WEDS 9PM / UNIT 413. The pin has a sunburst head."
+    has_insignia: true
+
+  - id: 12
+    title: "RITUAL NIGHT"
+    background: "bg-gradient-to-b from-[#800020] via-[#4A0000] to-[#800020]"
+    text: "Wednesday, 9PM. Unit 413 is alive. Twelve people, twelve candles, a new speaker. The androgynous host stands watch. A woman’s voice—not from the speaker—starts the call: 'She comes. What do you return?' Name, light, body. The candles light clockwise, a clock that ignores time. The woman in red steps in, her sunburst humming."
+    has_insignia: true
+    neon_title: true
+    neon_color: "red"
+
+  - id: 13
+    title: "CIRCLE OF RETURN"
+    background: "bg-gradient-to-b from-[#2D0A31] via-[#1A0E25] to-[#2D0A31]"
+    text: "She hands me a patch. It’s heavy, not hot. 'You brought him here,' she says, meaning the dead man. I protest, but she says I know everyone—it’s my job. The group hums, a frequency that turns the unit into a throat. The candles gutter backward. The door ceases to be a boundary. On the horizon: fire."
+    has_insignia: true
+    has_burning: true
+
+  - id: 14
+    title: "BODY RETURNED"
+    background: "bg-gradient-to-b from-[#1A2A44] via-[#000000] to-[#1A2A44]"
+    text: "She kisses the patch, presses it to the concrete. It burns a sunburst into the floor. A body bag appears in the circle, white vinyl, sunburst on the sleeve. 'Returns make us real,' she says. Two people lift the bag. The host draws a chalk sunburst. 'No photos,' they say. I hadn’t tried."
+    has_insignia: true
+    has_burning: true
+
+  - id: 15
+    title: "PATCH FOUND"
+    background: "bg-gradient-to-b from-[#1A2A44] via-[#FFC107] to-[#1A2A44]"
+    text: "At home, the morgue’s index card falls from my notebook. With it: a sunburst patch I didn’t take. My heart snaps. I dial the second number. My own voice answers: 'Return what isn’t yours.' The city blinks a sunburst in red exit-sign light. I sleep badly. In the morning, the patch is pinned to my jacket."
+    has_insignia: true
+
+  - id: 16
+    title: "WRITING THE SUN"
+    background: "bg-gradient-to-b from-[#2D2D2D] via-[#1A1A1A] to-[#2D2D2D]"
+    text: "I write to pin the story down. Morgue, body bag, candles, clock. The radio plays the horizon song. My phone buzzes. Her voice: 'Start with the name.' I delete my byline. The cursor blinks. The patch weighs like an oath. Outside, sirens call. A kid’s chalk sunburst on the floor says: 'She comes. We’re ready.'"
+    has_insignia: true
+
+  - id: 17
+    title: "WALKING THE CIRCLE"
+    background: "bg-gradient-to-b from-[#FFC107] via-[#FF3300] to-[#FFC107]"
+    text: "I step into the morning. The insignia isn’t a brand—it’s a receipt. You borrow light, you return it. Across the street, the woman in red pauses, her sunburst flaring. She looks through me, like I’m a pattern in the algorithm. I walk, patch unpinned, toward a city of twelve doors. The horizon burns. She comes."
+    has_insignia: true
+    has_burning: true
+    epilogue: true
