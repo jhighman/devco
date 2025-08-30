@@ -1,0 +1,1072 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 1: Velvet Dancers - Pop Song Summer</title>
+    <meta name="description" content="Chapter 1 of Pop Song Summer: Velvet Dancers - A mysterious encounter at a hidden club.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="./css/output.css">
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* Base styles */
+        body {
+            background-color: #1A2A44;
+            color: #333333;
+            font-family: 'Crimson Text', serif;
+            line-height: 1.9;
+        }
+        
+        /* Velvet texture background */
+        .velvet-bg {
+            background-color: #1A2A44;
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='velvetPattern' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(2) rotate(0)'%3E%3Crect width='40' height='40' fill='%231A2A44'/%3E%3Cpath d='M0 0 L40 40 M40 0 L0 40' stroke='%23FFC107' stroke-width='0.5' stroke-opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23velvetPattern)'/%3E%3C/svg%3E");
+        }
+        
+        /* Story header */
+        .story-header {
+            padding: 3rem 1rem 2rem;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(26, 42, 68, 0.7), rgba(26, 42, 68, 0.5));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .story-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            color: #FFC107;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+        }
+        
+        .story-subtitle {
+            font-family: 'Crimson Text', serif;
+            font-size: 1rem;
+            color: #26A69A;
+            margin-bottom: 1.5rem;
+        }
+        
+        .story-quote {
+            font-style: italic;
+            font-size: 1rem;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+            color: #26A69A;
+            border-left: 2px solid #FFC107;
+            padding-left: 0.75rem;
+        }
+        
+        /* Navigation sidebar */
+        .nav-sidebar {
+            position: fixed;
+            top: 60px;
+            left: -250px;
+            width: 220px;
+            height: calc(100vh - 60px);
+            background: rgba(26, 42, 68, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+            padding: 0.75rem;
+        }
+        
+        .nav-sidebar.open {
+            left: 0;
+        }
+        
+        .nav-sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .nav-sidebar li {
+            margin: 0.3rem 0;
+        }
+        
+        .nav-sidebar a {
+            color: #FFC107;
+            font-family: 'Crimson Text', serif;
+            font-size: 0.95rem;
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            display: block;
+            border-radius: 0.4rem;
+            transition: background 0.3s ease;
+            text-transform: capitalize;
+        }
+        
+        .nav-sidebar a:hover {
+            background: rgba(255, 193, 7, 0.15);
+        }
+        
+        .neon-red {
+            color: #FF3366;
+            text-shadow: 0 0 4px rgba(255, 51, 102, 0.7), 0 0 8px rgba(255, 51, 102, 0.4);
+        }
+        
+        .neon-text {
+            color: #26A69A;
+            text-shadow: 0 0 4px rgba(38, 166, 154, 0.7), 0 0 8px rgba(38, 166, 154, 0.4);
+        }
+        
+        .nav-toggle-btn {
+            position: fixed;
+            top: 70px;
+            left: 15px;
+            z-index: 101;
+            background: rgba(26, 42, 68, 0.8);
+            color: #FFC107;
+            border: none;
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-toggle-btn:hover {
+            background: rgba(255, 193, 7, 0.15);
+        }
+        
+        /* Story panels */
+        .story-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .story-panel {
+            margin-bottom: 0.3rem;
+            position: relative;
+            border-radius: 0.3rem;
+            background: #F5F1E9;
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1), -3px -3px 8px rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            min-height: 180px;
+            display: flex;
+            scroll-margin-top: 70px;
+        }
+        
+        .panel-content {
+            width: 80%;
+            padding: 1rem;
+            background: #F5F1E9;
+            z-index: 2;
+        }
+        
+        .panel-accent {
+            width: 20%;
+            position: relative;
+            background: #F5F1E9;
+            z-index: 1;
+        }
+        
+        .panel-text {
+            font-size: 0.95rem;
+            line-height: 1.9;
+            margin-bottom: 0.5rem;
+            color: #333333;
+        }
+        
+        .panel-quote {
+            font-style: italic;
+            font-size: 0.95rem;
+            color: #26A69A;
+            border-left: 2px solid #FFC107;
+            padding-left: 0.5rem;
+            margin: 0.5rem 0;
+        }
+        
+        /* Visual elements */
+        .insignia {
+            color: #FFC107;
+            font-size: 0.9em;
+            margin: 0 0.15em;
+            display: inline-block;
+        }
+        
+        .large-insignia {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        
+        .large-insignia .circle {
+            width: 100%;
+            height: 100%;
+            border: 3px solid #FFC107;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, rgba(255, 193, 7, 0.2), transparent);
+        }
+        
+        .large-insignia .sun {
+            font-size: 2.5rem;
+            color: #FFC107;
+        }
+        
+        .light-rays {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.15;
+        }
+        
+        .light-ray {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-top: 200px solid transparent;
+            border-right: 400px solid rgba(255, 255, 255, 0.08);
+            transform-origin: 0 0;
+        }
+        
+        .light-burst {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+            animation: pulse 6s infinite alternate;
+            pointer-events: none;
+        }
+        
+        .door-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 160px;
+            border: 2px solid rgba(255, 193, 7, 0.3);
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(255, 193, 7, 0.1), transparent);
+        }
+        
+        .key {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 20px;
+            pointer-events: none;
+        }
+        
+        .key-head {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #FFC107;
+            border-radius: 50%;
+            float: left;
+        }
+        
+        .key-shaft {
+            width: 42px;
+            height: 5px;
+            background: #FFC107;
+            float: right;
+            margin-top: 6px;
+        }
+        
+        .road {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: radial-gradient(circle, rgba(51, 51, 51, 0.3), transparent);
+            pointer-events: none;
+        }
+        
+        .road-marking {
+            position: absolute;
+            bottom: 30px;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .sun {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        
+        .sun-glow {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(255, 193, 7, 0.3), transparent);
+            border-radius: 50%;
+            filter: blur(10px);
+        }
+        
+        .sun-symbol {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: #FFC107;
+        }
+        
+        .burning-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 51, 0, 0.2), transparent);
+            mix-blend-mode: overlay;
+            pointer-events: none;
+        }
+        
+        .split-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            pointer-events: none;
+        }
+        
+        .split-left {
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 193, 7, 0.1), transparent);
+        }
+        
+        .split-right {
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(38, 166, 154, 0.1), transparent);
+        }
+        
+        /* Audio controls */
+        .audio-controls {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(26, 42, 68, 0.8);
+            padding: 0.4rem 0.8rem;
+            border-radius: 1.5rem;
+            backdrop-filter: blur(8px);
+        }
+        
+        .audio-controls button {
+            background: none;
+            border: none;
+            color: #FFC107;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.8rem;
+            height: 1.8rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .audio-controls button:hover {
+            background: rgba(255, 193, 7, 0.15);
+        }
+        
+        /* Audio progress indicator */
+        .audio-progress {
+            position: fixed;
+            bottom: 15px;
+            right: 70px;
+            z-index: 100;
+            background: rgba(26, 42, 68, 0.8);
+            color: #FFC107;
+            padding: 0.4rem 0.8rem;
+            border-radius: 1.5rem;
+            font-size: 0.8rem;
+            backdrop-filter: blur(8px);
+        }
+        
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            z-index: 100;
+            background: rgba(26, 42, 68, 0.8);
+            color: #FFC107;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            border: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+        
+        .scroll-top:hover {
+            background: rgba(255, 193, 7, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% { opacity: 0.2; }
+            100% { opacity: 0.5; }
+        }
+        
+        @keyframes rotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .story-title {
+                font-size: 2rem;
+            }
+            .story-container {
+                padding: 0.75rem;
+            }
+            .story-panel {
+                padding: 0.75rem;
+                margin-bottom: 0.2rem;
+            }
+            .panel-content {
+                width: 100%;
+            }
+            .panel-accent {
+                display: none;
+            }
+            .nav-sidebar {
+                width: 180px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .story-title {
+                font-size: 1.75rem;
+            }
+            .story-panel {
+                padding: 0.5rem;
+            }
+            .nav-sidebar {
+                width: 160px;
+            }
+            .nav-sidebar a {
+                font-size: 0.85rem;
+                padding: 0.3rem 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body class="velvet-bg">
+    <!-- Header/Navigation -->
+    <header class="fixed top-0 left-0 w-full bg-navy bg-opacity-90 z-50 backdrop-blur-sm">
+        <nav class="container-custom py-3 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-heading font-bold text-golden-blaze">DevCo</a>
+            <div class="nav-toggle md:hidden cursor-pointer">
+                <div class="bar w-5 h-0.4 bg-white-spark mb-1"></div>
+                <div class="bar w-5 h-0.4 bg-white-spark mb-1"></div>
+                <div class="bar w-5 h-0.4 bg-white-spark"></div>
+            </div>
+            <ul class="hidden md:flex space-x-6">
+                <li><a href="index.html" class="nav-link text-base">Home</a></li>
+                <li><a href="index.html#music" class="nav-link text-base">Music</a></li>
+                <li><a href="index.html#about" class="nav-link text-base">About</a></li>
+                <li><a href="index.html#contact" class="nav-link text-base">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu fixed inset-0 bg-navy bg-opacity-95 z-40 flex-col items-center justify-center hidden">
+            <button class="close-btn absolute top-4 right-4 text-white-spark text-2xl">&times;</button>
+            <ul class="text-center space-y-6">
+                <li><a href="index.html" class="nav-link text-2xl">Home</a></li>
+                <li><a href="index.html#music" class="nav-link text-2xl">Music</a></li>
+                <li><a href="index.html#about" class="nav-link text-2xl">About</a></li>
+                <li><a href="index.html#contact" class="nav-link text-2xl">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Navigation Sidebar -->
+    <button class="nav-toggle-btn" id="nav-toggle-btn" title="Toggle Navigation" aria-label="Toggle navigation menu">☰</button>
+    <nav class="nav-sidebar" id="nav-sidebar">
+        <ul id="panel-nav"></ul>
+    </nav>
+
+    <!-- Audio Element (Hidden) -->
+    <audio id="background-music" loop>
+        <source src="music/Chapter 1_ Velvet Dancers.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <button id="play-pause-btn" title="Play/Pause" aria-label="Play or pause background music">▶</button>
+        <button id="restart-btn" title="Restart" aria-label="Restart background music">↻</button>
+    </div>
+    
+    <!-- Audio Progress -->
+    <div class="audio-progress" id="audio-progress">0:00 / 8:15</div>
+    
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scroll-top-btn" title="Scroll to Top" aria-label="Scroll to top">↑</button>
+    
+    <!-- Story Header -->
+    <div class="story-header">
+        <h1 class="story-title">Velvet Dancers</h1>
+        <p class="story-subtitle">Pop Song Summer, Track 1</p>
+        <blockquote class="story-quote">
+            "She comes, she comes… burning houses in the distance. Lights up the night. She comes."
+        </blockquote>
+        <button id="start-reading-btn" class="bg-golden-blaze text-navy px-5 py-2 rounded-md hover:bg-opacity-80 transition-colors font-bold text-base">
+            Start Reading with Music
+        </button>
+    </div>
+    
+    <!-- Story Content -->
+    <div class="story-container" id="story-content">
+        <!-- Story panels will be dynamically generated here -->
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const audio = document.getElementById('background-music');
+            const playPauseBtn = document.getElementById('play-pause-btn');
+            const restartBtn = document.getElementById('restart-btn');
+            const startReadingBtn = document.getElementById('start-reading-btn');
+            const scrollTopBtn = document.getElementById('scroll-top-btn');
+            const storyContainer = document.getElementById('story-content');
+            const audioProgress = document.getElementById('audio-progress');
+            const navSidebar = document.getElementById('nav-sidebar');
+            const navToggleBtn = document.getElementById('nav-toggle-btn');
+            const panelNav = document.getElementById('panel-nav');
+            
+            // Story data (full 22 panels from YAML)
+            const storyData = [
+                {
+                    id: 1,
+                    title: "City Skyline",
+                    text: "The city is a cancer of glass and LED, and tonight it hums like a broken amp. Down on 14th, the traffic's jammed with rideshare drones and guys selling knockoff pills out of the hoods of parked cars. Everybody's tuned into their own soundtrack, little earbuds whispering Top 40 like prayers to gods who died in the eighties. The skyline flickers in glitches, as if reality itself is buffering."
+                },
+                {
+                    id: 2,
+                    title: "Velvet Curtain",
+                    text: "And tucked between two shuttered bodegas is a velvet curtain. No sign, no door, just this blood-colored fabric swaying like it's breathing. Behind it, bass leaks out in subsonic pulses. It's the kind of bass that rewrites your heartbeat whether you want it or not.\n\nI push through."
+                },
+                {
+                    id: 3,
+                    title: "Club Interior",
+                    text: "The air inside is thick, like the club is running on oxygen siphoned from another dimension. Lights move in lazy strobes, purple and gold, spilling over a floor that's already slick with sweat. There's no bar, no menu, just shadows that sell you what you want if they decide you're worth the bother.\n\nAnd then there are the dancers."
+                },
+                {
+                    id: 4,
+                    title: "Velvet Dancers",
+                    text: "Velvet on their skin, velvet in their movements, velvet like the smooth part of a blade before the edge cuts. They move as if they're running a program: flawless, slow, then impossibly fast. Every single one of them wears the same patch stitched near the shoulder — a circle with sunrays stitched in gold thread. The insignia <span class='insignia'>☀</span>.\n\nThey don't look at you. They look through you, like you're another light on the floor, one more pattern in the algorithm.",
+                    has_insignia: true
+                },
+                {
+                    id: 5,
+                    title: "Blind Singer",
+                    text: "In the corner, a blind man sings. No mic, no amp, just raw voice cut against the bass. He's chanting words like they're half-forgotten scripture, or maybe the last pirate broadcast before the collapse:",
+                    quote: "She comes, she comes… burning houses in the distance. Lights up the night. She comes.",
+                    text_after: "Nobody claps. Nobody even reacts. The crowd moves in sync, eyes half-lidded, as though they're hypnotized. Like they already know the words. Like they were born knowing."
+                },
+                {
+                    id: 6,
+                    title: "Woman in Red",
+                    text: "That's when I see her.\n\nShe's in red. Not neon red, not digital red — real red, the kind that stains. Her dress is cut from velvet so dark it looks wet. Same sun insignia <span class='insignia'>☀</span> stitched into the fabric. She's not one of the dancers, though. She moves against the rhythm, like she's inside her own soundtrack. And when she locks eyes with me, it feels less like attraction and more like conscription.\n\nShe doesn't ask. She just takes my hand.",
+                    has_insignia: true,
+                    neon_title: true,
+                    neon_color: "red"
+                },
+                {
+                    id: 7,
+                    title: "Mirror Hallway",
+                    text: "Her fingers are cold, but not corpse cold — cold like the first second of an ice cube against skin, the kind that burns after. She pulls me through the moving bodies. Deeper. Back through a hallway lined with mirrors that don't reflect right. In one, I'm younger. In another, I'm someone else entirely.\n\n\"Where are we going?\" I ask.\n\nShe doesn't answer."
+                },
+                {
+                    id: 8,
+                    title: "Blind Prophet",
+                    text: "Behind us, the blind man's voice climbs a register. He's in full prophecy mode now:",
+                    quote: "Pop song summer. Velvet dancers. Insignia of the sun.",
+                    text_after: "The hallway splits into three. She doesn't hesitate, pulls me left. The music distorts here — like cassette tape warping, like turntables melting under too much heat. Smells like ozone and perfume, a cocktail that says you're too far in to walk back.",
+                    neon_title: true,
+                    neon_color: "teal"
+                },
+                {
+                    id: 9,
+                    title: "Ritual Chamber",
+                    text: "And then we're in the back room.\n\nIt looks like a church, if the architects were high on disco and conspiracy theory. Columns of light instead of stone, a floor that ripples under your feet like water. At the center: a circle, burned into the ground, glowing faint red.\n\nThe dancers are here too. More of them. Moving slower now, almost ritualistic. The insignia on their clothes glows like it's alive.\n\nI pull my hand free. \"What is this?\"\n\nShe finally speaks, voice low, like someone reading a poem to the apocalypse.\n\n\"This is where she comes.\"\n\n\"Who's she?\"\n\nHer smile is too sharp to be warm. \"You'll see.\"",
+                    has_insignia: true
+                },
+                {
+                    id: 10,
+                    title: "Pulsing Floor",
+                    text: "And then the floor pulses. Once, twice, syncing with my heartbeat. The dancers accelerate, spinning faster than physics should allow, velvet blurring into streaks of blood and shadow.\n\nThe blind man's voice isn't in the room, but I still hear it. Inside my skull:",
+                    quote: "She comes. Out to the other side. Into the pop song summer."
+                },
+                {
+                    id: 11,
+                    title: "Burning Houses",
+                    text: "The walls dissolve into horizon. Burning houses flicker in the distance. I know it isn't real — but my body doesn't care. Every nerve screams run.\n\nI back up, trip, catch myself against the edge of the circle. It's hot, too hot, like touching the rim of the sun.",
+                    has_burning: true
+                },
+                {
+                    id: 12,
+                    title: "Sun Insignia",
+                    text: "The woman in red grabs my wrist, turns my palm up. She's holding something — a patch, identical to the ones on the dancers. The sun insignia.\n\n\"Put it on,\" she says.\n\n\"What happens if I do?\"\n\nHer smile widens. \"You'll see her. You'll be part of the summer.\"",
+                    has_insignia: true,
+                    large_insignia: true
+                },
+                {
+                    id: 13,
+                    title: "The Choice",
+                    text: "I look at the patch. It's warm in my hand, like it's been sitting in the sun. The gold thread catches light that isn't there.\n\nThe blind man's voice is still in my head:",
+                    quote: "She comes, she comes...",
+                    text_after: "I should run. I know I should run. But there's something about the way the dancers move, something about the promise of seeing her...",
+                    split_screen: true
+                },
+                {
+                    id: 14,
+                    title: "The Decision",
+                    text: "\"Fine,\" I say, and take the patch. It's heavier than it looks. I press it against my shoulder, and it burns through my shirt, fusing to skin. I gasp, but the pain is gone as quickly as it came.\n\nThe woman in red steps back. \"Now you're one of us.\"\n\nThe dancers stop. All at once. They turn to look at me, and for the first time, I see their eyes clearly. They're normal eyes. Human eyes. But they're all looking at something beyond me."
+                },
+                {
+                    id: 15,
+                    title: "She Arrives",
+                    text: "The circle on the floor cracks open. Light pours out, not like stage lights or LEDs, but like sunlight through stained glass. It's too bright to look at directly, but I can't look away.\n\nAnd then she's there.\n\nI can't describe her face. It shifts too fast, like flipping through radio stations. But she's beautiful in a way that hurts. She's wearing a dress made of summer itself — the kind of summer you remember from childhood, all endless days and popsicle-stained fingers.\n\nThe dancers bow. The woman in red bows. I find myself bowing too, though I didn't mean to.\n\nShe speaks, and her voice is a pop song I've heard a thousand times but can never remember the name of:",
+                    quote: "The houses are burning. The old world is dying. Are you ready for summer?",
+                    has_light_rays: true
+                },
+                {
+                    id: 16,
+                    title: "The Answer",
+                    text: "I find my voice. \"Yes.\"\n\nShe smiles, and it's like watching the sun rise over a world that's never seen daylight before. She extends her hand, and there's a key in it. Old brass, worn smooth from use.\n\n\"Then take this. Find the door.\"\n\nI take the key. It's hot, like the patch was, but I don't drop it."
+                },
+                {
+                    id: 17,
+                    title: "Transformation",
+                    text: "The dancers begin to move again, but differently now. Their movements are sharper, more urgent. The velvet of their clothes ripples like it's alive. Their patches glow brighter, pulsing in time with mine.\n\nThe woman in red is watching me, her eyes reflecting the light from the circle. \"It's starting,\" she says. \"The pop song summer.\"\n\nThe blind man's voice rises again, but now it's coming from everywhere:",
+                    quote: "Burning houses in the distance. Lights up the night.",
+                    has_insignia: true
+                },
+                {
+                    id: 18,
+                    title: "The Door",
+                    text: "The air splits open. There's no other way to describe it. Like someone took a knife to reality and cut a door-shaped hole. Through it, I can see... something else. Not the club, not the city. Something golden and endless.\n\nShe — the woman from the circle, the one made of summer — is gone. But her voice lingers:",
+                    quote: "The key fits the door. The door leads to summer. Will you come?",
+                    text_after: "I look at the woman in red. \"What's on the other side?\"\n\nShe shrugs. \"I've never gone through. I just bring people to her. That's my job.\"\n\nThe key burns hotter in my palm. The patch on my shoulder pulses like a second heart.",
+                    has_door: true
+                },
+                {
+                    id: 19,
+                    title: "Decision Point",
+                    text: "I look back at the club behind me. Through the door, I can still see the dancers, the blind man, the city beyond. My old life.\n\nI look at the key in my hand. At the door in front of me. At whatever waits on the other side.\n\nThe woman in red watches me, her face unreadable. \"Choose,\" she says.",
+                    split_screen: true
+                },
+                {
+                    id: 20,
+                    title: "Key Turns",
+                    text: "I step forward. Insert the key into the lock. It fits perfectly, like it was made for this moment. For me.\n\nI turn it.\n\nThe sound it makes isn't a click. It's a chord — the perfect final chord of a pop song you've been waiting your whole life to hear.",
+                    has_key: true
+                },
+                {
+                    id: 21,
+                    title: "Threshold",
+                    text: "The door swings open. Light floods out, so bright it erases the club, the dancers, the woman in red. Everything.\n\nI step through.\n\nThe last thing I hear is the blind man's voice, no longer chanting but laughing, joyful:",
+                    quote: "Pop song summer begins!",
+                    text_after: "And then I'm gone.",
+                    has_light_burst: true
+                },
+                {
+                    id: 22,
+                    title: "Desert Road",
+                    text: "Somewhere, on a desert highway, under a sun that never sets, a figure walks. The asphalt shimmers with heat. In the distance, a city burns, but the figure doesn't look back.\n\nOn their shoulder: a patch with the sun insignia.\n\nIn their ears: the perfect pop song, playing on repeat.\n\nIt's summer. It's always summer now.\n\nAnd she is coming.",
+                    has_road: true,
+                    has_sun: true,
+                    epilogue: true
+                }
+            ];
+            
+            // Function to format time in MM:SS format
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = Math.floor(seconds % 60);
+                return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+            }
+            
+            // Function to generate story panels
+            function generateStoryPanels() {
+                storyContainer.innerHTML = '';
+                panelNav.innerHTML = '';
+                
+                storyData.forEach((panel, index) => {
+                    // Create panel element
+                    const panelElement = document.createElement('div');
+                    panelElement.className = 'story-panel';
+                    panelElement.id = `panel-${panel.id}`;
+                    
+                    // Create panel content
+                    const panelContent = document.createElement('div');
+                    panelContent.className = 'panel-content';
+                    
+                    // Create panel text
+                    const panelText = document.createElement('p');
+                    panelText.className = 'panel-text';
+                    panelText.innerHTML = panel.text.replace(/\n\n/g, '<br><br>');
+                    
+                    // Add elements to panel content
+                    panelContent.appendChild(panelText);
+                    
+                    // Add quote if present
+                    if (panel.quote) {
+                        const panelQuote = document.createElement('blockquote');
+                        panelQuote.className = 'panel-quote';
+                        panelQuote.textContent = panel.quote;
+                        panelContent.appendChild(panelQuote);
+                    }
+                    
+                    // Add text after quote if present
+                    if (panel.text_after) {
+                        const panelTextAfter = document.createElement('p');
+                        panelTextAfter.className = 'panel-text';
+                        panelTextAfter.innerHTML = panel.text_after.replace(/\n\n/g, '<br><br>');
+                        panelContent.appendChild(panelTextAfter);
+                    }
+                    
+                    // Add choice button for Decision Point
+                    if (panel.id === 19) {
+                        const choiceBtn = document.createElement('button');
+                        choiceBtn.className = 'bg-golden-blaze text-navy px-4 py-2 rounded-md font-bold text-sm';
+                        choiceBtn.textContent = 'Take the Patch';
+                        choiceBtn.setAttribute('aria-label', 'Choose to take the sun insignia patch');
+                        choiceBtn.onclick = () => {
+                            gsap.to(panelElement, {
+                                opacity: 0,
+                                duration: 1,
+                                onComplete: () => {
+                                    document.getElementById('panel-20').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }
+                            });
+                        };
+                        panelContent.appendChild(choiceBtn);
+                    }
+                    
+                    // Create panel accent
+                    const panelAccent = document.createElement('div');
+                    panelAccent.className = 'panel-accent';
+                    
+                    // Add visual elements to accent
+                    if (panel.has_insignia || panel.large_insignia) {
+                        const insignia = document.createElement('div');
+                        insignia.className = 'large-insignia';
+                        insignia.innerHTML = `<div class="circle"><div class="sun">☀</div></div>`;
+                        panelAccent.appendChild(insignia);
+                    }
+                    if (panel.has_light_rays) {
+                        const lightRays = document.createElement('div');
+                        lightRays.className = 'light-rays';
+                        for (let i = 0; i < 6; i++) {
+                            const lightRay = document.createElement('div');
+                            lightRay.className = 'light-ray';
+                            lightRay.style.transform = `rotate(${i * 60}deg)`;
+                            lightRays.appendChild(lightRay);
+                        }
+                        panelAccent.appendChild(lightRays);
+                    }
+                    if (panel.has_light_burst) {
+                        const lightBurst = document.createElement('div');
+                        lightBurst.className = 'light-burst';
+                        panelAccent.appendChild(lightBurst);
+                    }
+                    if (panel.has_burning) {
+                        const burning = document.createElement('div');
+                        burning.className = 'burning-overlay';
+                        panelAccent.appendChild(burning);
+                    }
+                    if (panel.has_door) {
+                        const door = document.createElement('div');
+                        door.className = 'door-frame';
+                        panelAccent.appendChild(door);
+                    }
+                    if (panel.has_key) {
+                        const key = document.createElement('div');
+                        key.className = 'key';
+                        key.innerHTML = '<div class="key-head"></div><div class="key-shaft"></div>';
+                        panelAccent.appendChild(key);
+                    }
+                    if (panel.has_road) {
+                        const road = document.createElement('div');
+                        road.className = 'road';
+                        road.innerHTML = '<div class="road-marking"></div>';
+                        panelAccent.appendChild(road);
+                    }
+                    if (panel.has_sun) {
+                        const sun = document.createElement('div');
+                        sun.className = 'sun';
+                        sun.innerHTML = '<div class="sun-glow"><span class="sun-symbol">☀</span></div>';
+                        panelAccent.appendChild(sun);
+                    }
+                    if (panel.split_screen) {
+                        const split = document.createElement('div');
+                        split.className = 'split-screen';
+                        split.innerHTML = '<div class="split-left"></div><div class="split-right"></div>';
+                        panelAccent.appendChild(split);
+                    }
+                    
+                    // Add elements to panel
+                    panelElement.appendChild(panelContent);
+                    panelElement.appendChild(panelAccent);
+                    
+                    // Add panel to story container
+                    storyContainer.appendChild(panelElement);
+                    
+                    // Add nav item
+                    const navItem = document.createElement('li');
+                    const navLink = document.createElement('a');
+                    navLink.href = `#panel-${panel.id}`;
+                    navLink.textContent = panel.title;
+                    navLink.setAttribute('aria-label', `Navigate to ${panel.title}`);
+                    navLink.onclick = (e) => {
+                        e.preventDefault();
+                        document.querySelector(`#panel-${panel.id}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    };
+                    if (panel.neon_title) {
+                        navLink.className = `neon-${panel.neon_color || 'text'}`;
+                    }
+                    navItem.appendChild(navLink);
+                    panelNav.appendChild(navItem);
+                });
+                
+                // Initialize GSAP animations
+                initAnimations();
+            }
+            
+            // Function to initialize GSAP animations
+            function initAnimations() {
+                gsap.registerPlugin(ScrollTrigger);
+                
+                // Animate light rays
+                gsap.utils.toArray('.light-ray').forEach((ray, i) => {
+                    gsap.to(ray, {
+                        rotation: `+=${360 * (i % 2 ? -1 : 1)}`,
+                        duration: 40 + i * 5,
+                        repeat: -1,
+                        ease: "none",
+                        transformOrigin: "0 0"
+                    });
+                });
+                
+                // Animate visual elements
+                gsap.utils.toArray('.large-insignia').forEach((insignia) => {
+                    gsap.to(insignia, {
+                        opacity: 0.3,
+                        duration: 4,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                });
+                gsap.utils.toArray('.burning-overlay').forEach((overlay) => {
+                    gsap.to(overlay, {
+                        opacity: 0.25,
+                        duration: 4,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                });
+                gsap.utils.toArray('.door-frame').forEach((door) => {
+                    gsap.from(door, {
+                        height: 0,
+                        duration: 1.5,
+                        scrollTrigger: { trigger: door.parentElement.parentElement, start: 'top 95%' }
+                    });
+                });
+                gsap.utils.toArray('.key').forEach((key) => {
+                    gsap.to(key, {
+                        rotation: 360,
+                        duration: 2.5,
+                        scrollTrigger: { trigger: key.parentElement.parentElement, start: 'top 95%' }
+                    });
+                });
+                gsap.utils.toArray('.road-marking').forEach((marking) => {
+                    gsap.to(marking, {
+                        x: '-100%',
+                        duration: 6,
+                        repeat: -1,
+                        ease: 'none'
+                    });
+                });
+                gsap.utils.toArray('.sun-glow').forEach((sun) => {
+                    gsap.to(sun, {
+                        scale: 1.1,
+                        opacity: 0.4,
+                        duration: 4,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: 'sine.inOut'
+                    });
+                });
+                gsap.utils.toArray('.split-screen').forEach((split) => {
+                    gsap.to(split.querySelector('.split-left'), {
+                        opacity: 0.15,
+                        duration: 4,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: 'sine.inOut'
+                    });
+                    gsap.to(split.querySelector('.split-right'), {
+                        opacity: 0.15,
+                        duration: 4,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: 'sine.inOut',
+                        delay: 2
+                    });
+                });
+                
+                // Animate panels on scroll (page turn effect)
+                gsap.utils.toArray('.story-panel').forEach((panel) => {
+                    gsap.fromTo(panel, 
+                        { opacity: 0, x: 20, rotateY: 6 },
+                        { 
+                            opacity: 1, 
+                            x: 0,
+                            rotateY: 0,
+                            duration: 1,
+                            ease: "power2.out",
+                            scrollTrigger: {
+                                trigger: panel,
+                                start: "top 95%",
+                                end: "top 70%",
+                                scrub: 1
+                            }
+                        }
+                    );
+                });
+            }
+            
+            // Function to update audio progress
+            function updateAudioProgress() {
+                if (!audio.paused) {
+                    const currentTime = formatTime(audio.currentTime);
+                    const duration = formatTime(audio.duration || 495);
+                    audioProgress.textContent = `${currentTime} / ${duration}`;
+                    requestAnimationFrame(updateAudioProgress);
+                }
+            }
+            
+            // Event Listeners
+            startReadingBtn.addEventListener('click', function() {
+                this.style.display = 'none';
+                navToggleBtn.style.display = 'flex';
+                generateStoryPanels();
+                audio.play();
+                playPauseBtn.textContent = '❚❚';
+                updateAudioProgress();
+                document.getElementById('panel-1').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+            
+            playPauseBtn.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play();
+                    this.textContent = '❚❚';
+                    updateAudioProgress();
+                } else {
+                    audio.pause();
+                    this.textContent = '▶';
+                }
+            });
+            
+            restartBtn.addEventListener('click', function() {
+                audio.currentTime = 0;
+                if (audio.paused) {
+                    audio.play();
+                    playPauseBtn.textContent = '❚❚';
+                    updateAudioProgress();
+                }
+            });
+            
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            navToggleBtn.addEventListener('click', function() {
+                navSidebar.classList.toggle('open');
+                this.textContent = navSidebar.classList.contains('open') ? '×' : '☰';
+            });
+            
+            // Mobile menu toggle
+            const navToggle = document.querySelector('.nav-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const closeBtn = document.querySelector('.close-btn');
+            
+            navToggle.addEventListener('click', function() {
+                mobileMenu.classList.add('flex');
+                mobileMenu.classList.remove('hidden');
+            });
+            
+            closeBtn.addEventListener('click', function() {
+                mobileMenu.classList.remove('flex');
+                mobileMenu.classList.add('hidden');
+            });
+            
+            // Initialize audio duration
+            audio.addEventListener('loadedmetadata', function() {
+                const duration = formatTime(audio.duration);
+                audioProgress.textContent = `0:00 / ${duration}`;
+            });
+            
+            // Show/hide scroll-to-top and nav-toggle buttons
+            window.addEventListener('scroll', () => {
+                scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
