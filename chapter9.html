@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 9: Coming Soon - Pop Song Summer</title>
+    <meta name="description" content="Chapter 9 of Pop Song Summer: Coming Soon - This chapter is currently in development.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="./css/output.css">
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* Base styles */
+        body {
+            background-color: #1A1A1A;
+            color: #F5F5F5;
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* Placeholder background */
+        .placeholder-bg {
+            background-color: #1A1A1A;
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='placeholderPattern' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(2) rotate(45)'%3E%3Crect width='40' height='40' fill='%231A1A1A'/%3E%3Cpath d='M0 20 L40 20 M20 0 L20 40' stroke='%23333333' stroke-width='0.5' stroke-opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23placeholderPattern)'/%3E%3C/svg%3E");
+        }
+        
+        /* Story header */
+        .story-header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(45, 10, 49, 0.9), rgba(26, 26, 26, 0.7));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .story-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            color: #F5F5F5;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+        }
+        
+        .story-subtitle {
+            font-size: 1.5rem;
+            color: #CCCCCC;
+            margin-bottom: 2rem;
+        }
+        
+        /* Coming soon content */
+        .coming-soon-container {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .coming-soon-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            color: #FF5722;
+            margin-bottom: 2rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+        }
+        
+        .coming-soon-text {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .sunburst-icon {
+            font-size: 6rem;
+            color: #FF5722;
+            margin: 2rem 0;
+            animation: rotate 10s linear infinite;
+        }
+        
+        /* Visual elements */
+        .large-insignia {
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+            width: 200px;
+            height: 200px;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .large-insignia .circle {
+            width: 100%;
+            height: 100%;
+            border: 8px solid #FF5722;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .large-insignia .sun {
+            font-size: 6rem;
+            color: #FF5722;
+        }
+        
+        .rays {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 4px;
+            background-color: rgba(255, 87, 34, 0.3);
+            transform-origin: center;
+        }
+        
+        /* Animations */
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+            100% { opacity: 0.3; }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .story-title {
+                font-size: 3rem;
+            }
+            
+            .coming-soon-title {
+                font-size: 2.5rem;
+            }
+            
+            .coming-soon-text {
+                font-size: 1.125rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .story-title {
+                font-size: 2.5rem;
+            }
+            
+            .coming-soon-title {
+                font-size: 2rem;
+            }
+            
+            .coming-soon-text {
+                font-size: 1rem;
+            }
+            
+            .sunburst-icon {
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+<body class="placeholder-bg">
+    <!-- Header/Navigation -->
+    <header class="fixed top-0 left-0 w-full bg-navy bg-opacity-90 z-50 backdrop-blur-sm">
+        <nav class="container-custom py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-heading font-bold text-golden-blaze">DevCo</a>
+            <div class="nav-toggle md:hidden cursor-pointer">
+                <div class="bar w-6 h-0.5 bg-white-spark mb-1.5"></div>
+                <div class="bar w-6 h-0.5 bg-white-spark mb-1.5"></div>
+                <div class="bar w-6 h-0.5 bg-white-spark"></div>
+            </div>
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="index.html" class="nav-link text-lg">Home</a></li>
+                <li><a href="index.html#music" class="nav-link text-lg">Music</a></li>
+                <li><a href="index.html#about" class="nav-link text-lg">About</a></li>
+                <li><a href="index.html#contact" class="nav-link text-lg">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu fixed inset-0 bg-navy bg-opacity-95 z-40 flex-col items-center justify-center hidden">
+            <button class="close-btn absolute top-4 right-4 text-white-spark text-3xl">&times;</button>
+            <ul class="text-center space-y-8">
+                <li><a href="index.html" class="nav-link text-3xl">Home</a></li>
+                <li><a href="index.html#music" class="nav-link text-3xl">Music</a></li>
+                <li><a href="index.html#about" class="nav-link text-3xl">About</a></li>
+                <li><a href="index.html#contact" class="nav-link text-3xl">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Story Header -->
+    <div class="story-header">
+        <h1 class="story-title">Chapter 9</h1>
+        <p class="story-subtitle">Pop Song Summer, Track 9</p>
+        
+        <!-- Large insignia in header -->
+        <div class="large-insignia" style="animation: fadeInOut 4s infinite;">
+            <div class="circle">
+                <div class="sun">☀</div>
+            </div>
+            <!-- Add rays -->
+            <div class="rays" style="transform: translate(-50%, -50%) rotate(0deg);"></div>
+            <div class="rays" style="transform: translate(-50%, -50%) rotate(30deg);"></div>
+            <div class="rays" style="transform: translate(-50%, -50%) rotate(60deg);"></div>
+            <div class="rays" style="transform: translate(-50%, -50%) rotate(90deg);"></div>
+            <div class="rays" style="transform: translate(-50%, -50%) rotate(120deg);"></div>
+            <div class="rays" style="transform: translate(-50%, -50%) rotate(150deg);"></div>
+        </div>
+    </div>
+    
+    <!-- Coming Soon Content -->
+    <div class="coming-soon-container">
+        <h2 class="coming-soon-title">Coming Soon</h2>
+        <div class="sunburst-icon">☀</div>
+        <p class="coming-soon-text">
+            The ninth chapter of Pop Song Summer is currently being written.
+            Return soon to continue the journey through the story.
+        </p>
+        <p class="coming-soon-text">
+            While you wait, explore the other chapters to experience more of the Pop Song Summer universe.
+        </p>
+        <div class="mt-8 flex justify-center gap-4">
+            <a href="chapter8.html" class="bg-golden-blaze text-navy px-6 py-3 rounded-md hover:bg-opacity-80 transition-colors font-bold text-lg">
+                Previous Chapter
+            </a>
+            <a href="chapter10.html" class="bg-golden-blaze text-navy px-6 py-3 rounded-md hover:bg-opacity-80 transition-colors font-bold text-lg">
+                Next Chapter
+            </a>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu functionality
+            const navToggle = document.querySelector('.nav-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const closeBtn = document.querySelector('.close-btn');
+            
+            if (navToggle && mobileMenu && closeBtn) {
+                navToggle.addEventListener('click', function() {
+                    mobileMenu.classList.add('flex');
+                    mobileMenu.classList.remove('hidden');
+                });
+                
+                closeBtn.addEventListener('click', function() {
+                    mobileMenu.classList.remove('flex');
+                    mobileMenu.classList.add('hidden');
+                });
+                
+                // Close mobile menu when clicking a link
+                const mobileLinks = mobileMenu.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.remove('flex');
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+            
+            // GSAP animations
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate sunburst icon
+            gsap.to('.sunburst-icon', {
+                scale: 1.2,
+                duration: 2,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+            
+            // Animate rays
+            gsap.utils.toArray('.rays').forEach((ray) => {
+                gsap.to(ray, {
+                    opacity: 0.7,
+                    duration: 1.5,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut",
+                    delay: Math.random()
+                });
+            });
+        });
+    </script>
+</body>
+</html>
