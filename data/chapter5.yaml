@@ -1,0 +1,64 @@
+# Chapter 5: A Blind Man Singing - Story Content
+title: "A Blind Man Singing"
+subtitle: "Pop Song Summer, Track 5"
+intro_quote: "She comes, burning houses in the distance."
+audio_file: "music/Chapter 5_A Blind Man Singing.mp3"
+audio_duration: 510 # Estimated 8.5 minutes, aligning with Chapter 2's length for musical focus
+
+panels:
+  - id: 1
+    title: "BLANK TAPE"
+    background: "bg-gradient-to-b from-[#2D2D2D] via-[#1A1A1A] to-[#2D2D2D]"
+    text: "The first time I recorded his voice, the tape was blank—levels jumped, needles danced, but playback gave silence, a shape in the noise like heat on a road. In a subway tunnel smelling of metal and bread, he sang five feet from my mic, cane tapping, no hat for tips. The song braided through footsteps and coins. 'Your recorder’s fine,' he said. 'Hearing isn’t playing back.' His sunglasses showed white eyes, a fact like weather. 'What’s your name?' I asked. 'No,' he said, kind. 'Today I’m a channel. Names are what you return.' I run Sunroom Radio, a pirate station above a pawn shop, broadcasting lonely songs and storm warnings."
+    has_insignia: true
+
+  - id: 2
+    title: "CHALK AND CORNER"
+    background: "bg-gradient-to-b from-[#1A2A44] via-[#000000] to-[#1A2A44]"
+    text: "I followed him, two paces back, to a corner where a kid drew a chalk sun with twelve uneven rays. He tapped the circle’s edge, singing, *She comes, burning houses in the distance. Lights up the night.* The kid added a thirteenth ray, testing us. 'You sang that last week,' I said. 'Whenever the city forgets,' he replied. A woman mouthed the refrain at a bus stop, a teen’s phone flashed *Insignia of the Sun*. 'I’m Mira,' I offered. 'Return it when you can,' he said, walking into a bruised sky, his cane punctuation, leaving me with a blank tape and a city turned radio."
+    has_insignia: true
+    has_burning: true
+
+  - id: 3
+    title: "STUDIO INVITATION"
+    background: "bg-gradient-to-b from-[#4A4A4A] via-[#2D2D2D] to-[#4A4A4A]"
+    text: "Two days later, call-ins led me to 8th and Marlow, where his voice 'aligned the air.' He sat on a milk crate, a chalk sun beneath, a sunburst patch on his frayed hat. 'Studio,' I said. 'One hour, no money, walk out anytime.' He asked for a reel-to-reel. I lied, 'Yes,' though mine’s ancient. 'Point the mic at the empty chair,' he said in my studio, rubbing his cane like a match. He sang of burning horizons, names returned, a woman in a red coat. The tape spilled, needles swung, my eyes prickled. Playback: silence, but a pressure like altitude."
+    has_insignia: true
+    has_burning: true
+    neon_title: true
+    neon_color: "gold"
+
+  - id: 4
+    title: "BROADCAST ABSENCE"
+    background: "bg-gradient-to-b from-[#800020] via-[#4A0000] to-[#800020]"
+    text: "He grinned at the silence. 'The room remembering,' he called it. I broadcast it live: 'Sunroom listeners, this blank tape isn’t blank. Breathe like you’re with a stranger.' The city held its breath for two minutes. Phones lit: an old man’s clock kept time, a nurse’s monitors calmed, a woman heard humming from nowhere. 'Aim the antenna at the bridges,' he said. 'They’ll need exits.' 'Is there a fire?' 'There’s always a fire.' He left the tape, labeled *RETURN WHAT ISN’T YOURS*, and walked out, sunglasses catching the pawnshop neon."
+    has_insignia: true
+    has_burning: true
+    neon_title: true
+    neon_color: "red"
+
+  - id: 5
+    title: "BRIDGE PROCESSION"
+    background: "bg-gradient-to-b from-[#2D0A31] via-[#1A0E25] to-[#2D0A31]"
+    text: "Dusk brought a fire’s smell from three exits north. I pointed the antenna at the river, played the silence: 'If you’re on foot to the bridges, go slow.' On the 9th Street bridge, he sang, conducting people and cars with his voice. *She comes, lights up the night.* A woman in a red coat led a column, her sunburst pulsing. A stroller, a dog, an ambulance moved in rhythm. 'Records are being set,' I said. 'Play the absence,' he replied. 'It lets the city hear itself.' A boy with a trombone case whispered, 'Ready to return?' The bridge sang without his mouth moving."
+    has_insignia: true
+    has_burning: true
+
+  - id: 6
+    title: "CANE AND CASSETTE"
+    background: "bg-gradient-to-b from-[#1A2A44] via-[#FFC107] to-[#1A2A44]"
+    text: "He tapped the bridge’s seam three times, a note in my bones. I lost him in the smoke. At the rail, his cane leaned, a sunburst patch tied to it, a cassette taped on: *FOR WHEN THE WIND FINDS YOU*. I ran to the station, played it. My voice sang the refrain, a crowd and city woven in. Phones lit; I let them. At dawn, the chalk corner waited, twelve rays needing supervision. The kid approved my thirteenth ray. The woman in red passed, touching her sunburst cuff. 'Ready?' the kid asked. 'To return,' I said, laughing into the morning."
+    has_insignia: true
+    has_burning: true
+    neon_title: true
+    neon_color: "gold"
+
+  - id: 7
+    title: "CHORUS OF RETURN"
+    background: "bg-gradient-to-b from-[#FFC107] via-[#FF3300] to-[#FFC107]"
+    text: "At ten, a cop signaled to move along. I left the chalk sun’s ghost. A sticky note on the board read *OUT TO THE OTHER SIDE*, circled with twelve marks. The tape ran without me, singing my voice, the city’s chorus: *She comes, into the pop song summer.* Someone hummed, carrying a stroller; another turned a key in a blue sedan, calling it a return. Houses burned closer than they appear. I’m Mira, until I return that. The station is Sunroom, until a better name. Play the absence, draw the circle, wait for the wind. The city answers, a choir without rehearsals."
+    has_insignia: true
+    has_burning: true
+    epilogue: true
+    neon_title: true
+    neon_color: "red"

@@ -1,0 +1,62 @@
+# Chapter 8: 1985 (Disco Time Machine) - Story Content
+title: "1985 (Disco Time Machine)"
+subtitle: "Pop Song Summer, Track 8"
+intro_quote: "She comes, into the pop song summer."
+audio_file: "music/Chapter 8_1985 (Disco Time Machine).mp3"
+audio_duration: 510 # Estimated 8.5 minutes, aligning with Chapter 5 for musical intensity
+
+panels:
+  - id: 1
+    title: "THRIFT STORE FIND"
+    background: "bg-gradient-to-b from[#2D2D2D] via[#1A1A1A] to[#2D2D2D]"
+    text: "In a thrift store in a dead mall, a crate of $1 disco records hides a white-label 12-inch, stamped with a gold-foil sunburst, twelve rays, etched with *HELIOGRAPH / 12 DOORS / +6% / -6% / FOR RETURN*. The clerk, in an I’M NOT A ROBOT shirt, says it’s not for sale. I set a five on the counter. He slides it to me in a sleeve smelling of winter. 'Don’t play it loud,' he says. 'I don’t do anything loud,' I lie. The air smells of dust and forgotten decisions, the mall’s neon sign half-lit: FOA FO A WEAR."
+    has_insignia: true
+
+  - id: 2
+    title: "TIME MACHINE DECK"
+    background: "bg-gradient-to-b from[#1A2A44] via[#000000] to[#1A2A44]"
+    text: "At home, my Technics 1200s are a religion. I place the white-label on the left deck, superstitious. The needle drops; silence hums like a dog expecting its name. Then: hi-hat like a subway gate, bass thick as nostalgia, strings curving air. A woman’s voice sings, *She comes…* The pitch fader at +6% yellows the room; my phone flickers into a walkman, a landline rings in a kitchen without one. The street grows Datsuns, neon reads FOAM AND FORMALWEAR. At -6%, the snare modernizes, the room snaps back. The runoff groove whispers: *Return what isn’t yours. Wednesday, nine, unit four-thirteen.*"
+    has_insignia: true
+    neon_title: true
+    neon_color: "gold"
+
+  - id: 3
+    title: "ROLLER RINK REVIVAL"
+    background: "bg-gradient-to-b from[#4A4A4A] via[#2D2D2D] to[#4A4A4A]"
+    text: "The dead mall’s roller rink opens Fridays, promising ADULTS ONLY TONIGHT. The DJ, in a DON’T PANIC hoodie, eyes the sunburst record. 'You a member?' 'It’s a toll,' I say. At eleven, I drop the needle. The hi-hat rumors, the voice reefs the ceiling: *Pop song summer.* At +6%, lights warm, the mirror ball infects, jackets grow shoulder pads. Skaters sing, *She comes,* unrehearsed. A woman in a red coat skates, her sunburst patch catching lasers. The rink becomes 1985; a ferris wheel turns in the glass. A kid redraws a chalk sunburst on the wall."
+    has_insignia: true
+    has_burning: true
+    neon_title: true
+    neon_color: "red"
+
+  - id: 4
+    title: "SKATING THROUGH TIME"
+    background: "bg-gradient-to-b from[#800020] via[#4A0000] to[#800020]"
+    text: "The house DJ says, 'Lift at the bridge—now.' I push the fader to +10%; time dilates, wheels spark. The red-coat woman skates backward, laughing silently, her patch a corrected laser. Skaters mouth lyrics they didn’t learn: *Pop song summer.* In the snack bar glass, houses burn four cities away. A man asks, 'What is this?' 'Receipt for time,' she says. The runoff groove repeats: *Return what isn’t yours. Resist seven.* The rink breathes like a survivor. The DJ slides the record back: 'It’ll want a toll.' 'What you stole,' she says. I know better."
+    has_insignia: true
+    has_burning: true
+
+  - id: 5
+    title: "PAYPHONE CALL"
+    background: "bg-gradient-to-b from[#2D0A31] via[#1A0E25] to[#2D0A31]"
+    text: "In the mall, a dead payphone rings. I answer; a woman’s voice, not the red-coat’s, says, 'You’re early or late. Either works.' 'I have the record,' I say. 'You have a door. Bring nothing. Return everything.' The call ends. I pack the white-label like a loved hostage. The neon flickers to FOA FO A WEAR. A kid outside draws a chalk sunburst, adding a thirteenth ray. The rink’s lights dim, the city in the glass shows burning houses. The record’s weight lies; it’s the same, but I’m not. The toll is what I stole: time, her, a name I scuff on my license."
+    has_insignia: true
+    has_burning: true
+
+  - id: 6
+    title: "UNIT 413 RITUAL"
+    background: "bg-gradient-to-b from[#1A2A44] via[#FFC107] to[#1A2A44]"
+    text: "Unit 413, in a storage facility, yawns open. Inside: candles circle a milk crate altar with a cassette deck, a jar of sunburst patches, a chalk diagram of twelve notches. An androgynous figure with a sunburst patch says, 'You brought it.' I set the record down; it warms under my palm. 'What did you steal?' they ask. 'Time. Her.' They nod, administrative. I place my license down, scraping my name. 'Return what isn’t yours,' they say. The red-coat woman appears in the doorway, her patch glowing. 'Wednesday,' she says. 'Nine,' I reply. The cassette exhales a skating tone."
+    has_insignia: true
+    neon_title: true
+    neon_color: "gold"
+
+  - id: 7
+    title: "RETURN AND KEEP"
+    background: "bg-gradient-to-b from[#FFC107] via[#FF3300] to[#FFC107]"
+    text: "'Ready to return?' the figure asks. I leave the record, keep the song. Stepping around the chalk circle, I exit to a night smelling like 1985. At home, the slipmat holds a sunburst ghost. The radio, unasked, plays Sunroom’s frequency, my voice singing a chorus I didn’t write. A kid’s chalk circle outside counts to thirteen. The blind man’s note hums from a bridge. The red-coat woman lifts a hand in the glass. *She comes,* the city sings, into the pop song summer. I press the slipmat’s mark, feeling thread bite. Wednesday, nine, unit 413. I don’t plan to go. I’m going."
+    has_insignia: true
+    has_burning: true
+    epilogue: true
+    neon_title: true
+    neon_color: "red"

@@ -1,0 +1,66 @@
+# Chapter 10: The End of Everything - Story Content
+title: "The End of Everything"
+subtitle: "Pop Song Summer, Track 10"
+intro_quote: "What you choose is yours to choose, the wall you must break through."
+audio_file: "music/Chapter 10_The End of Everything.mp3"
+audio_duration: 540 # Estimated 9 minutes, matching Chapter 6 for climactic depth
+
+panels:
+  - id: 1
+    title: "FAIRGROUND GATHERING"
+    background: "bg-gradient-to-b from[#2D2D2D] via[#1A1A1A] to[#2D2D2D]"
+    text: "The fairgrounds glow under a POP SONG SUMMER banner, ferris wheel lit like a waiting rib cage. A chalk sun with twelve rays resists footsteps; a kid adds a thirteenth. The blind man taps his cane thrice, the ground purrs. The red-coat woman, sunburst patch glowing, lifts a hand, hushing the crowd. The DJ wheels a turntable, white-label sunburst under her arm. The painter carries a glowing canvas. Sunroom’s radio person aims a transmitter at the wheel. The song hums: *What you choose is yours to choose.* We gather to pick a future."
+    has_insignia: true
+    has_burning: true
+
+  - id: 2
+    title: "HELIOGRAPH RITUAL"
+    background: "bg-gradient-to-b from[#800020] via[#4A0000] to[#800020]"
+    text: "The Unit 413 host stands in the chalk circle, patch gleaming. 'Welcome to Heliograph. Receipts and returns.' The red coat asks, 'What do you return?' 'Name,' the crowd says, some silent. 'Light,' softer. 'Body,' as the wheel creaks. The blind man sings without moving: *Time just froze inside of me.* A lemonade girl gives out gold-stamped tickets: FOR RETURN. The radio cues silence; the city hears itself. Voices confess: filming fires, fearing loss. The song pushes: *We can’t take it… I want to go.* The red coat nods, cataloging."
+    has_insignia: true
+    has_burning: true
+    neon_title: true
+    neon_color: "red"
+
+  - id: 3
+    title: "WHITE-LABEL SONG"
+    background: "bg-gradient-to-b from[#1A2A44] via[#000000] to[#1A2A44]"
+    text: "The DJ drops the white-label; hi-hat rings, bass maps feet. At +6%, the air warms, the rink’s glass shows a past jacket. The song sings: *Could this be the end of everything.* The red coat says, 'Maybe the end of parts that don’t return receipts.' A cop points to his watch; she smiles him down. My drifter-shadow aligns, no lag. My pockets hold a ticket, a letter, a warm patch. The host points to the wheel: 'Twelve doors. Resist seven.' Laughter rises. Cabins fill two by two, creaking like prayers."
+    has_insignia: true
+    has_burning: true
+    neon_title: true
+    neon_color: "gold"
+
+  - id: 4
+    title: "BREAKING THE WALL"
+    background: "bg-gradient-to-b from[#4A4A4A] via[#2D2D2D] to[#4A4A4A]"
+    text: "The red coat turns to me: 'You brought the wall.' I nod. In the rink’s glass, my reflection lags. 'Sing at it,' she says, 'or touch it with the right name.' I say my childhood name; the glass wobbles, cracks in twelve rays. The crowd presses palms to reflections, the glass parting like a lake. The wheel turns, cabins cresting, lights blinking out in the glass. The kid draws a sun at my feet. The blind man hums, realigning my spine. The DJ pushes the pitch. *What you choose is yours to choose.* The wall thins to habit."
+    has_insignia: true
+    has_burning: true
+
+  - id: 5
+    title: "ORANGE CIRCLE"
+    background: "bg-gradient-to-b from[#2D0A31] via[#1A0E25] to[#2D0A31]"
+    text: "The kid hands me an orange; we pass it around the circle, thumbs marking tiny suns. The blind man pockets it like a compass. The song softens: *Time just froze inside of me.* Houses burn in the glass, not here. A canoe glides with a dog, a cop lets midnight slide. The pie stand sells FORGIVEN. The red coat says, 'It’s about choosing how to lose less.' The wheel turns, the song confesses: *We can’t take it… I don’t wanna know.* We say both, go anyway, asking who we’ll be, not what’s next."
+    has_insignia: true
+    has_burning: true
+
+  - id: 6
+    title: "CHORUS RELEASE"
+    background: "bg-gradient-to-b from[#1A2A44] via[#FFC107] to[#1A2A44]"
+    text: "The host lifts a jar of sunburst patches; the red coat kisses one, presses it to the wheel. It glows, the machine purrs. Sunroom’s radio plays silence that sings, my voice braiding with others. The chorus spills into cars, vents, lobbies, clearing layaway names. People cry, a receipt. The blind man taps thrice, the wheel stills. The DJ sleeves the record, the painter returns the canvas under the bridge. The cop salutes, the kid counts to twelve. The red coat says, 'It’s the end of faking it, the beginning of returns.'"
+    has_insignia: true
+    has_burning: true
+    neon_title: true
+    neon_color: "gold"
+
+  - id: 7
+    title: "OUT TO RETURN"
+    background: "bg-gradient-to-b from[#FFC107] via[#FF3300] to[#FFC107]"
+    text: "The red coat steps close, her patch warm under my knuckles. 'Nobody gets to be the only door,' she says. I broke the wall because we sang. The fairgrounds dim like a pilot light. At the gate, the lemonade girl thumbs my ticket, gold sparks sticking. The blind man squeezes my elbow, the cop promises tomorrow. *She comes,* the city sings, through us, without rehearsals. We walk to the bridge, the river following. My drifter steps with me, no lag. The receipt lives under our tongues, the chorus rides. Out to the other side, keeping what keeps us."
+    has_insignia: true
+    has_burning: true
+    epilogue: true
+    neon_title: true
+    neon_color: "red"
+  

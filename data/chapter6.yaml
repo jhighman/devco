@@ -1,0 +1,60 @@
+# Chapter 6: Out to the Other Side - Story Content
+title: "Out to the Other Side"
+subtitle: "Pop Song Summer, Track 6"
+intro_quote: "She is out on the other side, in the white gold of the evening light."
+audio_file: "music/Chapter 6_Out to the Other Side.mp3"
+audio_duration: 540 # Estimated 9 minutes, matching Chapter 3 for narrative depth
+
+panels:
+  - id: 1
+    title: "FAIRGROUND TICKET"
+    background: "bg-gradient-to-b from-[#2D2D2D] via-[#1A1A1A] to-[#2D2D2D]"
+    text: "The river roared under a STATE FAIR IS COMIN’ BACK banner, sagging between light poles. The ferris wheel’s skeleton stood like a rib cage. Out of work, I stopped at a red barn selling lemonade and lottery tickets. A girl with a ballpoint sun tattoo on her wrist handed me a peach-colored ticket stamped with a gold-foil sunburst, twelve rays. 'Souvenir,' she said. 'Makes folks spend brave.' I tucked it behind my license. A blind man sang by the gate: *She is out on the horizon, in the white gold of the evening light.* The ferris wheel caught and returned the sun. I filled the tank, the radio playing a woman’s voice about the open road."
+    has_insignia: true
+
+  - id: 2
+    title: "DINER HELIOGRAPH"
+    background: "bg-gradient-to-b from[#800020] via[#4A0000] to[#800020]"
+    text: "At a shotgun-shack diner, a chalkboard promised PIE THAT FORGIVES. A woman in a red coat sat by the window, her sunburst patch glowing like a heliograph. Time bent around her; the jukebox skipped to a future song. A coffee I didn’t order appeared. 'You headed out?' Lucy, the waitress, asked. 'To the other side,' I said. 'You got a reason?' I glanced at the woman, who smiled elsewhere. 'Low on reasons,' I said. The blind man’s song drifted in: *There’s a world of freedom waiting.* She left cash and walked into daylight. Lucy said, 'She’ll be on the horizon. All of them.'"
+    has_insignia: true
+    neon_title: true
+    neon_color: "red"
+
+  - id: 3
+    title: "ROAD AND MAP"
+    background: "bg-gradient-to-b from[#1A2A44] via[#000000] to[#1A2A44]"
+    text: "The two-lane west shrank the fair’s sign to rumor. Fields buffered into billboards. The radio replayed the song—*She is on my mind*—and I found a map in the passenger seat, marked in white pencil across counties. At a town, fair crew tents waited, a ferris wheel in pieces. A man smoking drew a sun in ash. 'Got a receipt?' he asked. I showed the ticket; he nodded. 'Don’t stop where the freeway says. Stop where the river does.' The wind shifted, the sky turned nickel. He ground the ash sun under his heel, a ritual with jokes."
+    has_insignia: true
+
+  - id: 4
+    title: "CITY OF ANGELS"
+    background: "bg-gradient-to-b from[#4A4A4A] via[#2D2D2D] to[#4A4A4A]"
+    text: "Past sundown, the City of Angels glowed like a sea of lights. The song returned: *Out on the other side.* I took a wrong exit to Whittier, finding warehouses and a chalk sunburst under an overpass, twelve rays. A woman in a red coat leaned on a blue sedan, map folded on the dash, her sunburst patch pulsing. 'You took the wrong exit,' she said, pleased. 'Tradition,' she corrected my 'Habit.' She placed a velvet sunburst patch on the hood. 'It’s a toll to cross.' 'Cross what?' 'Pick one,' she said, smiling half her mouth. 'Return what isn’t yours, the bridge appears.'"
+    has_insignia: true
+    neon_title: true
+    neon_color: "gold"
+
+  - id: 5
+    title: "BRIDGE TOLL"
+    background: "bg-gradient-to-b from[#2D0A31] via[#1A0E25] to[#2D0A31]"
+    text: "We drove to a bridge, the river below engineered into submission. A man with a sign—RETURN WHAT ISN’T YOURS—traded my toll change for a sunburst sticker. The blind man sang from a folding chair: *In the white gold of the evening light.* Drivers opened windows, nodding like conspirators. Over the radio, her voice: 'Feel that?' 'Like driving uphill on a flat line.' 'That’s the toll,' she said. 'Keep your foot in it.' The skyline lifted, the car aligned with its blueprint. A billboard promised OTHER SIDE OF SUMMER. My voice sang softly on the radio, unasked."
+    has_insignia: true
+    has_burning: true
+
+  - id: 6
+    title: "DESERT CONFESSION"
+    background: "bg-gradient-to-b from[#1A2A44] via[#FFC107] to[#1A2A44]"
+    text: "Past the city, the freeway faded to a frontage road, stars unguarded. We pulled over, the desert cold settling in the car. She stood on the sedan’s hood, red coat a climate, sunburst answering stars. 'What happens on the other side?' I asked. 'You return what isn’t yours, keep what keeps you.' 'Do we get each other?' Her look held a cure’s cost. 'In pieces. In chorus.' The wind tugged her coat. Far off, a ferris wheel turned, a blind man counted beats. A kid erased a chalk ray. 'Forward,' she said, and we drove until the map forgot us."
+    has_insignia: true
+    neon_title: true
+    neon_color: "gold"
+
+  - id: 7
+    title: "WHITE GOLD HORIZON"
+    background: "bg-gradient-to-b from[#FFC107] via[#FF3300] to[#FFC107]"
+    text: "Dawn broke in a county spelling freedom simply. The fair was a rumor, the river its own mind. At a turnout, she touched my wrist, our pulses agreeing we were alive. The ticket’s gold had printed onto my wallet, a staying receipt. The radio played the song, *A world of freedom waiting.* We passed a chalk circle, a diner with PIE STILL TRYING, a mural of a ferris wheel and red coat. 'You ready?' she asked. 'To return,' I said, honoring tradition. The patch lightened, the car wrote our attendance in rubber and light, out to the other side, horizon burning white gold."
+    has_insignia: true
+    has_burning: true
+    epilogue: true
+    neon_title: true
+    neon_color: "red"
