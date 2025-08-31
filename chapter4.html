@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 4: On the Corner, Reading Poetry - Pop Song Summer</title>
+    <meta name="description" content="Chapter 4 of Pop Song Summer: On the Corner, Reading Poetry - A story of urban poetry and connection.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+Pro:wght@400;600&family=Permanent+Marker&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="./css/output.css">
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* Base styles */
+        body {
+            background-color: #1A1A1A;
+            color: #F5F5F5;
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* Urban texture background */
+        .urban-bg {
+            background-color: #1A1A1A;
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='urbanPattern' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(2) rotate(0)'%3E%3Crect width='40' height='40' fill='%231A1A1A'/%3E%3Cpath d='M0 0 L40 40 M40 0 L0 40' stroke='%23333333' stroke-width='0.5' stroke-opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23urbanPattern)'/%3E%3C/svg%3E");
+        }
+        
+        /* Story header */
+        .story-header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(26, 42, 68, 0.9), rgba(26, 26, 26, 0.7));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .story-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            color: #F5F5F5;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+        }
+        
+        .story-subtitle {
+            font-size: 1.5rem;
+            color: #CCCCCC;
+            margin-bottom: 2rem;
+        }
+        
+        .story-quote {
+            font-style: italic;
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #CCCCCC;
+            border-left: 4px solid #FFC107;
+            padding-left: 1rem;
+        }
+        
+        /* Story panels */
+        .story-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .story-panel {
+            margin-bottom: 6rem;
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            min-height: 400px;
+        }
+        
+        .panel-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .panel-content {
+            position: relative;
+            z-index: 2;
+            padding: 3rem;
+            background-color: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid #FFC107;
+        }
+        
+        .panel-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #F5F5F5;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+        
+        .panel-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #FFC107, #CCCCCC);
+            border-radius: 2px;
+        }
+        
+        .panel-text {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Visual elements */
+        .insignia {
+            color: #FFC107;
+            font-size: 1.5em;
+            margin: 0 0.2em;
+            display: inline-block;
+        }
+        
+        .large-insignia {
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+            width: 200px;
+            height: 200px;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .large-insignia .circle {
+            width: 100%;
+            height: 100%;
+            border: 8px solid #FFC107;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .large-insignia .sun {
+            font-size: 6rem;
+            color: #FFC107;
+        }
+        
+        .burning-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255, 87, 34, 0.2), rgba(255, 193, 7, 0.2));
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Poetry elements */
+        .chalk-circle {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            border: 8px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .chalk-text {
+            font-family: 'Permanent Marker', cursive;
+            color: rgba(255, 255, 255, 0.7);
+            position: absolute;
+            transform: rotate(-5deg);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .poetry-verse {
+            font-style: italic;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 3px solid #FFC107;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .street-element {
+            position: absolute;
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Neon glow effect */
+        .neon-gold {
+            color: #FFC107;
+            text-shadow: 0 0 5px rgba(255, 193, 7, 0.8), 0 0 10px rgba(255, 193, 7, 0.5);
+        }
+        
+        .neon-red {
+            color: #FF5722;
+            text-shadow: 0 0 5px rgba(255, 87, 34, 0.8), 0 0 10px rgba(255, 87, 34, 0.5);
+        }
+        
+        /* Audio controls */
+        .audio-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: rgba(26, 26, 26, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .audio-controls button {
+            background: none;
+            border: none;
+            color: #FFC107;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .audio-controls button:hover {
+            background-color: rgba(255, 193, 7, 0.2);
+        }
+        
+        /* Audio progress indicator */
+        .audio-progress {
+            position: fixed;
+            bottom: 20px;
+            right: 80px;
+            z-index: 100;
+            background-color: rgba(26, 26, 26, 0.8);
+            color: #FFC107;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background-color: rgba(26, 26, 26, 0.8);
+            color: #FFC107;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .scroll-top:hover {
+            background-color: rgba(255, 193, 7, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        /* Animations */
+        @keyframes chalkDraw {
+            0% { stroke-dashoffset: 1000; }
+            100% { stroke-dashoffset: 0; }
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0.2; }
+            50% { opacity: 0.5; }
+            100% { opacity: 0.2; }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .story-title {
+                font-size: 3rem;
+            }
+            
+            .panel-title {
+                font-size: 2rem;
+            }
+            
+            .panel-content {
+                padding: 2rem;
+            }
+            
+            .large-insignia {
+                transform: scale(0.7) translateY(-50%);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .story-title {
+                font-size: 2.5rem;
+            }
+            
+            .panel-title {
+                font-size: 1.75rem;
+            }
+            
+            .panel-content {
+                padding: 1.5rem;
+            }
+            
+            .large-insignia {
+                transform: scale(0.5) translateY(-50%);
+            }
+        }
+    </style>
+</head>
+<body class="urban-bg">
+    <!-- Header/Navigation -->
+    <header class="fixed top-0 left-0 w-full bg-navy bg-opacity-90 z-50 backdrop-blur-sm">
+        <nav class="container-custom py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-heading font-bold text-golden-blaze">DevCo</a>
+            <div class="nav-toggle md:hidden cursor-pointer">
+                <div class="bar w-6 h-0.5 bg-white-spark mb-1.5"></div>
+                <div class="bar w-6 h-0.5 bg-white-spark mb-1.5"></div>
+                <div class="bar w-6 h-0.5 bg-white-spark"></div>
+            </div>
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="index.html" class="nav-link text-lg">Home</a></li>
+                <li><a href="index.html#music" class="nav-link text-lg">Music</a></li>
+                <li><a href="index.html#about" class="nav-link text-lg">About</a></li>
+                <li><a href="index.html#contact" class="nav-link text-lg">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu fixed inset-0 bg-navy bg-opacity-95 z-40 flex-col items-center justify-center hidden">
+            <button class="close-btn absolute top-4 right-4 text-white-spark text-3xl">&times;</button>
+            <ul class="text-center space-y-8">
+                <li><a href="index.html" class="nav-link text-3xl">Home</a></li>
+                <li><a href="index.html#music" class="nav-link text-3xl">Music</a></li>
+                <li><a href="index.html#about" class="nav-link text-3xl">About</a></li>
+                <li><a href="index.html#contact" class="nav-link text-3xl">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Audio Element (Hidden) -->
+    <audio id="background-music" loop>
+        <source src="music/Chapter 4_On the Corner, Reading Poetry.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <button id="play-pause-btn" title="Play/Pause">▶</button>
+        <button id="restart-btn" title="Restart">↻</button>
+    </div>
+    
+    <!-- Audio Progress -->
+    <div class="audio-progress" id="audio-progress">0:00 / 8:00</div>
+    
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scroll-top-btn" title="Scroll to Top">↑</button>
+    
+    <!-- Story Header -->
+    <div class="story-header">
+        <h1 class="story-title">On the Corner, Reading Poetry</h1>
+        <p class="story-subtitle">Pop Song Summer, Track 4</p>
+        <blockquote class="story-quote">
+            "She comes, like a rumor with shoes on."
+        </blockquote>
+        <button id="start-reading-btn" class="bg-golden-blaze text-navy px-6 py-3 rounded-md hover:bg-opacity-80 transition-colors font-bold text-lg">
+            Start Reading with Music
+        </button>
+        
+        <!-- Chalk circle in header -->
+        <div class="chalk-circle" style="animation: fadeInOut 4s infinite;"></div>
+        <div class="chalk-text" style="top: 60%; left: 30%; font-size: 1.5rem;">Poetry</div>
+        <div class="chalk-text" style="top: 70%; left: 60%; font-size: 1.2rem;">Corner</div>
+    </div>
+    
+    <!-- Story Content -->
+    <div class="story-container" id="story-content">
+        <!-- Story panels will be dynamically generated here -->
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const audio = document.getElementById('background-music');
+            const playPauseBtn = document.getElementById('play-pause-btn');
+            const restartBtn = document.getElementById('restart-btn');
+            const startReadingBtn = document.getElementById('start-reading-btn');
+            const scrollTopBtn = document.getElementById('scroll-top-btn');
+            const storyContainer = document.getElementById('story-content');
+            const audioProgress = document.getElementById('audio-progress');
+            
+            // Story data (embedded directly in the page for simplicity)
+            const storyData = [
+                {
+                    title: "CHALK CIRCLE",
+                    background: "bg-gradient-to-b from-[#2D2D2D] via-[#1A1A1A] to-[#2D2D2D]",
+                    text: "I pick the corner for its honesty: four directions, one promise. Crosswalk chirps like a toy apocalypse, buses sigh like fat dragons. I set the milk crate down, chalk a sunburst with twelve rays on the concrete, and climb up to be taller than I am. 'Good evening,' I say to the city. 'There will be a test.' People pass, phones glowing, selecting the least painful world. A woman with groceries slows, then hurries on. Two teenagers on scooters hover, curious. A man in a suit scowls at the word poetry. I read: Inventory at Sundown—sun pinned like a receipt, twelve doors ajar, houses burning politely. She comes, like a rumor with shoes on. Coins clink into my hat.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    hasPoetry: true,
+                    poetryText: "Inventory at Sundown—\nsun pinned like a receipt,\ntwelve doors ajar,\nhouses burning politely.\nShe comes, like a rumor with shoes on."
+                },
+                {
+                    title: "SUNBURST REFLECTION",
+                    background: "bg-gradient-to-b from-[#1A2A44] via-[#000000] to-[#1A2A44]",
+                    text: "Across the street, the glass tower splits the city: one chilled inside, one dusted with ash out here. The low sun copies my chalk sunburst, making me think I drew the sky. A kid kneels, drawing a smaller twelve-ray circle with bright chalk, tongue out for accuracy. 'Receipt for the sun,' he says. 'My mom. And the other one.' A scooter kid with a sunburst patch on his sleeve asks for requests. 'No,' I say, 'but stay.' He does. A woman in a red coat, gold-thread sunburst on her cuff, watches without tipping, her gaze more costly. The dog at the bike rack sleeps through the city's lullaby.",
+                    hasInsignia: true,
+                    neonTitle: true,
+                    neonColor: "gold",
+                    hasStreetElements: true
+                },
+                {
+                    title: "POETRY AND POLICE",
+                    background: "bg-gradient-to-b from-[#4A4A4A] via-[#2D2D2D] to-[#4A4A4A]",
+                    text: "I read: Urban Survival Guide, Verse Edition—carry water, receipts, don't argue with wind. She comes—you do not have to open the door. She is the door. A bus unloads commuters. A girl in a floral mask drops a dollar, a painter exhales his day. Two cops in sunglasses ask for a permit. 'Five-oh-one,' I say. 'Freedom of speech, polite decibels.' They eye the chalk sunburst. 'Just math,' I say. 'Wheel of the year's little brother.' The red-coat woman grades the exchange, her patch brighter. 'Move along after ten,' the cop says, tipping two fingers. The corner collects us, doesn't promise to keep us.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    hasPoetry: true,
+                    poetryText: "Urban Survival Guide, Verse Edition—\ncarry water, receipts,\ndon't argue with wind.\nShe comes—you do not have to open the door.\nShe is the door."
+                },
+                {
+                    title: "BLIND MAN'S SONG",
+                    background: "bg-gradient-to-b from-[#800020] via-[#4A0000] to-[#800020]",
+                    text: "The blind man arrives, taps the chalk circle with his cane, and sits on his crate. 'Evening,' I say. He sings, braiding my poem: She comes, burning houses in the distance—lights up the night. The scooter kids chime in, delighted. The red-coat woman's patch pulses. The tower's reflection shows a burning horizon. A man at the bus stop asks if this is art or warning. 'Both,' I say. Another asks if I write the flyers with the number. 'Sometimes me, sometimes the sun.' His laugh is nervous. The blind man's song makes a woman cry without permission, the melody slipping into a corridor of notes.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    neonTitle: true,
+                    neonColor: "red",
+                    hasStreetElements: true
+                },
+                {
+                    title: "ORANGES AND ANGER",
+                    background: "bg-gradient-to-b from-[#2D0A31] via-[#1A0E25] to-[#2D0A31]",
+                    text: "A drone drops a bag of oranges, spilling like small suns at the red-coat woman's feet. 'Leave them,' she says, and they stop at the chalk circle's edge. A man mutters about devil circles, eats half a flyer, then confesses his brother's house burned last summer. 'We watched it like a show,' he says, eyes wet, leaving the unchewed flyer in my hat. I read: Call & Answer—who keeps the ledger? Not the bank. What burns slowest? Memory. She comes. Make room. The kid with chalk nods at my circle. A woman with a sign—RETURN WHAT ISN'T YOURS—chews a marker, staring at traffic.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    hasPoetry: true,
+                    poetryText: "Call & Answer—\nwho keeps the ledger? Not the bank.\nWhat burns slowest? Memory.\nShe comes. Make room."
+                },
+                {
+                    title: "RETURN ROLL CALL",
+                    background: "bg-gradient-to-b from-[#1A2A44] via-[#FFC107] to-[#1A2A44]",
+                    text: "The red-coat woman kneels, one palm in the circle, one out, asking, 'What do you return?' 'Name,' I say, wincing as it leaves. The blind man says, 'Light,' removing his glasses, eyes quivering. The kid says, 'Body,' patting his ribs. Her smile cools the air. Sirens pass, not for us. I hand out Return Slip zines, cheap and smudging, taken like communion. The cop across the street points at his watch: ten. I call, 'Last one,' and read: Twelve Doors—names, light, bodies, luck, ashes, receipts. She comes. We make room. Silence is my applause, four seconds before the city resumes.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    neonTitle: true,
+                    neonColor: "gold",
+                    hasPoetry: true,
+                    poetryText: "Twelve Doors—\nnames, light, bodies,\nluck, ashes, receipts.\nShe comes. We make room."
+                },
+                {
+                    title: "DRIVING THE OTHER SIDE",
+                    background: "bg-gradient-to-b from-[#FFC107] via-[#FF3300] to-[#FFC107]",
+                    text: "The red-coat woman presses a car key into my hand, sunburst on its head. 'You'll be returning it to motion,' she says, nodding to a blue sedan. 'I have a bike,' I argue. 'You have a corner,' she counters, then vanishes. I pack the crate, wipe the chalk, leaving a ghost sun. The sedan's engine catches, a map on the seat marked OUT TO THE OTHER SIDE. 'Ready?' her voice hums in the corner. 'To return,' it says. I drive, the horizon bruising behind, the road promising what it can't keep. She comes, the city whispers, into the pop song summer.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    epilogue: true,
+                    neonTitle: true,
+                    neonColor: "red",
+                    hasStreetElements: true
+                }
+            ];
+            
+            // Function to format time in MM:SS format
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = Math.floor(seconds % 60);
+                return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+            }
+            
+            // Function to generate story panels
+            function generateStoryPanels() {
+                storyContainer.innerHTML = '';
+                
+                storyData.forEach((panel, index) => {
+                    // Create panel element
+                    const panelElement = document.createElement('div');
+                    panelElement.className = 'story-panel';
+                    panelElement.id = `panel-${index + 1}`;
+                    
+                    // Create panel background
+                    const panelBackground = document.createElement('div');
+                    panelBackground.className = `panel-background ${panel.background}`;
+                    
+                    // Add visual elements based on panel properties
+                    if (panel.hasInsignia) {
+                        const insignia = document.createElement('div');
+                        insignia.className = 'large-insignia';
+                        insignia.innerHTML = `
+                            <div class="circle">
+                                <div class="sun">☀</div>
+                            </div>
+                        `;
+                        panelBackground.appendChild(insignia);
+                    }
+                    
+                    if (panel.hasBurning) {
+                        const burningOverlay = document.createElement('div');
+                        burningOverlay.className = 'burning-overlay';
+                        panelBackground.appendChild(burningOverlay);
+                    }
+                    
+                    // Add chalk circle
+                    const chalkCircle = document.createElement('div');
+                    chalkCircle.className = 'chalk-circle';
+                    chalkCircle.style.animation = 'fadeInOut 4s infinite';
+                    panelBackground.appendChild(chalkCircle);
+                    
+                    // Add street elements if specified
+                    if (panel.hasStreetElements) {
+                        // Add street signs
+                        const streetSign1 = document.createElement('div');
+                        streetSign1.className = 'street-element';
+                        streetSign1.innerHTML = '⚠';
+                        streetSign1.style.top = '20%';
+                        streetSign1.style.left = '10%';
+                        streetSign1.style.fontSize = '3rem';
+                        panelBackground.appendChild(streetSign1);
+                        
+                        const streetSign2 = document.createElement('div');
+                        streetSign2.className = 'street-element';
+                        streetSign2.innerHTML = '🚶';
+                        streetSign2.style.top = '30%';
+                        streetSign2.style.right = '15%';
+                        streetSign2.style.fontSize = '2.5rem';
+                        panelBackground.appendChild(streetSign2);
+                        
+                        const streetSign3 = document.createElement('div');
+                        streetSign3.className = 'street-element';
+                        streetSign3.innerHTML = '🚌';
+                        streetSign3.style.bottom = '25%';
+                        streetSign3.style.left = '20%';
+                        streetSign3.style.fontSize = '2rem';
+                        panelBackground.appendChild(streetSign3);
+                    }
+                    
+                    // Create panel content
+                    const panelContent = document.createElement('div');
+                    panelContent.className = 'panel-content';
+                    
+                    // Create panel title
+                    const panelTitle = document.createElement('h2');
+                    if (panel.neonTitle) {
+                        panelTitle.className = `panel-title neon-${panel.neonColor || 'gold'}`;
+                    } else {
+                        panelTitle.className = 'panel-title';
+                    }
+                    panelTitle.textContent = panel.title;
+                    
+                    // Create panel text
+                    const panelText = document.createElement('p');
+                    panelText.className = 'panel-text';
+                    panelText.textContent = panel.text;
+                    
+                    // Add poetry verse if specified
+                    if (panel.hasPoetry && panel.poetryText) {
+                        const poetryVerse = document.createElement('div');
+                        poetryVerse.className = 'poetry-verse';
+                        poetryVerse.textContent = panel.poetryText;
+                        panelContent.appendChild(panelTitle);
+                        panelContent.appendChild(panelText);
+                        panelContent.appendChild(poetryVerse);
+                    } else {
+                        // Add elements to panel content
+                        panelContent.appendChild(panelTitle);
+                        panelContent.appendChild(panelText);
+                    }
+                    
+                    // Add elements to panel
+                    panelElement.appendChild(panelBackground);
+                    panelElement.appendChild(panelContent);
+                    
+                    // Add panel to story container
+                    storyContainer.appendChild(panelElement);
+                });
+                
+                // Initialize GSAP animations
+                initAnimations();
+            }
+            
+            // Function to initialize GSAP animations
+            function initAnimations() {
+                // Register ScrollTrigger plugin
+                gsap.registerPlugin(ScrollTrigger);
+                
+                // Animate insignias
+                gsap.utils.toArray('.large-insignia').forEach((insignia) => {
+                    gsap.to(insignia, {
+                        opacity: 0.7,
+                        duration: 3,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                });
+                
+                // Animate chalk circles
+                gsap.utils.toArray('.chalk-circle').forEach((circle) => {
+                    gsap.to(circle, {
+                        opacity: 0.7,
+                        duration: 2,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                });
+                
+                // Animate street elements
+                gsap.utils.toArray('.street-element').forEach((element) => {
+                    gsap.to(element, {
+                        opacity: 0.4,
+                        duration: Math.random() * 3 + 2,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                });
+                
+                // Animate panels on scroll
+                gsap.utils.toArray('.story-panel').forEach((panel, i) => {
+                    // Fade in panel
+                    gsap.fromTo(panel,
+                        { opacity: 0, y: 50 },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 1,
+                            scrollTrigger: {
+                                trigger: panel,
+                                start: "top 80%",
+                                end: "top 50%",
+                                scrub: 1
+                            }
+                        }
+                    );
+                    
+                    // Parallax effect on background
+                    gsap.to(panel.querySelector('.panel-background'), {
+                        y: -50,
+                        duration: 1,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: panel,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: true
+                        }
+                    });
+                });
+            }
+            
+            // Function to update audio progress
+            function updateAudioProgress() {
+                if (audio.duration) {
+                    const currentTime = audio.currentTime;
+                    const duration = audio.duration;
+                    audioProgress.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+                }
+            }
+            
+            // Audio event listeners
+            audio.addEventListener('timeupdate', updateAudioProgress);
+            
+            // Play/Pause button functionality
+            playPauseBtn.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play();
+                    playPauseBtn.textContent = '❚❚';
+                } else {
+                    audio.pause();
+                    playPauseBtn.textContent = '▶';
+                }
+            });
+            
+            // Restart button functionality
+            restartBtn.addEventListener('click', function() {
+                audio.currentTime = 0;
+                if (audio.paused) {
+                    audio.play();
+                    playPauseBtn.textContent = '❚❚';
+                }
+            });
+            
+            // Start reading button functionality
+            startReadingBtn.addEventListener('click', function() {
+                audio.play();
+                playPauseBtn.textContent = '❚❚';
+                window.scrollTo({
+                    top: storyContainer.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+                startReadingBtn.style.display = 'none';
+            });
+            
+            // Scroll to top button functionality
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Show/hide scroll to top button based on scroll position
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.style.opacity = '1';
+                } else {
+                    scrollTopBtn.style.opacity = '0';
+                }
+            });
+            
+            // Mobile menu functionality
+            const navToggle = document.querySelector('.nav-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const closeBtn = document.querySelector('.close-btn');
+            
+            if (navToggle && mobileMenu && closeBtn) {
+                navToggle.addEventListener('click', function() {
+                    mobileMenu.classList.add('flex');
+                    mobileMenu.classList.remove('hidden');
+                });
+                
+                closeBtn.addEventListener('click', function() {
+                    mobileMenu.classList.remove('flex');
+                    mobileMenu.classList.add('hidden');
+                });
+                
+                // Close mobile menu when clicking a link
+                const mobileLinks = mobileMenu.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.remove('flex');
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+            
+            // Generate story panels on page load
+            generateStoryPanels();
+        });
+    </script>
+</body>
+</html>

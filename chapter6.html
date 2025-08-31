@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 6: Out to the Other Side - Pop Song Summer</title>
+    <meta name="description" content="Chapter 6 of Pop Song Summer: Out to the Other Side - A journey across horizons.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="./css/output.css">
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* Base styles */
+        body {
+            background-color: #1A1A1A;
+            color: #F5F5F5;
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* Road texture background */
+        .road-bg {
+            background-color: #1A1A1A;
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='roadPattern' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(2) rotate(0)'%3E%3Crect width='40' height='40' fill='%231A1A1A'/%3E%3Cpath d='M20 0 L20 40' stroke='%23FFFFFF' stroke-width='2' stroke-opacity='0.1' stroke-dasharray='5,10'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23roadPattern)'/%3E%3C/svg%3E");
+        }
+        
+        /* Story header */
+        .story-header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(26, 42, 68, 0.9), rgba(26, 26, 26, 0.7));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .story-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            color: #F5F5F5;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+        }
+        
+        .story-subtitle {
+            font-size: 1.5rem;
+            color: #CCCCCC;
+            margin-bottom: 2rem;
+        }
+        
+        .story-quote {
+            font-style: italic;
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #CCCCCC;
+            border-left: 4px solid #FFC107;
+            padding-left: 1rem;
+        }
+        
+        /* Story panels */
+        .story-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .story-panel {
+            margin-bottom: 6rem;
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            min-height: 400px;
+        }
+        
+        .panel-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .panel-content {
+            position: relative;
+            z-index: 2;
+            padding: 3rem;
+            background-color: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid #FFC107;
+        }
+        
+        .panel-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #F5F5F5;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+        
+        .panel-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #FFC107, #CCCCCC);
+            border-radius: 2px;
+        }
+        
+        .panel-text {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Visual elements */
+        .insignia {
+            color: #FFC107;
+            font-size: 1.5em;
+            margin: 0 0.2em;
+            display: inline-block;
+        }
+        
+        .large-insignia {
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+            width: 200px;
+            height: 200px;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .large-insignia .circle {
+            width: 100%;
+            height: 100%;
+            border: 8px solid #FFC107;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .large-insignia .sun {
+            font-size: 6rem;
+            color: #FFC107;
+        }
+        
+        .burning-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255, 87, 34, 0.2), rgba(255, 193, 7, 0.2));
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Road trip elements */
+        .horizon {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to top, rgba(26, 26, 26, 0.8), transparent);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .road {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background-color: rgba(40, 40, 40, 0.8);
+            clip-path: polygon(0% 100%, 100% 100%, 70% 0%, 30% 0%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .road-line {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 30%;
+            background-color: rgba(255, 255, 255, 0.5);
+            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .road-element {
+            position: absolute;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Neon glow effect */
+        .neon-gold {
+            color: #FFC107;
+            text-shadow: 0 0 5px rgba(255, 193, 7, 0.8), 0 0 10px rgba(255, 193, 7, 0.5);
+        }
+        
+        .neon-red {
+            color: #FF5722;
+            text-shadow: 0 0 5px rgba(255, 87, 34, 0.8), 0 0 10px rgba(255, 87, 34, 0.5);
+        }
+        
+        /* Audio controls */
+        .audio-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: rgba(26, 26, 26, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .audio-controls button {
+            background: none;
+            border: none;
+            color: #FFC107;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .audio-controls button:hover {
+            background-color: rgba(255, 193, 7, 0.2);
+        }
+        
+        /* Audio progress indicator */
+        .audio-progress {
+            position: fixed;
+            bottom: 20px;
+            right: 80px;
+            z-index: 100;
+            background-color: rgba(26, 26, 26, 0.8);
+            color: #FFC107;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background-color: rgba(26, 26, 26, 0.8);
+            color: #FFC107;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .scroll-top:hover {
+            background-color: rgba(255, 193, 7, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        /* Animations */
+        @keyframes roadMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(20px); }
+        }
+        
+        @keyframes horizonPulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.5; }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .story-title {
+                font-size: 3rem;
+            }
+            
+            .panel-title {
+                font-size: 2rem;
+            }
+            
+            .panel-content {
+                padding: 2rem;
+            }
+            
+            .large-insignia {
+                transform: scale(0.7) translateY(-50%);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .story-title {
+                font-size: 2.5rem;
+            }
+            
+            .panel-title {
+                font-size: 1.75rem;
+            }
+            
+            .panel-content {
+                padding: 1.5rem;
+            }
+            
+            .large-insignia {
+                transform: scale(0.5) translateY(-50%);
+            }
+        }
+    </style>
+</head>
+<body class="road-bg">
+    <!-- Header/Navigation -->
+    <header class="fixed top-0 left-0 w-full bg-navy bg-opacity-90 z-50 backdrop-blur-sm">
+        <nav class="container-custom py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-heading font-bold text-golden-blaze">DevCo</a>
+            <div class="nav-toggle md:hidden cursor-pointer">
+                <div class="bar w-6 h-0.5 bg-white-spark mb-1.5"></div>
+                <div class="bar w-6 h-0.5 bg-white-spark mb-1.5"></div>
+                <div class="bar w-6 h-0.5 bg-white-spark"></div>
+            </div>
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="index.html" class="nav-link text-lg">Home</a></li>
+                <li><a href="index.html#music" class="nav-link text-lg">Music</a></li>
+                <li><a href="index.html#about" class="nav-link text-lg">About</a></li>
+                <li><a href="index.html#contact" class="nav-link text-lg">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu fixed inset-0 bg-navy bg-opacity-95 z-40 flex-col items-center justify-center hidden">
+            <button class="close-btn absolute top-4 right-4 text-white-spark text-3xl">&times;</button>
+            <ul class="text-center space-y-8">
+                <li><a href="index.html" class="nav-link text-3xl">Home</a></li>
+                <li><a href="index.html#music" class="nav-link text-3xl">Music</a></li>
+                <li><a href="index.html#about" class="nav-link text-3xl">About</a></li>
+                <li><a href="index.html#contact" class="nav-link text-3xl">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Audio Element (Hidden) -->
+    <audio id="background-music" loop>
+        <source src="music/Chapter 6_Out to the Other Side.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <button id="play-pause-btn" title="Play/Pause">▶</button>
+        <button id="restart-btn" title="Restart">↻</button>
+    </div>
+    
+    <!-- Audio Progress -->
+    <div class="audio-progress" id="audio-progress">0:00 / 9:00</div>
+    
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scroll-top-btn" title="Scroll to Top">↑</button>
+    
+    <!-- Story Header -->
+    <div class="story-header">
+        <h1 class="story-title">Out to the Other Side</h1>
+        <p class="story-subtitle">Pop Song Summer, Track 6</p>
+        <blockquote class="story-quote">
+            "She is out on the other side, in the white gold of the evening light."
+        </blockquote>
+        <button id="start-reading-btn" class="bg-golden-blaze text-navy px-6 py-3 rounded-md hover:bg-opacity-80 transition-colors font-bold text-lg">
+            Start Reading with Music
+        </button>
+        
+        <!-- Road in header -->
+        <div class="horizon" style="animation: horizonPulse 4s infinite;"></div>
+        <div class="road" style="animation: roadMove 3s infinite alternate;"></div>
+        <div class="road-line"></div>
+    </div>
+    
+    <!-- Story Content -->
+    <div class="story-container" id="story-content">
+        <!-- Story panels will be dynamically generated here -->
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const audio = document.getElementById('background-music');
+            const playPauseBtn = document.getElementById('play-pause-btn');
+            const restartBtn = document.getElementById('restart-btn');
+            const startReadingBtn = document.getElementById('start-reading-btn');
+            const scrollTopBtn = document.getElementById('scroll-top-btn');
+            const storyContainer = document.getElementById('story-content');
+            const audioProgress = document.getElementById('audio-progress');
+            
+            // Story data (embedded directly in the page for simplicity)
+            const storyData = [
+                {
+                    title: "FAIRGROUND TICKET",
+                    background: "bg-gradient-to-b from-[#2D2D2D] via-[#1A1A1A] to-[#2D2D2D]",
+                    text: "The river roared under a STATE FAIR IS COMIN' BACK banner, sagging between light poles. The ferris wheel's skeleton stood like a rib cage. Out of work, I stopped at a red barn selling lemonade and lottery tickets. A girl with a ballpoint sun tattoo on her wrist handed me a peach-colored ticket stamped with a gold-foil sunburst, twelve rays. 'Souvenir,' she said. 'Makes folks spend brave.' I tucked it behind my license. A blind man sang by the gate: She is out on the horizon, in the white gold of the evening light. The ferris wheel caught and returned the sun. I filled the tank, the radio playing a woman's voice about the open road.",
+                    hasInsignia: true,
+                    hasRoadElements: true
+                },
+                {
+                    title: "DINER HELIOGRAPH",
+                    background: "bg-gradient-to-b from-[#800020] via-[#4A0000] to-[#800020]",
+                    text: "At a shotgun-shack diner, a chalkboard promised PIE THAT FORGIVES. A woman in a red coat sat by the window, her sunburst patch glowing like a heliograph. Time bent around her; the jukebox skipped to a future song. A coffee I didn't order appeared. 'You headed out?' Lucy, the waitress, asked. 'To the other side,' I said. 'You got a reason?' I glanced at the woman, who smiled elsewhere. 'Low on reasons,' I said. The blind man's song drifted in: There's a world of freedom waiting. She left cash and walked into daylight. Lucy said, 'She'll be on the horizon. All of them.'",
+                    hasInsignia: true,
+                    neonTitle: true,
+                    neonColor: "red",
+                    hasRoadElements: true
+                },
+                {
+                    title: "ROAD AND MAP",
+                    background: "bg-gradient-to-b from-[#1A2A44] via-[#000000] to-[#1A2A44]",
+                    text: "The two-lane west shrank the fair's sign to rumor. Fields buffered into billboards. The radio replayed the song—She is on my mind—and I found a map in the passenger seat, marked in white pencil across counties. At a town, fair crew tents waited, a ferris wheel in pieces. A man smoking drew a sun in ash. 'Got a receipt?' he asked. I showed the ticket; he nodded. 'Don't stop where the freeway says. Stop where the river does.' The wind shifted, the sky turned nickel. He ground the ash sun under his heel, a ritual with jokes.",
+                    hasInsignia: true,
+                    hasRoadElements: true
+                },
+                {
+                    title: "CITY OF ANGELS",
+                    background: "bg-gradient-to-b from-[#4A4A4A] via-[#2D2D2D] to-[#4A4A4A]",
+                    text: "Past sundown, the City of Angels glowed like a sea of lights. The song returned: Out on the other side. I took a wrong exit to Whittier, finding warehouses and a chalk sunburst under an overpass, twelve rays. A woman in a red coat leaned on a blue sedan, map folded on the dash, her sunburst patch pulsing. 'You took the wrong exit,' she said, pleased. 'Tradition,' she corrected my 'Habit.' She placed a velvet sunburst patch on the hood. 'It's a toll to cross.' 'Cross what?' 'Pick one,' she said, smiling half her mouth. 'Return what isn't yours, the bridge appears.'",
+                    hasInsignia: true,
+                    neonTitle: true,
+                    neonColor: "gold",
+                    hasRoadElements: true
+                },
+                {
+                    title: "BRIDGE TOLL",
+                    background: "bg-gradient-to-b from-[#2D0A31] via-[#1A0E25] to-[#2D0A31]",
+                    text: "We drove to a bridge, the river below engineered into submission. A man with a sign—RETURN WHAT ISN'T YOURS—traded my toll change for a sunburst sticker. The blind man sang from a folding chair: In the white gold of the evening light. Drivers opened windows, nodding like conspirators. Over the radio, her voice: 'Feel that?' 'Like driving uphill on a flat line.' 'That's the toll,' she said. 'Keep your foot in it.' The skyline lifted, the car aligned with its blueprint. A billboard promised OTHER SIDE OF SUMMER. My voice sang softly on the radio, unasked.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    hasRoadElements: true
+                },
+                {
+                    title: "DESERT CONFESSION",
+                    background: "bg-gradient-to-b from-[#1A2A44] via-[#FFC107] to-[#1A2A44]",
+                    text: "Past the city, the freeway faded to a frontage road, stars unguarded. We pulled over, the desert cold settling in the car. She stood on the sedan's hood, red coat a climate, sunburst answering stars. 'What happens on the other side?' I asked. 'You return what isn't yours, keep what keeps you.' 'Do we get each other?' Her look held a cure's cost. 'In pieces. In chorus.' The wind tugged her coat. Far off, a ferris wheel turned, a blind man counted beats. A kid erased a chalk ray. 'Forward,' she said, and we drove until the map forgot us.",
+                    hasInsignia: true,
+                    neonTitle: true,
+                    neonColor: "gold",
+                    hasRoadElements: true
+                },
+                {
+                    title: "WHITE GOLD HORIZON",
+                    background: "bg-gradient-to-b from-[#FFC107] via-[#FF3300] to-[#FFC107]",
+                    text: "Dawn broke in a county spelling freedom simply. The fair was a rumor, the river its own mind. At a turnout, she touched my wrist, our pulses agreeing we were alive. The ticket's gold had printed onto my wallet, a staying receipt. The radio played the song, A world of freedom waiting. We passed a chalk circle, a diner with PIE STILL TRYING, a mural of a ferris wheel and red coat. 'You ready?' she asked. 'To return,' I said, honoring tradition. The patch lightened, the car wrote our attendance in rubber and light, out to the other side, horizon burning white gold.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    epilogue: true,
+                    neonTitle: true,
+                    neonColor: "red",
+                    hasRoadElements: true
+                }
+            ];
+            
+            // Function to format time in MM:SS format
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = Math.floor(seconds % 60);
+                return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+            }
+            
+            // Function to generate story panels
+            function generateStoryPanels() {
+                storyContainer.innerHTML = '';
+                
+                storyData.forEach((panel, index) => {
+                    // Create panel element
+                    const panelElement = document.createElement('div');
+                    panelElement.className = 'story-panel';
+                    panelElement.id = `panel-${index + 1}`;
+                    
+                    // Create panel background
+                    const panelBackground = document.createElement('div');
+                    panelBackground.className = `panel-background ${panel.background}`;
+                    
+                    // Add visual elements based on panel properties
+                    if (panel.hasInsignia) {
+                        const insignia = document.createElement('div');
+                        insignia.className = 'large-insignia';
+                        insignia.innerHTML = `
+                            <div class="circle">
+                                <div class="sun">☀</div>
+                            </div>
+                        `;
+                        panelBackground.appendChild(insignia);
+                    }
+                    
+                    if (panel.hasBurning) {
+                        const burningOverlay = document.createElement('div');
+                        burningOverlay.className = 'burning-overlay';
+                        panelBackground.appendChild(burningOverlay);
+                    }
+                    
+                    // Add road elements if specified
+                    if (panel.hasRoadElements) {
+                        // Add horizon
+                        const horizon = document.createElement('div');
+                        horizon.className = 'horizon';
+                        horizon.style.animation = 'horizonPulse 4s infinite';
+                        panelBackground.appendChild(horizon);
+                        
+                        // Add road
+                        const road = document.createElement('div');
+                        road.className = 'road';
+                        road.style.animation = 'roadMove 3s infinite alternate';
+                        panelBackground.appendChild(road);
+                        
+                        // Add road line
+                        const roadLine = document.createElement('div');
+                        roadLine.className = 'road-line';
+                        panelBackground.appendChild(roadLine);
+                        
+                        // Add road signs
+                        const roadSign1 = document.createElement('div');
+                        roadSign1.className = 'road-element';
+                        roadSign1.innerHTML = '🚗';
+                        roadSign1.style.bottom = '15%';
+                        roadSign1.style.left = '40%';
+                        roadSign1.style.fontSize = '2rem';
+                        panelBackground.appendChild(roadSign1);
+                        
+                        const roadSign2 = document.createElement('div');
+                        roadSign2.className = 'road-element';
+                        roadSign2.innerHTML = '🚏';
+                        roadSign2.style.bottom = '20%';
+                        roadSign2.style.right = '20%';
+                        roadSign2.style.fontSize = '2.5rem';
+                        panelBackground.appendChild(roadSign2);
+                    }
+                    
+                    // Create panel content
+                    const panelContent = document.createElement('div');
+                    panelContent.className = 'panel-content';
+                    
+                    // Create panel title
+                    const panelTitle = document.createElement('h2');
+                    if (panel.neonTitle) {
+                        panelTitle.className = `panel-title neon-${panel.neonColor || 'gold'}`;
+                    } else {
+                        panelTitle.className = 'panel-title';
+                    }
+                    panelTitle.textContent = panel.title;
+                    
+                    // Create panel text
+                    const panelText = document.createElement('p');
+                    panelText.className = 'panel-text';
+                    panelText.textContent = panel.text;
+                    
+                    // Add elements to panel content
+                    panelContent.appendChild(panelTitle);
+                    panelContent.appendChild(panelText);
+                    
+                    // Add elements to panel
+                    panelElement.appendChild(panelBackground);
+                    panelElement.appendChild(panelContent);
+                    
+                    // Add panel to story container
+                    storyContainer.appendChild(panelElement);
+                });
+                
+                // Initialize GSAP animations
+                initAnimations();
+            }
+            
+            // Function to initialize GSAP animations
+            function initAnimations() {
+                // Register ScrollTrigger plugin
+                gsap.registerPlugin(ScrollTrigger);
+                
+                // Animate insignias
+                gsap.utils.toArray('.large-insignia').forEach((insignia) => {
+                    gsap.to(insignia, {
+                        opacity: 0.7,
+                        duration: 3,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                });
+                
+                // Animate road elements
+                gsap.utils.toArray('.road-element').forEach((element) => {
+                    gsap.to(element, {
+                        x: -20,
+                        duration: 2,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                });
+                
+                // Animate panels on scroll
+                gsap.utils.toArray('.story-panel').forEach((panel, i) => {
+                    // Fade in panel
+                    gsap.fromTo(panel, 
+                        { opacity: 0, y: 50 },
+                        { 
+                            opacity: 1, 
+                            y: 0,
+                            duration: 1,
+                            scrollTrigger: {
+                                trigger: panel,
+                                start: "top 80%",
+                                end: "top 50%",
+                                scrub: 1
+                            }
+                        }
+                    );
+                    
+                    // Parallax effect on background
+                    gsap.to(panel.querySelector('.panel-background'), {
+                        y: -50,
+                        duration: 1,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: panel,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: true
+                        }
+                    });
+                });
+            }
+            
+            // Function to update audio progress
+            function updateAudioProgress() {
+                if (audio.duration) {
+                    const currentTime = audio.currentTime;
+                    const duration = audio.duration;
+                    audioProgress.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+                }
+            }
+            
+            // Audio event listeners
+            audio.addEventListener('timeupdate', updateAudioProgress);
+            
+            // Play/Pause button functionality
+            playPauseBtn.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play();
+                    playPauseBtn.textContent = '❚❚';
+                } else {
+                    audio.pause();
+                    playPauseBtn.textContent = '▶';
+                }
+            });
+            
+            // Restart button functionality
+            restartBtn.addEventListener('click', function() {
+                audio.currentTime = 0;
+                if (audio.paused) {
+                    audio.play();
+                    playPauseBtn.textContent = '❚❚';
+                }
+            });
+            
+            // Start reading button functionality
+            startReadingBtn.addEventListener('click', function() {
+                audio.play();
+                playPauseBtn.textContent = '❚❚';
+                window.scrollTo({
+                    top: storyContainer.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+                startReadingBtn.style.display = 'none';
+            });
+            
+            // Scroll to top button functionality
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Show/hide scroll to top button based on scroll position
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.style.opacity = '1';
+                } else {
+                    scrollTopBtn.style.opacity = '0';
+                }
+            });
+            
+            // Mobile menu functionality
+            const navToggle = document.querySelector('.nav-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const closeBtn = document.querySelector('.close-btn');
+            
+            if (navToggle && mobileMenu && closeBtn) {
+                navToggle.addEventListener('click', function() {
+                    mobileMenu.classList.add('flex');
+                    mobileMenu.classList.remove('hidden');
+                });
+                
+                closeBtn.addEventListener('click', function() {
+                    mobileMenu.classList.remove('flex');
+                    mobileMenu.classList.add('hidden');
+                });
+                
+                // Close mobile menu when clicking a link
+                const mobileLinks = mobileMenu.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.remove('flex');
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+            
+            // Generate story panels on page load
+            generateStoryPanels();
+        });
+    </script>
+</body>
+</html>

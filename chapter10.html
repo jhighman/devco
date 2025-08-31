@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 10: The End of Everything - Pop Song Summer</title>
+    <meta name="description" content="Chapter 10 of Pop Song Summer: The End of Everything - The finale of the journey.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="./css/output.css">
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* Base styles */
+        body {
+            background-color: #1A1A1A;
+            color: #F5F5F5;
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* Fairground texture background */
+        .fairground-bg {
+            background-color: #1A1A1A;
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='fairgroundPattern' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(2) rotate(0)'%3E%3Crect width='40' height='40' fill='%231A1A1A'/%3E%3Cpath d='M0 20 A20 20 0 0 1 40 20 M20 0 A20 20 0 0 1 20 40' stroke='%23333333' stroke-width='0.5' stroke-opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23fairgroundPattern)'/%3E%3C/svg%3E");
+        }
+        
+        /* Story header */
+        .story-header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(26, 42, 68, 0.9), rgba(26, 26, 26, 0.7));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .story-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            color: #F5F5F5;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+        }
+        
+        .story-subtitle {
+            font-size: 1.5rem;
+            color: #CCCCCC;
+            margin-bottom: 2rem;
+        }
+        
+        .story-quote {
+            font-style: italic;
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #CCCCCC;
+            border-left: 4px solid #FFC107;
+            padding-left: 1rem;
+        }
+        
+        /* Story panels */
+        .story-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .story-panel {
+            margin-bottom: 6rem;
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            min-height: 400px;
+        }
+        
+        .panel-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .panel-content {
+            position: relative;
+            z-index: 2;
+            padding: 3rem;
+            background-color: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid #FFC107;
+        }
+        
+        .panel-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #F5F5F5;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+        
+        .panel-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #FFC107, #CCCCCC);
+            border-radius: 2px;
+        }
+        
+        .panel-text {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Visual elements */
+        .insignia {
+            color: #FFC107;
+            font-size: 1.5em;
+            margin: 0 0.2em;
+            display: inline-block;
+        }
+        
+        .large-insignia {
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+            width: 200px;
+            height: 200px;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .large-insignia .circle {
+            width: 100%;
+            height: 100%;
+            border: 8px solid #FFC107;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .large-insignia .sun {
+            font-size: 6rem;
+            color: #FFC107;
+        }
+        
+        .burning-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255, 87, 34, 0.2), rgba(255, 193, 7, 0.2));
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Fairground elements */
+        .ferris-wheel {
+            position: absolute;
+            bottom: 10%;
+            right: 10%;
+            width: 200px;
+            height: 200px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .ferris-wheel::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80%;
+            height: 80%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .ferris-wheel::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60%;
+            height: 60%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .ferris-spoke {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.3);
+            transform-origin: center;
+        }
+        
+        .ferris-cabin {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 4px;
+            transform: translate(-50%, -50%);
+        }
+        
+        .fairground-element {
+            position: absolute;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .chalk-circle {
+            position: absolute;
+            bottom: 20px;
+            left: 20%;
+            width: 100px;
+            height: 100px;
+            border: 4px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Neon glow effect */
+        .neon-gold {
+            color: #FFC107;
+            text-shadow: 0 0 5px rgba(255, 193, 7, 0.8), 0 0 10px rgba(255, 193, 7, 0.5);
+        }
+        
+        .neon-red {
+            color: #FF5722;
+            text-shadow: 0 0 5px rgba(255, 87, 34, 0.8), 0 0 10px rgba(255, 87, 34, 0.5);
+        }
+        
+        /* Audio controls */
+        .audio-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: rgba(26, 26, 26, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .audio-controls button {
+            background: none;
+            border: none;
+            color: #FFC107;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .audio-controls button:hover {
+            background-color: rgba(255, 193, 7, 0.2);
+        }
+        
+        /* Audio progress indicator */
+        .audio-progress {
+            position: fixed;
+            bottom: 20px;
+            right: 80px;
+            z-index: 100;
+            background-color: rgba(26, 26, 26, 0.8);
+            color: #FFC107;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background-color: rgba(26, 26, 26, 0.8);
+            color: #FFC107;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .scroll-top:hover {
+            background-color: rgba(255, 193, 7, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        /* Animations */
+        @keyframes rotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes sway {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(5deg); }
+            100% { transform: rotate(0deg); }
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0.2; }
+            50% { opacity: 0.5; }
+            100% { opacity: 0.2; }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .story-title {
+                font-size: 3rem;
+            }
+            
+            .panel-title {
+                font-size: 2rem;
+            }
+            
+            .panel-content {
+                padding: 2rem;
+            }
+            
+            .large-insignia {
+                transform: scale(0.7) translateY(-50%);
+            }
+            
+            .ferris-wheel {
+                width: 150px;
+                height: 150px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .story-title {
+                font-size: 2.5rem;
+            }
+            
+            .panel-title {
+                font-size: 1.75rem;
+            }
+            
+            .panel-content {
+                padding: 1.5rem;
+            }
+            
+            .large-insignia {
+                transform: scale(0.5) translateY(-50%);
+            }
+            
+            .ferris-wheel {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body class="fairground-bg">
+    <!-- Header/Navigation -->
+    <header class="fixed top-0 left-0 w-full bg-navy bg-opacity-90 z-50 backdrop-blur-sm">
+        <nav class="container-custom py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-heading font-bold text-golden-blaze">DevCo</a>
+            <div class="nav-toggle md:hidden cursor-pointer">
+                <div class="bar w-6 h-0.5 bg-white-spark mb-1.5"></div>
+                <div class="bar w-6 h-0.5 bg-white-spark mb-1.5"></div>
+                <div class="bar w-6 h-0.5 bg-white-spark"></div>
+            </div>
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="index.html" class="nav-link text-lg">Home</a></li>
+                <li><a href="index.html#music" class="nav-link text-lg">Music</a></li>
+                <li><a href="index.html#about" class="nav-link text-lg">About</a></li>
+                <li><a href="index.html#contact" class="nav-link text-lg">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu fixed inset-0 bg-navy bg-opacity-95 z-40 flex-col items-center justify-center hidden">
+            <button class="close-btn absolute top-4 right-4 text-white-spark text-3xl">&times;</button>
+            <ul class="text-center space-y-8">
+                <li><a href="index.html" class="nav-link text-3xl">Home</a></li>
+                <li><a href="index.html#music" class="nav-link text-3xl">Music</a></li>
+                <li><a href="index.html#about" class="nav-link text-3xl">About</a></li>
+                <li><a href="index.html#contact" class="nav-link text-3xl">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Audio Element (Hidden) -->
+    <audio id="background-music" loop>
+        <source src="music/Chapter 10_The End of Everything.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <button id="play-pause-btn" title="Play/Pause">▶</button>
+        <button id="restart-btn" title="Restart">↻</button>
+    </div>
+    
+    <!-- Audio Progress -->
+    <div class="audio-progress" id="audio-progress">0:00 / 9:00</div>
+    
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scroll-top-btn" title="Scroll to Top">↑</button>
+    
+    <!-- Story Header -->
+    <div class="story-header">
+        <h1 class="story-title">The End of Everything</h1>
+        <p class="story-subtitle">Pop Song Summer, Track 10</p>
+        <blockquote class="story-quote">
+            "What you choose is yours to choose, the wall you must break through."
+        </blockquote>
+        <button id="start-reading-btn" class="bg-golden-blaze text-navy px-6 py-3 rounded-md hover:bg-opacity-80 transition-colors font-bold text-lg">
+            Start Reading with Music
+        </button>
+        
+        <!-- Ferris wheel in header -->
+        <div class="ferris-wheel" style="animation: rotate 20s linear infinite;">
+            <div class="ferris-spoke" style="transform: translate(-50%, -50%) rotate(0deg);"></div>
+            <div class="ferris-spoke" style="transform: translate(-50%, -50%) rotate(45deg);"></div>
+            <div class="ferris-spoke" style="transform: translate(-50%, -50%) rotate(90deg);"></div>
+            <div class="ferris-spoke" style="transform: translate(-50%, -50%) rotate(135deg);"></div>
+            
+            <div class="ferris-cabin" style="top: 0%; left: 50%;"></div>
+            <div class="ferris-cabin" style="top: 100%; left: 50%;"></div>
+            <div class="ferris-cabin" style="top: 50%; left: 0%;"></div>
+            <div class="ferris-cabin" style="top: 50%; left: 100%;"></div>
+            <div class="ferris-cabin" style="top: 14.6%; left: 14.6%;"></div>
+            <div class="ferris-cabin" style="top: 85.4%; left: 14.6%;"></div>
+            <div class="ferris-cabin" style="top: 14.6%; left: 85.4%;"></div>
+            <div class="ferris-cabin" style="top: 85.4%; left: 85.4%;"></div>
+        </div>
+        
+        <div class="chalk-circle" style="animation: fadeInOut 4s infinite;"></div>
+    </div>
+    
+    <!-- Story Content -->
+    <div class="story-container" id="story-content">
+        <!-- Story panels will be dynamically generated here -->
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const audio = document.getElementById('background-music');
+            const playPauseBtn = document.getElementById('play-pause-btn');
+            const restartBtn = document.getElementById('restart-btn');
+            const startReadingBtn = document.getElementById('start-reading-btn');
+            const scrollTopBtn = document.getElementById('scroll-top-btn');
+            const storyContainer = document.getElementById('story-content');
+            const audioProgress = document.getElementById('audio-progress');
+            
+            // Story data (embedded directly in the page for simplicity)
+            const storyData = [
+                {
+                    title: "FAIRGROUND GATHERING",
+                    background: "bg-gradient-to-b from-[#2D2D2D] via-[#1A1A1A] to-[#2D2D2D]",
+                    text: "The fairgrounds glow under a POP SONG SUMMER banner, ferris wheel lit like a waiting rib cage. A chalk sun with twelve rays resists footsteps; a kid adds a thirteenth. The blind man taps his cane thrice, the ground purrs. The red-coat woman, sunburst patch glowing, lifts a hand, hushing the crowd. The DJ wheels a turntable, white-label sunburst under her arm. The painter carries a glowing canvas. Sunroom's radio person aims a transmitter at the wheel. The song hums: What you choose is yours to choose. We gather to pick a future.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    hasFerrisWheel: true
+                },
+                {
+                    title: "HELIOGRAPH RITUAL",
+                    background: "bg-gradient-to-b from-[#800020] via-[#4A0000] to-[#800020]",
+                    text: "The Unit 413 host stands in the chalk circle, patch gleaming. 'Welcome to Heliograph. Receipts and returns.' The red coat asks, 'What do you return?' 'Name,' the crowd says, some silent. 'Light,' softer. 'Body,' as the wheel creaks. The blind man sings without moving: Time just froze inside of me. A lemonade girl gives out gold-stamped tickets: FOR RETURN. The radio cues silence; the city hears itself. Voices confess: filming fires, fearing loss. The song pushes: We can't take it… I want to go. The red coat nods, cataloging.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    neonTitle: true,
+                    neonColor: "red",
+                    hasFerrisWheel: true
+                },
+                {
+                    title: "WHITE-LABEL SONG",
+                    background: "bg-gradient-to-b from-[#1A2A44] via-[#000000] to-[#1A2A44]",
+                    text: "The DJ drops the white-label; hi-hat rings, bass maps feet. At +6%, the air warms, the rink's glass shows a past jacket. The song sings: Could this be the end of everything. The red coat says, 'Maybe the end of parts that don't return receipts.' A cop points to his watch; she smiles him down. My drifter-shadow aligns, no lag. My pockets hold a ticket, a letter, a warm patch. The host points to the wheel: 'Twelve doors. Resist seven.' Laughter rises. Cabins fill two by two, creaking like prayers.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    neonTitle: true,
+                    neonColor: "gold",
+                    hasFerrisWheel: true
+                },
+                {
+                    title: "BREAKING THE WALL",
+                    background: "bg-gradient-to-b from-[#4A4A4A] via-[#2D2D2D] to-[#4A4A4A]",
+                    text: "The red coat turns to me: 'You brought the wall.' I nod. In the rink's glass, my reflection lags. 'Sing at it,' she says, 'or touch it with the right name.' I say my childhood name; the glass wobbles, cracks in twelve rays. The crowd presses palms to reflections, the glass parting like a lake. The wheel turns, cabins cresting, lights blinking out in the glass. The kid draws a sun at my feet. The blind man hums, realigning my spine. The DJ pushes the pitch. What you choose is yours to choose. The wall thins to habit.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    hasFerrisWheel: true
+                },
+                {
+                    title: "ORANGE CIRCLE",
+                    background: "bg-gradient-to-b from-[#2D0A31] via-[#1A0E25] to-[#2D0A31]",
+                    text: "The kid hands me an orange; we pass it around the circle, thumbs marking tiny suns. The blind man pockets it like a compass. The song softens: Time just froze inside of me. Houses burn in the glass, not here. A canoe glides with a dog, a cop lets midnight slide. The pie stand sells FORGIVEN. The red coat says, 'It's about choosing how to lose less.' The wheel turns, the song confesses: We can't take it… I don't wanna know. We say both, go anyway, asking who we'll be, not what's next.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    hasFerrisWheel: true
+                },
+                {
+                    title: "CHORUS RELEASE",
+                    background: "bg-gradient-to-b from-[#1A2A44] via-[#FFC107] to-[#1A2A44]",
+                    text: "The host lifts a jar of sunburst patches; the red coat kisses one, presses it to the wheel. It glows, the machine purrs. Sunroom's radio plays silence that sings, my voice braiding with others. The chorus spills into cars, vents, lobbies, clearing layaway names. People cry, a receipt. The blind man taps thrice, the wheel stills. The DJ sleeves the record, the painter returns the canvas under the bridge. The cop salutes, the kid counts to twelve. The red coat says, 'It's the end of faking it, the beginning of returns.'",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    neonTitle: true,
+                    neonColor: "gold",
+                    hasFerrisWheel: true
+                },
+                {
+                    title: "OUT TO RETURN",
+                    background: "bg-gradient-to-b from-[#FFC107] via-[#FF3300] to-[#FFC107]",
+                    text: "The red coat steps close, her patch warm under my knuckles. 'Nobody gets to be the only door,' she says. I broke the wall because we sang. The fairgrounds dim like a pilot light. At the gate, the lemonade girl thumbs my ticket, gold sparks sticking. The blind man squeezes my elbow, the cop promises tomorrow. She comes, the city sings, through us, without rehearsals. We walk to the bridge, the river following. My drifter steps with me, no lag. The receipt lives under our tongues, the chorus rides. Out to the other side, keeping what keeps us.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    epilogue: true,
+                    neonTitle: true,
+                    neonColor: "red",
+                    hasFerrisWheel: true
+                }
+            ];
+            
+            // Function to format time in MM:SS format
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = Math.floor(seconds % 60);
+                return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+            }
+            
+            // Function to generate story panels
+            function generateStoryPanels() {
+                storyContainer.innerHTML = '';
+                
+                storyData.forEach((panel, index) => {
+                    // Create panel element
+                    const panelElement = document.createElement('div');
+                    panelElement.className = 'story-panel';
+                    panelElement.id = `panel-${index + 1}`;
+                    
+                    // Create panel background
+                    const panelBackground = document.createElement('div');
+                    panelBackground.className = `panel-background ${panel.background}`;
+                    
+                    // Add visual elements based on panel properties
+                    if (panel.hasInsignia) {
+                        const insignia = document.createElement('div');
+                        insignia.className = 'large-insignia';
+                        insignia.innerHTML = `
+                            <div class="circle">
+                                <div class="sun">☀</div>
+                            </div>
+                        `;
+                        panelBackground.appendChild(insignia);
+                    }
+                    
+                    if (panel.hasBurning) {
+                        const burningOverlay = document.createElement('div');
+                        burningOverlay.className = 'burning-overlay';
+                        panelBackground.appendChild(burningOverlay);
+                    }
+                    
+                    // Add ferris wheel if specified
+                    if (panel.hasFerrisWheel) {
+                        // Add ferris wheel
+                        const ferrisWheel = document.createElement('div');
+                        ferrisWheel.className = 'ferris-wheel';
+                        ferrisWheel.style.animation = 'rotate 20s linear infinite';
+                        
+                        // Add spokes
+                        for (let i = 0; i < 8; i++) {
+                            const spoke = document.createElement('div');
+                            spoke.className = 'ferris-spoke';
+                            spoke.style.transform = `translate(-50%, -50%) rotate(${i * 45}deg)`;
+                            ferrisWheel.appendChild(spoke);
+                        }
+                        
+                        // Add cabins
+                        const cabinPositions = [
+                            { top: '0%', left: '50%' },
+                            { top: '100%', left: '50%' },
+                            { top: '50%', left: '0%' },
+                            { top: '50%', left: '100%' },
+                            { top: '14.6%', left: '14.6%' },
+                            { top: '85.4%', left: '14.6%' },
+                            { top: '14.6%', left: '85.4%' },
+                            { top: '85.4%', left: '85.4%' }
+                        ];
+                        
+                        cabinPositions.forEach(pos => {
+                            const cabin = document.createElement('div');
+                            cabin.className = 'ferris-cabin';
+                            cabin.style.top = pos.top;
+                            cabin.style.left = pos.left;
+                            ferrisWheel.appendChild(cabin);
+                        });
+                        
+                        panelBackground.appendChild(ferrisWheel);
+                        
+                        // Add chalk circle
+                        const chalkCircle = document.createElement('div');
+                        chalkCircle.className = 'chalk-circle';
+                        chalkCircle.style.animation = 'fadeInOut 4s infinite';
+                        panelBackground.appendChild(chalkCircle);
+                        
+                        // Add fairground elements
+                        const fairgroundElement1 = document.createElement('div');
+                        fairgroundElement1.className = 'fairground-element';
+                        fairgroundElement1.innerHTML = '🎪';
+                        fairgroundElement1.style.top = '20%';
+                        fairgroundElement1.style.left = '10%';
+                        fairgroundElement1.style.fontSize = '3rem';
+                        panelBackground.appendChild(fairgroundElement1);
+                        
+                        const fairgroundElement2 = document.createElement('div');
+                        fairgroundElement2.className = 'fairground-element';
+                        fairgroundElement2.innerHTML = '🎡';
+                        fairgroundElement2.style.top = '15%';
+                        fairgroundElement2.style.right = '15%';
+                        fairgroundElement2.style.fontSize = '2.5rem';
+                        panelBackground.appendChild(fairgroundElement2);
+                        
+                        const fairgroundElement3 = document.createElement('div');
+                        fairgroundElement3.className = 'fairground-element';
+                        fairgroundElement3.innerHTML = '🎠';
+                        fairgroundElement3.style.bottom = '25%';
+                        fairgroundElement3.style.left = '20%';
+                        fairgroundElement3.style.fontSize = '2rem';
+                        panelBackground.appendChild(fairgroundElement3);
+                    }
+                    
+                    // Create panel content
+                    const panelContent = document.createElement('div');
+                    panelContent.className = 'panel-content';
+                    
+                    // Create panel title
+                    const panelTitle = document.createElement('h2');
+                    if (panel.neonTitle) {
+                        panelTitle.className = `panel-title neon-${panel.neonColor || 'gold'}`;
+                    } else {
+                        panelTitle.className = 'panel-title';
+                    }
+                    panelTitle.textContent = panel.title;
+                    
+                    // Create panel text
+                    const panelText = document.createElement('p');
+                    panelText.className = 'panel-text';
+                    panelText.textContent = panel.text;
+                    
+                    // Add elements to panel content
+                    panelContent.appendChild(panelTitle);
+                    panelContent.appendChild(panelText);
+                    
+                    // Add elements to panel
+                    panelElement.appendChild(panelBackground);
+                    panelElement.appendChild(panelContent);
+                    
+                    // Add panel to story container
+                    storyContainer.appendChild(panelElement);
+                });
+                
+                // Initialize GSAP animations
+                initAnimations();
+            }
+            
+            // Function to initialize GSAP animations
+            function initAnimations() {
+                // Register ScrollTrigger plugin
+                gsap.registerPlugin(ScrollTrigger);
+                
+                // Animate insignias
+                gsap.utils.toArray('.large-insignia').forEach((insignia) => {
+                    gsap.to(insignia, {
+                        opacity: 0.7,
+                        duration: 3,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                });
+                
+                // Animate ferris wheels
+                gsap.utils.toArray('.ferris-wheel').forEach((wheel) => {
+                    gsap.to(wheel, {
+                        opacity: 0.7,
+                        duration: 2,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                });
+                
+                // Animate fairground elements
+                gsap.utils.toArray('.fairground-element').forEach((element) => {
+                    gsap.to(element, {
+                        y: -10,
+                        duration: Math.random() * 3 + 2,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                });
+                
+                // Animate panels on scroll
+                gsap.utils.toArray('.story-panel').forEach((panel, i) => {
+                    // Fade in panel
+                    gsap.fromTo(panel,
+                        { opacity: 0, y: 50 },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 1,
+                            scrollTrigger: {
+                                trigger: panel,
+                                start: "top 80%",
+                                end: "top 50%",
+                                scrub: 1
+                            }
+                        }
+                    );
+                    
+                    // Parallax effect on background
+                    gsap.to(panel.querySelector('.panel-background'), {
+                        y: -50,
+                        duration: 1,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: panel,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: true
+                        }
+                    });
+                });
+            }
+            
+            // Function to update audio progress
+            function updateAudioProgress() {
+                if (audio.duration) {
+                    const currentTime = audio.currentTime;
+                    const duration = audio.duration;
+                    audioProgress.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+                }
+            }
+            
+            // Audio event listeners
+            audio.addEventListener('timeupdate', updateAudioProgress);
+            
+            // Play/Pause button functionality
+            playPauseBtn.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play();
+                    playPauseBtn.textContent = '❚❚';
+                } else {
+                    audio.pause();
+                    playPauseBtn.textContent = '▶';
+                }
+            });
+            
+            // Restart button functionality
+            restartBtn.addEventListener('click', function() {
+                audio.currentTime = 0;
+                if (audio.paused) {
+                    audio.play();
+                    playPauseBtn.textContent = '❚❚';
+                }
+            });
+            
+            // Start reading button functionality
+            startReadingBtn.addEventListener('click', function() {
+                audio.play();
+                playPauseBtn.textContent = '❚❚';
+                window.scrollTo({
+                    top: storyContainer.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+                startReadingBtn.style.display = 'none';
+            });
+            
+            // Scroll to top button functionality
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Show/hide scroll to top button based on scroll position
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.style.opacity = '1';
+                } else {
+                    scrollTopBtn.style.opacity = '0';
+                }
+            });
+            
+            // Mobile menu functionality
+            const navToggle = document.querySelector('.nav-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const closeBtn = document.querySelector('.close-btn');
+            
+            if (navToggle && mobileMenu && closeBtn) {
+                navToggle.addEventListener('click', function() {
+                    mobileMenu.classList.add('flex');
+                    mobileMenu.classList.remove('hidden');
+                });
+                
+                closeBtn.addEventListener('click', function() {
+                    mobileMenu.classList.remove('flex');
+                    mobileMenu.classList.add('hidden');
+                });
+                
+                // Close mobile menu when clicking a link
+                const mobileLinks = mobileMenu.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.remove('flex');
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+            
+            // Generate story panels on page load
+            generateStoryPanels();
+        });
+    </script>
+</body>
+</html>

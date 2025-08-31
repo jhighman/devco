@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 5: A Blind Man Singing - Pop Song Summer</title>
+    <meta name="description" content="Chapter 5 of Pop Song Summer: A Blind Man Singing - A story about sound, silence, and the city's voice.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="./css/output.css">
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* Base styles */
+        body {
+            background-color: #0A0A0A;
+            color: #F5F5F5;
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* Sound wave texture background */
+        .sound-bg {
+            background-color: #0A0A0A;
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='soundPattern' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(2) rotate(0)'%3E%3Crect width='40' height='40' fill='%230A0A0A'/%3E%3Cpath d='M0 20 Q10 15, 20 20, 30 25, 40 20 M0 20 Q10 25, 20 20, 30 15, 40 20' stroke='%23333333' stroke-width='0.5' stroke-opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23soundPattern)'/%3E%3C/svg%3E");
+        }
+        
+        /* Story header */
+        .story-header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(26, 42, 68, 0.9), rgba(10, 10, 10, 0.7));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .story-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            color: #F5F5F5;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+        }
+        
+        .story-subtitle {
+            font-size: 1.5rem;
+            color: #CCCCCC;
+            margin-bottom: 2rem;
+        }
+        
+        .story-quote {
+            font-style: italic;
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #CCCCCC;
+            border-left: 4px solid #FFC107;
+            padding-left: 1rem;
+        }
+        
+        /* Story panels */
+        .story-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .story-panel {
+            margin-bottom: 6rem;
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            min-height: 400px;
+        }
+        
+        .panel-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .panel-content {
+            position: relative;
+            z-index: 2;
+            padding: 3rem;
+            background-color: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid #FFC107;
+        }
+        
+        .panel-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #F5F5F5;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+        
+        .panel-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #FFC107, #CCCCCC);
+            border-radius: 2px;
+        }
+        
+        .panel-text {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Visual elements */
+        .insignia {
+            color: #FFC107;
+            font-size: 1.5em;
+            margin: 0 0.2em;
+            display: inline-block;
+        }
+        
+        .large-insignia {
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+            width: 200px;
+            height: 200px;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .large-insignia .circle {
+            width: 100%;
+            height: 100%;
+            border: 8px solid #FFC107;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .large-insignia .sun {
+            font-size: 6rem;
+            color: #FFC107;
+        }
+        
+        .burning-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255, 87, 34, 0.2), rgba(255, 193, 7, 0.2));
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Sound wave visualization */
+        .sound-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .sound-bar {
+            width: 4px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.5);
+            margin: 0 2px;
+            border-radius: 2px;
+        }
+        
+        /* Audio visualization */
+        .audio-visualizer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+        
+        .audio-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+        }
+        
+        /* Neon glow effect */
+        .neon-gold {
+            color: #FFC107;
+            text-shadow: 0 0 5px rgba(255, 193, 7, 0.8), 0 0 10px rgba(255, 193, 7, 0.5);
+        }
+        
+        .neon-red {
+            color: #FF5722;
+            text-shadow: 0 0 5px rgba(255, 87, 34, 0.8), 0 0 10px rgba(255, 87, 34, 0.5);
+        }
+        
+        /* Audio controls */
+        .audio-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: rgba(10, 10, 10, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .audio-controls button {
+            background: none;
+            border: none;
+            color: #FFC107;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .audio-controls button:hover {
+            background-color: rgba(255, 193, 7, 0.2);
+        }
+        
+        /* Audio progress indicator */
+        .audio-progress {
+            position: fixed;
+            bottom: 20px;
+            right: 80px;
+            z-index: 100;
+            background-color: rgba(10, 10, 10, 0.8);
+            color: #FFC107;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background-color: rgba(10, 10, 10, 0.8);
+            color: #FFC107;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .scroll-top:hover {
+            background-color: rgba(255, 193, 7, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        /* Animations */
+        @keyframes soundWave {
+            0% { height: 10px; }
+            50% { height: 40px; }
+            100% { height: 10px; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.2; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+        
+        @keyframes ripple {
+            0% { width: 0; height: 0; opacity: 0.8; }
+            100% { width: 500px; height: 500px; opacity: 0; }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .story-title {
+                font-size: 3rem;
+            }
+            
+            .panel-title {
+                font-size: 2rem;
+            }
+            
+            .panel-content {
+                padding: 2rem;
+            }
+            
+            .large-insignia {
+                transform: scale(0.7) translateY(-50%);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .story-title {
+                font-size: 2.5rem;
+            }
+            
+            .panel-title {
+                font-size: 1.75rem;
+            }
+            
+            .panel-content {
+                padding: 1.5rem;
+            }
+            
+            .large-insignia {
+                transform: scale(0.5) translateY(-50%);
+            }
+        }
+    </style>
+</head>
+<body class="sound-bg">
+    <!-- Header/Navigation -->
+    <header class="fixed top-0 left-0 w-full bg-navy bg-opacity-90 z-50 backdrop-blur-sm">
+        <nav class="container-custom py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-heading font-bold text-golden-blaze">DevCo</a>
+            <div class="nav-toggle md:hidden cursor-pointer">
+                <div class="bar w-6 h-0.5 bg-white-spark mb-1.5"></div>
+                <div class="bar w-6 h-0.5 bg-white-spark mb-1.5"></div>
+                <div class="bar w-6 h-0.5 bg-white-spark"></div>
+            </div>
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="index.html" class="nav-link text-lg">Home</a></li>
+                <li><a href="index.html#music" class="nav-link text-lg">Music</a></li>
+                <li><a href="index.html#about" class="nav-link text-lg">About</a></li>
+                <li><a href="index.html#contact" class="nav-link text-lg">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu fixed inset-0 bg-navy bg-opacity-95 z-40 flex-col items-center justify-center hidden">
+            <button class="close-btn absolute top-4 right-4 text-white-spark text-3xl">&times;</button>
+            <ul class="text-center space-y-8">
+                <li><a href="index.html" class="nav-link text-3xl">Home</a></li>
+                <li><a href="index.html#music" class="nav-link text-3xl">Music</a></li>
+                <li><a href="index.html#about" class="nav-link text-3xl">About</a></li>
+                <li><a href="index.html#contact" class="nav-link text-3xl">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Audio Element (Hidden) -->
+    <audio id="background-music" loop>
+        <source src="music/Chapter 5_A Blind Man Singing.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <button id="play-pause-btn" title="Play/Pause">▶</button>
+        <button id="restart-btn" title="Restart">↻</button>
+    </div>
+    
+    <!-- Audio Progress -->
+    <div class="audio-progress" id="audio-progress">0:00 / 8:30</div>
+    
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scroll-top-btn" title="Scroll to Top">↑</button>
+    
+    <!-- Story Header -->
+    <div class="story-header">
+        <h1 class="story-title">A Blind Man Singing</h1>
+        <p class="story-subtitle">Pop Song Summer, Track 5</p>
+        <blockquote class="story-quote">
+            "She comes, burning houses in the distance."
+        </blockquote>
+        <button id="start-reading-btn" class="bg-golden-blaze text-navy px-6 py-3 rounded-md hover:bg-opacity-80 transition-colors font-bold text-lg">
+            Start Reading with Music
+        </button>
+        
+        <!-- Sound wave visualization in header -->
+        <div class="sound-wave">
+            <div class="sound-bar" style="animation: soundWave 1.3s infinite;"></div>
+            <div class="sound-bar" style="animation: soundWave 1.5s infinite;"></div>
+            <div class="sound-bar" style="animation: soundWave 1.7s infinite;"></div>
+            <div class="sound-bar" style="animation: soundWave 1.1s infinite;"></div>
+            <div class="sound-bar" style="animation: soundWave 1.9s infinite;"></div>
+            <div class="sound-bar" style="animation: soundWave 1.2s infinite;"></div>
+            <div class="sound-bar" style="animation: soundWave 1.6s infinite;"></div>
+            <div class="sound-bar" style="animation: soundWave 1.4s infinite;"></div>
+            <div class="sound-bar" style="animation: soundWave 1.8s infinite;"></div>
+            <div class="sound-bar" style="animation: soundWave 1.3s infinite;"></div>
+            <div class="sound-bar" style="animation: soundWave 1.5s infinite;"></div>
+            <div class="sound-bar" style="animation: soundWave 1.7s infinite;"></div>
+            <div class="sound-bar" style="animation: soundWave 1.1s infinite;"></div>
+            <div class="sound-bar" style="animation: soundWave 1.9s infinite;"></div>
+            <div class="sound-bar" style="animation: soundWave 1.2s infinite;"></div>
+        </div>
+    </div>
+    
+    <!-- Story Content -->
+    <div class="story-container" id="story-content">
+        <!-- Story panels will be dynamically generated here -->
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const audio = document.getElementById('background-music');
+            const playPauseBtn = document.getElementById('play-pause-btn');
+            const restartBtn = document.getElementById('restart-btn');
+            const startReadingBtn = document.getElementById('start-reading-btn');
+            const scrollTopBtn = document.getElementById('scroll-top-btn');
+            const storyContainer = document.getElementById('story-content');
+            const audioProgress = document.getElementById('audio-progress');
+            
+            // Story data (embedded directly in the page for simplicity)
+            const storyData = [
+                {
+                    title: "BLANK TAPE",
+                    background: "bg-gradient-to-b from-[#2D2D2D] via-[#1A1A1A] to-[#2D2D2D]",
+                    text: "The first time I recorded his voice, the tape was blank—levels jumped, needles danced, but playback gave silence, a shape in the noise like heat on a road. In a subway tunnel smelling of metal and bread, he sang five feet from my mic, cane tapping, no hat for tips. The song braided through footsteps and coins. 'Your recorder's fine,' he said. 'Hearing isn't playing back.' His sunglasses showed white eyes, a fact like weather. 'What's your name?' I asked. 'No,' he said, kind. 'Today I'm a channel. Names are what you return.' I run Sunroom Radio, a pirate station above a pawn shop, broadcasting lonely songs and storm warnings.",
+                    hasInsignia: true
+                },
+                {
+                    title: "CHALK AND CORNER",
+                    background: "bg-gradient-to-b from-[#1A2A44] via-[#000000] to-[#1A2A44]",
+                    text: "I followed him, two paces back, to a corner where a kid drew a chalk sun with twelve uneven rays. He tapped the circle's edge, singing, She comes, burning houses in the distance. Lights up the night. The kid added a thirteenth ray, testing us. 'You sang that last week,' I said. 'Whenever the city forgets,' he replied. A woman mouthed the refrain at a bus stop, a teen's phone flashed Insignia of the Sun. 'I'm Mira,' I offered. 'Return it when you can,' he said, walking into a bruised sky, his cane punctuation, leaving me with a blank tape and a city turned radio.",
+                    hasInsignia: true,
+                    hasBurning: true
+                },
+                {
+                    title: "STUDIO INVITATION",
+                    background: "bg-gradient-to-b from-[#4A4A4A] via-[#2D2D2D] to-[#4A4A4A]",
+                    text: "Two days later, call-ins led me to 8th and Marlow, where his voice 'aligned the air.' He sat on a milk crate, a chalk sun beneath, a sunburst patch on his frayed hat. 'Studio,' I said. 'One hour, no money, walk out anytime.' He asked for a reel-to-reel. I lied, 'Yes,' though mine's ancient. 'Point the mic at the empty chair,' he said in my studio, rubbing his cane like a match. He sang of burning horizons, names returned, a woman in a red coat. The tape spilled, needles swung, my eyes prickled. Playback: silence, but a pressure like altitude.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    neonTitle: true,
+                    neonColor: "gold"
+                },
+                {
+                    title: "BROADCAST ABSENCE",
+                    background: "bg-gradient-to-b from-[#800020] via-[#4A0000] to-[#800020]",
+                    text: "He grinned at the silence. 'The room remembering,' he called it. I broadcast it live: 'Sunroom listeners, this blank tape isn't blank. Breathe like you're with a stranger.' The city held its breath for two minutes. Phones lit: an old man's clock kept time, a nurse's monitors calmed, a woman heard humming from nowhere. 'Aim the antenna at the bridges,' he said. 'They'll need exits.' 'Is there a fire?' 'There's always a fire.' He left the tape, labeled RETURN WHAT ISN'T YOURS, and walked out, sunglasses catching the pawnshop neon.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    neonTitle: true,
+                    neonColor: "red"
+                },
+                {
+                    title: "BRIDGE PROCESSION",
+                    background: "bg-gradient-to-b from-[#2D0A31] via-[#1A0E25] to-[#2D0A31]",
+                    text: "Dusk brought a fire's smell from three exits north. I pointed the antenna at the river, played the silence: 'If you're on foot to the bridges, go slow.' On the 9th Street bridge, he sang, conducting people and cars with his voice. She comes, lights up the night. A woman in a red coat led a column, her sunburst pulsing. A stroller, a dog, an ambulance moved in rhythm. 'Records are being set,' I said. 'Play the absence,' he replied. 'It lets the city hear itself.' A boy with a trombone case whispered, 'Ready to return?' The bridge sang without his mouth moving.",
+                    hasInsignia: true,
+                    hasBurning: true
+                },
+                {
+                    title: "CANE AND CASSETTE",
+                    background: "bg-gradient-to-b from-[#1A2A44] via-[#FFC107] to-[#1A2A44]",
+                    text: "He tapped the bridge's seam three times, a note in my bones. I lost him in the smoke. At the rail, his cane leaned, a sunburst patch tied to it, a cassette taped on: FOR WHEN THE WIND FINDS YOU. I ran to the station, played it. My voice sang the refrain, a crowd and city woven in. Phones lit; I let them. At dawn, the chalk corner waited, twelve rays needing supervision. The kid approved my thirteenth ray. The woman in red passed, touching her sunburst cuff. 'Ready?' the kid asked. 'To return,' I said, laughing into the morning.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    neonTitle: true,
+                    neonColor: "gold"
+                },
+                {
+                    title: "CHORUS OF RETURN",
+                    background: "bg-gradient-to-b from-[#FFC107] via-[#FF3300] to-[#FFC107]",
+                    text: "At ten, a cop signaled to move along. I left the chalk sun's ghost. A sticky note on the board read OUT TO THE OTHER SIDE, circled with twelve marks. The tape ran without me, singing my voice, the city's chorus: She comes, into the pop song summer. Someone hummed, carrying a stroller; another turned a key in a blue sedan, calling it a return. Houses burned closer than they appear. I'm Mira, until I return that. The station is Sunroom, until a better name. Play the absence, draw the circle, wait for the wind. The city answers, a choir without rehearsals.",
+                    hasInsignia: true,
+                    hasBurning: true,
+                    epilogue: true,
+                    neonTitle: true,
+                    neonColor: "red"
+                }
+            ];
+            
+            // Function to format time in MM:SS format
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = Math.floor(seconds % 60);
+                return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+            }
+            
+            // Function to generate story panels
+            function generateStoryPanels() {
+                storyContainer.innerHTML = '';
+                
+                storyData.forEach((panel, index) => {
+                    // Create panel element
+                    const panelElement = document.createElement('div');
+                    panelElement.className = 'story-panel';
+                    panelElement.id = `panel-${index + 1}`;
+                    
+                    // Create panel background
+                    const panelBackground = document.createElement('div');
+                    panelBackground.className = `panel-background ${panel.background}`;
+                    
+                    // Add visual elements based on panel properties
+                    if (panel.hasInsignia) {
+                        const insignia = document.createElement('div');
+                        insignia.className = 'large-insignia';
+                        insignia.innerHTML = `
+                            <div class="circle">
+                                <div class="sun">☀</div>
+                            </div>
+                        `;
+                        panelBackground.appendChild(insignia);
+                    }
+                    
+                    if (panel.hasBurning) {
+                        const burningOverlay = document.createElement('div');
+                        burningOverlay.className = 'burning-overlay';
+                        panelBackground.appendChild(burningOverlay);
+                    }
+                    
+                    // Add audio visualization
+                    const audioVisualizer = document.createElement('div');
+                    audioVisualizer.className = 'audio-visualizer';
+                    
+                    // Create audio circles
+                    for (let i = 0; i < 5; i++) {
+                        const circle = document.createElement('div');
+                        circle.className = 'audio-circle';
+                        circle.style.width = `${(i + 1) * 100}px`;
+                        circle.style.height = `${(i + 1) * 100}px`;
+                        circle.style.left = '50%';
+                        circle.style.top = '50%';
+                        circle.style.animation = `pulse ${3 + i}s infinite`;
+                        audioVisualizer.appendChild(circle);
+                    }
+                    
+                    panelBackground.appendChild(audioVisualizer);
+                    
+                    // Add sound wave
+                    const soundWave = document.createElement('div');
+                    soundWave.className = 'sound-wave';
+                    
+                    // Create sound bars
+                    for (let i = 0; i < 20; i++) {
+                        const bar = document.createElement('div');
+                        bar.className = 'sound-bar';
+                        bar.style.animation = `soundWave ${1 + Math.random() * 1}s infinite`;
+                        bar.style.animationDelay = `${Math.random() * 1}s`;
+                        soundWave.appendChild(bar);
+                    }
+                    
+                    panelBackground.appendChild(soundWave);
+                    
+                    // Create panel content
+                    const panelContent = document.createElement('div');
+                    panelContent.className = 'panel-content';
+                    
+                    // Create panel title
+                    const panelTitle = document.createElement('h2');
+                    if (panel.neonTitle) {
+                        panelTitle.className = `panel-title neon-${panel.neonColor || 'gold'}`;
+                    } else {
+                        panelTitle.className = 'panel-title';
+                    }
+                    panelTitle.textContent = panel.title;
+                    
+                    // Create panel text
+                    const panelText = document.createElement('p');
+                    panelText.className = 'panel-text';
+                    panelText.textContent = panel.text;
+                    
+                    // Add elements to panel content
+                    panelContent.appendChild(panelTitle);
+                    panelContent.appendChild(panelText);
+                    
+                    // Add elements to panel
+                    panelElement.appendChild(panelBackground);
+                    panelElement.appendChild(panelContent);
+                    
+                    // Add panel to story container
+                    storyContainer.appendChild(panelElement);
+                });
+                
+                // Initialize GSAP animations
+                initAnimations();
+            }
+            
+            // Function to initialize GSAP animations
+            function initAnimations() {
+                // Register ScrollTrigger plugin
+                gsap.registerPlugin(ScrollTrigger);
+                
+                // Animate insignias
+                gsap.utils.toArray('.large-insignia').forEach((insignia) => {
+                    gsap.to(insignia, {
+                        opacity: 0.7,
+                        duration: 3,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                });
+                
+                // Animate audio circles
+                gsap.utils.toArray('.audio-circle').forEach((circle) => {
+                    gsap.to(circle, {
+                        opacity: 0.2,
+                        duration: 2,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                });
+                
+                // Animate panels on scroll
+                gsap.utils.toArray('.story-panel').forEach((panel, i) => {
+                    // Fade in panel
+                    gsap.fromTo(panel,
+                        { opacity: 0, y: 50 },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 1,
+                            scrollTrigger: {
+                                trigger: panel,
+                                start: "top 80%",
+                                end: "top 50%",
+                                scrub: 1
+                            }
+                        }
+                    );
+                    
+                    // Parallax effect on background
+                    gsap.to(panel.querySelector('.panel-background'), {
+                        y: -50,
+                        duration: 1,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: panel,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: true
+                        }
+                    });
+                });
+            }
+            
+            // Function to update audio progress
+            function updateAudioProgress() {
+                if (audio.duration) {
+                    const currentTime = audio.currentTime;
+                    const duration = audio.duration;
+                    audioProgress.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+                }
+            }
+            
+            // Audio event listeners
+            audio.addEventListener('timeupdate', updateAudioProgress);
+            
+            // Play/Pause button functionality
+            playPauseBtn.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play();
+                    playPauseBtn.textContent = '❚❚';
+                } else {
+                    audio.pause();
+                    playPauseBtn.textContent = '▶';
+                }
+            });
+            
+            // Restart button functionality
+            restartBtn.addEventListener('click', function() {
+                audio.currentTime = 0;
+                if (audio.paused) {
+                    audio.play();
+                    playPauseBtn.textContent = '❚❚';
+                }
+            });
+            
+            // Start reading button functionality
+            startReadingBtn.addEventListener('click', function() {
+                audio.play();
+                playPauseBtn.textContent = '❚❚';
+                window.scrollTo({
+                    top: storyContainer.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+                startReadingBtn.style.display = 'none';
+            });
+            
+            // Scroll to top button functionality
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Show/hide scroll to top button based on scroll position
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.style.opacity = '1';
+                } else {
+                    scrollTopBtn.style.opacity = '0';
+                }
+            });
+            
+            // Mobile menu functionality
+            const navToggle = document.querySelector('.nav-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const closeBtn = document.querySelector('.close-btn');
+            
+            if (navToggle && mobileMenu && closeBtn) {
+                navToggle.addEventListener('click', function() {
+                    mobileMenu.classList.add('flex');
+                    mobileMenu.classList.remove('hidden');
+                });
+                
+                closeBtn.addEventListener('click', function() {
+                    mobileMenu.classList.remove('flex');
+                    mobileMenu.classList.add('hidden');
+                });
+                
+                // Close mobile menu when clicking a link
+                const mobileLinks = mobileMenu.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.remove('flex');
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+            
+            // Generate story panels on page load
+            generateStoryPanels();
+        });
+    </script>
+</body>
+</html>
+                
