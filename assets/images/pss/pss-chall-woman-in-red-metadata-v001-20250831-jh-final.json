@@ -1,0 +1,35 @@
+{
+  "collection": "Pop Song Summer",
+  "chapter": "all",
+  "asset_title": "Woman in Red (Archetype)",
+  "filenames": {
+    "svg": "pss-chall-woman-in-red-portrait-ar4x5-svg-v001-20250831-jh-final.svg",
+    "png": "pss-chall-woman-in-red-portrait-ar4x5-4k-rgb-v001-20250831-jh-final.png",
+    "canvas_demo": "pss-chall-woman-in-red-portrait-ar4x5-4k-canvas-v001-20250831-jh-final.html"
+  },
+  "prompt": "Portrait: woman in a red velvet coat with sun insignia at the cuff, urban night with magenta/gold neon spill, subtle motion blur implying inevitability; archetypal, album-cover energy.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "4:5",
+  "color_space": "RGB",
+  "tags": [
+    "woman in red",
+    "archetype",
+    "velvet",
+    "sun insignia",
+    "neon",
+    "portrait"
+  ],
+  "chapters": [
+    "Velvet Dancers",
+    "Insignia of the Sun",
+    "Burning Houses in the Distance",
+    "On the Corner, Reading Poetry",
+    "A Blind Man Singing"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

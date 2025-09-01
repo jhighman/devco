@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – Patch Over Heart (Receipt Kept) (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1100px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 16/9; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3840" height="2160" aria-label="Patch Over Heart (Receipt Kept) artwork"></canvas>
+    <div class="controls">
+      <button id="render4k">Render 4K (3840×2160)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 4K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const W=3840, H=2160;
+    const FILENAME = "pss-patch-over-heart-receipt-kept-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png";
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(){ canvas.width=W; canvas.height=H; }
+    function L(x0,y0,x1,y1,stops){ const g = ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+    function R(cx,cy,r,stops){ const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+
+    function bg(){
+      ctx.fillStyle = L(0,0,0,H*0.48, [[0,"#0b0c16"],[0.6,"#0a0a12"],[1,"#090910"]]); ctx.fillRect(0,0,W,H*0.48);
+      ctx.fillStyle = L(0,0,0,200, [[0,"rgba(255,150,90,0)"],[1,"rgba(255,130,80,0.26)"]]); ctx.fillRect(0,0,W,200);
+      const pat = document.createElement('canvas'); pat.width=8; pat.height=8; const pctx = pat.getContext('2d');
+      pctx.fillStyle="#0f1220"; pctx.fillRect(0,0,8,8);
+      pctx.strokeStyle="#13182a"; pctx.beginPath(); pctx.moveTo(0,8); pctx.lineTo(8,0); pctx.stroke();
+      pctx.strokeStyle="#0c0f1d"; pctx.beginPath(); pctx.moveTo(0,0); pctx.lineTo(8,8); pctx.stroke();
+      const p = ctx.createPattern(pat,'repeat');
+      ctx.fillStyle=p; ctx.fillRect(0,H*0.48, W, H*0.52);
+      ctx.strokeStyle="#1a2036"; ctx.lineWidth=12;
+      ctx.beginPath(); ctx.moveTo(240,540); ctx.bezierCurveTo(520,680,620,900,620,1080); ctx.stroke();
+    }
+
+    function pocket(){
+      const ox=920, oy=720;
+      ctx.fillStyle="#10152a"; ctx.strokeStyle="#2b3355"; ctx.lineWidth=4;
+      ctx.beginPath(); ctx.moveTo(ox,oy); ctx.lineTo(ox+380,oy); ctx.lineTo(ox+360,oy+160); ctx.lineTo(ox+20,oy+160); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.fillStyle="#0f1426"; ctx.beginPath(); ctx.moveTo(ox,oy); ctx.lineTo(ox+380,oy); ctx.lineTo(ox+340,oy-60); ctx.lineTo(ox+40,oy-60); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle="#d6af37"; ctx.lineWidth=2; ctx.setLineDash([6,6]);
+      ctx.beginPath(); ctx.moveTo(ox+10,oy+6); ctx.lineTo(ox+370,oy+6); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(ox+8,oy+156); ctx.lineTo(ox+352,oy+156); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(ox+18,oy-56); ctx.lineTo(ox+362,oy-56); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(ox+6,oy+8); ctx.lineTo(ox+6,oy+150); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(ox+366,oy+8); ctx.lineTo(ox+346,oy+150); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function patch(){
+      const cx=760, cy=640;
+      ctx.fillStyle="#1a0f18"; ctx.strokeStyle="#2e1a28"; ctx.lineWidth=6;
+      ctx.beginPath(); ctx.arc(cx,cy,110,0,Math.PI*2); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle="rgba(255,180,220,0.25)"; ctx.lineWidth=12; ctx.beginPath(); ctx.arc(cx,cy,90,0,Math.PI*2); ctx.stroke();
+      const r=40; const g = R(cx,cy,r, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.save(); ctx.filter='blur(8px)'; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill(); ctx.restore();
+      ctx.strokeStyle="#d6af37"; ctx.lineWidth=10; ctx.lineCap='round';
+      function ray(ax,ay,bx,by){ ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke(); }
+      ray(cx,cy-84, cx,cy-48); ray(cx,cy+48, cx,cy+84); ray(cx-84,cy, cx-48,cy); ray(cx+48,cy, cx+84,cy);
+      ctx.strokeStyle="#d6af37"; ctx.lineWidth=3; ctx.setLineDash([8,10]);
+      ctx.beginPath(); ctx.arc(cx,cy,110,0,Math.PI*2); ctx.stroke(); ctx.setLineDash([]);
+    }
+
+    function receipt(){
+      const ox=790, oy=710;
+      ctx.save(); ctx.translate(ox,oy); ctx.rotate(-12*Math.PI/180);
+      const w=300,h=380; ctx.fillStyle="#f7f7fb"; ctx.strokeStyle="#d8d8e2"; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.roundRect(0,0,w,h,8); ctx.fill(); ctx.stroke();
+      ctx.fillStyle="#1a1a22"; ctx.fillRect(18,24,220,16);
+      ctx.fillStyle="#606070"; ctx.fillRect(18,48,160,10);
+      ctx.fillStyle="#9a9aaa"; for(const [y,len] of [[86,240],[108,210],[130,230],[152,170],[174,230]]) ctx.fillRect(18,y,len,8);
+      ctx.fillStyle="#111116"; ctx.fillRect(18,320,190,26);
+      ctx.fillStyle="#ececf6"; for(const [x,w] of [[24,3],[30,7],[41,2],[47,6],[57,2],[63,8],[75,2],[81,6]]) ctx.fillRect(x,324,w,18);
+      ctx.save(); ctx.translate(140,260); ctx.rotate(-8*Math.PI/180);
+      ctx.strokeStyle="#ff6a6a"; ctx.lineWidth=6; ctx.beginPath(); ctx.roundRect(-80,-22,160,44,6); ctx.stroke();
+      ctx.fillStyle="#ff6a6a"; ctx.font="34px monospace"; ctx.textAlign="center"; ctx.fillText("KEEP", 0, 10);
+      ctx.restore();
+      ctx.fillStyle="#b0b6c8"; ctx.strokeStyle="#e8ebf5"; ctx.beginPath(); ctx.arc(260,30,10,0,Math.PI*2); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle="#b0b6c8"; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(250,30); ctx.lineTo(120,80); ctx.stroke();
+      ctx.restore();
+    }
+
+    function vignette(){
+      const r = Math.max(W,H)*0.95;
+      const g = ctx.createRadialGradient(W/2,H/2, r*0.55, W/2,H/2, r);
+      g.addColorStop(0,"rgba(0,0,0,0)");
+      g.addColorStop(1,"rgba(0,0,0,0.82)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    }
+
+    function render(){ setSize(); bg(); pocket(); patch(); receipt(); vignette(); }
+    render();
+
+    document.getElementById('render4k').addEventListener('click', render);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

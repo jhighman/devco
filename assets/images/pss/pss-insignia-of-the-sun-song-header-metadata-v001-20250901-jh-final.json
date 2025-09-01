@@ -1,0 +1,32 @@
+{
+  "collection": "Pop Song Summer",
+  "asset_title": "Insignia of the Sun \u2014 Song Header",
+  "filenames": {
+    "svg": "pss-insignia-of-the-sun-song-header-ar3x1-svg-v001-20250901-jh-final.svg",
+    "png": "pss-insignia-of-the-sun-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png",
+    "canvas_demo": "pss-insignia-of-the-sun-song-header-ar3x1-3k-canvas-v001-20250901-jh-final.html"
+  },
+  "prompt": "3:1 dark header featuring the recurring sun insignia: glowing center, cross rays, dashed orbit rings, ritual grid lines, soft bokeh, and a bottom legibility fade.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-09-01",
+  "aspect_ratio": "3:1",
+  "resolution": "3000x1000",
+  "color_space": "RGB",
+  "tags": [
+    "header",
+    "sun insignia",
+    "ritual grid",
+    "bokeh",
+    "Pop Song Summer"
+  ],
+  "chapters_referenced": [
+    "02",
+    "03",
+    "06"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept header artwork for Pop Song Summer."
+  }
+}

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer — The End of Everything (Header)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; background:#0b0f18; color:#eaeaea; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1400px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 3/1; display:block; border-radius:14px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0c1022; }
+    .controls { display:flex; gap:10px; margin-top:12px; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3000" height="1000" aria-label="The End of Everything — Song Header artwork"></canvas>
+    <div class="controls">
+      <button id="download">Download PNG</button>
+    </div>
+  </div>
+
+<script>
+const W=3000,H=1000; const canvas=document.getElementById('art'); const ctx=canvas.getContext('2d');
+function L(x0,y0,x1,y1,stops){ const g=ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g }
+function R(cx,cy,r,stops){ const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g }
+
+function render(){
+  canvas.width=W; canvas.height=H;
+  // sky
+  ctx.fillStyle=L(0,0,0,H,[[0,"#0c1024"],[0.6,"#0a0f1f"],[1,"#0a0c14"]]); ctx.fillRect(0,0,W,H);
+  // horizon ember
+  const eg=R(1500,640,1000,[[0,"rgba(255,160,100,0.32)"],[1,"rgba(255,120,80,0)"]]);
+  ctx.save(); ctx.filter="blur(10px)"; ctx.fillStyle=eg; ctx.beginPath(); ctx.ellipse(1500,640,1000,380,0,0,Math.PI*2); ctx.fill(); ctx.restore();
+  // ground
+  ctx.fillStyle="rgba(11,15,27,0.96)"; ctx.beginPath(); ctx.moveTo(0,880); ctx.lineTo(1200,820); ctx.lineTo(3000,900); ctx.lineTo(3000,1000); ctx.lineTo(0,1000); ctx.closePath(); ctx.fill();
+  // city blocks
+  function block(x,w,h){ ctx.beginPath(); ctx.roundRect(x, 860-h, w, h, 2); ctx.fill(); }
+  ctx.fillStyle="rgba(14,19,36,0.95)";
+  [[260,80,60],[360,60,70],[460,90,80],[620,70,68],[720,110,56],[880,70,80],[980,50,64],[1100,90,70],[1900,80,68],[2020,60,76],[2120,100,60],[2260,70,72],[2380,120,56]].forEach(([x,w,h])=>block(x,w,h));
+  // ember spots
+  function ember(cx,cy,r){ const g=R(cx,cy,r,[[0,"rgba(255,170,110,0.6)"],[1,"rgba(255,170,110,0)"]]); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,r*2,0,Math.PI*2); ctx.fill(); }
+  ember(820,820,3); ember(910,826,2.5); ember(1010,818,3.5); ember(2100,820,3); ember(2200,828,2.5); ember(2320,816,3.5);
+  // crack line
+  ctx.strokeStyle="rgba(42,48,72,0.8)"; ctx.lineWidth=4; ctx.beginPath();
+  const P=[[400,940],[620,900],[800,920],[980,880],[1200,900],[1400,860],[1580,880],[1760,860],[1960,880],[2140,860],[2300,880]];
+  ctx.moveTo(P[0][0],P[0][1]); for(let i=1;i<P.length;i++){ ctx.lineTo(P[i][0],P[i][1]); } ctx.stroke();
+  // eclipsed sun-insignia
+  const sg=R(1500,620,78,[[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+  ctx.save(); ctx.globalAlpha=.35; ctx.filter="blur(10px)"; ctx.fillStyle=sg; ctx.beginPath(); ctx.arc(1500,620,78,0,Math.PI*2); ctx.fill(); ctx.filter="none"; ctx.globalAlpha=.9; ctx.strokeStyle="#d6af37"; ctx.lineWidth=8; ctx.lineCap="round";
+  function ray(ax,ay,bx,by){ ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke(); }
+  ray(1500,510,1500,542); ray(1500,698,1500,730); ray(1390,620,1422,620); ray(1578,620,1610,620);
+  // eclipse disc
+  ctx.beginPath(); ctx.fillStyle="#0a0d16"; ctx.arc(1500,620,64,0,Math.PI*2); ctx.fill();
+  ctx.restore();
+  // ash
+  ctx.fillStyle="rgba(207,214,223,0.35)";
+  for(let i=0;i<40;i++){ const x=200+Math.random()*2600, y=200+Math.random()*220, r = 1+Math.random()*1.2; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill(); }
+  // bokeh
+  function dot(cx,cy,r,c){ const g=R(cx,cy,r,[[0,c],[1,"rgba(0,0,0,0)"]]); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill(); }
+  dot(520,500,12,"rgba(180,150,255,0.35)"); dot(860,560,10,"rgba(255,170,110,0.35)"); dot(2060,500,12,"rgba(180,150,255,0.35)"); dot(2380,560,10,"rgba(255,170,110,0.35)"); dot(2600,500,14,"rgba(180,150,255,0.35)");
+  // bottom fade
+  const f=L(0,720,0,1000,[[0,"rgba(0,0,0,0)"],[1,"rgba(0,0,0,0.6)"]]); ctx.fillStyle=f; ctx.fillRect(0,720,W,280);
+}
+render();
+document.getElementById('download').addEventListener('click', ()=>{
+  canvas.toBlob((b)=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download="pss-the-end-of-everything-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png"; document.body.appendChild(a); a.click(); a.remove(); }, "image/png");
+});
+</script>
+</body>
+</html>

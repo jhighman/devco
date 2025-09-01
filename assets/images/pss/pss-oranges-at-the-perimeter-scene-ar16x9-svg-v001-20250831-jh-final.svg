@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Oranges at the Perimeter — Pop Song Summer</title>
+  <desc id="desc">Night perimeter fence with diagonal chain-link pattern. A line of oranges (whole and halved) sits along the curb like warding marks. One orange bears a gold sun insignia sticker. Distant horizon glows amber; a floodlight cone grazes the fence.</desc>
+
+  <defs>
+    <!-- Sky / horizon -->
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0b0c16"/>
+      <stop offset="60%"  stop-color="#0a0a12"/>
+      <stop offset="100%" stop-color="#090910"/>
+    </linearGradient>
+    <linearGradient id="haze" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="rgba(255,150,90,0.0)"/>
+      <stop offset="100%" stop-color="rgba(255,130,80,0.28)"/>
+    </linearGradient>
+
+    <!-- Ground -->
+    <linearGradient id="asphalt" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0a0a12"/>
+      <stop offset="100%" stop-color="#08080f"/>
+    </linearGradient>
+
+    <!-- Floodlight glow -->
+    <radialGradient id="gold" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffe789"/>
+      <stop offset="70%" stop-color="#d6af37"/>
+      <stop offset="100%" stop-color="rgba(168,122,34,0)"/>
+    </radialGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+
+    <!-- Vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="80%">
+      <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.82)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Sky & horizon -->
+  <rect width="1920" height="520" fill="url(#sky)"/>
+  <rect width="1920" height="200" fill="url(#haze)"/>
+
+  <!-- Floodlight cone (subtle) -->
+  <ellipse cx="1640" cy="160" rx="480" ry="200" fill="url(#gold)" filter="url(#soft)" opacity="0.25"/>
+
+  <!-- Fence posts -->
+  <g stroke="rgba(220,220,240,0.25)" stroke-width="12">
+    <line x1="160" y1="80" x2="160" y2="520"/>
+    <line x1="480" y1="80" x2="480" y2="520"/>
+    <line x1="800" y1="80" x2="800" y2="520"/>
+    <line x1="1120" y1="80" x2="1120" y2="520"/>
+    <line x1="1440" y1="80" x2="1440" y2="520"/>
+  </g>
+
+  <!-- Chain-link (diagonal hatch) -->
+  <g stroke="rgba(220,220,240,0.18)" stroke-width="3">
+    <!-- forward diagonals -->
+    <path d="M0,120 L240,0 M-200,260 L320,-20 M-80,360 L440,-20 M40,460 L560,-20 M160,560 L680,-20 M280,560 L800,-20 M400,560 L920,-20 M520,560 L1040,-20 M640,560 L1160,-20 M760,560 L1280,-20 M880,560 L1400,-20 M1000,560 L1520,-20 M1120,560 L1640,-20 M1240,560 L1760,-20 M1360,560 L1880,-20" />
+    <!-- back diagonals -->
+    <path d="M2000,120 L1760,0 M2120,220 L1600,-20 M2240,320 L1440,-20 M2360,420 L1280,-20 M1600,560 L1120,-20 M1480,560 L1000,-20 M1360,560 L880,-20 M1240,560 L760,-20 M1120,560 L640,-20 M1000,560 L520,-20 M880,560 L400,-20 M760,560 L280,-20 M640,560 L160,-20 M520,560 L40,-20 M400,560 L-80,-20" />
+  </g>
+
+  <!-- Ground -->
+  <rect x="0" y="520" width="1920" height="560" fill="url(#asphalt)"/>
+  <rect x="0" y="520" width="1920" height="12" fill="#1b1b24"/>
+
+  <!-- Oranges along the curb -->
+  <g id="oranges" transform="translate(240,620)">
+    <!-- Whole oranges -->
+    <g>
+      <circle cx="0" cy="0" r="28" fill="#f38b1a" stroke="rgba(255,220,180,0.4)" stroke-width="3"/>
+      <circle cx="140" cy="14" r="26" fill="#f38b1a" stroke="rgba(255,220,180,0.4)" stroke-width="3"/>
+      <circle cx="300" cy="-6" r="30" fill="#f38b1a" stroke="rgba(255,220,180,0.4)" stroke-width="3"/>
+    </g>
+    <!-- Halved with segments -->
+    <g stroke="#ffe2b0" stroke-width="3">
+      <circle cx="70" cy="10" r="22" fill="#ffb14d"/>
+      <path d="M70,-12 L70,32 M48,10 L92,10 M57,-5 L83,25 M57,25 L83,-5" />
+      <circle cx="220" cy="-2" r="24" fill="#ffb14d"/>
+      <path d="M220,-26 L220,22 M196,-2 L244,-2 M205,-15 L235,11 M205,11 L235,-15" />
+    </g>
+    <!-- Leaf & stem accents -->
+    <g fill="#2d6c3a">
+      <ellipse cx="12" cy="-20" rx="10" ry="6" />
+      <ellipse cx="292" cy="-28" rx="12" ry="8" />
+    </g>
+    <!-- Insignia sticker on one orange -->
+    <g transform="translate(300,-6)">
+      <circle cx="0" cy="0" r="10" fill="url(#gold)" filter="url(#soft)" opacity="0.95"/>
+      <g stroke="#d6af37" stroke-width="3" stroke-linecap="round">
+        <line x1="0" y1="-20" x2="0" y2="-12"/>
+        <line x1="0" y1="12" x2="0" y2="20"/>
+        <line x1="-20" y1="0" x2="-12" y2="0"/>
+        <line x1="12" y1="0" x2="20" y2="0"/>
+      </g>
+    </g>
+    <!-- Mesh bag -->
+    <g opacity="0.35" stroke="#eec391" stroke-width="2">
+      <path d="M360,-18 C400,-40 440,-20 470,10 C500,40 500,70 460,82 C420,94 380,60 360,20 Z" fill="none"/>
+      <!-- net -->
+      <g>
+        <path d="M370,-10 L460,70 M385,-15 L475,65 M355,10 L445,90 M360,-5 L450,75" />
+        <path d="M365,20 L470,-20 M360,10 L460,-30 M375,35 L485,-8 M390,40 L500,0" />
+      </g>
+    </g>
+  </g>
+
+  <!-- Vignette -->
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+</svg>

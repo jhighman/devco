@@ -1,0 +1,26 @@
+{
+  "collection": "Pop Song Summer",
+  "chapter": "01",
+  "asset_title": "The Velvet Curtain",
+  "filename_svg": "pss-ch01-velvet-curtain-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+  "filename_png": "pss-ch01-velvet-curtain-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+  "filename_canvas_demo": "pss-ch01-velvet-curtain-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html",
+  "prompt": "Anonymous city alley between shuttered bodegas; blood-red velvet curtain centered, no signage; neon magenta and gold spill; bass ripples in a puddle; noir, album-cover energy.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "16:9",
+  "color_space": "RGB",
+  "tags": [
+    "velvet",
+    "curtain",
+    "neon",
+    "alley",
+    "noir",
+    "pop song summer"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

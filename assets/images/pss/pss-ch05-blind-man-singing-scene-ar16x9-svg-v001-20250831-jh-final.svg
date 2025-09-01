@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Blind Man Singing — Pop Song Summer</title>
+  <desc id="desc">Night bridge scene: blind singer on a milk crate with cane, no amp; soft sound as light halo; pedestrians moving in rhythm; distant fires on horizon; subtle sun insignia glows.</desc>
+
+  <defs>
+    <!-- Night sky -->
+    <radialGradient id="sky" cx="50%" cy="45%" r="80%">
+      <stop offset="0%"   stop-color="#0a0b14"/>
+      <stop offset="65%"  stop-color="#070812"/>
+      <stop offset="100%" stop-color="#05060c"/>
+    </radialGradient>
+
+    <!-- City glow/haze -->
+    <linearGradient id="haze" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="rgba(255,140,100,0.0)"/>
+      <stop offset="80%"  stop-color="rgba(255,140,100,0.2)"/>
+      <stop offset="100%" stop-color="rgba(255,140,100,0.35)"/>
+    </linearGradient>
+
+    <!-- Fire on horizon -->
+    <linearGradient id="fire" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="rgba(255,160,90,0.9)"/>
+      <stop offset="70%"  stop-color="rgba(220,80,40,0.6)"/>
+      <stop offset="100%" stop-color="rgba(220,80,40,0.0)"/>
+    </linearGradient>
+
+    <!-- Bridge deck gradient -->
+    <linearGradient id="deck" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0e0e16"/>
+      <stop offset="100%" stop-color="#0a0a12"/>
+    </linearGradient>
+
+    <!-- Sound halo -->
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%"   stop-color="rgba(255,235,160,0.9)"/>
+      <stop offset="60%"  stop-color="rgba(255,210,120,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,210,120,0.0)"/>
+    </radialGradient>
+    <filter id="blur10" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+
+    <!-- Gold insignia -->
+    <radialGradient id="gold" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffe789"/>
+      <stop offset="65%" stop-color="#d6af37"/>
+      <stop offset="100%" stop-color="rgba(168,122,34,0)"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+
+    <!-- Vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="80%">
+      <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.8)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background sky + haze -->
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <rect width="1920" height="1080" fill="url(#haze)" opacity="0.35"/>
+
+  <!-- Distant fires on horizon -->
+  <g opacity="0.7">
+    <rect x="0" y="860" width="1920" height="140" fill="url(#fire)"/>
+    <rect x="0" y="860" width="1920" height="140" fill="url(#fire)" transform="translate(0,20)" opacity="0.4"/>
+  </g>
+
+  <!-- Bridge deck & rails -->
+  <rect x="0" y="760" width="1920" height="320" fill="url(#deck)"/>
+  <g stroke="rgba(180,180,200,0.25)" stroke-width="4">
+    <line x1="0" y1="780" x2="1920" y2="780"/>
+    <line x1="0" y1="820" x2="1920" y2="820"/>
+  </g>
+  <!-- Rail posts -->
+  <g stroke="rgba(180,180,200,0.22)" stroke-width="6">
+    <path d="M120,820 v-80 M360,820 v-80 M600,820 v-80 M840,820 v-80 M1080,820 v-80 M1320,820 v-80 M1560,820 v-80 M1800,820 v-80"/>
+  </g>
+
+  <!-- Sound halo at center -->
+  <circle cx="960" cy="780" r="220" fill="url(#halo)" filter="url(#blur10)"/>
+
+  <!-- Singer: milk crate, figure, cane -->
+  <g id="singer" transform="translate(960,760)">
+    <!-- crate -->
+    <rect x="-25" y="40" width="50" height="40" fill="#111118" stroke="#282836" stroke-width="3"/>
+    <g stroke="#2a2a3a" stroke-width="2">
+      <line x1="-22" y1="50" x2="22" y2="50"/>
+      <line x1="-22" y1="60" x2="22" y2="60"/>
+      <line x1="-22" y1="70" x2="22" y2="70"/>
+      <line x1="-22" y1="80" x2="22" y2="80"/>
+    </g>
+    <!-- figure -->
+    <path d="M-10,10 q0,-40 40,-40 q40,0 40,40 q-20,15 -38,22 q4,28 10,52 q-20,10 -44,0 q8,-26 10,-52 q-18,-8 -28,-22 z" fill="#0b0a10"/>
+    <!-- cane -->
+    <path d="M35,0 q8,40 10,88 q0,10 -8,14" stroke="#b8b4aa" stroke-width="6" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- Crowd silhouettes (left/right) -->
+  <g id="crowd" fill="rgba(20,18,28,0.9)">
+    <path d="M200,900 q-30,-80 40,-120 q60,-40 110,30 q-30,30 -30,80 q0,50 30,100 q-80,30 -150,10 z"/>
+    <path d="M330,900 q-20,-80 40,-110 q60,-30 90,40 q-28,28 -28,74 q0,52 22,94 q-70,26 -124,6 z" opacity="0.85"/>
+    <path d="M1680,900 q-24,-80 50,-120 q70,-30 100,46 q-34,28 -32,76 q2,50 26,90 q-78,28 -144,10 z"/>
+    <path d="M1550,900 q-20,-70 45,-100 q55,-30 88,36 q-26,26 -26,70 q0,50 20,86 q-66,22 -118,8 z" opacity="0.85"/>
+  </g>
+
+  <!-- A few insignia glows in the crowd -->
+  <g>
+    <circle cx="320" cy="820" r="10" fill="url(#gold)" filter="url(#glow)"/>
+    <circle cx="1600" cy="820" r="10" fill="url(#gold)" filter="url(#glow)"/>
+  </g>
+
+  <!-- Vignette -->
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+</svg>

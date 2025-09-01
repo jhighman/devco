@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Back Room: Church of Light — Pop Song Summer</title>
+  <desc id="desc">Disco-temple with vertical light columns, water-ripple floor, and a glowing circle sigil; silhouetted velvet dancers around the ring; gold sun insignia glows.</desc>
+
+  <defs>
+    <!-- Background gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="80%">
+      <stop offset="0%"  stop-color="#0d0a12"/>
+      <stop offset="60%" stop-color="#0a0810"/>
+      <stop offset="100%" stop-color="#05050a"/>
+    </radialGradient>
+
+    <!-- Light column gradient -->
+    <linearGradient id="beam" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="rgba(255,230,160,0.0)"/>
+      <stop offset="20%"  stop-color="rgba(255,230,160,0.45)"/>
+      <stop offset="55%"  stop-color="rgba(255,200,90,0.20)"/>
+      <stop offset="100%" stop-color="rgba(255,200,90,0.0)"/>
+    </linearGradient>
+
+    <!-- Beam blur for softness -->
+    <filter id="beamBlur" x="-50%" y="-10%" width="200%" height="120%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+
+    <!-- Floor ripple gradient -->
+    <radialGradient id="floorGrad" cx="50%" cy="85%" r="55%">
+      <stop offset="0%"   stop-color="rgba(120,80,120,0.6)"/>
+      <stop offset="100%" stop-color="rgba(30,20,40,0.0)"/>
+    </radialGradient>
+
+    <!-- Sigil glow -->
+    <radialGradient id="sigilGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="rgba(255,80,80,0.9)"/>
+      <stop offset="60%"  stop-color="rgba(220,40,40,0.45)"/>
+      <stop offset="100%" stop-color="rgba(220,40,40,0.0)"/>
+    </radialGradient>
+    <filter id="sigilBlur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+
+    <!-- Gold insignia glow -->
+    <radialGradient id="insigniaGold" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ffe789"/>
+      <stop offset="70%"  stop-color="#d6af37"/>
+      <stop offset="100%" stop-color="rgba(168,122,34,0)"/>
+    </radialGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+
+    <!-- Vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="80%">
+      <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.75)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="url(#bgGrad)"/>
+
+  <!-- Beams of light (evenly spaced) -->
+  <g filter="url(#beamBlur)">
+    <!-- 7 columns -->
+    <rect x="200"  y="0" width="70" height="1080" fill="url(#beam)"/>
+    <rect x="450"  y="0" width="70" height="1080" fill="url(#beam)"/>
+    <rect x="700"  y="0" width="70" height="1080" fill="url(#beam)"/>
+    <rect x="950"  y="0" width="70" height="1080" fill="url(#beam)"/>
+    <rect x="1200" y="0" width="70" height="1080" fill="url(#beam)"/>
+    <rect x="1450" y="0" width="70" height="1080" fill="url(#beam)"/>
+    <rect x="1700" y="0" width="70" height="1080" fill="url(#beam)"/>
+  </g>
+
+  <!-- Floor ripple / pool -->
+  <ellipse cx="960" cy="930" rx="740" ry="180" fill="url(#floorGrad)"/>
+
+  <!-- Glowing sigil ring -->
+  <g id="sigil">
+    <circle cx="960" cy="880" r="200" fill="url(#sigilGlow)" filter="url(#sigilBlur)" opacity="0.9"/>
+    <circle cx="960" cy="880" r="190" fill="none" stroke="rgba(255,90,90,0.9)" stroke-width="8"/>
+    <circle cx="960" cy="880" r="206" fill="none" stroke="rgba(255,140,120,0.35)" stroke-width="14"/>
+  </g>
+
+  <!-- Dancer silhouettes (abstract, ritual motion) -->
+  <g id="dancers" fill="rgba(10,0,10,0.9)">
+    <!-- Left -->
+    <path d="M760,750 q-20,-120 40,-160 q60,-40 100,30 q-30,40 -30,90 q0,50 30,110 q-40,10 -90,-10 q-50,-20 -50,-60 z"/>
+    <!-- Right -->
+    <path d="M1160,760 q10,-110 70,-140 q60,-30 90,50 q-30,30 -30,80 q0,60 20,100 q-60,20 -110,0 q-50,-20 -40,-90 z"/>
+    <!-- Rear center -->
+    <path d="M960,700 q-10,-80 40,-120 q50,-40 90,0 q-20,30 -20,70 q0,60 20,110 q-50,20 -90,0 q-40,-20 -40,-60 z" opacity="0.8"/>
+  </g>
+
+  <!-- Insignia glows on shoulders -->
+  <g id="insignia">
+    <circle cx="830" cy="720" r="10" fill="url(#insigniaGold)" filter="url(#softGlow)"/>
+    <circle cx="1120" cy="720" r="10" fill="url(#insigniaGold)" filter="url(#softGlow)"/>
+    <circle cx="990" cy="690" r="9"  fill="url(#insigniaGold)" filter="url(#softGlow)"/>
+  </g>
+
+  <!-- Vignette -->
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+</svg>

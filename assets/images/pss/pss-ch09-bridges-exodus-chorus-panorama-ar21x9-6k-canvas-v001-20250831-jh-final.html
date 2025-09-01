@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – Bridges — Exodus Chorus (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(96vw, 1200px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 21/9; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="6048" height="2592" aria-label="Bridges — Exodus Chorus artwork"></canvas>
+    <div class="controls">
+      <button id="render6k">Render 6K (6048×2592)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 6K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const W=6048, H=2592;
+    const FILENAME = "pss-ch09-bridges-exodus-chorus-panorama-ar21x9-6k-rgb-v001-20250831-jh-final.png";
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(){ canvas.width=W; canvas.height=H; }
+    function L(x0,y0,x1,y1,stops){ const g = ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+    function R(cx,cy,r,stops){ const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+
+    function sky(){
+      ctx.fillStyle = L(0,0,0,H, [[0,"#090a12"],[0.55,"#0a0810"],[1,"#07060c"]]); ctx.fillRect(0,0,W,H);
+      ctx.fillStyle = L(0,0,0,H, [[0,"rgba(255,160,90,0)"],[0.7,"rgba(255,140,80,0.2)"],[1,"rgba(255,120,70,0.35)"]]); ctx.fillRect(0,0,W,H);
+      const g = L(0,H*0.69,0,H*0.76, [[0,"rgba(255,180,90,1)"],[0.7,"rgba(230,90,40,0.75)"],[1,"rgba(220,60,30,0)"]]);
+      ctx.globalAlpha = 0.6; ctx.fillStyle=g; ctx.fillRect(0,H*0.69,W,H*0.07); ctx.globalAlpha = 1;
+    }
+
+    function bridges(){
+      ctx.fillStyle="#0a0a12"; ctx.strokeStyle="rgba(200,200,220,0.18)"; ctx.lineWidth=4;
+      // upper span shape
+      ctx.beginPath(); ctx.moveTo(-80,1280);
+      ctx.bezierCurveTo(1200,1120, 4848,1120, 6128,1280);
+      ctx.lineTo(6128,1360);
+      ctx.bezierCurveTo(4848,1200, 1200,1200, -80,1360);
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+      // pillars
+      function pillar(x,h){ ctx.beginPath(); ctx.roundRect(x,1360,36,h,8); ctx.fill(); ctx.stroke(); }
+      pillar(760,640); pillar(2140,700); pillar(3520,720); pillar(4900,660);
+      // lower span
+      ctx.beginPath(); ctx.moveTo(-80,1700);
+      ctx.bezierCurveTo(1200,1540, 4848,1540, 6128,1700);
+      ctx.lineTo(6128,1780);
+      ctx.bezierCurveTo(4848,1620, 1200,1620, -80,1780);
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+    }
+
+    function river(){ ctx.fillStyle="#0a0a12"; ctx.fillRect(0,H*0.69+180,W,H - (H*0.69+180)); }
+
+    function lightTrails(){
+      ctx.save(); ctx.lineCap='round'; ctx.filter='blur(6px)';
+      // outbound red/pink staff
+      function curve(y, color, w){ ctx.strokeStyle=color; ctx.lineWidth=w; ctx.globalAlpha=0.9; ctx.beginPath(); ctx.moveTo(0,y); ctx.bezierCurveTo(800,y-80, 1600,y+40, 2400,y-20); ctx.bezierCurveTo(3200,y-80, 4800,y+60, W,y-20); ctx.stroke(); }
+      curve(1480, "#ff7a7a", 10);
+      ctx.globalAlpha=0.8; curve(1510, "#ff9acb", 8);
+      ctx.globalAlpha=0.75; curve(1540, "#ffd27a", 6);
+      // inbound white/amber lower
+      function curve2(y, color, w){ ctx.strokeStyle=color; ctx.lineWidth=w; ctx.beginPath(); ctx.moveTo(0,y); ctx.bezierCurveTo(900,y-60, 1700,y+40, 2500,y-20); ctx.bezierCurveTo(3400,y-80, 4800,y+100, W,y-20); ctx.stroke(); }
+      ctx.globalAlpha=0.75; curve2(1820, "#e6e6f0", 8);
+      ctx.globalAlpha=0.7; curve2(1850, "#ffdca0", 6);
+      ctx.restore();
+    }
+
+    function signage(){
+      ctx.fillStyle="#0d0e16"; ctx.strokeStyle="rgba(200,200,220,0.24)"; ctx.lineWidth=3;
+      function sign(x){ ctx.beginPath(); ctx.roundRect(x,1180,320,120,8); ctx.fill(); ctx.stroke(); }
+      sign(1600); sign(3600);
+      ctx.save(); ctx.fillStyle="#ffd27a"; ctx.font="56px monospace"; ctx.textAlign="center"; ctx.globalAlpha=0.85;
+      ctx.fillText("EAST", 1760, 1260);
+      ctx.fillText("EXIT 7", 3760, 1260);
+      ctx.restore();
+    }
+
+    function reflections(){
+      ctx.save(); ctx.filter='blur(6px)'; ctx.globalAlpha=0.35;
+      function band(y,h,c){ ctx.fillStyle=c; ctx.fillRect(0,y,h?W:W, h||6); }
+      band(1920,8,"#ff7a7a"); band(1940,6,"#ff9acb"); band(1960,6,"#ffd27a"); band(1986,6,"#e6e6f0"); band(2006,6,"#ffdca0");
+      ctx.restore();
+      // hidden insignia glow under pillar
+      const sx=3520, sy=2060, r=24;
+      const g = R(sx,sy,r, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.save(); ctx.filter='blur(6px)'; ctx.globalAlpha=0.55; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(sx,sy,r,0,Math.PI*2); ctx.fill(); ctx.restore();
+    }
+
+    function vignette(){
+      const r = Math.max(W,H)*0.95;
+      const g = ctx.createRadialGradient(W/2,H/2, r*0.55, W/2,H/2, r);
+      g.addColorStop(0,"rgba(0,0,0,0)");
+      g.addColorStop(1,"rgba(0,0,0,0.82)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    }
+
+    function render(){ setSize(); sky(); bridges(); river(); lightTrails(); signage(); reflections(); vignette(); }
+    render();
+
+    document.getElementById('render6k').addEventListener('click', render);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

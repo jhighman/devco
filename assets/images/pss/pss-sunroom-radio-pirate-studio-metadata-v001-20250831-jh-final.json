@@ -1,0 +1,35 @@
+{
+  "collection": "Pop Song Summer",
+  "asset_title": "Sunroom Radio (Pirate Studio)",
+  "filenames": {
+    "svg": "pss-sunroom-radio-pirate-studio-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+    "png": "pss-sunroom-radio-pirate-studio-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+    "canvas_demo": "pss-sunroom-radio-pirate-studio-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+  },
+  "prompt": "DIY pirate radio studio inside a glass sunroom at night: window grid framing an amber horizon; turntable, mixer, cassette deck on a desk; a mic arm; an ON AIR light; milk crate with vinyl; distant rooftop antenna outside. A gold sun-insignia sticker glows on the mixer.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "16:9",
+  "resolution": "3840x2160",
+  "color_space": "RGB",
+  "tags": [
+    "pirate radio",
+    "sunroom",
+    "turntable",
+    "mixer",
+    "on air",
+    "insignia",
+    "antenna"
+  ],
+  "chapters_referenced": [
+    "01",
+    "02",
+    "06",
+    "07"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6048 2592" role="img" aria-labelledby="title desc">
+  <title id="title">Bridges — Exodus Chorus — Pop Song Summer</title>
+  <desc id="desc">Cinematic 21:9 night panorama of stacked highway bridges crossing a river; long taillight streams form musical-staff lines; headlights counterflow; distant fires tint the horizon; hidden sun insignia reflected in water under an arch.</desc>
+
+  <defs>
+    <!-- Night sky -->
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#090a12"/>
+      <stop offset="55%"  stop-color="#0a0810"/>
+      <stop offset="100%" stop-color="#07060c"/>
+    </linearGradient>
+
+    <!-- Amber haze near horizon -->
+    <linearGradient id="haze" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="rgba(255,160,90,0.0)"/>
+      <stop offset="70%"  stop-color="rgba(255,140,80,0.20)"/>
+      <stop offset="100%" stop-color="rgba(255,120,70,0.35)"/>
+    </linearGradient>
+
+    <!-- Fire glow band -->
+    <linearGradient id="fire" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="rgba(255,180,90,1)"/>
+      <stop offset="70%"  stop-color="rgba(230,90,40,0.75)"/>
+      <stop offset="100%" stop-color="rgba(220,60,30,0.0)"/>
+    </linearGradient>
+
+    <!-- Vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="80%">
+      <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.82)"/>
+    </radialGradient>
+
+    <!-- Gold insignia -->
+    <radialGradient id="gold" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffe789"/>
+      <stop offset="70%" stop-color="#d6af37"/>
+      <stop offset="100%" stop-color="rgba(168,122,34,0)"/>
+    </radialGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+
+    <!-- Neon blur for light trails -->
+    <filter id="neon" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+  </defs>
+
+  <!-- Sky + haze + far fire band -->
+  <rect width="6048" height="2592" fill="url(#sky)"/>
+  <rect width="6048" height="2592" fill="url(#haze)"/>
+  <rect x="0" y="1800" width="6048" height="180" fill="url(#fire)" opacity="0.6"/>
+
+  <!-- Bridge silhouettes: upper and lower decks -->
+  <g fill="#0a0a12" stroke="rgba(200,200,220,0.18)" stroke-width="4">
+    <!-- Upper span -->
+    <path d="M-80,1280 C1200,1120 4848,1120 6128,1280 L6128,1360 C4848,1200 1200,1200 -80,1360 Z"/>
+    <!-- Pillars -->
+    <rect x="760" y="1360" width="36" height="640" rx="8"/>
+    <rect x="2140" y="1360" width="36" height="700" rx="8"/>
+    <rect x="3520" y="1360" width="36" height="720" rx="8"/>
+    <rect x="4900" y="1360" width="36" height="660" rx="8"/>
+    <!-- Lower span -->
+    <path d="M-80,1700 C1200,1540 4848,1540 6128,1700 L6128,1780 C4848,1620 1200,1620 -80,1780 Z"/>
+  </g>
+
+  <!-- River -->
+  <rect x="0" y="1780" width="6048" height="812" fill="#0a0a12"/>
+
+  <!-- Light trails as chorus lines -->
+  <g filter="url(#neon)" stroke-linecap="round">
+    <!-- Outbound taillights (red/pink) -->
+    <path d="M0,1480 C800,1400 1600,1520 2400,1460 C3200,1400 4800,1540 6048,1460" stroke="#ff7a7a" stroke-width="10" opacity="0.9"/>
+    <path d="M0,1510 C820,1430 1620,1550 2380,1490 C3200,1430 4800,1570 6048,1490" stroke="#ff9acb" stroke-width="8" opacity="0.8"/>
+    <path d="M0,1540 C820,1460 1640,1570 2360,1520 C3180,1470 4820,1600 6048,1520" stroke="#ffd27a" stroke-width="6" opacity="0.75"/>
+    <!-- Inbound headlights (white/amber) lower deck -->
+    <path d="M0,1820 C900,1760 1700,1860 2500,1800 C3400,1740 4800,1900 6048,1800" stroke="#e6e6f0" stroke-width="8" opacity="0.75"/>
+    <path d="M0,1850 C900,1790 1700,1890 2500,1830 C3400,1770 4800,1930 6048,1830" stroke="#ffdca0" stroke-width="6" opacity="0.7"/>
+  </g>
+
+  <!-- Signage boards -->
+  <g fill="#0d0e16" stroke="rgba(200,200,220,0.24)" stroke-width="3">
+    <rect x="1600" y="1180" width="320" height="120" rx="8"/>
+    <rect x="3600" y="1180" width="320" height="120" rx="8"/>
+  </g>
+  <g fill="#ffd27a" font-family="monospace" font-size="56" opacity="0.85">
+    <text x="1760" y="1260" text-anchor="middle">EAST</text>
+    <text x="3760" y="1260" text-anchor="middle">EXIT 7</text>
+  </g>
+
+  <!-- Reflections in water -->
+  <g opacity="0.35" filter="url(#neon)">
+    <rect x="0" y="1920" width="6048" height="8" fill="#ff7a7a"/>
+    <rect x="0" y="1940" width="6048" height="6" fill="#ff9acb"/>
+    <rect x="0" y="1960" width="6048" height="6" fill="#ffd27a"/>
+    <rect x="0" y="1986" width="6048" height="6" fill="#e6e6f0"/>
+    <rect x="0" y="2006" width="6048" height="6" fill="#ffdca0"/>
+  </g>
+
+  <!-- Hidden insignia reflection under pillar 3 -->
+  <g transform="translate(3520,2060)">
+    <circle cx="0" cy="0" r="24" fill="url(#gold)" filter="url(#softGlow)" opacity="0.55"/>
+  </g>
+
+  <!-- Vignette -->
+  <rect width="6048" height="2592" fill="url(#vignette)"/>
+</svg>

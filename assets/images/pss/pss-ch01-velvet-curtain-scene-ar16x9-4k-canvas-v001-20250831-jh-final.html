@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – The Velvet Curtain (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1100px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 16/9; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3840" height="2160" aria-label="The Velvet Curtain artwork"></canvas>
+    <div class="controls">
+      <button id="render4k">Render 4K (3840×2160)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 4K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const FILENAME = "pss-ch01-velvet-curtain-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png";
+    const W = 3840, H = 2160;
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(w=W, h=H){ canvas.width=w; canvas.height=h; }
+
+    function fillLinearGradient(x0,y0,x1,y1,stops){
+      const g = ctx.createLinearGradient(x0,y0,x1,y1);
+      for(const [o,c] of stops) g.addColorStop(o,c);
+      ctx.fillStyle = g; ctx.fillRect(0,0,canvas.width,canvas.height);
+    }
+    function fillRadialGradient(cx,cy,r,stops){
+      const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r);
+      for(const [o,c] of stops) g.addColorStop(o,c);
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill();
+    }
+    function drawNoise(alpha=0.18){
+      const t = document.createElement('canvas'); const s = 256;
+      t.width=t.height=s;
+      const c = t.getContext('2d'); const img = c.createImageData(s,s);
+      for(let i=0;i<img.data.length;i+=4){
+        const v = 32 + Math.random()*32;
+        img.data[i]=img.data[i+1]=img.data[i+2]=v; img.data[i+3]=255;
+      }
+      c.putImageData(img,0,0);
+      const p = ctx.createPattern(t,'repeat');
+      ctx.save(); ctx.globalAlpha=alpha; ctx.globalCompositeOperation='overlay';
+      ctx.fillStyle=p; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.restore();
+    }
+
+    function drawAlley(){
+      fillLinearGradient(0,0,0,canvas.height,[
+        [0,"#0b0b12"], [0.55,"#0a0910"], [1,"#05050a"]
+      ]);
+      drawNoise(0.18);
+      // Neon spill
+      const r = Math.max(canvas.width, canvas.height)*0.8;
+      const left = ctx.createRadialGradient(0,canvas.height/2,0,0,canvas.height/2,r);
+      left.addColorStop(0,"rgba(255,0,180,0.35)");
+      left.addColorStop(1,"rgba(255,0,180,0)");
+      ctx.fillStyle=left; ctx.fillRect(0,0,canvas.width,canvas.height);
+      const right = ctx.createRadialGradient(canvas.width,canvas.height/2,0,canvas.width,canvas.height/2,r);
+      right.addColorStop(0,"rgba(255,190,70,0.32)");
+      right.addColorStop(1,"rgba(255,190,70,0)");
+      ctx.fillStyle=right; ctx.fillRect(0,0,canvas.width,canvas.height);
+    }
+
+    function drawCurtain(){
+      const x=710/1920*canvas.width, y=120/1080*canvas.height;
+      const w=480/1920*canvas.width, h=760/1080*canvas.height;
+      // rail shadow
+      ctx.fillStyle="rgba(0,0,0,0.5)";
+      ctx.fillRect(x-20, y-10, w+40, 24);
+      // main drape
+      const grd = ctx.createLinearGradient(0,y,0,y+h);
+      grd.addColorStop(0,"#6d001c"); grd.addColorStop(0.6,"#4a0014"); grd.addColorStop(1,"#2a000b");
+      ctx.fillStyle = grd; ctx.fillRect(x,y,w,h);
+      // folds
+      const fold = ctx.createLinearGradient(0,y,0,y+h);
+      fold.addColorStop(0,"rgba(255,120,160,0.45)");
+      fold.addColorStop(0.5,"rgba(255,120,160,0.08)");
+      fold.addColorStop(1,"rgba(0,0,0,0)");
+      ctx.save(); ctx.globalAlpha=0.65;
+      const xs = [12,42,72,112,152,192,232,272,312,352,392,432];
+      for(const xi of xs){
+        const fx = x + (xi/480)*w; const fw = 12/480*w;
+        ctx.fillStyle = fold; ctx.fillRect(fx, y, fw, h);
+      }
+      ctx.restore();
+      // bottom sweep shadow
+      ctx.fillStyle="rgba(0,0,0,0.55)";
+      ctx.beginPath();
+      const cx = x + w/2, cy = y + h + 10;
+      const rx = w*0.52, ry = h*0.034;
+      ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    function drawPuddle(){
+      const cx = 960/1920*canvas.width, cy = 950/1080*canvas.height;
+      const rx = 360/1920*canvas.width, ry = 86/1080*canvas.height;
+      const g = ctx.createRadialGradient(cx,cy,0,cx,cy,Math.max(rx,ry));
+      g.addColorStop(0,"rgba(140,60,90,0.5)");
+      g.addColorStop(1,"rgba(20,10,20,0)");
+      ctx.fillStyle=g;
+      ctx.beginPath(); ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2); ctx.fill();
+      // ripples
+      ctx.strokeStyle="rgba(255,160,190,0.35)"; ctx.lineWidth=2;
+      const rxs=[120,180,260];
+      for(const r of rxs){
+        const rr = r/1920*canvas.width;
+        ctx.beginPath(); ctx.ellipse(cx,cy, rr, rr*0.233, 0, 0, Math.PI*2); ctx.stroke();
+      }
+    }
+
+    function vignette(){
+      const r = Math.max(canvas.width, canvas.height)*0.95;
+      const g = ctx.createRadialGradient(canvas.width/2,canvas.height/2, r*0.55, canvas.width/2,canvas.height/2, r);
+      g.addColorStop(0,"rgba(0,0,0,0)");
+      g.addColorStop(1,"rgba(0,0,0,0.75)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,canvas.width,canvas.height);
+    }
+
+    function render(){
+      setSize();
+      drawAlley();
+      drawCurtain();
+      drawPuddle();
+      vignette();
+    }
+    render();
+
+    document.getElementById('render4k').addEventListener('click', render);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

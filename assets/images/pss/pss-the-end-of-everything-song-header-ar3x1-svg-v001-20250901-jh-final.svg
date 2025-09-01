@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 1000" role="img" aria-labelledby="title desc">
+  <title id="title">The End of Everything — Song Header (Pop Song Summer)</title>
+  <desc id="desc">Dusk-to-night gradient with scorched horizon, low city silhouettes, ember lights like distant fires, a fractured ground line, and an eclipsed sun-insignia at the vanishing point. Built to sit gently behind a heading.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0c1024"/>
+      <stop offset="60%"  stop-color="#0a0f1f"/>
+      <stop offset="100%" stop-color="#0a0c14"/>
+    </linearGradient>
+    <radialGradient id="ember" cx="50%" cy="62%" r="55%">
+      <stop offset="0%"   stop-color="rgba(255,160,100,0.32)"/>
+      <stop offset="100%" stop-color="rgba(255,120,80,0)"/>
+    </radialGradient>
+    <radialGradient id="bokehA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(180,150,255,0.35)"/>
+      <stop offset="100%" stop-color="rgba(180,150,255,0)"/>
+    </radialGradient>
+    <radialGradient id="bokehB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,170,110,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,170,110,0)"/>
+    </radialGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffe789"/>
+      <stop offset="70%" stop-color="#d6af37"/>
+      <stop offset="100%" stop-color="rgba(168,122,34,0)"/>
+    </radialGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
+    <mask id="eclipseMask">
+      <rect width="3000" height="1000" fill="white"/>
+      <!-- dark disc to occlude sun -->
+      <circle cx="1500" cy="620" r="64" fill="black"/>
+    </mask>
+  </defs>
+
+  <!-- Background + horizon glow -->
+  <rect width="3000" height="1000" fill="url(#sky)"/>
+  <ellipse cx="1500" cy="640" rx="1000" ry="380" fill="url(#ember)"/>
+
+  <!-- Ground plane -->
+  <path d="M0,880 L1200,820 L3000,900 L3000,1000 L0,1000 Z" fill="#0b0f1b" opacity="0.96"/>
+
+  <!-- City silhouette -->
+  <g fill="#0e1324" opacity="0.95">
+    <rect x="260" y="800" width="80" height="60" rx="2"/>
+    <rect x="360" y="790" width="60" height="70" rx="2"/>
+    <rect x="460" y="780" width="90" height="80" rx="2"/>
+    <rect x="620" y="792" width="70" height="68" rx="2"/>
+    <rect x="720" y="804" width="110" height="56" rx="2"/>
+    <rect x="880" y="780" width="70" height="80" rx="2"/>
+    <rect x="980" y="796" width="50" height="64" rx="2"/>
+    <rect x="1100" y="790" width="90" height="70" rx="2"/>
+    <rect x="1900" y="792" width="80" height="68" rx="2"/>
+    <rect x="2020" y="784" width="60" height="76" rx="2"/>
+    <rect x="2120" y="800" width="100" height="60" rx="2"/>
+    <rect x="2260" y="788" width="70" height="72" rx="2"/>
+    <rect x="2380" y="804" width="120" height="56" rx="2"/>
+  </g>
+
+  <!-- Distant ember lights (burning houses) -->
+  <g opacity="0.7">
+    <circle cx="820" cy="820" r="6" fill="url(#bokehB)"/>
+    <circle cx="910" cy="826" r="5" fill="url(#bokehB)"/>
+    <circle cx="1010" cy="818" r="7" fill="url(#bokehB)"/>
+    <circle cx="2100" cy="820" r="6" fill="url(#bokehB)"/>
+    <circle cx="2200" cy="828" r="5" fill="url(#bokehB)"/>
+    <circle cx="2320" cy="816" r="7" fill="url(#bokehB)"/>
+  </g>
+
+  <!-- Fracture / crack line -->
+  <path d="M400,940 L620,900 L800,920 L980,880 L1200,900 L1400,860 L1580,880 L1760,860 L1960,880 L2140,860 L2300,880"
+        fill="none" stroke="#2a3048" stroke-width="4" opacity="0.8"/>
+
+  <!-- Eclipsed sun-insignia at vanishing point -->
+  <g transform="translate(1500,620)">
+    <g mask="url(#eclipseMask)" opacity="0.35">
+      <circle cx="0" cy="0" r="78" fill="url(#sun)" filter="url(#soft)"/>
+      <g stroke="#d6af37" stroke-linecap="round" stroke-width="8">
+        <line x1="0" y1="-110" x2="0" y2="-78"/>
+        <line x1="0" y1="78"  x2="0" y2="110"/>
+        <line x1="-110" y1="0" x2="-78" y2="0"/>
+        <line x1="78" y1="0"  x2="110" y2="0"/>
+      </g>
+    </g>
+    <!-- dark disc creating the eclipse -->
+    <circle cx="0" cy="0" r="64" fill="#0a0d16" opacity="0.9"/>
+  </g>
+
+  <!-- Ash / particulates (very subtle) -->
+  <g opacity="0.28" fill="#cfd6df">
+    <circle cx="360" cy="260" r="2"/><circle cx="460" cy="320" r="2"/>
+    <circle cx="600" cy="280" r="2"/><circle cx="760" cy="340" r="2"/>
+    <circle cx="920" cy="260" r="2"/><circle cx="1120" cy="300" r="2"/>
+    <circle cx="1800" cy="280" r="2"/><circle cx="1960" cy="360" r="2"/>
+    <circle cx="2140" cy="300" r="2"/><circle cx="2360" cy="340" r="2"/>
+  </g>
+
+  <!-- Bokeh -->
+  <g opacity="0.8">
+    <circle cx="520" cy="500" r="12" fill="url(#bokehA)"/>
+    <circle cx="860" cy="560" r="10" fill="url(#bokehB)"/>
+    <circle cx="2060" cy="500" r="12" fill="url(#bokehA)"/>
+    <circle cx="2380" cy="560" r="10" fill="url(#bokehB)"/>
+    <circle cx="2600" cy="500" r="14" fill="url(#bokehA)"/>
+  </g>
+
+  <!-- Bottom fade for title legibility -->
+  <linearGradient id="fade" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="rgba(0,0,0,0)"/>
+    <stop offset="100%" stop-color="rgba(0,0,0,0.60)"/>
+  </linearGradient>
+  <rect x="0" y="720" width="3000" height="280" fill="url(#fade)"/>
+</svg>

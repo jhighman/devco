@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer — Out to the Other Side (Header)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; background:#0b0f18; color:#eaeaea; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1400px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 3/1; display:block; border-radius:14px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0c1022; }
+    .controls { display:flex; gap:10px; margin-top:12px; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3000" height="1000" aria-label="Out to the Other Side — Song Header artwork"></canvas>
+    <div class="controls">
+      <button id="download">Download PNG</button>
+    </div>
+  </div>
+
+<script>
+const W=3000,H=1000; const canvas=document.getElementById('art'); const ctx=canvas.getContext('2d');
+function L(x0,y0,x1,y1,stops){ const g=ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g }
+function R(cx,cy,r,stops){ const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g }
+
+function render(){
+  canvas.width=W; canvas.height=H;
+  // sky
+  ctx.fillStyle=L(0,0,0,H,[[0,"#0c1024"],[0.6,"#0a0f1f"],[1,"#0a0c14"]]); ctx.fillRect(0,0,W,H);
+  // horizon glow
+  const hg=R(1500,580,900,[[0,"rgba(255,220,150,0.40)"],[1,"rgba(255,180,110,0)"]]);
+  ctx.save(); ctx.filter="blur(10px)"; ctx.fillStyle=hg; ctx.beginPath(); ctx.ellipse(1500,580,900,360,0,0,Math.PI*2); ctx.fill(); ctx.restore();
+  // road
+  ctx.fillStyle="rgba(11,15,27,0.95)";
+  ctx.beginPath(); ctx.moveTo(0,1000); ctx.lineTo(0,920); ctx.lineTo(1100,760); ctx.lineTo(1500,610); ctx.lineTo(1900,760); ctx.lineTo(3000,920); ctx.lineTo(3000,1000); ctx.closePath(); ctx.fill();
+  // center dashed line
+  ctx.fillStyle="rgba(244,231,200,0.85)";
+  function dash(x,y,w,h){ ctx.beginPath(); ctx.roundRect(x,y,w,h,Math.min(6,h/2)); ctx.fill(); }
+  [[1488,630,24,20],[1486,682,28,18],[1484,736,32,18],[1480,792,38,18],[1476,850,44,18],[1470,910,52,18]].forEach(d=>dash(...d));
+  // light trails
+  ctx.lineCap="round";
+  function q(ax,ay,cx1,cy1,bx,by,color,width,alpha){ ctx.save(); ctx.globalAlpha=alpha; ctx.strokeStyle=color; ctx.lineWidth=width; ctx.beginPath(); ctx.moveTo(ax,ay); ctx.quadraticCurveTo(cx1,cy1,bx,by); ctx.stroke(); ctx.restore(); }
+  q(940,840,1180,760,1500,640,"#7fc7ff",8,0.85);
+  q(2060,840,1820,760,1500,640,"#ffd58a",6,0.70);
+  // sun insignia
+  const sg=R(1500,610,72,[[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+  ctx.save(); ctx.globalAlpha=.30; ctx.filter="blur(10px)"; ctx.fillStyle=sg; ctx.beginPath(); ctx.arc(1500,610,72,0,Math.PI*2); ctx.fill(); ctx.filter="none"; ctx.globalAlpha=.9; ctx.strokeStyle="#d6af37"; ctx.lineWidth=8; ctx.lineCap="round";
+  function ray(ax,ay,bx,by){ ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke(); }
+  ray(1500,610-96,1500,610-64); ray(1500,610+64,1500,610+96); ray(1500-96,610,1500-64,610); ray(1500+64,610,1500+96,610);
+  ctx.restore();
+  // bokeh
+  function dot(cx,cy,r,c){ const g=R(cx,cy,r,[[0,c],[1,"rgba(0,0,0,0)"]]); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill(); }
+  dot(520,520,12,"rgba(180,150,255,0.35)"); dot(880,580,10,"rgba(255,170,110,0.35)"); dot(2060,520,12,"rgba(180,150,255,0.35)"); dot(2380,580,10,"rgba(255,170,110,0.35)"); dot(2600,520,14,"rgba(180,150,255,0.35)");
+  // bottom fade
+  const f=L(0,720,0,1000,[[0,"rgba(0,0,0,0)"],[1,"rgba(0,0,0,0.6)"]]); ctx.fillStyle=f; ctx.fillRect(0,720,W,280);
+}
+render();
+document.getElementById('download').addEventListener('click', ()=>{
+  canvas.toBlob((b)=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download="pss-out-to-the-other-side-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png"; document.body.appendChild(a); a.click(); a.remove(); }, "image/png");
+});
+</script>
+</body>
+</html>

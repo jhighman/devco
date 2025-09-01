@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Burning Houses (in the Distance) — Song Header (Pop Song Summer)</title>
+  <desc id="desc">Dark navy-to-ember gradient sky, low horizon with tiny house silhouettes burning faintly, soft smoke arcs and ember bokeh, with a subtle sun-insignia shimmer. Designed to sit quietly behind a heading.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0c1022"/>
+      <stop offset="55%"  stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#1a0f0b"/>
+    </linearGradient>
+    <linearGradient id="haze" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,180,120,0.0)"/>
+      <stop offset="100%" stop-color="rgba(255,150,90,0.35)"/>
+    </linearGradient>
+    <radialGradient id="ember" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,200,120,0.9)"/>
+      <stop offset="100%" stop-color="rgba(255,140,60,0)"/>
+    </radialGradient>
+    <radialGradient id="bokeh" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,170,110,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,170,110,0)"/>
+    </radialGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffe789"/>
+      <stop offset="70%" stop-color="#d6af37"/>
+      <stop offset="100%" stop-color="rgba(168,122,34,0)"/>
+    </radialGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+
+  <!-- Background sky + horizon haze -->
+  <rect width="3000" height="1000" fill="url(#sky)"/>
+  <rect x="0" y="0" width="3000" height="180" fill="url(#haze)"/>
+
+  <!-- Far horizon line -->
+  <path d="M0,720 C400,740 1000,746 1500,742 C2000,738 2600,730 3000,712" stroke="rgba(255,180,120,0.15)" stroke-width="2" fill="none"/>
+
+  <!-- Distant houses (minimal silhouettes) -->
+  <g fill="#0b0c10" stroke="rgba(255,200,120,0.12)" stroke-width="1">
+    <g transform="translate(420,706)">
+      <rect x="0" y="0" width="54" height="26" rx="2"/>
+      <polygon points="0,0 27,-18 54,0"/>
+      <rect x="18" y="6" width="10" height="10" fill="rgba(255,210,150,0.22)"/>
+    </g>
+    <g transform="translate(980,716) scale(0.9)">
+      <rect x="0" y="0" width="64" height="28" rx="2"/>
+      <polygon points="0,0 32,-20 64,0"/>
+      <rect x="22" y="8" width="12" height="12" fill="rgba(255,210,150,0.22)"/>
+    </g>
+    <g transform="translate(1620,708) scale(0.8)">
+      <rect x="0" y="0" width="60" height="26" rx="2"/>
+      <polygon points="0,0 30,-18 60,0"/>
+    </g>
+    <g transform="translate(2260,714) scale(0.95)">
+      <rect x="0" y="0" width="50" height="22" rx="2"/>
+      <polygon points="0,0 25,-16 50,0"/>
+      <rect x="18" y="6" width="8" height="8" fill="rgba(255,210,150,0.22)"/>
+    </g>
+  </g>
+
+  <!-- Small flames & glow -->
+  <g>
+    <circle cx="452" cy="700" r="18" fill="url(#ember)" filter="url(#soft)"/>
+    <circle cx="1012" cy="708" r="16" fill="url(#ember)" filter="url(#soft)"/>
+    <circle cx="1646" cy="704" r="14" fill="url(#ember)" filter="url(#soft)"/>
+    <circle cx="2286" cy="710" r="12" fill="url(#ember)" filter="url(#soft)"/>
+  </g>
+
+  <!-- Smoke arcs (very subtle) -->
+  <g stroke="rgba(255,220,180,0.18)" fill="none" stroke-width="2">
+    <path d="M452,700 C468,660 488,640 506,620"/>
+    <path d="M1012,708 C1024,668 1048,648 1070,632"/>
+    <path d="M1646,704 C1662,666 1686,646 1702,628"/>
+    <path d="M2286,710 C2298,672 2316,652 2334,634"/>
+  </g>
+
+  <!-- Ember bokeh field -->
+  <g opacity="0.8">
+    <circle cx="620" cy="640" r="10" fill="url(#bokeh)"/>
+    <circle cx="860" cy="600" r="8" fill="url(#bokeh)"/>
+    <circle cx="1340" cy="650" r="12" fill="url(#bokeh)"/>
+    <circle cx="1860" cy="620" r="9" fill="url(#bokeh)"/>
+    <circle cx="2140" cy="640" r="11" fill="url(#bokeh)"/>
+    <circle cx="2420" cy="600" r="8" fill="url(#bokeh)"/>
+  </g>
+
+  <!-- Subtle sun-insignia shimmer (right side) -->
+  <g transform="translate(2760,280)" opacity="0.22">
+    <circle cx="0" cy="0" r="70" fill="url(#sun)" filter="url(#soft)"/>
+    <g stroke="#d6af37" stroke-linecap="round" stroke-width="8">
+      <line x1="0" y1="-100" x2="0" y2="-66"/>
+      <line x1="0" y1="66"  x2="0" y2="100"/>
+      <line x1="-100" y1="0" x2="-66" y2="0"/>
+      <line x1="66" y1="0"  x2="100" y2="0"/>
+    </g>
+  </g>
+
+  <!-- Bottom fade for title legibility -->
+  <linearGradient id="fade" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="rgba(0,0,0,0)"/>
+    <stop offset="100%" stop-color="rgba(0,0,0,0.60)"/>
+  </linearGradient>
+  <rect x="0" y="720" width="3000" height="280" fill="url(#fade)"/>
+</svg>

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – Diner: Flo &amp; the Refrain (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1100px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 16/9; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3840" height="2160" aria-label="Diner: Flo & the Refrain artwork"></canvas>
+    <div class="controls">
+      <button id="render4k">Render 4K (3840×2160)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 4K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const W=3840, H=2160;
+    const FILENAME = "pss-ch07-diner-flo-and-the-refrain-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png";
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(){ canvas.width=W; canvas.height=H; }
+    function L(x0,y0,x1,y1,stops){ const g = ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+    function R(cx,cy,r,stops){ const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+
+    function wallsAndWindows(){
+      ctx.fillStyle = L(0,0,0,H, [[0,"#0c0c12"],[0.6,"#0a0a10"],[1,"#08080d"]]); ctx.fillRect(0,0,W,H);
+      // windows
+      function win(x,w){ ctx.fillStyle="#0a0a12"; ctx.strokeStyle="rgba(220,220,240,0.25)"; ctx.lineWidth=3; ctx.beginPath(); ctx.roundRect(x,100,w,180,8); ctx.fill(); ctx.stroke(); ctx.fillStyle = L(0,100,0,280, [[0,"rgba(255,160,90,0)"],[1,"rgba(255,130,80,0.35)"]]); ctx.beginPath(); ctx.roundRect(x,100,w,180,8); ctx.fill(); }
+      win(120,520); win(720,520); win(1320,480);
+    }
+
+    function neon(){
+      // DINER
+      ctx.save(); ctx.filter='blur(10px)'; ctx.fillStyle="#ff2a6d"; ctx.font="120px monospace"; ctx.fillText("DINER", 140, 120); ctx.restore();
+      // OPEN 24
+      const x=1460, y=120;
+      ctx.save(); ctx.filter='blur(6px)';
+      ctx.fillStyle="rgba(255,80,80,0.15)"; ctx.strokeStyle="rgba(255,80,80,0.4)"; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.roundRect(x-10, y-40, 230, 70, 12); ctx.fill(); ctx.stroke();
+      ctx.fillStyle="#ffd27a"; ctx.font="36px system-ui, sans-serif"; ctx.textAlign="center"; ctx.fillText("OPEN 24", x+105, y+12);
+      ctx.restore();
+    }
+
+    function counterAndStools(){
+      ctx.fillStyle="#12121a"; ctx.strokeStyle="rgba(200,200,220,0.2)"; ctx.lineWidth=2;
+      ctx.fillRect(160,520,1600,40); ctx.strokeRect(160,520,1600,40);
+      ctx.fillStyle="#0f0f16"; ctx.fillRect(160,560,1600,40);
+      // stools
+      ctx.fillStyle="#141420"; ctx.strokeStyle="rgba(200,200,220,0.3)"; ctx.lineWidth=4;
+      const xs=[360,760,1160,1560];
+      for(const x of xs){ ctx.beginPath(); ctx.arc(x,660,24,0,Math.PI*2); ctx.fill(); ctx.stroke(); ctx.fillRect(x-8,660,16,120); }
+    }
+
+    function floor(){
+      ctx.fillStyle="#0a0a12"; ctx.fillRect(0,780,W,H-780);
+      // checkered pattern
+      const size=80, x0=120, y0=780, cols=16, rows=6;
+      ctx.globalAlpha=0.85;
+      for(let r=0;r<rows;r++){
+        for(let c=0;c<cols;c++){
+          if((r+c)%2===0){
+            const x=x0+c*size, y=y0+r*size;
+            ctx.fillStyle="#1a1a22"; ctx.fillRect(x,y,size,size);
+          }
+        }
+      }
+      ctx.globalAlpha=1;
+      // sheen
+      ctx.fillStyle="rgba(255,255,255,0.02)"; ctx.fillRect(x0,y0,cols*size,80*2);
+    }
+
+    function jukebox(){
+      const ox=1560, oy=520;
+      ctx.fillStyle="#12121a"; ctx.strokeStyle="rgba(200,200,220,0.25)"; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.roundRect(ox-80,oy,140,220,18); ctx.fill(); ctx.stroke();
+      ctx.save(); ctx.filter='blur(6px)'; ctx.strokeStyle="rgba(255,0,180,0.35)"; ctx.lineWidth=10; ctx.beginPath(); ctx.moveTo(ox-80,oy); ctx.quadraticCurveTo(ox,oy-80, ox+60,oy); ctx.stroke(); ctx.restore();
+      ctx.fillStyle="#0f0f16"; ctx.strokeStyle="rgba(200,200,220,0.2)"; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.roundRect(ox-60,oy+40,100,60,8); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.roundRect(ox-60,oy+120,100,60,8); ctx.fill(); ctx.stroke();
+    }
+
+    function flo(){
+      const cx=840, cy=520;
+      // head/body base
+      ctx.fillStyle="#0b0a10";
+      ctx.beginPath();
+      ctx.moveTo(cx-40,cy-60); ctx.quadraticCurveTo(cx-40,cy-110, cx+10,cy-110);
+      ctx.quadraticCurveTo(cx+60,cy-110, cx+60,cy-60);
+      ctx.quadraticCurveTo(cx+50,cy-36, cx+26,cy-24);
+      ctx.quadraticCurveTo(cx+34,cy+8, cx+48,cy+32);
+      ctx.quadraticCurveTo(cx+22,cy+44, cx-6,cy+32);
+      ctx.quadraticCurveTo(cx+4,cy+4, cx+8,cy-24);
+      ctx.quadraticCurveTo(cx-20,cy-36, cx-40,cy-60);
+      ctx.closePath(); ctx.fill();
+      // dress
+      ctx.fillStyle="#a3082c";
+      ctx.beginPath();
+      ctx.moveTo(cx-80, cy-10); ctx.quadraticCurveTo(cx, cy-46, cx+60, cy-26);
+      ctx.quadraticCurveTo(cx+120, cy-6, cx+150, cy+54);
+      ctx.quadraticCurveTo(cx+142, cy+140, cx+108, cy+200);
+      ctx.quadraticCurveTo(cx-32, cy+250, cx-150, cy+220);
+      ctx.quadraticCurveTo(cx-170, cy+100, cx-158, cy+40);
+      ctx.quadraticCurveTo(cx-130, cy, cx-80, cy-10);
+      ctx.closePath(); ctx.fill();
+      // insignia pin
+      const sx=cx+64, sy=cy+60, r=12;
+      const g = R(sx,sy,r, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.save(); ctx.filter='blur(4px)'; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(sx,sy,r,0,Math.PI*2); ctx.fill(); ctx.restore();
+    }
+
+    function coffee(){
+      const ox=480, oy=520;
+      // cup
+      ctx.fillStyle="#0d0d14"; ctx.beginPath(); ctx.ellipse(ox, oy+80, 50, 12, 0, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle="#12121a"; ctx.strokeStyle="rgba(200,200,220,0.2)"; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.roundRect(ox-50, oy+20, 100, 60, 8); ctx.fill(); ctx.stroke();
+      ctx.fillStyle="#0d0d14"; ctx.beginPath(); ctx.ellipse(ox, oy+20, 50, 12, 0, 0, Math.PI*2); ctx.fill();
+      ctx.strokeStyle="rgba(200,200,220,0.3)"; ctx.lineWidth=6; ctx.beginPath(); ctx.moveTo(ox+60, oy+40); ctx.quadraticCurveTo(ox+80,oy+50, ox+60,oy+70); ctx.stroke();
+      // steam staff
+      ctx.save(); ctx.filter='blur(4px)';
+      ctx.strokeStyle="rgba(255,210,120,0.5)"; ctx.lineWidth=2;
+      function s(x1,y1,cx,cy,x2,y2){ ctx.beginPath(); ctx.moveTo(x1,y1); ctx.bezierCurveTo(cx,cy, cx+20,cy-20, x2,y2); ctx.stroke(); }
+      s(ox-30, oy-40, ox-10, oy-80, ox+30, oy-60);
+      s(ox-24, oy-20, ox-2,  oy-60, ox+34, oy-50);
+      s(ox-20, oy,    ox,    oy-40, ox+36, oy-30);
+      // notes
+      ctx.fillStyle="#ffd27a";
+      ctx.beginPath(); ctx.arc(ox-12, oy-30, 4, 0, Math.PI*2); ctx.fill();
+      ctx.fillRect(ox-11, oy-52, 2, 20);
+      ctx.beginPath(); ctx.arc(ox+14, oy-28, 4, 0, Math.PI*2); ctx.fill();
+      ctx.fillRect(ox+15, oy-50, 2, 20);
+      ctx.restore();
+      // hidden insignia reflection
+      const g = R(ox+22, oy+10, 10, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.save(); ctx.filter='blur(4px)'; ctx.globalAlpha=0.45; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(ox+22, oy+10, 10, 0, Math.PI*2); ctx.fill(); ctx.restore();
+    }
+
+    function vignette(){
+      const r = Math.max(W,H)*0.95;
+      const g = ctx.createRadialGradient(W/2,H/2, r*0.55, W/2,H/2, r);
+      g.addColorStop(0,"rgba(0,0,0,0)");
+      g.addColorStop(1,"rgba(0,0,0,0.82)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    }
+
+    function render(){ setSize(); wallsAndWindows(); neon(); counterAndStools(); floor(); jukebox(); flo(); coffee(); vignette(); }
+    render();
+
+    document.getElementById('render4k').addEventListener('click', render);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

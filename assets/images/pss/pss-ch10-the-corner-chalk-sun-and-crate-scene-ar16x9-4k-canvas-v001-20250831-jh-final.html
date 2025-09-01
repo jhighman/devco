@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – The Corner: Chalk Sun &amp; Crate (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1100px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 16/9; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3840" height="2160" aria-label="The Corner: Chalk Sun & Crate artwork"></canvas>
+    <div class="controls">
+      <button id="render4k">Render 4K (3840×2160)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 4K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const W=3840, H=2160;
+    const FILENAME = "pss-ch10-the-corner-chalk-sun-and-crate-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png";
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(){ canvas.width=W; canvas.height=H; }
+    function L(x0,y0,x1,y1,stops){ const g = ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+    function R(cx,cy,r,stops){ const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+
+    function backdrop(){
+      // wall band
+      ctx.fillStyle = L(0,0,0,H*0.48, [[0,"#0b0b12"],[0.6,"#0a0a11"],[1,"#090911"]]);
+      ctx.fillRect(0,0,W,H*0.48);
+      // horizon haze
+      ctx.fillStyle = L(0,0,0,220, [[0,"rgba(255,150,90,0)"],[1,"rgba(255,130,80,0.28)"]]);
+      ctx.fillRect(0,0,W,220);
+      // streetlamp
+      ctx.fillStyle="#13131b"; ctx.fillRect(W-460,80,10,420);
+      ctx.save(); ctx.filter='blur(6px)'; ctx.fillStyle="#ffdca0"; ctx.beginPath(); ctx.arc(W-455,80,12,0,Math.PI*2); ctx.fill(); ctx.restore();
+      // cone
+      const g = ctx.createRadialGradient(W-455,100, 0, W-455,100, 420);
+      g.addColorStop(0,"rgba(255,240,190,0.55)");
+      g.addColorStop(0.6,"rgba(255,220,150,0.2)");
+      g.addColorStop(1,"rgba(255,220,150,0)");
+      ctx.fillStyle=g; ctx.beginPath(); ctx.ellipse(W-455, 260, 380, 260, 0, 0, Math.PI*2); ctx.fill();
+    }
+
+    function ground(){
+      ctx.fillStyle = L(0,H*0.48,0,H, [[0,"#0a0a12"],[1,"#08080f"]]);
+      ctx.fillRect(0,H*0.48,W,H*0.52);
+      ctx.fillStyle="#1c1c24"; ctx.fillRect(0,H*0.48,W,12);
+      // crosswalk stripes
+      const x0=280, y0=H*0.52, h=360, w=120, gap=80;
+      ctx.fillStyle="#d6d6de"; ctx.globalAlpha=0.8;
+      for(let i=0;i<4;i++){ ctx.beginPath(); ctx.roundRect(x0+i*(w+gap), y0, w, h, 6); ctx.fill(); }
+      ctx.globalAlpha=1;
+      // storm drain
+      const dx=1200, dy=H*0.48;
+      ctx.fillStyle="#1c1c24"; ctx.fillRect(dx,dy,200,12);
+      ctx.fillStyle="#101018";
+      for(let i=0;i<5;i++){ ctx.fillRect(dx+12+i*36, dy+4, 24, 8); }
+    }
+
+    function crateAndBox(){
+      const ox=880, oy=H*0.60;
+      // crate
+      ctx.fillStyle="#101018"; ctx.strokeStyle="rgba(220,220,240,0.25)"; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.roundRect(ox, oy, 180, 160, 10); ctx.fill(); ctx.stroke();
+      ctx.fillStyle="#0b0b12"; ctx.globalAlpha=0.9;
+      for(const yy of [oy+20,oy+52,oy+84,oy+116]){ ctx.fillRect(ox+14, yy, 152, 16); }
+      ctx.globalAlpha=1;
+      // records
+      ctx.fillStyle="#302030"; ctx.fillRect(ox+20, oy-40, 30, 40);
+      ctx.fillStyle="#103030"; ctx.fillRect(ox+56, oy-48, 30, 48);
+      ctx.fillStyle="#301010"; ctx.fillRect(ox+92, oy-36, 30, 36);
+      ctx.fillStyle="#103010"; ctx.fillRect(ox+128, oy-44, 30, 44);
+      // boombox
+      ctx.fillStyle="#14141e"; ctx.strokeStyle="rgba(220,220,240,0.25)"; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.roundRect(ox+200, oy-10, 200, 70, 6); ctx.fill(); ctx.stroke();
+      ctx.fillStyle="#0e0e16"; ctx.strokeStyle="rgba(200,200,220,0.2)"; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.arc(ox+236, oy+25, 18, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.arc(ox+364, oy+25, 18, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+      ctx.fillStyle="#0f0f16"; ctx.beginPath(); ctx.roundRect(ox+276, oy-2, 48, 16, 4); ctx.fill();
+      // insignia sticker
+      const sx=ox+60, sy=oy+120, r=12;
+      const g = R(sx,sy,r, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.save(); ctx.filter='blur(4px)'; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(sx,sy,r,0,Math.PI*2); ctx.fill(); ctx.restore();
+      // newspaper box
+      const bx=300, by=H*0.56;
+      ctx.fillStyle="#12121a"; ctx.strokeStyle="rgba(220,220,240,0.25)"; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.roundRect(bx, by, 120, 180, 8); ctx.fill(); ctx.stroke();
+      ctx.fillStyle="#0f0f16"; ctx.beginPath(); ctx.roundRect(bx+10, by+20, 100, 70, 4); ctx.fill();
+      ctx.beginPath(); ctx.roundRect(bx+10, by+100, 100, 60, 4); ctx.fill();
+    }
+
+    function poleFlyer(){
+      const px=520, py=H*0.48;
+      ctx.fillStyle="#20202a"; ctx.fillRect(px,py,16,300);
+      ctx.fillStyle="#f5f2e8"; ctx.globalAlpha=0.9; ctx.beginPath(); ctx.roundRect(px+20, py+30, 80, 100, 4); ctx.fill(); ctx.globalAlpha=1;
+      ctx.fillStyle="#101018"; ctx.font="28px monospace"; ctx.textAlign="center"; ctx.fillText("POETRY", px+60, py+90);
+    }
+
+    function chalkSun(){
+      const cx=1080, cy=H*0.342 + 380;
+      ctx.strokeStyle="#d6af37"; ctx.lineWidth=10; ctx.globalAlpha=0.85;
+      ctx.beginPath(); ctx.arc(cx,cy,70,0,Math.PI*2); ctx.stroke();
+      ctx.lineWidth=8; ctx.lineCap='round';
+      function ray(ax,ay,bx,by){ ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke(); }
+      ray(cx,cy-130, cx,cy-86); ray(cx,cy+86, cx,cy+130);
+      ray(cx-130,cy, cx-86,cy); ray(cx+86,cy, cx+130,cy);
+      ray(cx-92,cy-92, cx-60,cy-60); ray(cx+92,cy-92, cx+60,cy-60);
+      ray(cx-92,cy+92, cx-60,cy+60); ray(cx+92,cy+92, cx+60,cy+60);
+      // center glow
+      const g = R(cx,cy,28, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.save(); ctx.filter='blur(4px)'; ctx.beginPath(); ctx.arc(cx,cy,28,0,Math.PI*2); ctx.fillStyle=g; ctx.fill(); ctx.restore();
+    }
+
+    function vignette(){
+      const r = Math.max(W,H)*0.95;
+      const g = ctx.createRadialGradient(W/2,H/2, r*0.55, W/2,H/2, r);
+      g.addColorStop(0,"rgba(0,0,0,0)");
+      g.addColorStop(1,"rgba(0,0,0,0.82)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    }
+
+    function render(){ setSize(); backdrop(); ground(); crateAndBox(); poleFlyer(); chalkSun(); vignette(); }
+    render();
+
+    document.getElementById('render4k').addEventListener('click', render);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

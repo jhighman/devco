@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – Insignia of the Sun (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(92vmin, 900px); padding:18px; }
+    canvas { width:100%; height:auto; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#1a0a0f; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="1920" height="1920" aria-label="Insignia of the Sun artwork"></canvas>
+    <div class="controls">
+      <button id="render4k">Render 4K (3840×3840)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 4K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const FILENAME = "pss-chall-insignia-of-the-sun-motif-ar1x1-4k-rgb-v001-20250831-jh-final.png";
+    const PREVIEW_SIZE = 1920;
+    const FINAL_SIZE   = 3840;
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setCanvasSize(size) {
+      const ratio = 1;
+      canvas.width = Math.floor(size * ratio);
+      canvas.height = Math.floor(size * ratio);
+    }
+
+    function fillRadialGradient(ctx, cx, cy, r0, r1, stops) {
+      const g = ctx.createRadialGradient(cx, cy, r0, cx, cy, r1);
+      for (const [off, color] of stops) g.addColorStop(off, color);
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    }
+
+    function drawVelvetBackground(ctx) {
+      const { width: W, height: H } = ctx.canvas;
+      fillRadialGradient(ctx, W/2, H/2, 10, Math.hypot(W,H)/2, [
+        [0.00, "#5a0018"], [0.50, "#3c0012"], [1.00, "#1b0009"]
+      ]);
+      ctx.save();
+      ctx.globalCompositeOperation = 'multiply';
+      const vign = ctx.createRadialGradient(W/2, H/2, W*0.15, W/2, H/2, W*0.7);
+      vign.addColorStop(0, "rgba(0,0,0,0.0)");
+      vign.addColorStop(1, "rgba(0,0,0,0.65)");
+      ctx.fillStyle = vign; ctx.fillRect(0,0,W,H);
+      ctx.restore();
+      const noise = makeNoiseTile(256, 0.08);
+      const pat = ctx.createPattern(noise, 'repeat');
+      ctx.save(); ctx.globalAlpha = 0.25; ctx.globalCompositeOperation = 'overlay';
+      ctx.fillStyle = pat; ctx.fillRect(0,0,W,H); ctx.restore();
+      ctx.save(); ctx.globalAlpha = 0.08;
+      const g2 = ctx.createLinearGradient(0,0,W,H);
+      g2.addColorStop(0,"rgba(255,255,255,0.0)");
+      g2.addColorStop(0.5,"rgba(255,255,255,0.20)");
+      g2.addColorStop(1,"rgba(0,0,0,0.0)");
+      ctx.fillStyle = g2; ctx.fillRect(0,0,W,H); ctx.restore();
+    }
+
+    function makeNoiseTile(size, strength=0.1) {
+      const cnv = document.createElement('canvas');
+      cnv.width = cnv.height = size;
+      const c = cnv.getContext('2d');
+      const img = c.createImageData(size, size);
+      for (let i=0; i<img.data.length; i+=4) {
+        const v = 127 + (Math.random()*2 - 1) * 127 * strength;
+        img.data[i] = img.data[i+1] = img.data[i+2] = v|0;
+        img.data[i+3] = 255;
+      }
+      c.putImageData(img,0,0);
+      return cnv;
+    }
+
+    function drawPatch(ctx) {
+      const { width: W, height: H } = ctx.canvas;
+      const cx = W/2, cy = H/2;
+      const rOuter = W * 0.38;
+      const rInner = rOuter * 0.86;
+      const grad = ctx.createRadialGradient(cx, cy, rInner*0.1, cx, cy, rOuter);
+      grad.addColorStop(0, "#7a0625"); grad.addColorStop(1, "#3a0412");
+      ctx.fillStyle = grad;
+      ctx.beginPath(); ctx.arc(cx, cy, rOuter, 0, Math.PI*2); ctx.fill();
+      ctx.save();
+      const ring = ctx.createRadialGradient(cx, cy, rInner, cx, cy, rOuter);
+      ring.addColorStop(0, "rgba(255,255,255,0)"); ring.addColorStop(1, "rgba(255,255,255,0.12)");
+      ctx.fillStyle = ring;
+      ctx.beginPath(); ctx.arc(cx, cy, rOuter, 0, Math.PI*2);
+      ctx.arc(cx, cy, rInner, 0, Math.PI*2, true); ctx.fill();
+      const ring2 = ctx.createRadialGradient(cx, cy, rInner*0.6, cx, cy, rInner);
+      ring2.addColorStop(0, "rgba(0,0,0,0)"); ring2.addColorStop(1, "rgba(0,0,0,0.18)");
+      ctx.fillStyle = ring2; ctx.beginPath(); ctx.arc(cx, cy, rInner, 0, Math.PI*2); ctx.fill();
+      ctx.restore();
+      ctx.save(); ctx.strokeStyle = "#d2b08a"; ctx.lineWidth = Math.max(2, W/1600);
+      const rStitch = (rOuter + rInner) / 2; const stitches = 160; const dash = W * 0.006;
+      for (let i=0; i<stitches; i++) {
+        const t = (i / stitches) * Math.PI*2;
+        const x = cx + rStitch * Math.cos(t), y = cy + rStitch * Math.sin(t);
+        const tx = Math.cos(t + Math.PI/2), ty = Math.sin(t + Math.PI/2);
+        ctx.beginPath(); ctx.moveTo(x - dash/2 * tx, y - dash/2 * ty);
+        ctx.lineTo(x + dash/2 * tx, y + dash/2 * ty); ctx.stroke();
+      }
+      ctx.restore();
+      return { cx, cy, rOuter, rInner };
+    }
+
+    function drawSun(ctx, cx, cy, innerR, rayLen, rayAngleDeg=20) {
+      const rays = 12, spread = rayAngleDeg * Math.PI/180;
+      for (let i=0; i<rays; i++) {
+        const a = (i / rays) * Math.PI*2, a0 = a - spread/2, a1 = a + spread/2;
+        const r0 = innerR * 0.96, r1 = innerR + rayLen;
+        ctx.beginPath();
+        ctx.moveTo(cx + r0*Math.cos(a0), cy + r0*Math.sin(a0));
+        ctx.lineTo(cx + r1*Math.cos(a),  cy + r1*Math.sin(a));
+        ctx.lineTo(cx + r0*Math.cos(a1), cy + r0*Math.sin(a1));
+        ctx.closePath(); ctx.fillStyle = "#a87a22"; ctx.fill();
+        ctx.strokeStyle = "#d6af37"; ctx.lineWidth = Math.max(2, ctx.canvas.width/1600);
+        ctx.beginPath(); ctx.moveTo(cx+(r0+4)*Math.cos(a0), cy+(r0+4)*Math.sin(a0));
+        ctx.lineTo(cx+(r1-18)*Math.cos(a0), cy+(r1-18)*Math.sin(a0)); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx+(r0+4)*Math.cos(a1), cy+(r0+4)*Math.sin(a1));
+        ctx.lineTo(cx+(r1-18)*Math.cos(a1), cy+(r1-18)*Math.sin(a1)); ctx.stroke();
+        ctx.strokeStyle = "rgba(255,235,140,0.9)"; ctx.lineWidth = Math.max(4, ctx.canvas.width/1000);
+        ctx.beginPath(); ctx.moveTo(cx+(r0+6)*Math.cos(a), cy+(r0+6)*Math.sin(a));
+        ctx.lineTo(cx+(r1-10)*Math.cos(a), cy+(r1-10)*Math.sin(a)); ctx.stroke();
+      }
+      ctx.beginPath(); ctx.arc(cx, cy, innerR*0.62, 0, Math.PI*2);
+      const g = ctx.createRadialGradient(cx, cy, innerR*0.15, cx, cy, innerR*0.62);
+      g.addColorStop(0, "#ffe789"); g.addColorStop(0.6, "#d6af37"); g.addColorStop(1, "#a87a22");
+      ctx.fillStyle = g; ctx.fill();
+      ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = "rgba(255, 220, 120, 0.18)";
+      ctx.beginPath(); ctx.arc(cx, cy, innerR + rayLen + 40, 0, Math.PI*2); ctx.fill();
+      ctx.globalCompositeOperation = 'source-over';
+    }
+
+    function vignette(ctx) {
+      const { width: W, height: H } = ctx.canvas;
+      ctx.save(); ctx.globalCompositeOperation = 'multiply';
+      const g = ctx.createRadialGradient(W/2, H/2, W*0.25, W/2, H/2, W*0.75);
+      g.addColorStop(0, "rgba(255,255,255,1)");
+      g.addColorStop(1, "rgba(0,0,0,0.9)");
+      ctx.fillStyle = g; ctx.fillRect(0,0,W,H); ctx.restore();
+    }
+
+    function render(size = PREVIEW_SIZE) {
+      setCanvasSize(size);
+      drawVelvetBackground(ctx);
+      const { cx, cy, rOuter, rInner } = drawPatch(ctx);
+      const innerR = rInner * 0.88, rayLen = rOuter * 0.32;
+      drawSun(ctx, cx, cy, innerR, rayLen, 20);
+      vignette(ctx);
+    }
+
+    render(PREVIEW_SIZE);
+    document.getElementById('render4k').addEventListener('click', () => requestAnimationFrame(() => render(FINAL_SIZE)));
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = "pss-chall-insignia-of-the-sun-motif-ar1x1-4k-rgb-v001-20250831-jh-final.png";
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

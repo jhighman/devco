@@ -1,0 +1,35 @@
+{
+  "collection": "Pop Song Summer",
+  "chapter": "07",
+  "asset_title": "Diner: Flo & the Refrain",
+  "filenames": {
+    "svg": "pss-ch07-diner-flo-and-the-refrain-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+    "png": "pss-ch07-diner-flo-and-the-refrain-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+    "canvas_demo": "pss-ch07-diner-flo-and-the-refrain-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+  },
+  "prompt": "Late-night diner interior with checkerboard floor, chrome counter, four stools, neon DINER and 'OPEN 24' glow, a retro jukebox, and Flo in a red uniform with a sun-insignia pin. Steam from a coffee cup curls into musical staff lines with a couple of glowing notes; horizon-fire amber tints the windows.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "16:9",
+  "resolution": "3840x2160",
+  "color_space": "RGB",
+  "tags": [
+    "diner",
+    "flo",
+    "refrain",
+    "jukebox",
+    "neon",
+    "insignia",
+    "coffee"
+  ],
+  "chapters_referenced": [
+    "03",
+    "05",
+    "07"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

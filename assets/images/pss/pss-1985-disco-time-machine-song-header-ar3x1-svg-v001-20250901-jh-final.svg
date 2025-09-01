@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 1000" role="img" aria-labelledby="title desc">
+  <title id="title">1985 (Disco Time Machine) — Song Header (Pop Song Summer)</title>
+  <desc id="desc">Retro-future neon: synth sky, perspective grid floor, glowing disco ball with crisscross facets, time-ring halo, tiny sun-insignia glint, and bokeh. Built to sit gently behind a heading.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#111336"/>
+      <stop offset="60%"  stop-color="#0c1030"/>
+      <stop offset="100%" stop-color="#0a0c14"/>
+    </linearGradient>
+    <radialGradient id="ring" cx="50%" cy="45%" r="50%">
+      <stop offset="0%"   stop-color="rgba(255,120,220,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,120,220,0)"/>
+    </radialGradient>
+    <radialGradient id="ball" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#a0d9ff"/>
+      <stop offset="60%"  stop-color="#6bd3ff"/>
+      <stop offset="100%" stop-color="#2ed1ff"/>
+    </radialGradient>
+    <radialGradient id="bokehA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(180,150,255,0.35)"/>
+      <stop offset="100%" stop-color="rgba(180,150,255,0)"/>
+    </radialGradient>
+    <radialGradient id="bokehB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,170,110,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,170,110,0)"/>
+    </radialGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffe789"/>
+      <stop offset="70%" stop-color="#d6af37"/>
+      <stop offset="100%" stop-color="rgba(168,122,34,0)"/>
+    </radialGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="3000" height="1000" fill="url(#sky)"/>
+
+  <!-- Time ring halo -->
+  <ellipse cx="1500" cy="460" rx="820" ry="320" fill="url(#ring)"/>
+
+  <!-- Grid floor -->
+  <g stroke="#382a6b" stroke-opacity="0.75">
+    <!-- horizontal grid (projected) -->
+    <path d="M0,880 L3000,880" />
+    <path d="M0,920 L3000,920" />
+    <path d="M0,960 L3000,960" />
+    <!-- vertical converging lines -->
+    <path d="M-60,1000 L1500,620"/>
+    <path d="M200,1000 L1500,620"/>
+    <path d="M460,1000 L1500,620"/>
+    <path d="M720,1000 L1500,620"/>
+    <path d="M980,1000 L1500,620"/>
+    <path d="M1240,1000 L1500,620"/>
+    <path d="M1760,1000 L1500,620"/>
+    <path d="M2020,1000 L1500,620"/>
+    <path d="M2280,1000 L1500,620"/>
+    <path d="M2540,1000 L1500,620"/>
+    <path d="M2800,1000 L1500,620"/>
+    <path d="M3060,1000 L1500,620"/>
+  </g>
+
+  <!-- Disco ball -->
+  <g transform="translate(1500,520)">
+    <circle cx="0" cy="0" r="110" fill="url(#ball)" filter="url(#soft)" opacity="0.9"/>
+    <!-- facet lines -->
+    <g stroke="#c7f1ff" stroke-opacity="0.8">
+      <g>
+        <circle cx="0" cy="0" r="90" fill="none" opacity="0.7"/>
+        <circle cx="0" cy="0" r="60" fill="none" opacity="0.6"/>
+        <circle cx="0" cy="0" r="30" fill="none" opacity="0.5"/>
+      </g>
+      <g>
+        <line x1="-110" y1="0" x2="110" y2="0" />
+        <line x1="-95" y1="-40" x2="95" y2="-40" />
+        <line x1="-95" y1="40" x2="95" y2="40" />
+        <line x1="-70" y1="-80" x2="70" y2="-80" />
+        <line x1="-70" y1="80" x2="70" y2="80" />
+      </g>
+      <g>
+        <line x1="-78" y1="-78" x2="78" y2="78"/>
+        <line x1="78" y1="-78" x2="-78" y2="78"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Tiny tonearm hint -->
+  <g stroke="#6fb0ff" stroke-width="6" opacity="0.65">
+    <line x1="1680" y1="560" x2="1820" y2="620" stroke-linecap="round"/>
+    <circle cx="1820" cy="620" r="8" fill="#6fb0ff"/>
+  </g>
+
+  <!-- Sun-insignia glint (small, top-right) -->
+  <g transform="translate(2360,240)" opacity="0.30">
+    <circle cx="0" cy="0" r="48" fill="url(#sun)" filter="url(#soft)"/>
+    <g stroke="#d6af37" stroke-linecap="round" stroke-width="6">
+      <line x1="0" y1="-70" x2="0" y2="-44"/>
+      <line x1="0" y1="44"  x2="0" y2="70"/>
+      <line x1="-70" y1="0" x2="-44" y2="0"/>
+      <line x1="44"  y1="0" x2="70"  y2="0"/>
+    </g>
+  </g>
+
+  <!-- Bokeh -->
+  <g opacity="0.8">
+    <circle cx="420" cy="460" r="12" fill="url(#bokehA)"/>
+    <circle cx="860" cy="520" r="10" fill="url(#bokehB)"/>
+    <circle cx="1980" cy="460" r="12" fill="url(#bokehA)"/>
+    <circle cx="2260" cy="520" r="10" fill="url(#bokehB)"/>
+    <circle cx="2580" cy="460" r="14" fill="url(#bokehA)"/>
+  </g>
+
+  <!-- Bottom fade for title legibility -->
+  <linearGradient id="fade" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="rgba(0,0,0,0)"/>
+    <stop offset="100%" stop-color="rgba(0,0,0,0.60)"/>
+  </linearGradient>
+  <rect x="0" y="720" width="3000" height="280" fill="url(#fade)"/>
+</svg>

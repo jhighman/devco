@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – Roller Rink Shelter (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1100px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 16/9; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3840" height="2160" aria-label="Roller Rink Shelter artwork"></canvas>
+    <div class="controls">
+      <button id="render4k">Render 4K (3840×2160)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 4K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const W=3840, H=2160;
+    const FILENAME = "pss-ch08-roller-rink-shelter-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png";
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(){ canvas.width=W; canvas.height=H; }
+    function L(x0,y0,x1,y1,stops){ const g = ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+    function R(cx,cy,r,stops){ const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+
+    function ceiling(){
+      ctx.fillStyle = L(0,0,0,H*0.57, [[0,"#0a0b14"],[0.7,"#090a12"],[1,"#080910"]]);
+      ctx.fillRect(0,0,W,H*0.57);
+      // neon ring lights
+      ctx.save(); ctx.lineCap='round'; ctx.filter='blur(8px)';
+      ctx.strokeStyle="#78b2ff"; ctx.lineWidth=10; ctx.globalAlpha=0.8;
+      ctx.beginPath(); ctx.moveTo(120,160); ctx.bezierCurveTo(480,80, 1440,80, 1800,160); ctx.stroke();
+      ctx.strokeStyle="#ff6fb1"; ctx.lineWidth=10; ctx.globalAlpha=0.85;
+      ctx.beginPath(); ctx.moveTo(120,220); ctx.bezierCurveTo(480,140, 1440,140, 1800,220); ctx.stroke();
+      ctx.restore();
+      // disco ball halo
+      const g = R(W/2, 140, 120, [[0,"rgba(200,220,255,0.9)"],[0.7,"rgba(160,180,240,0.25)"],[1,"rgba(160,180,240,0)"]]);
+      ctx.save(); ctx.filter='blur(6px)'; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(W/2,140,120,0,Math.PI*2); ctx.fill(); ctx.restore();
+      ctx.fillStyle="#cfd9ff"; ctx.beginPath(); ctx.arc(W/2,140,10,0,Math.PI*2); ctx.fill();
+    }
+
+    function backWall(){
+      // wall band
+      ctx.fillStyle="#0b0b12"; ctx.strokeStyle="rgba(220,220,240,0.18)"; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.roundRect(80,260,W-160,240,10); ctx.fill(); ctx.stroke();
+      // EXIT doors
+      function exit(x){
+        ctx.fillStyle="#0a0a12"; ctx.strokeStyle="rgba(220,220,240,0.2)"; ctx.lineWidth=3;
+        ctx.beginPath(); ctx.roundRect(x,280,200,200,6); ctx.fill(); ctx.stroke();
+        ctx.fillStyle="rgba(255,140,80,0.22)"; ctx.beginPath(); ctx.roundRect(x,280,200,200,6); ctx.fill();
+        ctx.save(); ctx.fillStyle="#ffd27a"; ctx.font="48px monospace"; ctx.textAlign="center"; ctx.fillText("EXIT", x+100, 390); ctx.restore();
+      }
+      exit(240); exit(W-240-200);
+    }
+
+    function boardsAndCots(){
+      ctx.fillStyle="#11111a"; ctx.strokeStyle="rgba(220,220,240,0.2)"; ctx.lineWidth=2;
+      ctx.fillRect(60,520,W-120,28); ctx.strokeRect(60,520,W-120,28);
+      const xs=[140,420,700,980,1260,1540];
+      ctx.fillStyle="#12121a"; ctx.strokeStyle="rgba(220,220,240,0.2)"; ctx.lineWidth=2;
+      for(const x of xs){ ctx.beginPath(); ctx.roundRect(x,540,220,44,8); ctx.fill(); ctx.stroke(); }
+      // hidden insignia key tag
+      const sx=260, sy=566, r=10;
+      const g = R(sx,sy-8, r, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.fillStyle="rgba(0,0,0,0.6)"; ctx.beginPath(); ctx.ellipse(sx, sy, 10, 3, 0, 0, Math.PI*2); ctx.fill();
+      ctx.save(); ctx.globalAlpha=0.75; ctx.filter='blur(4px)'; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(sx, sy-8, r, 0, Math.PI*2); ctx.fill(); ctx.restore();
+    }
+
+    function floor(){
+      ctx.fillStyle = L(0,H*0.51,0,H, [[0,"#1a1210"],[1,"#140e0c"]]);
+      ctx.fillRect(0,H*0.51,W,H*0.49);
+      // arcs / lane lines
+      ctx.strokeStyle="rgba(255,210,120,0.28)"; ctx.lineWidth=6; ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(-200,H*0.97); ctx.bezierCurveTo(400,H*0.76, 1520,H*0.76, W+200,H*0.97); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-200,H*0.94); ctx.bezierCurveTo(420,H*0.70, 1500,H*0.70, W+200,H*0.94); ctx.stroke();
+      // center emblem
+      const cx=W/2, cy=H*0.38 + H*0.33;
+      ctx.save();
+      ctx.beginPath(); ctx.arc(cx,cy,90,0,Math.PI*2); ctx.strokeStyle="rgba(214,175,55,0.35)"; ctx.lineWidth=4; ctx.fillStyle="rgba(200,140,40,0.08)"; ctx.fill(); ctx.stroke();
+      const g = R(cx,cy,26, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.filter='blur(4px)'; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,26,0,Math.PI*2); ctx.fill();
+      ctx.filter='none'; ctx.strokeStyle="#d6af37"; ctx.lineWidth=5; ctx.lineCap='round';
+      function ray(ax,ay,bx,by){ ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke(); }
+      ray(cx,cy-64, cx,cy-38); ray(cx,cy+38, cx,cy+64); ray(cx-64,cy, cx-38,cy); ray(cx+38,cy, cx+64,cy);
+      ray(cx-46,cy-46, cx-26,cy-26); ray(cx+46,cy-46, cx+26,cy-26);
+      ray(cx-46,cy+46, cx-26,cy+26); ray(cx+46,cy+46, cx+26,cy+26);
+      ctx.restore();
+    }
+
+    function skaters(){
+      ctx.fillStyle="#0b0a10"; ctx.globalAlpha=0.95;
+      function blob(x,y,s=1){
+        ctx.beginPath();
+        ctx.moveTo(x-40*s,y-40*s); ctx.quadraticCurveTo(x-20*s,y-100*s, x+40*s,y-100*s);
+        ctx.quadraticCurveTo(x+100*s,y-100*s, x+100*s,y-40*s);
+        ctx.quadraticCurveTo(x+80*s,y-20*s, x+56*s,y-12*s);
+        ctx.quadraticCurveTo(x+62*s,y+24*s, x+74*s,y+60*s);
+        ctx.quadraticCurveTo(x+18*s,y+80*s, x-82*s,y+24*s);
+        ctx.quadraticCurveTo(x-60*s,y-10*s, x-40*s,y-40*s);
+        ctx.closePath(); ctx.fill();
+      }
+      blob(620,880,1); blob(1280,900,0.95);
+      ctx.globalAlpha=1;
+    }
+
+    function render(){ setSize(); ceiling(); backWall(); boardsAndCots(); floor(); skaters(); 
+      // vignette
+      const r = Math.max(W,H)*0.95; const g = ctx.createRadialGradient(W/2,H/2, r*0.55, W/2,H/2, r); g.addColorStop(0,"rgba(0,0,0,0)"); g.addColorStop(1,"rgba(0,0,0,0.82)"); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    }
+    render();
+
+    document.getElementById('render4k').addEventListener('click', render);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

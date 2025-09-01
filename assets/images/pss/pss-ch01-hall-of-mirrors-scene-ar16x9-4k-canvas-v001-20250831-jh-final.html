@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – Hall of Mirrors (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1100px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 16/9; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3840" height="2160" aria-label="Hall of Mirrors artwork"></canvas>
+    <div class="controls">
+      <button id="render4k">Render 4K (3840×2160)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 4K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const W=3840, H=2160;
+    const FILENAME = "pss-ch01-hall-of-mirrors-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png";
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(){ canvas.width=W; canvas.height=H; }
+    function L(x0,y0,x1,y1,stops){ const g = ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+    function R(cx,cy,r,stops){ const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+
+    function background(){
+      ctx.fillStyle = L(0,0,0,H, [[0,"#0b0b12"],[0.6,"#0a0910"],[1,"#07070d"]]); ctx.fillRect(0,0,W,H);
+      // floor trapezoid
+      ctx.fillStyle = L(0,H*0.65,0,H, [[0,"#1a0a14"],[1,"#0b0710"]]);
+      ctx.beginPath(); ctx.moveTo(200,H); ctx.lineTo(W-200,H); ctx.lineTo(W*0.72,H*0.60); ctx.lineTo(W*0.28,H*0.60); ctx.closePath(); ctx.fill();
+    }
+
+    function mirrorPanel(x,y,w,h,scale=1){
+      // frame
+      ctx.fillStyle = L(x,y,x+w,y, [[0,"#0e0e16"],[0.5,"#11111a"],[1,"#0e0e16"]]);
+      ctx.fillRect(x,y,w,h);
+      ctx.strokeStyle = L(0,y,0,y+h, [[0,"rgba(255,0,180,0.25)"],[1,"rgba(255,190,70,0.25)"]]);
+      ctx.lineWidth = 4; ctx.strokeRect(x+1.5,y+1.5,w-3,h-3);
+      // warped reflection ellipses
+      ctx.save();
+      // crude warp via scale and slight random offsets
+      ctx.globalAlpha = 0.9*scale;
+      function refl(cx,cy,rx,ry,alpha){
+        ctx.fillStyle = `rgba(180,200,220,${alpha})`;
+        ctx.beginPath(); ctx.ellipse(x+cx, y+cy, rx, ry, 0, 0, Math.PI*2); ctx.fill();
+      }
+      refl(w*0.5, h*0.26, 46*scale, 66*scale, 0.18);
+      refl(w*0.5, h*0.48, 56*scale, 78*scale, 0.22);
+      refl(w*0.5, h*0.73, 68*scale, 96*scale, 0.26);
+      ctx.restore();
+    }
+
+    function mirrors(){
+      // left stack (closer bigger, then smaller forward)
+      const panels = [
+        {x:260, y:140, w:220, h:780, s:1.0},
+        {x:80,  y:160, w:220, h:760, s:0.92},
+        {x:-90, y:200, w:220, h:720, s:0.86},
+        {x:-260,y:240, w:220, h:680, s:0.8},
+        {x:-420,y:280, w:220, h:640, s:0.74},
+      ];
+      for(const p of panels) mirrorPanel(p.x, p.y, p.w, p.h, p.s);
+      // right (mirror horizontally)
+      ctx.save();
+      ctx.translate(W,0); ctx.scale(-1,1);
+      for(const p of panels) mirrorPanel(p.x, p.y, p.w, p.h, p.s);
+      ctx.restore();
+    }
+
+    function woman(){
+      // shadow
+      ctx.fillStyle="rgba(0,0,0,0.5)"; ctx.beginPath(); ctx.ellipse(W/2, H*0.76, 240, 36, 0, 0, Math.PI*2); ctx.fill();
+      // fringe copies
+      function coatPath(){ const p = new Path2D(); p.moveTo(780,600); p.quadraticCurveTo(920,540,1040,580); p.quadraticCurveTo(1150,610,1220,690); p.quadraticCurveTo(1210,830,1170,970); p.quadraticCurveTo(950,1050,760,1020); p.quadraticCurveTo(730,860,750,740); p.quadraticCurveTo(780,670,790,630); p.closePath(); return p; }
+      function armPath(){ const p = new Path2D(); p.moveTo(1090,720); p.quadraticCurveTo(1210,780, 1290,880); p.quadraticCurveTo(1250,920,1170,900); p.quadraticCurveTo(1090,880,1030,820); p.quadraticCurveTo(1050,770,1090,720); p.closePath(); return p; }
+      const coat = coatPath(); const arm = armPath();
+
+      // chromatic fringe
+      ctx.fillStyle="rgba(0,255,255,0.35)"; ctx.save(); ctx.translate(-2,0); ctx.fill(coat); ctx.fill(arm); ctx.restore();
+      ctx.fillStyle="rgba(255,0,180,0.35)"; ctx.save(); ctx.translate(2,0); ctx.fill(coat); ctx.fill(arm); ctx.restore();
+
+      // base silhouette
+      ctx.fillStyle="#0b0a0f";
+      const head = new Path2D("M860,560 q40,-120 160,-120 q120,0 150,100 q-40,40 -80,60 q-10,60 -20,120 q-100,50 -220,10 q20,-90 10,-150 q-10,-50 0,-20 z");
+      ctx.fill(head);
+
+      // velvet coat
+      ctx.fillStyle="#a3082c"; ctx.fill(coat);
+      // sheen
+      ctx.strokeStyle="rgba(255,120,160,0.35)"; ctx.lineCap="round";
+      ctx.lineWidth=14; ctx.beginPath(); ctx.moveTo(880,640); ctx.quadraticCurveTo(920,860,900,1060); ctx.stroke();
+      ctx.lineWidth=12; ctx.beginPath(); ctx.moveTo(980,660); ctx.quadraticCurveTo(1020,880,1010,1080); ctx.stroke();
+      ctx.lineWidth=10; ctx.beginPath(); ctx.moveTo(1080,700); ctx.quadraticCurveTo(1110,900,1110,1080); ctx.stroke();
+
+      // arm
+      ctx.fillStyle="#8e0728"; ctx.fill(arm);
+      // cuff + insignia
+      ctx.fillStyle="#5a0418"; ctx.fillRect(1120,760,46,28); // cuff
+      const sx=1150, sy=774;
+      const g = ctx.createRadialGradient(sx,sy,0,sx,sy,12);
+      g.addColorStop(0,"#ffe789"); g.addColorStop(0.7,"#d6af37"); g.addColorStop(1,"rgba(168,122,34,0)");
+      ctx.save(); ctx.filter='blur(4px)'; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(sx,sy,12,0,Math.PI*2); ctx.fill(); ctx.restore();
+    }
+
+    function vignette(){
+      const r = Math.max(W,H)*0.95;
+      const g = ctx.createRadialGradient(W/2,H/2, r*0.55, W/2,H/2, r);
+      g.addColorStop(0,"rgba(0,0,0,0)");
+      g.addColorStop(1,"rgba(0,0,0,0.82)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    }
+
+    function render(){ setSize(); background(); mirrors(); woman(); vignette(); }
+    render();
+
+    document.getElementById('render4k').addEventListener('click', render);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{
+  "collection": "Pop Song Summer",
+  "asset_title": "A Blind Man Singing \u2014 Song Header",
+  "filenames": {
+    "svg": "pss-a-blind-man-singing-song-header-ar3x1-svg-v001-20250901-jh-final.svg",
+    "png": "pss-a-blind-man-singing-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png",
+    "canvas_demo": "pss-a-blind-man-singing-song-header-ar3x1-3k-canvas-v001-20250901-jh-final.html"
+  },
+  "prompt": "3:1 dark stage header with a warm spotlight, minimal blind singer silhouette and cane, radiating voice arcs, subtle braille-like dots, faint sun-insignia halo, and a bottom fade for title legibility.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-09-01",
+  "aspect_ratio": "3:1",
+  "resolution": "3000x1000",
+  "color_space": "RGB",
+  "tags": [
+    "header",
+    "blind man",
+    "spotlight",
+    "voice arcs",
+    "braille",
+    "sun insignia",
+    "Pop Song Summer"
+  ],
+  "chapters_referenced": [
+    "01",
+    "03",
+    "07"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept header artwork for Pop Song Summer."
+  }
+}

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – Back Room: Church of Light (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1100px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 16/9; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3840" height="2160" aria-label="Back Room: Church of Light artwork"></canvas>
+    <div class="controls">
+      <button id="render4k">Render 4K (3840×2160)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 4K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const W=3840, H=2160;
+    const FILENAME = "pss-ch01-back-room-church-of-light-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png";
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(){ canvas.width=W; canvas.height=H; }
+
+    function drawBackground(){
+      // radial bg
+      const g = ctx.createRadialGradient(W/2, H*0.4, H*0.05, W/2, H*0.4, H*0.9);
+      g.addColorStop(0, "#0d0a12");
+      g.addColorStop(0.6, "#0a0810");
+      g.addColorStop(1, "#05050a");
+      ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+    }
+
+    function drawBeams(){
+      ctx.save();
+      ctx.filter = 'blur(8px)';
+      const xs = [200,450,700,950,1200,1450,1700];
+      for(const x of xs){
+        const grd = ctx.createLinearGradient(x,0,x,H);
+        grd.addColorStop(0, "rgba(255,230,160,0.0)");
+        grd.addColorStop(0.2, "rgba(255,230,160,0.45)");
+        grd.addColorStop(0.55,"rgba(255,200,90,0.20)");
+        grd.addColorStop(1, "rgba(255,200,90,0.0)");
+        ctx.fillStyle = grd;
+        ctx.fillRect(x,0,70,H);
+      }
+      ctx.restore();
+    }
+
+    function drawFloor(){
+      const cx=W/2, cy=H*0.86, rx=W*0.385, ry=H*0.083;
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(rx,ry));
+      g.addColorStop(0, "rgba(120,80,120,0.6)");
+      g.addColorStop(1, "rgba(30,20,40,0)");
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2); ctx.fill();
+    }
+
+    function drawSigil(){
+      const cx=W/2, cy=H*0.814, r=H*0.185;
+      // glow
+      const gg = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+      gg.addColorStop(0, "rgba(255,80,80,0.9)");
+      gg.addColorStop(0.6, "rgba(220,40,40,0.45)");
+      gg.addColorStop(1, "rgba(220,40,40,0)");
+      ctx.save();
+      ctx.filter = 'blur(6px)';
+      ctx.fillStyle = gg; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill();
+      ctx.restore();
+      // rings
+      ctx.strokeStyle = "rgba(255,90,90,0.9)"; ctx.lineWidth = 8;
+      ctx.beginPath(); ctx.arc(cx,cy,r*0.95,0,Math.PI*2); ctx.stroke();
+      ctx.strokeStyle = "rgba(255,140,120,0.35)"; ctx.lineWidth = 14;
+      ctx.beginPath(); ctx.arc(cx,cy,r*1.03,0,Math.PI*2); ctx.stroke();
+    }
+
+    function shapePath(d){
+      const p = new Path2D(d);
+      return p;
+    }
+
+    function drawDancers(){
+      ctx.fillStyle = "rgba(10,0,10,0.9)";
+      // left
+      ctx.fill(shapePath("M760,750 q-20,-120 40,-160 q60,-40 100,30 q-30,40 -30,90 q0,50 30,110 q-40,10 -90,-10 q-50,-20 -50,-60 z"));
+      // right
+      ctx.fill(shapePath("M1160,760 q10,-110 70,-140 q60,-30 90,50 q-30,30 -30,80 q0,60 20,100 q-60,20 -110,0 q-50,-20 -40,-90 z"));
+      // rear center
+      ctx.globalAlpha = 0.8;
+      ctx.fill(shapePath("M960,700 q-10,-80 40,-120 q50,-40 90,0 q-20,30 -20,70 q0,60 20,110 q-50,20 -90,0 q-40,-20 -40,-60 z"));
+      ctx.globalAlpha = 1.0;
+      // insignia glows
+      function glow(x,y,r){
+        const g = ctx.createRadialGradient(x,y,0,x,y,r);
+        g.addColorStop(0,"#ffe789");
+        g.addColorStop(0.7,"#d6af37");
+        g.addColorStop(1,"rgba(168,122,34,0)");
+        ctx.save(); ctx.filter='blur(5px)'; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill(); ctx.restore();
+      }
+      glow(830,720,12); glow(1120,720,12); glow(990,690,10);
+    }
+
+    function vignette(){
+      const r = Math.max(W,H)*0.95;
+      const g = ctx.createRadialGradient(W/2,H/2, r*0.55, W/2,H/2, r);
+      g.addColorStop(0,"rgba(0,0,0,0)");
+      g.addColorStop(1,"rgba(0,0,0,0.75)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    }
+
+    function render(){ setSize(); drawBackground(); drawBeams(); drawFloor(); drawSigil(); drawDancers(); vignette(); }
+    render();
+
+    document.getElementById('render4k').addEventListener('click', render);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

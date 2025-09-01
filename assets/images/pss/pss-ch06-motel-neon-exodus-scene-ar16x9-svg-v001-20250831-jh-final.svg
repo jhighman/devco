@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Motel Neon Exodus — Pop Song Summer</title>
+  <desc id="desc">Roadside L-motel at night with neon sign, packed car idling, a figure in red looking back, highway light trails, faint fires on the far horizon, hidden sun insignia as a key fob glow.</desc>
+
+  <defs>
+    <!-- Sky -->
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#090a12"/>
+      <stop offset="60%"  stop-color="#0a0810"/>
+      <stop offset="100%" stop-color="#07060c"/>
+    </linearGradient>
+
+    <!-- Amber haze near horizon -->
+    <linearGradient id="haze" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="rgba(255,160,90,0.0)"/>
+      <stop offset="80%"  stop-color="rgba(255,150,90,0.18)"/>
+      <stop offset="100%" stop-color="rgba(255,130,80,0.30)"/>
+    </linearGradient>
+
+    <!-- Fire band -->
+    <linearGradient id="fire" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="rgba(255,180,90,1)"/>
+      <stop offset="70%"  stop-color="rgba(230,90,40,0.7)"/>
+      <stop offset="100%" stop-color="rgba(220,60,30,0.0)"/>
+    </linearGradient>
+
+    <!-- Neon glow filters -->
+    <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="neonGlowStrong" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Gold insignia -->
+    <radialGradient id="gold" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffe789"/>
+      <stop offset="70%" stop-color="#d6af37"/>
+      <stop offset="100%" stop-color="rgba(168,122,34,0)"/>
+    </radialGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+
+    <!-- Vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="80%">
+      <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.82)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background sky + haze + far fires -->
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <rect width="1920" height="1080" fill="url(#haze)"/>
+  <rect x="0" y="820" width="1920" height="120" fill="url(#fire)" opacity="0.6"/>
+
+  <!-- Highway light trails -->
+  <g stroke-linecap="round" stroke-width="6" opacity="0.8" filter="url(#neonGlow)">
+    <path d="M0,980 C400,940 800,1020 1200,980 C1500,950 1710,1010 1920,980" stroke="#ff7a7a"/>
+    <path d="M0,1008 C420,972 820,1040 1180,1005 C1500,975 1700,1030 1920,1005" stroke="#ffd27a" opacity="0.75"/>
+  </g>
+
+  <!-- Motel block (simple L shape) -->
+  <g id="motel">
+    <rect x="300" y="640" width="800" height="220" fill="#0f0e16" stroke="rgba(200,200,220,0.2)" stroke-width="2"/>
+    <rect x="1040" y="720" width="220" height="140" fill="#0f0e16" stroke="rgba(200,200,220,0.2)" stroke-width="2"/>
+    <!-- doors/windows -->
+    <g fill="#12121a" stroke="rgba(180,180,200,0.25)" stroke-width="3">
+      <rect x="340" y="700" width="80" height="120" rx="4"/>
+      <rect x="460" y="700" width="80" height="120" rx="4"/>
+      <rect x="580" y="700" width="80" height="120" rx="4"/>
+      <rect x="700" y="700" width="80" height="120" rx="4"/>
+      <rect x="820" y="700" width="80" height="120" rx="4"/>
+      <rect x="940" y="700" width="80" height="120" rx="4"/>
+      <rect x="1080" y="760" width="60" height="80" rx="4"/>
+    </g>
+    <!-- pool glow -->
+    <ellipse cx="520" cy="880" rx="180" ry="30" fill="rgba(70,210,220,0.25)"/>
+  </g>
+
+  <!-- Neon sign -->
+  <g id="sign" transform="translate(240,520)">
+    <rect x="-20" y="-120" width="220" height="360" rx="14" fill="#09090f" stroke="#1a1a26" stroke-width="4"/>
+    <text x="90" y="0" text-anchor="middle" font-family="monospace" font-size="96" fill="#ff2a6d" filter="url(#neonGlowStrong)">M</text>
+    <text x="90" y="80" text-anchor="middle" font-family="monospace" font-size="96" fill="#ff2a6d" filter="url(#neonGlowStrong)">O</text>
+    <text x="90" y="160" text-anchor="middle" font-family="monospace" font-size="96" fill="#ff2a6d" filter="url(#neonGlowStrong)">T</text>
+    <text x="90" y="240" text-anchor="middle" font-family="monospace" font-size="96" fill="#ff2a6d" filter="url(#neonGlowStrong)">E</text>
+    <text x="90" y="320" text-anchor="middle" font-family="monospace" font-size="96" fill="#ff2a6d" filter="url(#neonGlowStrong)">L</text>
+    <!-- no vacancy -->
+    <rect x="220" y="40" width="200" height="40" rx="8" fill="rgba(255,80,80,0.15)" stroke="rgba(255,80,80,0.4)" stroke-width="3" filter="url(#neonGlow)"/>
+    <text x="320" y="70" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" fill="#ffd27a" filter="url(#neonGlow)">NO VACANCY</text>
+  </g>
+
+  <!-- Car + figure -->
+  <g id="car" transform="translate(1220,860)">
+    <rect x="-40" y="20" width="200" height="30" rx="8" fill="#0c0c12"/>
+    <rect x="-100" y="0" width="260" height="40" rx="10" fill="#0c0c12"/>
+    <circle cx="0" cy="60" r="22" fill="#141420" stroke="rgba(200,200,220,0.2)" stroke-width="3"/>
+    <circle cx="140" cy="60" r="22" fill="#141420" stroke="rgba(200,200,220,0.2)" stroke-width="3"/>
+    <!-- tail glow -->
+    <circle cx="180" cy="22" r="10" fill="#ff755c" filter="url(#neonGlow)"/>
+    <!-- roofline -->
+    <path d="M-40,0 q60,-40 160,-20 q60,10 80,40" stroke="rgba(200,200,220,0.35)" stroke-width="4" fill="none"/>
+  </g>
+  <g id="figure" transform="translate(1140,820)">
+    <path d="M-10,-40 q0,-40 40,-40 q40,0 40,40 q-10,20 -34,30 q6,28 12,48 q-20,12 -46,0 q8,-26 12,-48 q-18,-8 -24,-30 z" fill="#0b0a10"/>
+    <!-- coat -->
+    <path d="M-40,-10 q70,-30 120,-10 q50,16 76,60 q-4,80 -26,140 q-120,40 -220,10 q-20,-90 -10,-150 q18,-36 60,-50 z" fill="#a3082c"/>
+    <!-- cuff insignia -->
+    <circle cx="80" cy="56" r="10" fill="url(#gold)" filter="url(#softGlow)"/>
+  </g>
+
+  <!-- Key fob glow on ground (hidden insignia) -->
+  <g transform="translate(1060,980)">
+    <ellipse cx="0" cy="0" rx="8" ry="3" fill="rgba(0,0,0,0.6)"/>
+    <circle cx="0" cy="-6" r="10" fill="url(#gold)" filter="url(#softGlow)" opacity="0.75"/>
+  </g>
+
+  <!-- Foreground asphalt -->
+  <rect x="0" y="960" width="1920" height="120" fill="#0a0a12"/>
+
+  <!-- Vignette -->
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+</svg>

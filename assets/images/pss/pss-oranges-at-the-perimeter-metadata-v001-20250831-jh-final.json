@@ -1,0 +1,34 @@
+{
+  "collection": "Pop Song Summer",
+  "asset_title": "Oranges at the Perimeter",
+  "filenames": {
+    "svg": "pss-oranges-at-the-perimeter-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+    "png": "pss-oranges-at-the-perimeter-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+    "canvas_demo": "pss-oranges-at-the-perimeter-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+  },
+  "prompt": "Night chain-link perimeter fence; warm floodlight cone; oranges aligned along the curb as a ward (whole and halved with citrus segments); a mesh bag; one orange carries the gold sun-insignia sticker. Minimal, moody, recurring amber horizon.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "16:9",
+  "resolution": "3840x2160",
+  "color_space": "RGB",
+  "tags": [
+    "oranges",
+    "perimeter",
+    "fence",
+    "insignia",
+    "warding",
+    "night"
+  ],
+  "chapters_referenced": [
+    "02",
+    "03",
+    "06",
+    "10"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "collection": "Pop Song Summer",
+  "chapter": "09",
+  "asset_title": "Bridges \u2014 Exodus Chorus",
+  "filenames": {
+    "svg": "pss-ch09-bridges-exodus-chorus-panorama-ar21x9-svg-v001-20250831-jh-final.svg",
+    "png": "pss-ch09-bridges-exodus-chorus-panorama-ar21x9-6k-rgb-v001-20250831-jh-final.png",
+    "canvas_demo": "pss-ch09-bridges-exodus-chorus-panorama-ar21x9-6k-canvas-v001-20250831-jh-final.html"
+  },
+  "prompt": "Cinematic 21:9 night panorama of stacked highway bridges over a dark river; taillight and headlight trails weave like musical staff lines (the exodus chorus); horizon amber from distant fires; minimalist highway signs; pillars reflecting in water; hidden gold sun insignia glows beneath a central pillar.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "21:9",
+  "resolution": "6048x2592",
+  "color_space": "RGB",
+  "tags": [
+    "bridges",
+    "exodus",
+    "chorus",
+    "light trails",
+    "river",
+    "insignia"
+  ],
+  "chapters_referenced": [
+    "03",
+    "06",
+    "08",
+    "09"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

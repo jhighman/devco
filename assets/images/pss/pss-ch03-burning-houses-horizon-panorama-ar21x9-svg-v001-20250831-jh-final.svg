@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6048 2592" role="img" aria-labelledby="title desc">
+  <title id="title">Burning Houses on the Horizon — Pop Song Summer</title>
+  <desc id="desc">Cinematic horizon line of suburban roofs on fire; dark foreground road; telephone poles; smoke plumes; ember drift; faint sun insignia hidden in the smoke.</desc>
+
+  <defs>
+    <!-- Night sky -->
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#090a12"/>
+      <stop offset="55%"  stop-color="#0a0810"/>
+      <stop offset="100%" stop-color="#07060c"/>
+    </linearGradient>
+
+    <!-- Amber haze near horizon -->
+    <linearGradient id="haze" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="rgba(255,160,90,0.0)"/>
+      <stop offset="70%"  stop-color="rgba(255,140,80,0.20)"/>
+      <stop offset="100%" stop-color="rgba(255,120,70,0.35)"/>
+    </linearGradient>
+
+    <!-- Fire glow -->
+    <linearGradient id="fire" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="rgba(255,180,90,1)"/>
+      <stop offset="70%"  stop-color="rgba(230,90,40,0.75)"/>
+      <stop offset="100%" stop-color="rgba(220,60,30,0.0)"/>
+    </linearGradient>
+
+    <!-- Smoke via turbulence -->
+    <filter id="smoke" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="3" seed="8" result="n"/>
+      <feColorMatrix in="n" type="matrix"
+        values="0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0.7 0" result="a"/>
+      <feGaussianBlur in="a" stdDeviation="8"/>
+    </filter>
+
+    <!-- Insignia gold (hidden in smoke) -->
+    <radialGradient id="gold" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffe789"/>
+      <stop offset="70%" stop-color="#d6af37"/>
+      <stop offset="100%" stop-color="rgba(168,122,34,0)"/>
+    </radialGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+
+    <!-- Vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="80%">
+      <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.82)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Sky + haze -->
+  <rect width="6048" height="2592" fill="url(#sky)"/>
+  <rect width="6048" height="2592" fill="url(#haze)"/>
+
+  <!-- Horizon fire band -->
+  <rect x="0" y="1800" width="6048" height="420" fill="url(#fire)"/>
+
+  <!-- Roofline silhouettes (irregular) -->
+  <g fill="#0a0a12">
+    <path d="M0,1900 L180,1900 L260,1850 L420,1850 L520,1900 L760,1900 L860,1840 L1040,1840 L1140,1900 L1380,1900 L1500,1860 L1700,1860 L1800,1900 L2040,1900 L2140,1860 L2320,1860 L2420,1900 L2700,1900 L2800,1850 L3000,1850 L3120,1900 L3360,1900 L3480,1860 L3700,1860 L3820,1900 L4040,1900 L4160,1860 L4360,1860 L4480,1900 L4740,1900 L4860,1850 L5060,1850 L5180,1900 L5440,1900 L5560,1860 L5780,1860 L5900,1900 L6048,1900 L6048,2000 L0,2000 Z"/>
+  </g>
+
+  <!-- Smoke plumes -->
+  <g filter="url(#smoke)" opacity="0.65">
+    <rect x="400"  y="1200" width="220" height="900" fill="#1a191f"/>
+    <rect x="1200" y="1150" width="260" height="930" fill="#1a191f"/>
+    <rect x="2200" y="1180" width="240" height="900" fill="#1a191f"/>
+    <rect x="3200" y="1220" width="260" height="900" fill="#1a191f"/>
+    <rect x="4200" y="1160" width="240" height="960" fill="#1a191f"/>
+    <rect x="5200" y="1200" width="220" height="900" fill="#1a191f"/>
+  </g>
+
+  <!-- Telephone poles -->
+  <g stroke="rgba(180,180,200,0.35)" stroke-width="10" stroke-linecap="round">
+    <line x1="240" y1="1900" x2="240" y2="1500"/>
+    <line x1="240" y1="1520" x2="420" y2="1520"/>
+    <line x1="1120" y1="1900" x2="1120" y2="1460"/>
+    <line x1="1120" y1="1480" x2="1300" y2="1480"/>
+    <line x1="3120" y1="1900" x2="3120" y2="1440"/>
+    <line x1="3120" y1="1460" x2="3300" y2="1460"/>
+    <line x1="5120" y1="1900" x2="5120" y2="1500"/>
+    <line x1="5120" y1="1520" x2="5300" y2="1520"/>
+  </g>
+
+  <!-- Foreground road -->
+  <rect x="0" y="2000" width="6048" height="592" fill="#0a0a12"/>
+  <g stroke="rgba(220,200,150,0.45)" stroke-width="16" stroke-dasharray="60 40">
+    <line x1="0" y1="2300" x2="6048" y2="2300"/>
+  </g>
+
+  <!-- Embers -->
+  <g opacity="0.5">
+    <circle cx="300" cy="1700" r="6" fill="#ffd07a"/>
+    <circle cx="680" cy="1600" r="4" fill="#ff9acb"/>
+    <circle cx="980" cy="1660" r="5" fill="#ffd07a"/>
+    <circle cx="1420" cy="1720" r="4" fill="#ffd07a"/>
+    <circle cx="2100" cy="1680" r="6" fill="#ffd07a"/>
+    <circle cx="2580" cy="1640" r="5" fill="#ffb090"/>
+    <circle cx="3180" cy="1710" r="4" fill="#ffd07a"/>
+    <circle cx="3720" cy="1650" r="5" fill="#ffd07a"/>
+    <circle cx="4300" cy="1690" r="4" fill="#ffd07a"/>
+    <circle cx="4880" cy="1630" r="6" fill="#ffd07a"/>
+    <circle cx="5460" cy="1700" r="5" fill="#ffb090"/>
+  </g>
+
+  <!-- Hidden insignia in smoke (eastern plume) -->
+  <g transform="translate(4200,1300)">
+    <circle cx="80" cy="120" r="24" fill="url(#gold)" filter="url(#softGlow)" opacity="0.45"/>
+  </g>
+
+  <!-- Vignette -->
+  <rect width="6048" height="2592" fill="url(#vignette)"/>
+</svg>

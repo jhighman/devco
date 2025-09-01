@@ -1,0 +1,26 @@
+{
+  "collection": "Pop Song Summer",
+  "chapter": "05",
+  "asset_title": "Blind Man Singing",
+  "filename_svg": "pss-ch05-blind-man-singing-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+  "filename_png": "pss-ch05-blind-man-singing-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+  "filename_canvas_demo": "pss-ch05-blind-man-singing-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html",
+  "prompt": "Night bridge: blind singer on a milk crate, cane leaning; no amp; sound depicted as soft halo of light; pedestrians moving in rhythm; distant horizon fires; a couple of sun insignia glowing in the crowd.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "16:9",
+  "color_space": "RGB",
+  "tags": [
+    "blind man",
+    "bridge",
+    "halo",
+    "crowd",
+    "insignia",
+    "pop song summer"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

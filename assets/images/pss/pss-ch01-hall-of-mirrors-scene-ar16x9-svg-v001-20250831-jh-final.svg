@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Hall of Mirrors — Pop Song Summer</title>
+  <desc id="desc">Tight corridor of warped mirrors showing the narrator as different ages/selves; the Woman in Red pulling forward; tape-warp color fringe; subtle sun insignia glow.</desc>
+
+  <defs>
+    <!-- Corridor background -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0b0b12"/>
+      <stop offset="60%" stop-color="#0a0910"/>
+      <stop offset="100%" stop-color="#07070d"/>
+    </linearGradient>
+
+    <!-- Floor -->
+    <linearGradient id="floor" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a0a14"/>
+      <stop offset="100%" stop-color="#0b0710"/>
+    </linearGradient>
+
+    <!-- Mirror surface -->
+    <linearGradient id="mirror" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0e0e16"/>
+      <stop offset="50%" stop-color="#11111a"/>
+      <stop offset="100%" stop-color="#0e0e16"/>
+    </linearGradient>
+
+    <!-- Mirror border glow -->
+    <linearGradient id="edge" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,0,180,0.2)"/>
+      <stop offset="100%" stop-color="rgba(255,190,70,0.2)"/>
+    </linearGradient>
+
+    <!-- Warp filter -->
+    <filter id="warp" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+
+    <!-- Tape-warp fringe -->
+    <filter id="fringe" x="-10%" y="-10%" width="120%" height="120%">
+      <feOffset in="SourceGraphic" dx="-2" dy="0" result="r"/>
+      <feOffset in="SourceGraphic" dx="2" dy="0" result="b"/>
+      <feColorMatrix in="r" type="matrix"
+        values="1 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 1 0" result="rc"/>
+      <feColorMatrix in="b" type="matrix"
+        values="0 0 0 0 0
+                0 0 0 0 0
+                0 0 1 0 0
+                0 0 0 1 0" result="bc"/>
+      <feBlend in="rc" in2="bc" mode="screen" result="rb"/>
+      <feBlend in="rb" in2="SourceGraphic" mode="screen"/>
+    </filter>
+
+    <!-- Insignia gold -->
+    <radialGradient id="gold" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffe789"/>
+      <stop offset="70%" stop-color="#d6af37"/>
+      <stop offset="100%" stop-color="rgba(168,122,34,0)"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+
+    <!-- Vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="80%">
+      <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.82)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+
+  <!-- Floor perspective trapezoid -->
+  <polygon points="200,1080 1720,1080 1380,650 540,650" fill="url(#floor)"/>
+
+  <!-- Mirrors left -->
+  <g id="mirrorsLeft">
+    <!-- 5 panels -->
+    <g transform="translate(260,140)">
+      <rect x="0" y="0" width="220" height="780" fill="url(#mirror)" stroke="url(#edge)" stroke-width="4" rx="8"/>
+      <g filter="url(#warp)" opacity="0.9">
+        <!-- silhouettes as reflections (younger to older) -->
+        <ellipse cx="110" cy="200" rx="46" ry="66" fill="rgba(200,140,200,0.18)"/>
+        <ellipse cx="110" cy="370" rx="56" ry="78" fill="rgba(200,140,200,0.22)"/>
+        <ellipse cx="110" cy="560" rx="68" ry="96" fill="rgba(200,140,200,0.26)"/>
+      </g>
+    </g>
+    <g transform="translate(80,160) scale(0.92,1)">
+      <rect x="0" y="0" width="220" height="760" fill="url(#mirror)" stroke="url(#edge)" stroke-width="4" rx="8"/>
+      <g filter="url(#warp)" opacity="0.85">
+        <ellipse cx="110" cy="210" rx="40" ry="58" fill="rgba(200,180,220,0.16)"/>
+        <ellipse cx="110" cy="370" rx="54" ry="74" fill="rgba(200,180,220,0.2)"/>
+        <ellipse cx="110" cy="540" rx="64" ry="92" fill="rgba(200,180,220,0.24)"/>
+      </g>
+    </g>
+    <g transform="translate(-90,200) scale(0.86,1)">
+      <rect x="0" y="0" width="220" height="720" fill="url(#mirror)" stroke="url(#edge)" stroke-width="4" rx="8"/>
+      <g filter="url(#warp)" opacity="0.8">
+        <ellipse cx="110" cy="210" rx="38" ry="52" fill="rgba(160,200,220,0.16)"/>
+        <ellipse cx="110" cy="360" rx="48" ry="68" fill="rgba(160,200,220,0.2)"/>
+        <ellipse cx="110" cy="520" rx="58" ry="86" fill="rgba(160,200,220,0.24)"/>
+      </g>
+    </g>
+    <g transform="translate(-260,240) scale(0.8,1)">
+      <rect x="0" y="0" width="220" height="680" fill="url(#mirror)" stroke="url(#edge)" stroke-width="4" rx="8"/>
+      <g filter="url(#warp)" opacity="0.75">
+        <ellipse cx="110" cy="210" rx="36" ry="50" fill="rgba(160,200,220,0.14)"/>
+        <ellipse cx="110" cy="350" rx="46" ry="62" fill="rgba(160,200,220,0.18)"/>
+        <ellipse cx="110" cy="500" rx="54" ry="80" fill="rgba(160,200,220,0.22)"/>
+      </g>
+    </g>
+    <g transform="translate(-420,280) scale(0.74,1)">
+      <rect x="0" y="0" width="220" height="640" fill="url(#mirror)" stroke="url(#edge)" stroke-width="4" rx="8"/>
+      <g filter="url(#warp)" opacity="0.7">
+        <ellipse cx="110" cy="210" rx="34" ry="48" fill="rgba(160,200,220,0.12)"/>
+        <ellipse cx="110" cy="340" rx="42" ry="58" fill="rgba(160,200,220,0.16)"/>
+        <ellipse cx="110" cy="480" rx="50" ry="74" fill="rgba(160,200,220,0.2)"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Mirrors right (mirrored via scaleX(-1)) -->
+  <g id="mirrorsRight" transform="translate(1920,0) scale(-1,1)">
+    <use href="#mirrorsLeft"/>
+  </g>
+
+  <!-- Woman in Red (center forward) with fringe -->
+  <g id="woman" filter="url(#fringe)" transform="translate(0,20)">
+    <!-- Motion ground shadow -->
+    <ellipse cx="960" cy="820" rx="240" ry="36" fill="rgba(0,0,0,0.5)"/>
+    <!-- Silhouette -->
+    <path d="M860,560 q40,-120 160,-120 q120,0 150,100 q-40,40 -80,60 q-10,60 -20,120 q-100,50 -220,10 q20,-90 10,-150 q-10,-50 0,-20 z"
+          fill="#0b0a0f"/>
+    <!-- Velvet coat -->
+    <path d="M780,600 q140,-60 260,-20 q110,30 180,110 q-10,140 -50,280 q-220,80 -420,20 q-30,-160 -10,-280 q30,-70 40,-110 z"
+          fill="#a3082c"/>
+    <!-- Coat sheen -->
+    <g opacity="0.5" stroke="rgba(255,120,160,0.35)" stroke-linecap="round">
+      <path d="M880,640 q40,220 20,420" stroke-width="14" fill="none"/>
+      <path d="M980,660 q40,220 30,420" stroke-width="12" fill="none"/>
+      <path d="M1080,700 q30,200 30,380" stroke-width="10" fill="none"/>
+    </g>
+    <!-- Outstretched arm pulling -->
+    <path d="M1090,720 q120,60 200,160 q-40,40 -120,20 q-80,-20 -140,-80 q20,-50 60,-100 z" fill="#8e0728"/>
+    <!-- Cuff + insignia -->
+    <rect x="1120" y="760" width="46" height="28" rx="6" fill="#5a0418"/>
+    <g transform="translate(1150,774)">
+      <circle cx="0" cy="0" r="12" fill="url(#gold)" filter="url(#glow)"/>
+      <g stroke="#d6af37" stroke-linecap="round" stroke-width="3">
+        <line x1="0" y1="-20" x2="0" y2="-12"/>
+        <line x1="0" y1="12" x2="0" y2="20"/>
+        <line x1="-20" y1="0" x2="-12" y2="0"/>
+        <line x1="12" y1="0" x2="20"  y2="0"/>
+        <line x1="-14" y1="-14" x2="-8" y2="-8"/>
+        <line x1="14"  y1="-14" x2="8"  y2="-8"/>
+        <line x1="-14" y1="14"  x2="-8" y2="8"/>
+        <line x1="14"  y1="14"  x2="8"  y2="8"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Vignette -->
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+</svg>

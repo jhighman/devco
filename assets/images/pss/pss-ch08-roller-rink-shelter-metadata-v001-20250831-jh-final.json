@@ -1,0 +1,35 @@
+{
+  "collection": "Pop Song Summer",
+  "chapter": "08",
+  "asset_title": "Roller Rink Shelter",
+  "filenames": {
+    "svg": "pss-ch08-roller-rink-shelter-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+    "png": "pss-ch08-roller-rink-shelter-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+    "canvas_demo": "pss-ch08-roller-rink-shelter-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+  },
+  "prompt": "Interior roller rink repurposed as emergency shelter: neon ceiling rings and faint disco halo; EXIT doors glowing amber from outside fires; boards lined with six folding cots; polished floor arcs and a center medallion bearing the sun insignia; two skater silhouettes glide through the shelter space; hidden gold key tag near a cot.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "16:9",
+  "resolution": "3840x2160",
+  "color_space": "RGB",
+  "tags": [
+    "roller rink",
+    "shelter",
+    "neon",
+    "disco ball",
+    "cots",
+    "insignia"
+  ],
+  "chapters_referenced": [
+    "01",
+    "03",
+    "06",
+    "08"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

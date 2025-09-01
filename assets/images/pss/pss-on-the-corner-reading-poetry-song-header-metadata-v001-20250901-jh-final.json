@@ -1,0 +1,29 @@
+{
+  "collection": "Pop Song Summer",
+  "asset_title": "On the Corner, Reading Poetry \u2014 Song Header",
+  "filenames": {
+    "svg": "pss-on-the-corner-reading-poetry-song-header-ar3x1-svg-v001-20250901-jh-final.svg",
+    "png": "pss-on-the-corner-reading-poetry-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png",
+    "canvas_demo": "pss-on-the-corner-reading-poetry-song-header-ar3x1-3k-canvas-v001-20250901-jh-final.html"
+  },
+  "prompt": "3:1 dark header with an urban street corner under warm lamp glow, chalk sun insignia on the pavement, a crate with scattered pages, gentle 'verse lines' arcs, ember/bokeh, and a bottom fade for headline legibility.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-09-01",
+  "aspect_ratio": "3:1",
+  "resolution": "3000x1000",
+  "color_space": "RGB",
+  "tags": [
+    "header",
+    "corner",
+    "poetry",
+    "crate",
+    "chalk sun",
+    "bokeh",
+    "Pop Song Summer"
+  ],
+  "chapters_referenced": [
+    "06",
+    "13"
+  ]
+}

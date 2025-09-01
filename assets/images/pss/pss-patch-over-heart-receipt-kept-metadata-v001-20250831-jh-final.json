@@ -1,0 +1,32 @@
+{
+  "collection": "Pop Song Summer",
+  "asset_title": "Patch Over Heart (Receipt Kept)",
+  "filenames": {
+    "svg": "pss-patch-over-heart-receipt-kept-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+    "png": "pss-patch-over-heart-receipt-kept-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+    "canvas_demo": "pss-patch-over-heart-receipt-kept-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+  },
+  "prompt": "Close-up jacket chest in dark denim with pocket and gold stitching; a round velvet patch over the heart bears a glowing sun insignia; under it, a thermal receipt pinned, stamped KEEP in red. Amber horizon mood and subtle vignette.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "16:9",
+  "resolution": "3840x2160",
+  "color_space": "RGB",
+  "tags": [
+    "denim",
+    "patch",
+    "insignia",
+    "receipt",
+    "keep",
+    "stitching"
+  ],
+  "chapters_referenced": [
+    "02",
+    "11"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "collection": "Pop Song Summer",
+  "chapter": "10",
+  "asset_title": "The Corner: Chalk Sun & Crate",
+  "filenames": {
+    "svg": "pss-ch10-the-corner-chalk-sun-and-crate-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+    "png": "pss-ch10-the-corner-chalk-sun-and-crate-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+    "canvas_demo": "pss-ch10-the-corner-chalk-sun-and-crate-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+  },
+  "prompt": "Night street corner under a warm streetlamp: curb and zebra-crosswalk, chalk-drawn sun glowing on the asphalt, a milk crate stacked with vinyl and a small boombox, a flyer pole that reads POETRY, a newspaper box, faint amber horizon. Hidden insignia appears as a gold sticker on the crate.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "16:9",
+  "resolution": "3840x2160",
+  "color_space": "RGB",
+  "tags": [
+    "corner",
+    "chalk sun",
+    "crate",
+    "streetlamp",
+    "crosswalk",
+    "insignia"
+  ],
+  "chapters_referenced": [
+    "01",
+    "02",
+    "03",
+    "07",
+    "10"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

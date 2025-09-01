@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer — Second Lover, Over and Under (Header)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; background:#0b0f18; color:#eaeaea; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1400px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 3/1; display:block; border-radius:14px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0c1022; }
+    .controls { display:flex; gap:10px; margin-top:12px; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3000" height="1000" aria-label="Second Lover, Over and Under — Song Header artwork"></canvas>
+    <div class="controls">
+      <button id="download">Download PNG</button>
+    </div>
+  </div>
+
+<script>
+const W=3000,H=1000; const canvas=document.getElementById('art'); const ctx=canvas.getContext('2d');
+function L(x0,y0,x1,y1,stops){ const g=ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g }
+function R(cx,cy,r,stops){ const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g }
+
+function render(){
+  canvas.width=W; canvas.height=H;
+  ctx.fillStyle=L(0,0,0,H,[[0,"#0c1022"],[0.6,"#0a0f1f"],[1,"#0a0c14"]]); ctx.fillRect(0,0,W,H);
+  // underpass
+  ctx.fillStyle="rgba(15,21,40,0.95)"; ctx.beginPath(); ctx.moveTo(-60,860); ctx.bezierCurveTo(800,760,1400,800,3060,900); ctx.lineTo(3060,1000); ctx.lineTo(-60,1000); ctx.closePath(); ctx.fill();
+  // overpass
+  ctx.strokeStyle="#12192e"; ctx.lineWidth=120; ctx.lineCap="round"; ctx.beginPath(); ctx.moveTo(-60,660); ctx.quadraticCurveTo(700,560,3060,740); ctx.stroke();
+  ctx.strokeStyle="rgba(18,25,46,0.6)"; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(-60,660); ctx.quadraticCurveTo(700,560,3060,740); ctx.stroke();
+  // dashes
+  ctx.fillStyle="rgba(207,214,223,0.35)";
+  [[900,618,26],[1240,598,30],[1580,598,34],[1920,612,38]].forEach(([x,y,w])=>{ ctx.beginPath(); ctx.roundRect(x,y,w,10,4); ctx.fill(); });
+  // trails
+  function q(ax,ay,cx1,cy1,bx,by, color, width, alpha){ ctx.save(); ctx.globalAlpha=alpha; ctx.strokeStyle=color; ctx.lineWidth=width; ctx.lineCap="round"; ctx.beginPath(); ctx.moveTo(ax,ay); ctx.quadraticCurveTo(cx1,cy1,bx,by); ctx.stroke(); ctx.restore(); }
+  q(420,640,980,560,1820,600,"#ffd58a",8,0.85);  // warm over
+  q(540,880,1100,820,2080,860,"#7fc7ff",7,0.80); // cool under
+  // sun-insignia
+  const sg=R(1640,610,62,[[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+  ctx.save(); ctx.globalAlpha=.32; ctx.filter="blur(8px)"; ctx.fillStyle=sg; ctx.beginPath(); ctx.arc(1640,610,62,0,Math.PI*2); ctx.fill(); ctx.filter="none";
+  ctx.strokeStyle="#d6af37"; ctx.lineWidth=7; ctx.lineCap="round";
+  function ray(ax,ay,bx,by){ ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke(); }
+  ray(1640,524,1640,554); ray(1640,666,1640,696); ray(1554,610,1584,610); ray(1696,610,1726,610);
+  ctx.restore();
+  // bokeh
+  function dot(cx,cy,r,c){ const g=R(cx,cy,r,[[0,c],[1,"rgba(0,0,0,0)"]]); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill(); }
+  dot(620,520,12,"rgba(180,150,255,0.35)"); dot(980,560,10,"rgba(255,170,110,0.35)"); dot(2020,540,12,"rgba(180,150,255,0.35)"); dot(2340,600,10,"rgba(255,170,110,0.35)"); dot(2600,540,14,"rgba(180,150,255,0.35)");
+  // bottom fade
+  const f=L(0,720,0,1000,[[0,"rgba(0,0,0,0)"],[1,"rgba(0,0,0,0.6)"]]); ctx.fillStyle=f; ctx.fillRect(0,720,W,280);
+}
+render();
+document.getElementById('download').addEventListener('click', ()=>{
+  canvas.toBlob((b)=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download="pss-second-lover-over-and-under-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png"; document.body.appendChild(a); a.click(); a.remove(); }, "image/png");
+});
+</script>
+</body>
+</html>

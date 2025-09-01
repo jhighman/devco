@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – Airy Radio Chorus (Car Dash) (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#090a10; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1100px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 16/9; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3840" height="2160" aria-label="Airy Radio Chorus (Car Dash) artwork"></canvas>
+    <div class="controls">
+      <button id="render4k">Render 4K (3840×2160)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 4K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const W=3840, H=2160;
+    const FILENAME = "pss-airy-radio-chorus-car-dash-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png";
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(){ canvas.width=W; canvas.height=H; }
+    function L(x0,y0,x1,y1,stops){ const g = ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+    function R(cx,cy,r,stops){ const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+
+    function sky(){
+      ctx.fillStyle = L(0,0,0,H*0.52, [[0,"#0c0d18"],[0.6,"#0a0b14"],[1,"#090a12"]]); ctx.fillRect(0,0,W,H*0.52);
+      ctx.fillStyle = L(0,0,0,180, [[0,"rgba(255,180,120,0)"],[1,"rgba(255,160,100,0.30)"]]); ctx.fillRect(0,0,W,180);
+      ctx.strokeStyle="rgba(255,200,120,0.35)"; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.moveTo(0,520); ctx.bezierCurveTo(320,560,640,570,960,570); ctx.bezierCurveTo(1280,570,1600,560,1920,520); ctx.stroke();
+      ctx.globalAlpha=.6; ctx.beginPath(); ctx.moveTo(0,560); ctx.bezierCurveTo(320,600,640,610,960,610); ctx.bezierCurveTo(1280,610,1600,600,1920,560); ctx.stroke(); ctx.globalAlpha=1;
+      // sheen
+      const g = ctx.createLinearGradient(0,0,W,0); g.addColorStop(0,"rgba(255,255,255,0.05)"); g.addColorStop(1,"rgba(255,255,255,0.02)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,W,620);
+    }
+
+    function dash(){
+      ctx.save(); ctx.translate(200,640);
+      ctx.fillStyle="#0b0f16"; ctx.strokeStyle="#1a2236"; ctx.lineWidth=6;
+      ctx.beginPath(); ctx.roundRect(0,0,1520,360,22); ctx.fill(); ctx.stroke();
+
+      // radio bay
+      ctx.save(); ctx.translate(140,70);
+      const rw=1240,rh=220; ctx.fillStyle=L(0,0,0,rh, [[0,"#101424"],[1,"#0b0f1c"]]); ctx.strokeStyle="#2a3250"; ctx.lineWidth=4;
+      ctx.beginPath(); ctx.roundRect(0,0,rw,rh,14); ctx.fill(); ctx.stroke();
+
+      // display
+      ctx.save(); ctx.translate(40,24);
+      ctx.fillStyle="#0c1626"; ctx.strokeStyle="#22304a"; ctx.beginPath(); ctx.roundRect(0,0,780,90,10); ctx.fill(); ctx.stroke();
+      ctx.fillStyle="#a6d8ff"; ctx.font="38px monospace"; ctx.textAlign="left"; ctx.fillText("88.5 • AIRY CHORUS • POP SONG SUMMER", 20, 58);
+      // waveform bar
+      ctx.translate(0,106);
+      ctx.fillStyle="#0c1626"; ctx.strokeStyle="#22304a"; ctx.beginPath(); ctx.roundRect(0,0,780,56,10); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle="#79c5ff"; ctx.lineWidth=3; ctx.globalAlpha=.85;
+      ctx.beginPath(); ctx.moveTo(10,28);
+      for(let x=10;x<=720;x+=60){
+        ctx.bezierCurveTo(x+50,-0, x+110,56, x+170,28);
+      }
+      ctx.stroke();
+      ctx.globalAlpha=.6; ctx.strokeStyle="#ffd58a"; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.moveTo(10,36);
+      for(let x=10;x<=720;x+=60){
+        ctx.bezierCurveTo(x+50,12, x+110,48, x+170,36);
+      }
+      ctx.stroke(); ctx.globalAlpha=1;
+      ctx.restore();
+
+      // knobs & buttons
+      ctx.save(); ctx.translate(860,28);
+      function knob(x,y){
+        ctx.fillStyle="#0b101a"; ctx.strokeStyle="#2a3250"; ctx.lineWidth=4;
+        ctx.beginPath(); ctx.arc(x,y,28,0,Math.PI*2); ctx.fill(); ctx.stroke();
+        ctx.fillStyle="#121a2a"; ctx.beginPath(); ctx.arc(x,y,18,0,Math.PI*2); ctx.fill();
+      }
+      knob(60,36); knob(60,136);
+      // soft keys
+      ctx.translate(140,4);
+      function key(y, label, color){
+        ctx.fillStyle="#121a22"; ctx.strokeStyle="#26324a"; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.roundRect(0,y,220,48,8); ctx.fill(); ctx.stroke();
+        ctx.fillStyle=color; ctx.font="22px monospace"; ctx.textAlign="center"; ctx.fillText(label, 110, y+34);
+      }
+      key(0,"SCAN","#9cc6ff"); key(72,"CHORUS","#ffd58a"); key(144,"SAVE","#a6ffcf");
+      ctx.restore();
+
+      ctx.restore();
+      // rim
+      ctx.strokeStyle="rgba(255,255,255,0.06)"; ctx.lineWidth=10; ctx.beginPath(); ctx.moveTo(0,0); ctx.bezierCurveTo(420,-40,1100,-40,1520,0); ctx.stroke();
+      ctx.restore();
+    }
+
+    function rearview(){
+      // mirror
+      ctx.save(); ctx.translate(960,560);
+      ctx.fillStyle="#0f1426"; ctx.strokeStyle="#2b3355"; ctx.beginPath(); ctx.roundRect(-120,-20,240,40,10); ctx.fill(); ctx.stroke();
+      // chain
+      ctx.strokeStyle="#d6af37"; ctx.lineWidth=3; ctx.globalAlpha=.8;
+      ctx.beginPath(); ctx.moveTo(0,20); ctx.lineTo(0,60); ctx.stroke(); ctx.globalAlpha=1;
+      // sun charm
+      const g = R(0,106,20, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.save(); ctx.translate(0,106); ctx.filter='blur(8px)'; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(0,0,20,0,Math.PI*2); ctx.fill(); ctx.restore();
+      ctx.strokeStyle="#d6af37"; ctx.lineWidth=5; ctx.lineCap='round';
+      function ray(ax,ay,bx,by){ ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke(); }
+      ray(0,106-36, 0,106-22); ray(0,106+22, 0,106+36); ray(-36,106, -22,106); ray(22,106, 36,106);
+      ctx.restore();
+    }
+
+    function vignette(){
+      const r = Math.max(W,H)*0.95;
+      const g = ctx.createRadialGradient(W/2,H/2, r*0.55, W/2,H/2, r);
+      g.addColorStop(0,"rgba(0,0,0,0)");
+      g.addColorStop(1,"rgba(0,0,0,0.85)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    }
+
+    function render(){ setSize(); sky(); dash(); rearview(); vignette(); }
+    render();
+
+    document.getElementById('render4k').addEventListener('click', render);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

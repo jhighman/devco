@@ -1,0 +1,27 @@
+{
+  "collection": "Pop Song Summer",
+  "asset_title": "Insignia of the Sun (Primary Motif)",
+  "filename": "pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg",
+  "chapters": [
+    "Velvet Dancers",
+    "Insignia of the Sun",
+    "Burning Houses in the Distance",
+    "On the Corner, Reading Poetry",
+    "A Blind Man Singing"
+  ],
+  "prompt": "Macro close-up of a velvet patch stitched with a gold-thread sunburst (12 rays) catching light; optionally pinned over a heart on a red coat; slight scorch marks/lint; airy glow.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "1:1",
+  "color_space": "RGB",
+  "source": {
+    "svg": "pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg",
+    "html_canvas_demo": "pss-chall-insignia-of-the-sun-motif-ar1x1-4k-canvas-v001-20250831-jh-final.html",
+    "png_export": "pss-chall-insignia-of-the-sun-motif-ar1x1-4k-rgb-v001-20250831-jh-final.png"
+  },
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

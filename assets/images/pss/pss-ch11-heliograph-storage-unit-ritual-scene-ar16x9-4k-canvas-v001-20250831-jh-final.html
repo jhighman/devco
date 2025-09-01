@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – Heliograph: Storage Unit Ritual (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1100px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 16/9; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3840" height="2160" aria-label="Heliograph: Storage Unit Ritual artwork"></canvas>
+    <div class="controls">
+      <button id="render4k">Render 4K (3840×2160)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 4K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const W=3840, H=2160;
+    const FILENAME = "pss-ch11-heliograph-storage-unit-ritual-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png";
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(){ canvas.width=W; canvas.height=H; }
+    function L(x0,y0,x1,y1,stops){ const g = ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+    function R(cx,cy,r,stops){ const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+
+    function backdrop(){
+      ctx.fillStyle = L(0,0,0,H*0.48, [[0,"#0b0b12"],[0.6,"#0a0a10"],[1,"#090910"]]); ctx.fillRect(0,0,W,H*0.48);
+      // horizon amber
+      ctx.fillStyle = L(0,0,0,220, [[0,"rgba(255,150,90,0)"],[1,"rgba(255,130,80,0.28)"]]); ctx.fillRect(0,0,W,220);
+    }
+
+    function doors(){
+      const ox=80, oy=120, w=420, h=360, gap=40;
+      function shutter(x,label){
+        ctx.fillStyle="#0d0d16"; ctx.strokeStyle="rgba(220,220,240,0.2)"; ctx.lineWidth=3;
+        ctx.beginPath(); ctx.roundRect(x,oy,w,h,8); ctx.fill(); ctx.stroke();
+        ctx.strokeStyle="#121220"; ctx.lineWidth=6;
+        for(const yy of [60,120,180,240,300]){ ctx.beginPath(); ctx.moveTo(x,oy+yy); ctx.lineTo(x+w,oy+yy); ctx.stroke(); }
+        ctx.fillStyle="#d6d6de"; ctx.font="24px monospace"; ctx.fillText(label, x+20, oy-10);
+      }
+      shutter(ox, "UNIT 81"); shutter(ox+(w+gap), "UNIT 83");
+      // center raised
+      const cx = ox+2*(w+gap);
+      shutter(cx, "UNIT 85");
+      ctx.fillStyle="#0f0f18"; ctx.beginPath(); ctx.roundRect(cx,oy,w,180,8); ctx.fill(); // closed top portion
+      ctx.fillStyle=R(cx+w/2, oy+270, 200, [[0,"rgba(255,231,137,0.25)"],[1,"rgba(214,175,55,0)"]]);
+      ctx.fillRect(cx,oy+180,w,180);
+      // interior rig
+      const ix = cx+w/2, iy = oy+260;
+      // salt circle
+      ctx.strokeStyle="rgba(255,255,255,0.35)"; ctx.lineWidth=6; ctx.setLineDash([8,10]);
+      ctx.beginPath(); ctx.arc(ix,iy,90,0,Math.PI*2); ctx.stroke(); ctx.setLineDash([]);
+      // chalk sun
+      ctx.strokeStyle="#d6af37"; ctx.lineWidth=6;
+      ctx.beginPath(); ctx.arc(ix,iy,30,0,Math.PI*2); ctx.stroke();
+      ctx.lineWidth=5; ctx.lineCap='round';
+      function ray(ax,ay,bx,by){ ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke(); }
+      ray(ix,iy-58, ix,iy-38); ray(ix,iy+38, ix,iy+58); ray(ix-58,iy, ix-38,iy); ray(ix+38,iy, ix+58,iy);
+      // tripod
+      ctx.strokeStyle="#202030"; ctx.lineWidth=6; ctx.beginPath(); ctx.moveTo(ix-24,iy-10); ctx.lineTo(ix-60,iy+60); ctx.moveTo(ix+24,iy-10); ctx.lineTo(ix+60,iy+60); ctx.moveTo(ix,iy-20); ctx.lineTo(ix,iy+70); ctx.stroke();
+      // mirror disk
+      ctx.fillStyle="#eaeaf0"; ctx.strokeStyle="rgba(200,200,220,0.4)"; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.arc(ix,iy-24,14,0,Math.PI*2); ctx.fill(); ctx.stroke();
+      // beam
+      const g = R(ix,iy-100, 160, [[0,"rgba(255,231,137,0.9)"],[1,"rgba(214,175,55,0)"]]);
+      ctx.save(); ctx.filter='blur(6px)'; ctx.strokeStyle=g; ctx.lineWidth=8; ctx.beginPath(); ctx.moveTo(ix,iy-24); ctx.lineTo(ix, oy+90); ctx.stroke(); ctx.restore();
+      // insignia projection on slats
+      const sx=cx+w/2, sy=oy+90, rr=26; const g2 = R(sx,sy, rr, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.save(); ctx.filter='blur(6px)'; ctx.globalAlpha=0.85; ctx.fillStyle=g2; ctx.beginPath(); ctx.arc(sx,sy,rr,0,Math.PI*2); ctx.fill(); ctx.restore();
+      ctx.strokeStyle="#d6af37"; ctx.lineWidth=5; ctx.lineCap='round';
+      ray(sx,sy-64, sx,sy-40); ray(sx,sy+40, sx,sy+64); ray(sx-64,sy, sx-40,sy); ray(sx+40,sy, sx+64,sy);
+      // keypad + padlock
+      ctx.fillStyle="#141420"; ctx.strokeStyle="rgba(220,220,240,0.25)"; ctx.lineWidth=2; ctx.beginPath(); ctx.roundRect(cx-24, oy+140, 18, 32, 3); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.roundRect(cx+w-10, oy+150, 20, 28, 4); ctx.fill(); ctx.stroke();
+      const lkx=cx+w; const lky=oy+158; const g3 = R(lkx-10,lky-6, 6, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.save(); ctx.filter='blur(4px)'; ctx.fillStyle=g3; ctx.beginPath(); ctx.arc(lkx-10,lky-6,6,0,Math.PI*2); ctx.fill(); ctx.restore();
+      // right closed
+      shutter(ox+3*(w+gap), "UNIT 87");
+    }
+
+    function ground(){
+      ctx.fillStyle = L(0,H*0.48,0,H, [[0,"#0a0a12"],[1,"#08080f"]]); ctx.fillRect(0,H*0.48,W,H*0.52);
+    }
+
+    function vignette(){
+      const r = Math.max(W,H)*0.95;
+      const g = ctx.createRadialGradient(W/2,H/2, r*0.55, W/2,H/2, r);
+      g.addColorStop(0,"rgba(0,0,0,0)"); g.addColorStop(1,"rgba(0,0,0,0.82)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    }
+
+    function render(){ setSize(); backdrop(); doors(); ground(); vignette(); }
+    render();
+
+    document.getElementById('render4k').addEventListener('click', render);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

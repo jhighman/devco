@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – Twelve Doors Diagram (Receipt) (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1100px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 16/9; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3840" height="2160" aria-label="Twelve Doors Diagram (Receipt) artwork"></canvas>
+    <div class="controls">
+      <button id="render4k">Render 4K (3840×2160)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 4K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const W=3840, H=2160;
+    const FILENAME = "pss-twelve-doors-diagram-receipt-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png";
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(){ canvas.width=W; canvas.height=H; }
+    function L(x0,y0,x1,y1,stops){ const g = ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+    function R(cx,cy,r,stops){ const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+
+    function bg(){
+      ctx.fillStyle = L(0,0,0,H*0.48, [[0,"#0b0c16"],[0.6,"#0a0a12"],[1,"#090910"]]); ctx.fillRect(0,0,W,H*0.48);
+      ctx.fillStyle = L(0,0,0,220, [[0,"rgba(255,150,90,0)"],[1,"rgba(255,130,80,0.28)"]]); ctx.fillRect(0,0,W,220);
+      ctx.fillStyle="#0b0b12"; ctx.fillRect(0,H*0.48, W, H*0.52);
+    }
+
+    function receipt(){
+      // paper
+      ctx.save();
+      ctx.translate(520,120);
+      ctx.rotate(-6*Math.PI/180);
+      const w=880, h=960, r=8;
+      ctx.fillStyle="#f4f4fa"; ctx.strokeStyle="#d6d6de"; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.roundRect(0,0,w,h,r); ctx.fill(); ctx.stroke();
+      // tear
+      ctx.strokeStyle="#cfcfda"; ctx.lineWidth=2;
+      ctx.beginPath();
+      for(let x=10;x<=870;x+=30){ const y = 16 + (x%60===10?0:-4); ctx.lineTo(x,y); }
+      ctx.stroke();
+
+      // header
+      ctx.fillStyle="#16161e"; ctx.font="36px monospace"; ctx.fillText("Twelve Doors Diagram", 40, 70);
+      ctx.fillStyle="#5a5a6a"; ctx.font="22px monospace"; ctx.fillText("RECEIPT ID: PSS-12D-SN", 40, 104);
+
+      // radial doors
+      ctx.save();
+      ctx.translate(440,360);
+      ctx.fillStyle="#16161e";
+      ctx.beginPath(); ctx.arc(0,0,8,0,Math.PI*2); ctx.fill();
+      function doorGlyph(){
+        ctx.fillStyle="#ffffff"; ctx.strokeStyle="#202030"; ctx.lineWidth=3;
+        ctx.beginPath(); ctx.roundRect(-36,-54,72,108,8); ctx.fill(); ctx.stroke();
+        ctx.fillStyle="#202030"; ctx.beginPath(); ctx.arc(20,0,5,0,Math.PI*2); ctx.fill();
+      }
+      const labels = ["12","1","2","3","4","5","6","7","8","9","10","11"];
+      ctx.fillStyle="#202030"; ctx.font="18px monospace"; ctx.textAlign="center";
+      for(let i=0;i<12;i++){
+        ctx.save();
+        ctx.rotate((i*30)*Math.PI/180);
+        ctx.translate(0,-220);
+        doorGlyph();
+        ctx.fillText(labels[i], 0,-76);
+        ctx.restore();
+      }
+      // guide circle
+      ctx.strokeStyle="#dedee6"; ctx.setLineDash([6,8]); ctx.lineWidth=2;
+      ctx.beginPath(); ctx.arc(0,0,220,0,Math.PI*2); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+
+      // grid index 3x3
+      ctx.save();
+      ctx.translate(80,520);
+      ctx.fillStyle="#202030"; ctx.font="16px monospace"; ctx.fillText("GRID INDEX", 0, -18);
+      ctx.fillStyle="#ffffff"; ctx.strokeStyle="#d6d6de"; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.roundRect(0,0,240,280,6); ctx.fill(); ctx.stroke();
+      ctx.translate(20,20);
+      function smallDoor(x,y,label){
+        ctx.save(); ctx.translate(x,y);
+        ctx.fillStyle="#fff"; ctx.strokeStyle="#202030"; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.roundRect(0,0,46,72,6); ctx.fill(); ctx.stroke();
+        ctx.fillStyle="#202030"; ctx.beginPath(); ctx.arc(12,36,4,0,Math.PI*2); ctx.fill();
+        ctx.fillText(label, 12, -6);
+        ctx.restore();
+      }
+      const labels2 = [["1","2","3"],["4","5","6"],["7","8","9"]];
+      for(let r=0;r<3;r++){ for(let c=0;c<3;c++){ smallDoor(c*70,r*90, labels2[r][c]); } }
+      ctx.restore();
+
+      // red notes
+      ctx.strokeStyle="#ff6a6a"; ctx.lineWidth=4; ctx.globalAlpha=0.8; ctx.beginPath();
+      ctx.beginPath(); ctx.arc(216,620,24,0,Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(240,620); ctx.lineTo(340,560); ctx.stroke();
+      ctx.beginPath(); ctx.arc(520,360,26,0,Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(540,360); ctx.lineTo(620,300); ctx.stroke();
+      ctx.globalAlpha=1;
+
+      // barcode & total
+      ctx.save(); ctx.translate(60,900);
+      ctx.fillStyle="#101016"; ctx.fillRect(0,0,420,36);
+      ctx.fillStyle="#e6e6f0";
+      const bars = [ [10,4],[18,2],[24,6],[36,2],[42,8],[54,2],[60,6],[70,4],[78,2],[84,8],[96,2],[102,6],[112,4] ];
+      for(const [x,w2] of bars){ ctx.fillRect(x,6,w2,24); }
+      ctx.fillStyle="#202030"; ctx.font="18px monospace"; ctx.textAlign="left"; ctx.fillText("TOTAL: 12 DOORS", 440, 26);
+      ctx.restore();
+
+      // gold sun sticker
+      const sx=820, sy=860, rr=28;
+      const g = R(sx,sy, rr, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.save(); ctx.translate(820,860); ctx.rotate(-18*Math.PI/180);
+      ctx.save(); ctx.filter='blur(6px)'; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(0,0,rr,0,Math.PI*2); ctx.fill(); ctx.restore();
+      ctx.strokeStyle="#d6af37"; ctx.lineWidth=6; ctx.lineCap='round';
+      function ray(ax,ay,bx,by){ ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke(); }
+      ray(0,-52,0,-32); ray(0,32,0,52); ray(-52,0,-32,0); ray(32,0,52,0);
+      ctx.restore();
+
+      ctx.restore();
+    }
+
+    function vignette(){
+      const r = Math.max(W,H)*0.95;
+      const g = ctx.createRadialGradient(W/2,H/2, r*0.55, W/2,H/2, r);
+      g.addColorStop(0,"rgba(0,0,0,0)");
+      g.addColorStop(1,"rgba(0,0,0,0.82)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    }
+
+    function render(){ setSize(); bg(); receipt(); vignette(); }
+    render();
+
+    document.getElementById('render4k').addEventListener('click', render);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

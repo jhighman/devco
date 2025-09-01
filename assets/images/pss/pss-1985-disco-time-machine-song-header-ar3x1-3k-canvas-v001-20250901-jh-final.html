@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer — 1985 (Disco Time Machine) (Header)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; background:#0b0f18; color:#eaeaea; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1400px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 3/1; display:block; border-radius:14px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0c1022; }
+    .controls { display:flex; gap:10px; margin-top:12px; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3000" height="1000" aria-label="1985 (Disco Time Machine) — Song Header artwork"></canvas>
+    <div class="controls">
+      <button id="download">Download PNG</button>
+    </div>
+  </div>
+
+<script>
+const W=3000,H=1000; const canvas=document.getElementById('art'); const ctx=canvas.getContext('2d');
+function L(x0,y0,x1,y1,stops){ const g=ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g }
+function R(cx,cy,r,stops){ const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g }
+
+function render(){
+  canvas.width=W; canvas.height=H;
+  // sky
+  ctx.fillStyle=L(0,0,0,H,[[0,"#111336"],[0.6,"#0c1030"],[1,"#0a0c14"]]); ctx.fillRect(0,0,W,H);
+  // time ring
+  const rg=R(1500,460,820,[[0,"rgba(255,120,220,0.35)"],[1,"rgba(255,120,220,0)"]]);
+  ctx.save(); ctx.filter="blur(10px)"; ctx.fillStyle=rg; ctx.beginPath(); ctx.ellipse(1500,460,820,320,0,0,Math.PI*2); ctx.fill(); ctx.restore();
+  // grid floor
+  ctx.strokeStyle="rgba(56,42,107,0.75)"; ctx.lineWidth=2;
+  [880,920,960].forEach(y=>{ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); });
+  const vp=[1500,620];
+  [-60,200,460,720,980,1240,1760,2020,2280,2540,2800,3060].forEach(x=>{ ctx.beginPath(); ctx.moveTo(x,1000); ctx.lineTo(vp[0],vp[1]); ctx.stroke(); });
+  // disco ball glow
+  const bg=R(1500,520,110,[[0,"#a0d9ff"],[0.6,"#6bd3ff"],[1,"#2ed1ff"]]);
+  ctx.save(); ctx.filter="blur(6px)"; ctx.fillStyle=bg; ctx.beginPath(); ctx.arc(1500,520,110,0,Math.PI*2); ctx.fill(); ctx.restore();
+  // facet lines
+  ctx.strokeStyle="rgba(199,241,255,0.85)"; ctx.lineWidth=2;
+  [90,60,30].forEach(r=>{ ctx.beginPath(); ctx.arc(1500,520,r,0,Math.PI*2); ctx.stroke(); });
+  [520,480,560,440,600].forEach(y=>{ ctx.beginPath(); ctx.moveTo(1500-110,y); ctx.lineTo(1500+110,y); ctx.stroke(); });
+  ctx.beginPath(); ctx.moveTo(1500-78,520-78); ctx.lineTo(1500+78,520+78); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(1500+78,520-78); ctx.lineTo(1500-78,520+78); ctx.stroke();
+  // tonearm hint
+  ctx.strokeStyle="rgba(111,176,255,0.65)"; ctx.lineWidth=6; ctx.lineCap="round"; ctx.beginPath(); ctx.moveTo(1680,560); ctx.lineTo(1820,620); ctx.stroke(); ctx.beginPath(); ctx.arc(1820,620,8,0,Math.PI*2); ctx.fillStyle="rgba(111,176,255,0.65)"; ctx.fill();
+  // sun-insignia glint
+  const sg=R(2360,240,48,[[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+  ctx.save(); ctx.globalAlpha=.30; ctx.filter="blur(8px)"; ctx.fillStyle=sg; ctx.beginPath(); ctx.arc(2360,240,48,0,Math.PI*2); ctx.fill(); ctx.filter="none"; ctx.globalAlpha=1;
+  ctx.strokeStyle="#d6af37"; ctx.lineWidth=6; ctx.lineCap="round";
+  function ray(ax,ay,bx,by){ ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke(); }
+  ray(2360,170,2360,196); ray(2360,284,2360,310); ray(2290,240,2316,240); ray(2404,240,2430,240);
+  ctx.restore();
+  // bokeh
+  function dot(cx,cy,r,c){ const g=R(cx,cy,r,[[0,c],[1,"rgba(0,0,0,0)"]]); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill(); }
+  dot(420,460,12,"rgba(180,150,255,0.35)"); dot(860,520,10,"rgba(255,170,110,0.35)"); dot(1980,460,12,"rgba(180,150,255,0.35)"); dot(2260,520,10,"rgba(255,170,110,0.35)"); dot(2580,460,14,"rgba(180,150,255,0.35)");
+  // bottom fade
+  const f=L(0,720,0,1000,[[0,"rgba(0,0,0,0)"],[1,"rgba(0,0,0,0.6)"]]); ctx.fillStyle=f; ctx.fillRect(0,720,W,280);
+}
+render();
+document.getElementById('download').addEventListener('click', ()=>{
+  canvas.toBlob((b)=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download="pss-1985-disco-time-machine-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png"; document.body.appendChild(a); a.click(); a.remove(); }, "image/png");
+});
+</script>
+</body>
+</html>

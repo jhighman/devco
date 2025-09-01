@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Roller Rink Shelter — Pop Song Summer</title>
+  <desc id="desc">Interior roller rink repurposed as shelter: polished floor arcs, center sun-insignia emblem, neon ring lights, disco ball, cots along the boards, EXIT doors glowing with amber from distant fires, silhouettes gliding.</desc>
+
+  <defs>
+    <!-- Ceiling gradient -->
+    <linearGradient id="ceiling" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0a0b14"/>
+      <stop offset="70%"  stop-color="#090a12"/>
+      <stop offset="100%" stop-color="#080910"/>
+    </linearGradient>
+
+    <!-- Floor wood-tone gradient -->
+    <linearGradient id="floor" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#1a1210"/>
+      <stop offset="100%" stop-color="#140e0c"/>
+    </linearGradient>
+
+    <!-- Neon ring glow -->
+    <filter id="neon" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+
+    <!-- Disco halo -->
+    <radialGradient id="halo" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="rgba(200,220,255,0.9)"/>
+      <stop offset="70%" stop-color="rgba(160,180,240,0.25)"/>
+      <stop offset="100%" stop-color="rgba(160,180,240,0)"/>
+    </radialGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+
+    <!-- Gold sun insignia -->
+    <radialGradient id="gold" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffe789"/>
+      <stop offset="70%" stop-color="#d6af37"/>
+      <stop offset="100%" stop-color="rgba(168,122,34,0)"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+
+    <!-- Vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="80%">
+      <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.82)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Ceiling -->
+  <rect width="1920" height="620" fill="url(#ceiling)"/>
+
+  <!-- Neon ring lights -->
+  <g stroke-linecap="round" filter="url(#neon)">
+    <path d="M120,160 C480,80 1440,80 1800,160" stroke="#78b2ff" stroke-width="10" opacity="0.8"/>
+    <path d="M120,220 C480,140 1440,140 1800,220" stroke="#ff6fb1" stroke-width="10" opacity="0.85"/>
+  </g>
+
+  <!-- Disco ball + halo -->
+  <g transform="translate(960,140)">
+    <circle cx="0" cy="0" r="10" fill="#cfd9ff"/>
+    <circle cx="0" cy="0" r="120" fill="url(#halo)" filter="url(#soft)"/>
+  </g>
+
+  <!-- Back wall with EXIT doors glow -->
+  <rect x="80" y="260" width="1760" height="240" fill="#0b0b12" stroke="rgba(220,220,240,0.18)" stroke-width="3" rx="10"/>
+  <g transform="translate(240,280)">
+    <rect x="0" y="0" width="200" height="200" rx="6" fill="#0a0a12" stroke="rgba(220,220,240,0.2)" stroke-width="3"/>
+    <rect x="0" y="0" width="200" height="200" rx="6" fill="rgba(255,140,80,0.22)"/>
+    <text x="100" y="110" text-anchor="middle" font-family="monospace" font-size="48" fill="#ffd27a">EXIT</text>
+  </g>
+  <g transform="translate(1480,280)">
+    <rect x="0" y="0" width="200" height="200" rx="6" fill="#0a0a12" stroke="rgba(220,220,240,0.2)" stroke-width="3"/>
+    <rect x="0" y="0" width="200" height="200" rx="6" fill="rgba(255,140,80,0.22)"/>
+    <text x="100" y="110" text-anchor="middle" font-family="monospace" font-size="48" fill="#ffd27a">EXIT</text>
+  </g>
+
+  <!-- Boards & cots -->
+  <rect x="60" y="520" width="1800" height="28" fill="#11111a" stroke="rgba(220,220,240,0.2)" stroke-width="2"/>
+  <g id="cots" fill="#12121a" stroke="rgba(220,220,240,0.2)" stroke-width="2">
+    <rect x="140" y="540" width="220" height="44" rx="8"/>
+    <rect x="420" y="540" width="220" height="44" rx="8"/>
+    <rect x="700" y="540" width="220" height="44" rx="8"/>
+    <rect x="980" y="540" width="220" height="44" rx="8"/>
+    <rect x="1260" y="540" width="220" height="44" rx="8"/>
+    <rect x="1540" y="540" width="220" height="44" rx="8"/>
+  </g>
+
+  <!-- Floor -->
+  <rect x="0" y="548" width="1920" height="532" fill="url(#floor)"/>
+
+  <!-- Floor arcs / lane lines -->
+  <g stroke="rgba(255,210,120,0.28)" stroke-width="6" fill="none">
+    <path d="M-200,1050 C400,760 1520,760 2120,1050"/>
+    <path d="M-200,980  C420,700 1500,700 2120,980"/>
+  </g>
+
+  <!-- Center emblem: sun insignia as medallion -->
+  <g transform="translate(960,820)">
+    <circle cx="0" cy="0" r="90" fill="rgba(200,140,40,0.08)" stroke="rgba(214,175,55,0.35)" stroke-width="4"/>
+    <circle cx="0" cy="0" r="26" fill="url(#gold)" filter="url(#glow)"/>
+    <g stroke="#d6af37" stroke-width="5" stroke-linecap="round">
+      <line x1="0" y1="-64" x2="0" y2="-38"/>
+      <line x1="0" y1="38"  x2="0" y2="64"/>
+      <line x1="-64" y1="0" x2="-38" y2="0"/>
+      <line x1="38"  y1="0" x2="64" y2="0"/>
+      <line x1="-46" y1="-46" x2="-26" y2="-26"/>
+      <line x1="46"  y1="-46" x2="26"  y2="-26"/>
+      <line x1="-46" y1="46"  x2="-26" y2="26"/>
+      <line x1="46"  y1="46"  x2="26"  y2="26"/>
+    </g>
+  </g>
+
+  <!-- Skater silhouettes -->
+  <g fill="#0b0a10" opacity="0.95">
+    <path d="M620,880 q30,-100 120,-100 q90,0 110,80 q-30,32 -60,48 q-10,48 -18,96 q-80,40 -180,12 q16,-72 8,-120 q-8,-40 20,-16 z"/>
+    <path d="M1280,900 q24,-90 110,-90 q86,0 100,74 q-28,30 -54,44 q-8,44 -16,88 q-70,36 -160,10 q14,-66 8,-110 q-6,-36 12,-16 z"/>
+  </g>
+
+  <!-- Hidden insignia by a cot (key tag) -->
+  <g transform="translate(260,566)">
+    <ellipse cx="0" cy="16" rx="10" ry="3" fill="rgba(0,0,0,0.6)"/>
+    <circle cx="0" cy="8" r="10" fill="url(#gold)" filter="url(#glow)" opacity="0.75"/>
+  </g>
+
+  <!-- Vignette -->
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+</svg>

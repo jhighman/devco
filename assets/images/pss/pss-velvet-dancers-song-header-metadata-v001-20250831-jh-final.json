@@ -1,0 +1,24 @@
+{
+  "collection": "Pop Song Summer",
+  "asset_title": "Velvet Dancers \u2014 Song Header",
+  "filenames": {
+    "svg": "pss-velvet-dancers-song-header-ar3x1-svg-v001-20250831-jh-final.svg",
+    "png": "pss-velvet-dancers-song-header-ar3x1-3k-rgb-v001-20250831-jh-final.png",
+    "canvas_demo": "pss-velvet-dancers-song-header-ar3x1-3k-canvas-v001-20250831-jh-final.html"
+  },
+  "prompt": "Dark, text-friendly header with deep navy gradient, velvet arc, airy chorus waveform, soft bokeh, and a faint sun insignia on the left.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "3:1",
+  "resolution": "3000x1000",
+  "color_space": "RGB",
+  "tags": [
+    "header",
+    "velvet dancers",
+    "sun insignia",
+    "waveform",
+    "bokeh",
+    "dark navy"
+  ]
+}

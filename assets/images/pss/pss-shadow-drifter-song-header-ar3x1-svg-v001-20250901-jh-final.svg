@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Shadow Drifter — Song Header (Pop Song Summer)</title>
+  <desc id="desc">Night alley plane with backlight glow, elongated shadow shape approaching, a trail of rotated footprints, faint sun-insignia etched in the shadow, light bokeh, and a bottom fade for headline legibility.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0c1024"/>
+      <stop offset="60%"  stop-color="#0a0f1f"/>
+      <stop offset="100%" stop-color="#0a0c14"/>
+    </linearGradient>
+    <radialGradient id="back" cx="62%" cy="54%" r="46%">
+      <stop offset="0%"   stop-color="rgba(255,210,140,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,170,100,0)"/>
+    </radialGradient>
+    <radialGradient id="bokehA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(180,150,255,0.35)"/>
+      <stop offset="100%" stop-color="rgba(180,150,255,0)"/>
+    </radialGradient>
+    <radialGradient id="bokehB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,170,110,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,170,110,0)"/>
+    </radialGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffe789"/>
+      <stop offset="70%" stop-color="#d6af37"/>
+      <stop offset="100%" stop-color="rgba(168,122,34,0)"/>
+    </radialGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="3000" height="1000" fill="url(#sky)"/>
+  <ellipse cx="1860" cy="560" rx="920" ry="380" fill="url(#back)"/>
+
+  <!-- Ground plane wedge -->
+  <path d="M0,860 L1100,780 L3000,900 L3000,1000 L0,1000 Z" fill="#0b101e" opacity="0.96"/>
+
+  <!-- Elongated shadow (approaching) -->
+  <path d="M1760,600 L1500,740 L1240,960 L1580,960 L1820,760 Z" fill="#0a0d16" opacity="0.9"/>
+
+  <!-- Footsteps (rotated ovals) -->
+  <g fill="#121a2b" opacity="0.85">
+    <ellipse cx="1700" cy="700" rx="26" ry="14" transform="rotate(-14 1700 700)"/>
+    <ellipse cx="1630" cy="740" rx="30" ry="16" transform="rotate(-10 1630 740)"/>
+    <ellipse cx="1560" cy="790" rx="34" ry="18" transform="rotate(-6 1560 790)"/>
+    <ellipse cx="1480" cy="840" rx="38" ry="20" transform="rotate(-2 1480 840)"/>
+    <ellipse cx="1400" cy="900" rx="44" ry="22" transform="rotate(2 1400 900)"/>
+  </g>
+
+  <!-- Faint sun-insignia etched into shadow -->
+  <g transform="translate(1580,820)" opacity="0.25">
+    <circle cx="0" cy="0" r="64" fill="url(#sun)" filter="url(#soft)"/>
+    <g stroke="#d6af37" stroke-linecap="round" stroke-width="7" opacity="0.8">
+      <line x1="0" y1="-84" x2="0" y2="-56"/>
+      <line x1="0" y1="56"  x2="0" y2="84"/>
+      <line x1="-84" y1="0" x2="-56" y2="0"/>
+      <line x1="56"  y1="0" x2="84"  y2="0"/>
+    </g>
+  </g>
+
+  <!-- Bokeh -->
+  <g opacity="0.8">
+    <circle cx="1080" cy="520" r="12" fill="url(#bokehA)"/>
+    <circle cx="1320" cy="580" r="10" fill="url(#bokehB)"/>
+    <circle cx="2060" cy="520" r="12" fill="url(#bokehA)"/>
+    <circle cx="2340" cy="580" r="10" fill="url(#bokehB)"/>
+    <circle cx="2600" cy="520" r="14" fill="url(#bokehA)"/>
+  </g>
+
+  <!-- Bottom fade for title legibility -->
+  <linearGradient id="fade" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="rgba(0,0,0,0)"/>
+    <stop offset="100%" stop-color="rgba(0,0,0,0.60)"/>
+  </linearGradient>
+  <rect x="0" y="720" width="3000" height="280" fill="url(#fade)"/>
+</svg>

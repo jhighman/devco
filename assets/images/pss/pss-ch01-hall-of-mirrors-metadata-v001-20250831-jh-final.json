@@ -1,0 +1,25 @@
+{
+  "collection": "Pop Song Summer",
+  "chapter": "01",
+  "asset_title": "Hall of Mirrors",
+  "filename_svg": "pss-ch01-hall-of-mirrors-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+  "filename_png": "pss-ch01-hall-of-mirrors-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+  "filename_canvas_demo": "pss-ch01-hall-of-mirrors-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html",
+  "prompt": "Tight corridor of warped mirrors (left/right panels) showing the narrator as different ages/selves; the Woman in Red pulling the narrator forward; tape-warp chromatic fringe; subtle sun insignia glow on the cuff.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "16:9",
+  "color_space": "RGB",
+  "tags": [
+    "hall of mirrors",
+    "warped mirrors",
+    "woman in red",
+    "insignia",
+    "chromatic fringe"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

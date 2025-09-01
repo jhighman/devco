@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer — Velvet Dancers (Header)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; background:#0b0f18; color:#eaeaea; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1400px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 3/1; display:block; border-radius:14px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0c1022; }
+    .controls { display:flex; gap:10px; margin-top:12px; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3000" height="1000" aria-label="Velvet Dancers — Song Header artwork"></canvas>
+    <div class="controls">
+      <button id="download">Download PNG</button>
+    </div>
+  </div>
+
+<script>
+const W=3000,H=1000; const canvas=document.getElementById('art'); const ctx=canvas.getContext('2d');
+function L(x0,y0,x1,y1,stops){ const g=ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops){ g.addColorStop(o,c) } return g }
+function R(cx,cy,r,stops){ const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops){ g.addColorStop(o,c) } return g }
+
+function render(){
+  canvas.width=W; canvas.height=H;
+  ctx.fillStyle=L(0,0,0,H,[[0,"#0c1022"],[0.6,"#0b0f1e"],[1,"#0a0c16"]]); ctx.fillRect(0,0,W,H);
+  ctx.fillStyle="rgba(17,22,44,0.66)"; ctx.beginPath();
+  function bz(x0,y0,x1,y1,x2,y2,x3,y3){ ctx.bezierCurveTo(x1,y1,x2,y2,x3,y3) }
+  ctx.moveTo(0,0); ctx.lineTo(0,340);
+  ctx.moveTo(0,340);
+  bz(0,340,700,120,1300,100,1800,260);
+  bz(1800,260,2300,420,2700,420,3000,300);
+  ctx.lineTo(3000,0); ctx.closePath(); ctx.fill();
+  ctx.save(); ctx.translate(0,660);
+  ctx.strokeStyle="#7fc7ff"; ctx.globalAlpha=.85; ctx.lineWidth=6; ctx.beginPath(); ctx.moveTo(0,0);
+  for(let x=-150;x<=3150;x+=60){ ctx.bezierCurveTo(x+50,-24, x+110,24, x+170,0) } ctx.stroke();
+  ctx.strokeStyle="#ffd58a"; ctx.globalAlpha=.55; ctx.lineWidth=4; ctx.beginPath(); ctx.moveTo(0,18);
+  for(let x=-150;x<=3150;x+=60){ ctx.bezierCurveTo(x+50,-2, x+110,38, x+170,18) } ctx.stroke(); ctx.restore();
+  function dot(cx,cy,r,c){ const g=R(cx,cy,r,[[0,c],[1,"rgba(0,0,0,0)"]]); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill() }
+  dot(340,520,14,"rgba(180,150,255,0.35)"); dot(620,420,10,"rgba(180,150,255,0.35)"); dot(980,580,16,"rgba(255,180,120,0.35)");
+  dot(1320,460,12,"rgba(180,150,255,0.35)"); dot(1680,520,14,"rgba(255,180,120,0.35)"); dot(2100,600,10,"rgba(180,150,255,0.35)"); dot(2460,520,18,"rgba(255,180,120,0.35)");
+  const sg=R(210,300,82,[[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+  ctx.save(); ctx.globalAlpha=.28; ctx.filter="blur(10px)"; ctx.fillStyle=sg; ctx.beginPath(); ctx.arc(210,300,82,0,Math.PI*2); ctx.fill(); ctx.filter="none";
+  ctx.globalAlpha=.9; ctx.strokeStyle="#d6af37"; ctx.lineWidth=8; ctx.lineCap="round";
+  function ray(ax,ay,bx,by){ ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke() }
+  ray(210,180, 210,224); ray(210,376, 210,420); ray(90,300, 134,300); ray(286,300, 330,300);
+  ctx.globalAlpha=.55; ctx.setLineDash([10,14]); ctx.lineWidth=2; ctx.beginPath(); ctx.arc(210,300,98,0,Math.PI*2); ctx.stroke(); ctx.restore();
+  const g=ctx.createLinearGradient(0,700,0,1000); g.addColorStop(0,"rgba(0,0,0,0)"); g.addColorStop(1,"rgba(0,0,0,0.55)"); ctx.fillStyle=g; ctx.fillRect(0,700,W,300);
+}
+render();
+document.getElementById('download').addEventListener('click', ()=>{
+  canvas.toBlob((b)=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download="pss-velvet-dancers-song-header-ar3x1-3k-rgb-v001-20250831-jh-final.png"; document.body.appendChild(a); a.click(); a.remove(); }, "image/png");
+});
+</script>
+</body>
+</html>

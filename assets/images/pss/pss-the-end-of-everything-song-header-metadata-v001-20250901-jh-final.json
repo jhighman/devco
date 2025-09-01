@@ -1,0 +1,34 @@
+{
+  "collection": "Pop Song Summer",
+  "asset_title": "The End of Everything \u2014 Song Header",
+  "filenames": {
+    "svg": "pss-the-end-of-everything-song-header-ar3x1-svg-v001-20250901-jh-final.svg",
+    "png": "pss-the-end-of-everything-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png",
+    "canvas_demo": "pss-the-end-of-everything-song-header-ar3x1-3k-canvas-v001-20250901-jh-final.html"
+  },
+  "prompt": "3:1 dark header: dusk-to-night gradient, scorched horizon glow, low city silhouettes, ember points like distant fires, jagged ground crack, eclipsed sun-insignia at the vanishing point, subtle ash particles, bokeh, and a bottom fade for headline legibility.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-09-01",
+  "aspect_ratio": "3:1",
+  "resolution": "3000x1000",
+  "color_space": "RGB",
+  "tags": [
+    "header",
+    "apocalypse",
+    "horizon",
+    "eclipse",
+    "sun insignia",
+    "Pop Song Summer"
+  ],
+  "chapters_referenced": [
+    "01",
+    "03",
+    "09",
+    "11"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept header artwork for Pop Song Summer."
+  }
+}

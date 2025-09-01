@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – Motel Neon Exodus (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1100px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 16/9; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3840" height="2160" aria-label="Motel Neon Exodus artwork"></canvas>
+    <div class="controls">
+      <button id="render4k">Render 4K (3840×2160)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 4K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const W=3840, H=2160;
+    const FILENAME = "pss-ch06-motel-neon-exodus-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png";
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(){ canvas.width=W; canvas.height=H; }
+    function L(x0,y0,x1,y1,stops){ const g = ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+    function R(cx,cy,r,stops){ const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+
+    function sky(){
+      ctx.fillStyle = L(0,0,0,H, [[0,"#090a12"],[0.6,"#0a0810"],[1,"#07060c"]]); ctx.fillRect(0,0,W,H);
+      ctx.fillStyle = L(0,0,0,H, [[0,"rgba(255,160,90,0)"],[0.8,"rgba(255,150,90,0.18)"],[1,"rgba(255,130,80,0.3)"]]); ctx.fillRect(0,0,W,H);
+      // far fire band
+      const g = L(0,H*0.76,0,H*0.82, [[0,"rgba(255,180,90,1)"],[0.7,"rgba(230,90,40,0.7)"],[1,"rgba(220,60,30,0)"]]);
+      ctx.globalAlpha = 0.6; ctx.fillStyle=g; ctx.fillRect(0,H*0.76,W,H*0.06); ctx.globalAlpha = 1;
+    }
+
+    function trails(){
+      ctx.save(); ctx.lineCap='round'; ctx.lineWidth=6; ctx.filter='blur(6px)'; ctx.globalAlpha=0.8;
+      ctx.strokeStyle="#ff7a7a"; ctx.beginPath(); ctx.moveTo(0,H*0.91); ctx.bezierCurveTo(W*0.1,H*0.87, W*0.3,H*0.94, W*0.5,H*0.91); ctx.bezierCurveTo(W*0.68,H*0.88, W*0.84,H*0.93, W,H*0.91); ctx.stroke();
+      ctx.globalAlpha=0.75; ctx.strokeStyle="#ffd27a"; ctx.beginPath(); ctx.moveTo(0,H*0.93); ctx.bezierCurveTo(W*0.11,H*0.9, W*0.31,H*0.96, W*0.49,H*0.93); ctx.bezierCurveTo(W*0.68,H*0.9, W*0.84,H*0.95, W,H*0.93); ctx.stroke();
+      ctx.restore();
+    }
+
+    function motel(){
+      // blocks
+      ctx.fillStyle="#0f0e16"; ctx.strokeStyle="rgba(200,200,220,0.2)"; ctx.lineWidth=2;
+      ctx.fillRect(300, H*0.59, 800, 220); ctx.strokeRect(300, H*0.59, 800, 220);
+      ctx.fillRect(1040, H*0.67, 220, 140); ctx.strokeRect(1040, H*0.67, 220, 140);
+      // doors / windows
+      ctx.fillStyle="#12121a"; ctx.strokeStyle="rgba(180,180,200,0.25)"; ctx.lineWidth=3;
+      const ys=H*0.65; const h=120;
+      for(const x of [340,460,580,700,820,940]){ ctx.fillRect(x, ys, 80, h); ctx.strokeRect(x, ys, 80, h); }
+      ctx.fillRect(1080, H*0.70, 60, 80); ctx.strokeRect(1080, H*0.70, 60, 80);
+      // pool glow
+      const g = R(520, H*0.81, 120, [[0,"rgba(70,210,220,0.25)"],[1,"rgba(70,210,220,0)"]]);
+      ctx.fillStyle=g; ctx.beginPath(); ctx.ellipse(520, H*0.81, 180, 30, 0, 0, Math.PI*2); ctx.fill();
+    }
+
+    function neon(){
+      // main sign
+      ctx.save();
+      const x=240, y=H*0.48;
+      ctx.fillStyle="#09090f"; ctx.strokeStyle="#1a1a26"; ctx.lineWidth=4;
+      ctx.fillRect(x-20, y-120, 220, 360); ctx.strokeRect(x-20, y-120, 220, 360);
+      ctx.filter='blur(10px)';
+      const letters = ["M","O","T","E","L"];
+      ctx.fillStyle="#ff2a6d"; ctx.font="96px monospace"; ctx.textAlign="center";
+      for(let i=0;i<letters.length;i++){ ctx.fillText(letters[i], x+90, y + i*80); }
+      ctx.restore();
+      // no vacancy
+      ctx.save();
+      ctx.filter='blur(6px)';
+      ctx.fillStyle="rgba(255,80,80,0.15)"; ctx.strokeStyle="rgba(255,80,80,0.4)"; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.roundRect(220+240, y-80, 200, 40, 8); ctx.fill(); ctx.stroke();
+      ctx.fillStyle="#ffd27a"; ctx.font="28px system-ui, sans-serif"; ctx.textAlign="center"; ctx.fillText("NO VACANCY", 320+240, y-50);
+      ctx.restore();
+    }
+
+    function carAndFigure(){
+      // car
+      const cx=1220, cy=H*0.80;
+      ctx.fillStyle="#0c0c12"; ctx.fillRect(cx-40, cy+20, 200, 30, 8);
+      ctx.fillRect(cx-100, cy, 260, 40, 10);
+      ctx.strokeStyle="rgba(200,200,220,0.35)"; ctx.lineWidth=4; ctx.beginPath(); ctx.moveTo(cx-40,cy); ctx.quadraticCurveTo(cx+20,cy-40, cx+120,cy-20); ctx.quadraticCurveTo(cx+180,cy-10, cx+200,cy+20); ctx.stroke();
+      // wheels
+      ctx.fillStyle="#141420"; ctx.strokeStyle="rgba(200,200,220,0.2)"; ctx.lineWidth=3;
+      for(const wx of [cx, cx+140]){ ctx.beginPath(); ctx.arc(wx, cy+60, 22, 0, Math.PI*2); ctx.fill(); ctx.stroke(); }
+      // tail glow
+      ctx.save(); ctx.filter='blur(6px)'; ctx.fillStyle="#ff755c"; ctx.beginPath(); ctx.arc(cx+180, cy+2, 10, 0, Math.PI*2); ctx.fill(); ctx.restore();
+
+      // figure in red
+      const fx=1140, fy=H*0.76;
+      ctx.fillStyle="#0b0a10";
+      ctx.beginPath();
+      ctx.moveTo(fx-10, fy-40); ctx.quadraticCurveTo(fx-10, fy-80, fx+30, fy-80);
+      ctx.quadraticCurveTo(fx+70, fy-80, fx+70, fy-40);
+      ctx.quadraticCurveTo(fx+60, fy-20, fx+36, fy-10);
+      ctx.quadraticCurveTo(fx+42, fy+18, fx+54, fy+40);
+      ctx.quadraticCurveTo(fx+26, fy+52, fx-2, fy+40);
+      ctx.quadraticCurveTo(fx+8, fy+14, fx+12, fy-10);
+      ctx.quadraticCurveTo(fx-6, fy-18, fx-10, fy-40);
+      ctx.closePath(); ctx.fill();
+      // coat
+      ctx.fillStyle="#a3082c";
+      ctx.beginPath();
+      ctx.moveTo(fx-40, fy-10); ctx.quadraticCurveTo(fx+30, fy-40, fx+80, fy-20);
+      ctx.quadraticCurveTo(fx+130, fy-4, fx+156, fy+56);
+      ctx.quadraticCurveTo(fx+152, fy+120, fx+130, fy+180);
+      ctx.quadraticCurveTo(fx+30, fy+220, fx-90, fy+200);
+      ctx.quadraticCurveTo(fx-110, fy+110, fx-96, fy+40);
+      ctx.quadraticCurveTo(fx-78, fy, fx-40, fy-10);
+      ctx.closePath(); ctx.fill();
+      // cuff insignia
+      const sx = fx+80, sy = fy+56;
+      const g = R(sx,sy, 10, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.save(); ctx.filter='blur(4px)'; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(sx,sy,10,0,Math.PI*2); ctx.fill(); ctx.restore();
+
+      // key fob glow on ground
+      const kx = 1060, ky = H*0.91;
+      const kg = R(kx,ky-6, 10, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.fillStyle="rgba(0,0,0,0.6)"; ctx.beginPath(); ctx.ellipse(kx, ky, 8, 3, 0, 0, Math.PI*2); ctx.fill();
+      ctx.save(); ctx.filter='blur(4px)'; ctx.globalAlpha=0.75; ctx.fillStyle=kg; ctx.beginPath(); ctx.arc(kx, ky-6, 10, 0, Math.PI*2); ctx.fill(); ctx.restore();
+    }
+
+    function asphalt(){ ctx.fillStyle="#0a0a12"; ctx.fillRect(0,H*0.89,W,H*0.11); }
+
+    function vignette(){
+      const r = Math.max(W,H)*0.95;
+      const g = ctx.createRadialGradient(W/2,H/2, r*0.55, W/2,H/2, r);
+      g.addColorStop(0,"rgba(0,0,0,0)");
+      g.addColorStop(1,"rgba(0,0,0,0.82)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    }
+
+    function render(){ setSize(); sky(); trails(); motel(); neon(); carAndFigure(); asphalt(); vignette(); }
+    render();
+
+    document.getElementById('render4k').addEventListener('click', render);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

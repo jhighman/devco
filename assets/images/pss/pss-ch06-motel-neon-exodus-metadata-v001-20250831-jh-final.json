@@ -1,0 +1,36 @@
+{
+  "collection": "Pop Song Summer",
+  "chapter": "06",
+  "asset_title": "Motel Neon Exodus",
+  "filenames": {
+    "svg": "pss-ch06-motel-neon-exodus-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+    "png": "pss-ch06-motel-neon-exodus-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+    "canvas_demo": "pss-ch06-motel-neon-exodus-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+  },
+  "prompt": "Night roadside L-motel with vertical neon MOTEL sign and 'No Vacancy' bar; packed car idling; woman in red looking back; highway light trails; faint fires on the far horizon; hidden gold sun-insignia key fob glows near the curb; pool tint cyan.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "16:9",
+  "resolution": "3840x2160",
+  "color_space": "RGB",
+  "tags": [
+    "motel",
+    "neon",
+    "exodus",
+    "car",
+    "woman in red",
+    "insignia",
+    "night drive"
+  ],
+  "chapters_referenced": [
+    "01",
+    "03",
+    "05",
+    "06"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

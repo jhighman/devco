@@ -1,0 +1,33 @@
+{
+  "collection": "Pop Song Summer",
+  "asset_title": "Out to the Other Side \u2014 Song Header",
+  "filenames": {
+    "svg": "pss-out-to-the-other-side-song-header-ar3x1-svg-v001-20250901-jh-final.svg",
+    "png": "pss-out-to-the-other-side-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png",
+    "canvas_demo": "pss-out-to-the-other-side-song-header-ar3x1-3k-canvas-v001-20250901-jh-final.html"
+  },
+  "prompt": "3:1 dark header with receding highway into a warm horizon, center dashed line in perspective, twin light-trail arcs, faint sun-insignia at the vanishing point, and a bottom fade for headline legibility.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-09-01",
+  "aspect_ratio": "3:1",
+  "resolution": "3000x1000",
+  "color_space": "RGB",
+  "tags": [
+    "header",
+    "highway",
+    "horizon",
+    "light trails",
+    "sun insignia",
+    "Pop Song Summer"
+  ],
+  "chapters_referenced": [
+    "01",
+    "03",
+    "11"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept header artwork for Pop Song Summer."
+  }
+}

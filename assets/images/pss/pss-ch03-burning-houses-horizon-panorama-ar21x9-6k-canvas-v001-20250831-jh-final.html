@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – Burning Houses on the Horizon (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(96vw, 1200px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 21/9; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="6048" height="2592" aria-label="Burning Houses on the Horizon artwork"></canvas>
+    <div class="controls">
+      <button id="render6k">Render 6K (6048×2592)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 6K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const W=6048, H=2592;
+    const FILENAME = "pss-ch03-burning-houses-horizon-panorama-ar21x9-6k-rgb-v001-20250831-jh-final.png";
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(){ canvas.width=W; canvas.height=H; }
+    function L(x0,y0,x1,y1,stops){ const g = ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+    function R(cx,cy,r,stops){ const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+
+    function sky(){
+      ctx.fillStyle = L(0,0,0,H, [[0,"#090a12"],[0.55,"#0a0810"],[1,"#07060c"]]); ctx.fillRect(0,0,W,H);
+      ctx.fillStyle = L(0,0,0,H, [[0,"rgba(255,160,90,0)"],[0.7,"rgba(255,140,80,0.2)"],[1,"rgba(255,120,70,0.35)"]]); ctx.fillRect(0,0,W,H);
+    }
+
+    function fireBand(){
+      const g = L(0,H*0.69,0,H*0.85, [[0,"rgba(255,180,90,1)"],[0.7,"rgba(230,90,40,0.75)"],[1,"rgba(220,60,30,0)"]]);
+      ctx.fillStyle=g; ctx.fillRect(0,H*0.69,W,H*0.16);
+    }
+
+    function roofline(){
+      ctx.fillStyle = "#0a0a12";
+      const pts = [
+        [0,1900],[180,1900],[260,1850],[420,1850],[520,1900],[760,1900],[860,1840],[1040,1840],[1140,1900],[1380,1900],
+        [1500,1860],[1700,1860],[1800,1900],[2040,1900],[2140,1860],[2320,1860],[2420,1900],[2700,1900],[2800,1850],[3000,1850],
+        [3120,1900],[3360,1900],[3480,1860],[3700,1860],[3820,1900],[4040,1900],[4160,1860],[4360,1860],[4480,1900],[4740,1900],
+        [4860,1850],[5060,1850],[5180,1900],[5440,1900],[5560,1860],[5780,1860],[5900,1900],[6048,1900],[6048,2000],[0,2000]
+      ];
+      ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]);
+      for(const [x,y] of pts.slice(1)) ctx.lineTo(x,y);
+      ctx.closePath(); ctx.fill();
+    }
+
+    function smoke(){
+      // simulate with blurred tall rectangles + turbulence via alpha noise
+      ctx.save();
+      ctx.globalAlpha = 0.65;
+      const cols = [400,1200,2200,3200,4200,5200];
+      for(const x of cols){
+        const w = 220 + Math.random()*40;
+        const h = H*0.35 + Math.random()*H*0.05;
+        const y = H*0.46 + Math.random()*20;
+        const g = ctx.createLinearGradient(x,y, x,y+h);
+        g.addColorStop(0,"rgba(26,25,31,0.8)");
+        g.addColorStop(1,"rgba(26,25,31,0.2)");
+        ctx.fillStyle=g; ctx.filter='blur(8px)'; ctx.fillRect(x,y,w,h);
+      }
+      ctx.restore();
+    }
+
+    function poles(){
+      ctx.strokeStyle = "rgba(180,180,200,0.35)"; ctx.lineCap='round'; ctx.lineWidth=10;
+      function post(x,h1,h2){ ctx.beginPath(); ctx.moveTo(x,H*0.73); ctx.lineTo(x,H*0.58); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x,H*0.60); ctx.lineTo(x+h1,H*0.60); ctx.stroke(); }
+      post(240,180,0); post(1120,180,0); post(3120,180,0); post(5120,180,0);
+    }
+
+    function road(){
+      ctx.fillStyle="#0a0a12"; ctx.fillRect(0,H*0.77,W,H*0.23);
+      ctx.strokeStyle="rgba(220,200,150,0.45)"; ctx.lineWidth=16;
+      ctx.setLineDash([60,40]); ctx.beginPath(); ctx.moveTo(0,H*0.89); ctx.lineTo(W,H*0.89); ctx.stroke(); ctx.setLineDash([]);
+    }
+
+    function embers(){
+      const dots = [
+        [300,1700,6,"#ffd07a"],[680,1600,4,"#ff9acb"],[980,1660,5,"#ffd07a"],[1420,1720,4,"#ffd07a"],
+        [2100,1680,6,"#ffd07a"],[2580,1640,5,"#ffb090"],[3180,1710,4,"#ffd07a"],[3720,1650,5,"#ffd07a"],
+        [4300,1690,4,"#ffd07a"],[4880,1630,6,"#ffd07a"],[5460,1700,5,"#ffb090"]
+      ];
+      ctx.globalAlpha = 0.5;
+      for(const [x,y,r,c] of dots){ ctx.fillStyle=c; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill(); }
+      ctx.globalAlpha = 1;
+    }
+
+    function insignia(){
+      // faint gold dot in smoke at ~x=4200
+      const sx=4200+80, sy=1300+120, r=24;
+      const g = R(sx,sy,r, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.save(); ctx.filter='blur(6px)'; ctx.globalAlpha=0.45; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(sx,sy,r,0,Math.PI*2); ctx.fill(); ctx.restore();
+    }
+
+    function vignette(){
+      const r = Math.max(W,H)*0.95;
+      const g = ctx.createRadialGradient(W/2,H/2, r*0.55, W/2,H/2, r);
+      g.addColorStop(0,"rgba(0,0,0,0)");
+      g.addColorStop(1,"rgba(0,0,0,0.82)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    }
+
+    function render(){ setSize(); sky(); fireBand(); roofline(); smoke(); poles(); road(); embers(); insignia(); vignette(); }
+    render();
+
+    document.getElementById('render6k').addEventListener('click', render);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

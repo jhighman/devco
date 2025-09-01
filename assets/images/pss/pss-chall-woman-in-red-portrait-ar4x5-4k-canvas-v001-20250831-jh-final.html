@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – Woman in Red (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(92vmin, 900px); padding:18px; }
+    canvas { width:100%; height:auto; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="1600" height="2000" aria-label="Woman in Red (Archetype) artwork"></canvas>
+    <div class="controls">
+      <button id="render4k">Render 4K (3200×4000)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 4K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const FILENAME = "pss-chall-woman-in-red-portrait-ar4x5-4k-rgb-v001-20250831-jh-final.png";
+    const PRE_W = 1600, PRE_H = 2000;
+    const W = 3200, H = 4000;
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(w, h){ canvas.width = w; canvas.height = h; }
+    function L(x0,y0,x1,y1,stops){ const g = ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+    function R(cx,cy,r,stops){ const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+
+    function bokeh(cx,cy,r,color,a=0.35){ ctx.save(); ctx.filter='blur(6px)'; ctx.globalAlpha=a; ctx.fillStyle=color; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill(); ctx.restore(); }
+
+    function drawBackground(w=PRE_W,h=PRE_H){
+      setSize(w,h);
+      ctx.fillStyle = L(0,0,0,h, [[0,"#0a0b12"],[0.6,"#0a0810"],[1,"#08060c"]]);
+      ctx.fillRect(0,0,w,h);
+      // neon spill
+      ctx.fillStyle = R(0,h*0.35, Math.max(w,h)*0.65, [[0,"rgba(255,0,180,0.35)"],[1,"rgba(255,0,180,0)"]]);
+      ctx.fillRect(0,0,w,h);
+      ctx.fillStyle = R(w,h*0.65, Math.max(w,h)*0.65, [[0,"rgba(255,190,70,0.35)"],[1,"rgba(255,190,70,0)"]]);
+      ctx.fillRect(0,0,w,h);
+      // bokeh
+      bokeh(w*0.15,h*0.18, 28,"#ff8bd2"); bokeh(w*0.22,h*0.21, 18,"#ffd27a");
+      bokeh(w*0.83,h*0.16, 24,"#ffd27a"); bokeh(w*0.78,h*0.27, 16,"#ff8bd2");
+      bokeh(w*0.18,h*0.42, 22,"#ffd27a"); bokeh(w*0.86,h*0.46, 28,"#ffd27a");
+      bokeh(w*0.61,h*0.13, 14,"#ff8bd2");
+    }
+
+    function drawWoman(w=PRE_W,h=PRE_H){
+      const scale = w/1600;
+      ctx.save();
+      // ground shadow
+      ctx.fillStyle="rgba(0,0,0,0.5)";
+      ctx.beginPath(); ctx.ellipse(w*0.5, h*0.84, w*0.2625, h*0.035, 0,0,Math.PI*2); ctx.fill();
+
+      // Motion ghost (pre-blur dup)
+      function ghost(fn){
+        ctx.save(); ctx.filter='blur(10px)'; ctx.globalAlpha=0.35; ctx.translate(-14*scale,0); fn(); ctx.restore();
+      }
+
+      function head(){
+        ctx.beginPath();
+        ctx.moveTo(740*scale,740*scale);
+        ctx.quadraticCurveTo(710*scale,580*scale, 880*scale,570*scale);
+        ctx.quadraticCurveTo(1000*scale,570*scale, 1030*scale,690*scale);
+        ctx.quadraticCurveTo(990*scale,730*scale, 940*scale,750*scale);
+        ctx.quadraticCurveTo(920*scale,790*scale, 880*scale,820*scale);
+        ctx.quadraticCurveTo(800*scale,820*scale, 740*scale,740*scale);
+        ctx.closePath();
+        ctx.fillStyle="#0b0a0f"; ctx.fill();
+      }
+
+      function coat(){
+        const x=0, y=0;
+        ctx.beginPath();
+        ctx.moveTo(620*scale,820*scale);
+        ctx.quadraticCurveTo(740*scale,780*scale, 830*scale,800*scale);
+        ctx.quadraticCurveTo(970*scale,820*scale, 1130*scale,920*scale);
+        ctx.quadraticCurveTo(1140*scale,1120*scale, 1110*scale,1340*scale);
+        ctx.quadraticCurveTo(880*scale,1460*scale, 600*scale,1420*scale);
+        ctx.quadraticCurveTo(560*scale,1220*scale, 590*scale,1000*scale);
+        ctx.quadraticCurveTo(620*scale,880*scale, 680*scale,820*scale);
+        ctx.closePath();
+        const grd = L(0,820*scale,0,1420*scale, [[0,"#a3082c"],[0.6,"#7a0625"],[1,"#4a0416"]]);
+        ctx.fillStyle = grd; ctx.fill();
+        // Sheen folds
+        const fold = L(0,820*scale,0,1420*scale, [[0,"rgba(255,120,160,0.35)"],[0.7,"rgba(255,120,160,0.06)"],[1,"rgba(0,0,0,0)"]]);
+        ctx.strokeStyle = fold; ctx.lineCap="round";
+        ctx.lineWidth = 18*scale; ctx.beginPath(); ctx.moveTo(740*scale,860*scale); ctx.quadraticCurveTo(780*scale,1100*scale, 760*scale,1380*scale); ctx.stroke();
+        ctx.lineWidth = 14*scale; ctx.beginPath(); ctx.moveTo(860*scale,880*scale); ctx.quadraticCurveTo(920*scale,1120*scale, 900*scale,1400*scale); ctx.stroke();
+        ctx.lineWidth = 12*scale; ctx.beginPath(); ctx.moveTo(980*scale,930*scale); ctx.quadraticCurveTo(1040*scale,1150*scale, 1030*scale,1410*scale); ctx.stroke();
+      }
+
+      function sleeve(){
+        ctx.beginPath();
+        ctx.moveTo(1060*scale,1010*scale);
+        ctx.quadraticCurveTo(1180*scale,1070*scale, 1260*scale,1170*scale);
+        ctx.quadraticCurveTo(1220*scale,1210*scale, 1140*scale,1190*scale);
+        ctx.quadraticCurveTo(1060*scale,1170*scale, 1000*scale,1110*scale);
+        ctx.quadraticCurveTo(1020*scale,1060*scale, 1060*scale,1010*scale);
+        ctx.closePath();
+        ctx.fillStyle="#8e0728"; ctx.fill();
+        // cuff block
+        ctx.fillStyle="#5a0418"; ctx.fillRect(1080*scale,1050*scale, 60*scale, 40*scale);
+        // insignia
+        const sx = 1108*scale, sy = 1070*scale;
+        // rays
+        ctx.strokeStyle="#d6af37"; ctx.lineWidth=4*scale; ctx.lineCap='round';
+        function line(x1,y1,x2,y2){ ctx.beginPath(); ctx.moveTo(sx+x1*scale, sy+y1*scale); ctx.lineTo(sx+x2*scale, sy+y2*scale); ctx.stroke(); }
+        line(0,-34,0,-20); line(0,20,0,34); line(-34,0,-20,0); line(20,0,34,0);
+        line(-24,-24,-14,-14); line(24,-24,14,-14); line(-24,24,-14,14); line(24,24,14,14);
+        // center
+        const grad = ctx.createRadialGradient(sx,sy, 0, sx,sy, 20*scale);
+        grad.addColorStop(0,"#ffe789"); grad.addColorStop(0.65,"#d6af37"); grad.addColorStop(1,"#a87a22");
+        ctx.save(); ctx.filter='blur(4px)'; ctx.fillStyle=grad; ctx.beginPath(); ctx.arc(sx,sy, 20*scale, 0, Math.PI*2); ctx.fill(); ctx.restore();
+      }
+
+      ghost(() => { head(); coat(); sleeve(); });
+      head(); coat(); sleeve();
+      ctx.restore();
+
+      // vignette
+      const r = Math.max(w,h)*0.9;
+      const g = ctx.createRadialGradient(w/2, h/2, r*0.55, w/2, h/2, r);
+      g.addColorStop(0,"rgba(0,0,0,0)");
+      g.addColorStop(1,"rgba(0,0,0,0.75)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
+    }
+
+    function render4k(){ drawBackground(W,H); drawWoman(W,H); }
+    function renderPreview(){ drawBackground(PRE_W,PRE_H); drawWoman(PRE_W,PRE_H); }
+
+    renderPreview();
+    document.getElementById('render4k').addEventListener('click', render4k);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

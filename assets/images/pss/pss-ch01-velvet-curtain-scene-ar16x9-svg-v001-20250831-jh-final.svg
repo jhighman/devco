@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">The Velvet Curtain — Pop Song Summer</title>
+  <desc id="desc">Neon-noir alley between shuttered bodegas; a blood-red velvet curtain breathes; bass ripples in a puddle; no signage, only neon spill.</desc>
+
+  <defs>
+    <!-- Alley gradient -->
+    <linearGradient id="alleyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0b0b12"/>
+      <stop offset="55%" stop-color="#0a0910"/>
+      <stop offset="100%" stop-color="#05050a"/>
+    </linearGradient>
+
+    <!-- Subtle brick texture via turbulence -->
+    <filter id="alleyNoise" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="9" result="n"/>
+      <feColorMatrix in="n" type="matrix"
+        values="0.4 0 0 0 0
+                0 0.42 0 0 0
+                0 0 0.45 0 0
+                0 0 0 0.18 0"/>
+      <feGaussianBlur stdDeviation="0.4"/>
+    </filter>
+
+    <!-- Neon spill: left magenta, right gold -->
+    <radialGradient id="neonLeft" cx="0%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="rgba(255,0,180,0.4)"/>
+      <stop offset="100%" stop-color="rgba(255,0,180,0)"/>
+    </radialGradient>
+    <radialGradient id="neonRight" cx="100%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="rgba(255,190,70,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,190,70,0)"/>
+    </radialGradient>
+
+    <!-- Curtain base & sheen -->
+    <linearGradient id="curtainBase" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#6d001c"/>
+      <stop offset="60%"  stop-color="#4a0014"/>
+      <stop offset="100%" stop-color="#2a000b"/>
+    </linearGradient>
+    <linearGradient id="foldSheen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="rgba(255,120,160,0.45)"/>
+      <stop offset="50%"  stop-color="rgba(255,120,160,0.08)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </linearGradient>
+
+    <!-- Puddle gradient & ripple blur -->
+    <radialGradient id="puddleGrad" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="rgba(140,60,90,0.5)"/>
+      <stop offset="100%" stop-color="rgba(20,10,20,0.0)"/>
+    </radialGradient>
+    <filter id="rippleBlur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+
+    <!-- Subtle vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="80%">
+      <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.75)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Alley walls / ground -->
+  <rect x="0" y="0" width="1920" height="1080" fill="url(#alleyGrad)"/>
+  <rect x="0" y="0" width="1920" height="1080" filter="url(#alleyNoise)" opacity="0.18"/>
+
+  <!-- Neon spill -->
+  <rect x="0" y="0" width="1920" height="1080" fill="url(#neonLeft)"/>
+  <rect x="0" y="0" width="1920" height="1080" fill="url(#neonRight)"/>
+
+  <!-- Curtain group -->
+  <g id="curtain" transform="translate(710,120)">
+    <!-- Top rail shadow -->
+    <rect x="-20" y="-10" width="520" height="24" fill="rgba(0,0,0,0.5)"/>
+    <!-- Main drape -->
+    <rect x="0" y="0" width="480" height="760" rx="6" fill="url(#curtainBase)"/>
+    <!-- Folds (vertical sheens) -->
+    <g opacity="0.65">
+      <!-- 12 folds -->
+      <rect x="12"  y="0" width="12" height="760" fill="url(#foldSheen)"/>
+      <rect x="42"  y="0" width="12" height="760" fill="url(#foldSheen)"/>
+      <rect x="72"  y="0" width="12" height="760" fill="url(#foldSheen)"/>
+      <rect x="112" y="0" width="10" height="760" fill="url(#foldSheen)"/>
+      <rect x="152" y="0" width="12" height="760" fill="url(#foldSheen)"/>
+      <rect x="192" y="0" width="10" height="760" fill="url(#foldSheen)"/>
+      <rect x="232" y="0" width="12" height="760" fill="url(#foldSheen)"/>
+      <rect x="272" y="0" width="10" height="760" fill="url(#foldSheen)"/>
+      <rect x="312" y="0" width="12" height="760" fill="url(#foldSheen)"/>
+      <rect x="352" y="0" width="10" height="760" fill="url(#foldSheen)"/>
+      <rect x="392" y="0" width="12" height="760" fill="url(#foldSheen)"/>
+      <rect x="432" y="0" width="12" height="760" fill="url(#foldSheen)"/>
+    </g>
+    <!-- Bottom sweep shadow -->
+    <ellipse cx="240" cy="770" rx="250" ry="26" fill="rgba(0,0,0,0.55)"/>
+  </g>
+
+  <!-- Puddle with ripples -->
+  <g id="puddle" transform="translate(420,840)">
+    <ellipse cx="540" cy="110" rx="360" ry="86" fill="url(#puddleGrad)" filter="url(#rippleBlur)"/>
+    <!-- Ripples -->
+    <g fill="none" stroke="rgba(255,160,190,0.35)" stroke-width="2">
+      <ellipse cx="540" cy="110" rx="120" ry="28"/>
+      <ellipse cx="540" cy="110" rx="180" ry="42"/>
+      <ellipse cx="540" cy="110" rx="260" ry="60"/>
+    </g>
+  </g>
+
+  <!-- Vignette -->
+  <rect x="0" y="0" width="1920" height="1080" fill="url(#vignette)"/>
+</svg>

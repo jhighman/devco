@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – Blind Man Singing (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1100px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 16/9; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3840" height="2160" aria-label="Blind Man Singing artwork"></canvas>
+    <div class="controls">
+      <button id="render4k">Render 4K (3840×2160)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 4K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const W=3840, H=2160;
+    const FILENAME = "pss-ch05-blind-man-singing-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png";
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(){ canvas.width=W; canvas.height=H; }
+
+    function radial(cx,cy,r,stops){ const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+    function linear(x0,y0,x1,y1,stops){ const g = ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+
+    function drawSky(){
+      ctx.fillStyle = radial(W/2, H*0.45, H*0.9, [[0,"#0a0b14"],[0.65,"#070812"],[1,"#05060c"]]);
+      ctx.fillRect(0,0,W,H);
+      ctx.fillStyle = linear(0,0,0,H, [[0,"rgba(255,140,100,0)"],[0.8,"rgba(255,140,100,0.2)"],[1,"rgba(255,140,100,0.35)"]]);
+      ctx.fillRect(0,0,W,H);
+    }
+
+    function drawFires(){
+      ctx.save();
+      ctx.globalAlpha = 0.7;
+      const g = linear(0,H*0.8,0,H, [[0,"rgba(255,160,90,0.9)"],[0.7,"rgba(220,80,40,0.6)"],[1,"rgba(220,80,40,0)"]]);
+      ctx.fillStyle = g;
+      ctx.fillRect(0,H*0.8,W,H*0.2);
+      ctx.globalAlpha = 0.4;
+      ctx.fillRect(0,H*0.82,W,H*0.18);
+      ctx.restore();
+    }
+
+    function drawBridge(){
+      ctx.fillStyle = linear(0,H*0.7,0,H, [[0,"#0e0e16"],[1,"#0a0a12"]]);
+      ctx.fillRect(0,H*0.7,W,H*0.3);
+      ctx.strokeStyle = "rgba(180,180,200,0.25)"; ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(0,H*0.72); ctx.lineTo(W,H*0.72); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0,H*0.76); ctx.lineTo(W,H*0.76); ctx.stroke();
+      ctx.strokeStyle = "rgba(180,180,200,0.22)"; ctx.lineWidth = 6;
+      const posts = [120,360,600,840,1080,1320,1560,1800].map(x=>x/1920*W);
+      for(const x of posts){ ctx.beginPath(); ctx.moveTo(x,H*0.76); ctx.lineTo(x,H*0.69); ctx.stroke(); }
+    }
+
+    function drawHalo(cx=W/2, cy=H*0.72){
+      const r = H*0.2;
+      const g = radial(cx,cy,r, [[0,"rgba(255,235,160,0.9)"],[0.6,"rgba(255,210,120,0.35)"],[1,"rgba(255,210,120,0)"]]);
+      ctx.save(); ctx.filter = 'blur(10px)'; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill(); ctx.restore();
+    }
+
+    function drawSinger(){
+      const cx=W/2, cy=H*0.70;
+      // crate
+      ctx.fillStyle="#111118"; ctx.strokeStyle="#282836"; ctx.lineWidth=3;
+      ctx.fillRect(cx-25, cy+40, 50, 40); ctx.strokeRect(cx-25, cy+40, 50, 40);
+      ctx.strokeStyle="#2a2a3a"; ctx.lineWidth=2;
+      for(const y of [50,60,70,80]){ ctx.beginPath(); ctx.moveTo(cx-22, cy+y); ctx.lineTo(cx+22, cy+y); ctx.stroke(); }
+      // figure blob
+      ctx.fillStyle="#0b0a10";
+      ctx.beginPath();
+      ctx.moveTo(cx-10, cy+10);
+      ctx.quadraticCurveTo(cx-10, cy-30, cx+30, cy-30);
+      ctx.quadraticCurveTo(cx+70, cy-30, cx+70, cy+10);
+      ctx.quadraticCurveTo(cx+50, cy+25, cx+32, cy+32);
+      ctx.quadraticCurveTo(cx+36, cy+60, cx+46, cy+82);
+      ctx.quadraticCurveTo(cx+26, cy+92, cx+2, cy+82);
+      ctx.quadraticCurveTo(cx+10, cy+56, cx+12, cy+32);
+      ctx.quadraticCurveTo(cx-6, cy+24, cx-10, cy+10);
+      ctx.closePath(); ctx.fill();
+      // cane
+      ctx.strokeStyle="#b8b4aa"; ctx.lineWidth=6; ctx.lineCap='round';
+      ctx.beginPath(); ctx.moveTo(cx+35, cy); ctx.quadraticCurveTo(cx+43, cy+40, cx+45, cy+88); ctx.stroke();
+    }
+
+    function drawCrowd(){
+      ctx.fillStyle = "rgba(20,18,28,0.9)";
+      function blob(x,y){ ctx.beginPath(); ctx.moveTo(x-60,y+130); ctx.quadraticCurveTo(x-80,y+50, x,y); ctx.quadraticCurveTo(x+80,y+50, x+60,y+130); ctx.quadraticCurveTo(x,y+150, x-60,y+130); ctx.fill(); }
+      blob(W*0.12, H*0.78); blob(W*0.18, H*0.78); blob(W*0.88, H*0.78); blob(W*0.82, H*0.78);
+      // insignia glows
+      function glow(x,y,r){ const g = radial(x,y,r, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]); ctx.save(); ctx.filter='blur(5px)'; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill(); ctx.restore(); }
+      glow(W*0.167, H*0.76, 12); glow(W*0.833, H*0.76, 12);
+    }
+
+    function vignette(){
+      const r = Math.max(W,H)*0.95;
+      const g = ctx.createRadialGradient(W/2,H/2, r*0.55, W/2,H/2, r);
+      g.addColorStop(0,"rgba(0,0,0,0)");
+      g.addColorStop(1,"rgba(0,0,0,0.8)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    }
+
+    function render(){ setSize(); drawSky(); drawFires(); drawBridge(); drawHalo(); drawSinger(); drawCrowd(); vignette(); }
+    render();
+
+    document.getElementById('render4k').addEventListener('click', render);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

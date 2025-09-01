@@ -1,0 +1,34 @@
+{
+  "collection": "Pop Song Summer",
+  "chapter": "03",
+  "asset_title": "Burning Houses on the Horizon",
+  "filenames": {
+    "svg": "pss-ch03-burning-houses-horizon-panorama-ar21x9-svg-v001-20250831-jh-final.svg",
+    "png": "pss-ch03-burning-houses-horizon-panorama-ar21x9-6k-rgb-v001-20250831-jh-final.png",
+    "canvas_demo": "pss-ch03-burning-houses-horizon-panorama-ar21x9-6k-canvas-v001-20250831-jh-final.html"
+  },
+  "prompt": "Cinematic 21:9 night panorama: distant suburban roofline on fire, orange emberline across horizon, black road in foreground with dotted lane stripe, telephone poles, soft smoke pillars, faint gold sun insignia hidden in smoke.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "21:9",
+  "resolution": "6048x2592",
+  "color_space": "RGB",
+  "tags": [
+    "horizon fire",
+    "suburban roofs",
+    "embers",
+    "telephone poles",
+    "road",
+    "insignia"
+  ],
+  "chapters_referenced": [
+    "03",
+    "05",
+    "09"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

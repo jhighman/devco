@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer – Sunroom Radio (Pirate Studio) (Canvas)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eaeaea; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1100px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 16/9; display:block; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0b0b12; }
+    .controls { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3840" height="2160" aria-label="Sunroom Radio (Pirate Studio) artwork"></canvas>
+    <div class="controls">
+      <button id="render4k">Render 4K (3840×2160)</button>
+      <button id="download">Download PNG</button>
+      <small>Tip: Use “Render 4K” before downloading for full resolution.</small>
+    </div>
+  </div>
+
+  <script>
+    const W=3840, H=2160;
+    const FILENAME = "pss-sunroom-radio-pirate-studio-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png";
+    const canvas = document.getElementById('art');
+    const ctx = canvas.getContext('2d');
+
+    function setSize(){ canvas.width=W; canvas.height=H; }
+    function L(x0,y0,x1,y1,stops){ const g = ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+    function R(cx,cy,r,stops){ const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g; }
+
+    function sky(){
+      ctx.fillStyle = L(0,0,0,H*0.48, [[0,"#0b0c16"],[0.6,"#0a0a12"],[1,"#090910"]]); ctx.fillRect(0,0,W,H*0.48);
+      ctx.fillStyle = L(0,0,0,220, [[0,"rgba(255,150,90,0)"],[1,"rgba(255,130,80,0.30)"]]); ctx.fillRect(0,0,W,220);
+    }
+
+    function windows(){
+      ctx.strokeStyle="rgba(220,220,240,0.25)"; ctx.lineWidth=8;
+      ctx.strokeRect(120,60,1680,420);
+      ctx.beginPath(); ctx.moveTo(120,200); ctx.lineTo(1800,200); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(120,340); ctx.lineTo(1800,340); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(600,60); ctx.lineTo(600,480); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(1140,60); ctx.lineTo(1140,480); ctx.stroke();
+      // antenna outside
+      ctx.fillStyle="#0e0f16";
+      ctx.fillRect(1560+20,120+80,6,180);
+      ctx.strokeStyle="#0e0f16"; ctx.lineWidth=6;
+      ctx.beginPath(); ctx.moveTo(1560+23,120+80); ctx.lineTo(1560+80,120+20); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(1560+23,120+120); ctx.lineTo(1560+120,120+60); ctx.stroke();
+    }
+
+    function desk(){
+      ctx.fillStyle = L(0,H*0.48,0,H, [[0,"#0b0b12"],[1,"#090911"]]); ctx.fillRect(0,H*0.48,W,H*0.52);
+      ctx.fillStyle="#1b1b24"; ctx.fillRect(0,H*0.48, W, 12);
+    }
+
+    function turntable(){
+      const ox=260, oy=H*0.60;
+      ctx.fillStyle="#12121a"; ctx.strokeStyle="rgba(220,220,240,0.25)"; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.roundRect(ox,oy,380,220,12); ctx.fill(); ctx.stroke();
+      ctx.fillStyle="#0e0e16"; ctx.beginPath(); ctx.arc(ox+120, oy+110, 68, 0, Math.PI*2); ctx.fill();
+      ctx.strokeStyle="rgba(220,220,240,0.25)"; ctx.lineWidth=3; ctx.beginPath(); ctx.arc(ox+120, oy+110, 68, 0, Math.PI*2); ctx.stroke();
+      ctx.fillStyle="#e6e6f0"; ctx.beginPath(); ctx.arc(ox+120, oy+110, 6, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle="#0f0f17"; ctx.beginPath(); ctx.roundRect(ox+250, oy+40, 16, 140, 6); ctx.fill();
+      ctx.beginPath(); ctx.roundRect(ox+260, oy+40, 80, 10, 3); ctx.fill();
+    }
+
+    function mixer(){
+      const ox=700, oy=H*0.60;
+      ctx.fillStyle="#14141e"; ctx.strokeStyle="rgba(220,220,240,0.25)"; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.roundRect(ox,oy,360,220,12); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle="#e6e6f0"; ctx.lineWidth=3;
+      for(const x of [60,120,180,240,300]){ ctx.beginPath(); ctx.moveTo(ox+x, oy+40); ctx.lineTo(ox+x, oy+180); ctx.stroke(); }
+      // insignia sticker
+      const sx=ox+300, sy=oy+170, r=14;
+      const g = R(sx,sy,r, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.save(); ctx.filter='blur(6px)'; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(sx,sy,r,0,Math.PI*2); ctx.fill(); ctx.restore();
+      ctx.strokeStyle="#d6af37"; ctx.lineWidth=4; ctx.lineCap='round';
+      function ray(ax,ay,bx,by){ ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke(); }
+      ray(sx,sy-28, sx,sy-18); ray(sx,sy+18, sx,sy+28); ray(sx-28,sy, sx-18,sy); ray(sx+18,sy, sx+28,sy);
+    }
+
+    function deck(){
+      const ox=1100, oy=H*0.63;
+      ctx.fillStyle="#12121a"; ctx.strokeStyle="rgba(220,220,240,0.25)"; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.roundRect(ox,oy,320,160,10); ctx.fill(); ctx.stroke();
+      ctx.fillStyle="#0f0f16"; ctx.beginPath(); ctx.roundRect(ox+20,oy+30,160,60,6); ctx.fill();
+      ctx.beginPath(); ctx.roundRect(ox+200,oy+50,90,14,6); ctx.fill();
+    }
+
+    function micArm(){
+      const ox=580, oy=H*0.52+40;
+      ctx.fillStyle="#1a1a24";
+      ctx.beginPath(); ctx.roundRect(ox,oy,140,10,5); ctx.fill();
+      ctx.beginPath(); ctx.roundRect(ox+140,oy-2,220,10,5); ctx.fill();
+      ctx.fillStyle="#0f0f16"; ctx.beginPath(); ctx.arc(ox+360, oy+2, 18, 0, Math.PI*2); ctx.fill();
+      const sx=ox+360, sy=oy+2, r=8;
+      const g = R(sx,sy,r, [[0,"#ffe789"],[0.7,"#d6af37"],[1,"rgba(168,122,34,0)"]]);
+      ctx.save(); ctx.filter='blur(6px)'; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(sx,sy,r,0,Math.PI*2); ctx.fill(); ctx.restore();
+    }
+
+    function onAir(){
+      const ox=1280, oy=H*0.52+40;
+      ctx.fillStyle="#2a0f16"; ctx.strokeStyle="rgba(255,120,120,0.5)"; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.roundRect(ox,oy,220,60,8); ctx.fill(); ctx.stroke();
+      ctx.fillStyle="#ff9acb"; ctx.font="36px monospace"; ctx.textAlign="center"; ctx.fillText("ON AIR", ox+110, oy+42);
+    }
+
+    function crate(){
+      const ox=1480, oy=H*0.67;
+      ctx.fillStyle="#101018"; ctx.strokeStyle="rgba(220,220,240,0.25)"; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.roundRect(ox,oy,180,160,10); ctx.fill(); ctx.stroke();
+      ctx.fillStyle="#0b0b12"; ctx.globalAlpha=0.9;
+      for(const yy of [oy+20,oy+52,oy+84,oy+116]){ ctx.fillRect(ox+14, yy, 152, 16); }
+      ctx.globalAlpha=1;
+      ctx.fillStyle="#302030"; ctx.fillRect(ox+20, oy-40, 30, 40);
+      ctx.fillStyle="#103030"; ctx.fillRect(ox+56, oy-48, 30, 48);
+      ctx.fillStyle="#301010"; ctx.fillRect(ox+92, oy-36, 30, 36);
+      ctx.fillStyle="#103010"; ctx.fillRect(ox+128, oy-44, 30, 44);
+    }
+
+    function vignette(){
+      const r = Math.max(W,H)*0.95;
+      const g = ctx.createRadialGradient(W/2,H/2, r*0.55, W/2,H/2, r);
+      g.addColorStop(0,"rgba(0,0,0,0)");
+      g.addColorStop(1,"rgba(0,0,0,0.82)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    }
+
+    function render(){ setSize(); sky(); windows(); desk(); turntable(); mixer(); deck(); micArm(); onAir(); crate(); vignette(); }
+    render();
+
+    document.getElementById('render4k').addEventListener('click', render);
+    document.getElementById('download').addEventListener('click', () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = FILENAME;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, "image/png");
+    });
+  </script>
+</body>
+</html>

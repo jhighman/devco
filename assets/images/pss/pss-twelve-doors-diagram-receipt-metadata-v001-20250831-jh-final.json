@@ -1,0 +1,34 @@
+{
+  "collection": "Pop Song Summer",
+  "asset_title": "Twelve Doors Diagram (Receipt)",
+  "filenames": {
+    "svg": "pss-twelve-doors-diagram-receipt-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+    "png": "pss-twelve-doors-diagram-receipt-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+    "canvas_demo": "pss-twelve-doors-diagram-receipt-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+  },
+  "prompt": "Thermal receipt on a dark counter, rotated slightly. Printed diagram of twelve doors arranged like a clock with numbers 1\u201312 and a small 3\u00d73 grid index; red-circled notes and lines; barcode and 'TOTAL: 12 DOORS'; a gold sun-insignia sticker near the corner. Amber horizon vibe.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "16:9",
+  "resolution": "3840x2160",
+  "color_space": "RGB",
+  "tags": [
+    "receipt",
+    "diagram",
+    "twelve doors",
+    "insignia",
+    "red circle",
+    "barcode"
+  ],
+  "chapters_referenced": [
+    "02",
+    "03",
+    "10",
+    "11"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

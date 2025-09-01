@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop Song Summer — On the Corner, Reading Poetry (Header)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; background:#0b0f18; color:#eaeaea; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; display:grid; place-items:center; min-height:100vh; }
+    .wrap { width:min(95vw, 1400px); padding:18px; }
+    canvas { width:100%; aspect-ratio: 3/1; display:block; border-radius:14px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#0c1022; }
+    .controls { display:flex; gap:10px; margin-top:12px; }
+    button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid #333; background:#141414; color:#fff; }
+    button:hover { background:#1c1c1c; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="art" width="3000" height="1000" aria-label="On the Corner, Reading Poetry — Song Header artwork"></canvas>
+    <div class="controls">
+      <button id="download">Download PNG</button>
+    </div>
+  </div>
+
+<script>
+const W=3000,H=1000; const canvas=document.getElementById('art'); const ctx=canvas.getContext('2d');
+function L(x0,y0,x1,y1,stops){ const g=ctx.createLinearGradient(x0,y0,x1,y1); for(const [o,c] of stops) g.addColorStop(o,c); return g }
+function R(cx,cy,r,stops){ const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r); for(const [o,c] of stops) g.addColorStop(o,c); return g }
+
+function render(){
+  canvas.width=W; canvas.height=H;
+  ctx.fillStyle=L(0,0,0,H,[[0,"#0c1022"],[0.65,"#0a0f1f"],[1,"#0a0c14"]]); ctx.fillRect(0,0,W,H);
+  ctx.fillStyle="rgba(15,20,36,0.85)"; ctx.beginPath(); ctx.moveTo(0,820); ctx.lineTo(1200,640); ctx.lineTo(3000,820); ctx.lineTo(3000,1000); ctx.lineTo(0,1000); ctx.closePath(); ctx.fill();
+  ctx.fillStyle="rgba(11,15,28,0.9)"; ctx.beginPath(); ctx.moveTo(0,1000); ctx.lineTo(0,820); ctx.lineTo(600,720); ctx.lineTo(600,1000); ctx.closePath(); ctx.fill();
+  const lg=R(1200,640,620,[[0,"rgba(255,205,120,0.35)"],[1,"rgba(255,160,80,0)"]]);
+  ctx.save(); ctx.globalAlpha=.9; ctx.fillStyle=lg; ctx.beginPath(); ctx.ellipse(1200,640,620,280,0,0,Math.PI*2); ctx.fill(); ctx.restore();
+  const cg=R(1580,740,78,[[0,"rgba(255,242,208,0.7)"],[1,"rgba(255,242,208,0)"]]);
+  ctx.save(); ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(1580,740,78,0,Math.PI*2); ctx.fill(); ctx.restore();
+  ctx.strokeStyle="rgba(249,242,208,0.9)"; ctx.lineCap="round"; ctx.lineWidth=10;
+  function ln(ax,ay,bx,by){ ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke(); }
+  ln(1580,622,1580,656); ln(1580,824,1580,858); ln(1462,740,1496,740); ln(1664,740,1698,740);
+  ctx.setLineDash([12,16]); ctx.lineWidth=4; ctx.globalAlpha=.8; ctx.beginPath(); ctx.arc(1580,740,140,0,Math.PI*2); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha=1;
+  const x0=420,y0=760; ctx.fillStyle="#0b0e18"; ctx.strokeStyle="#20273c"; ctx.lineWidth=3;
+  ctx.beginPath(); ctx.roundRect(x0,y0,140,90,8); ctx.fill(); ctx.stroke();
+  ctx.strokeStyle="#20273c"; ctx.lineWidth=2;
+  for(const X of [x0+20,x0+50,x0+80,x0+110]){ ctx.beginPath(); ctx.moveTo(X,y0+16); ctx.lineTo(X,y0+74); ctx.stroke(); }
+  for(const Y of [y0+28,y0+46,y0+64]){ ctx.beginPath(); ctx.moveTo(x0+10,Y); ctx.lineTo(x0+130,Y); ctx.stroke(); }
+  function page(ox,oy,w,h,rot){
+    const mem=ctx.getTransform(); ctx.translate(ox,oy); ctx.rotate(rot*Math.PI/180);
+    ctx.fillStyle="#f7f7fb"; ctx.strokeStyle="#d8d8e2"; ctx.lineWidth=1.6; ctx.beginPath(); ctx.roundRect(0,0,w,h,6); ctx.fill(); ctx.stroke();
+    ctx.fillStyle="rgba(144,144,164,0.9)"; ctx.fillRect(12,18,w-24,8);
+    ctx.fillStyle="rgba(144,144,164,0.7)"; ctx.fillRect(12,34,w-34,8);
+    ctx.setTransform(mem);
+  }
+  page(540,730,120,72,-8); page(610,780,136,78,6);
+  ctx.strokeStyle="rgba(230,235,245,0.45)"; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(820,620);
+  ctx.bezierCurveTo(900,580,1040,660,1120,620); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(880,660); ctx.bezierCurveTo(960,620,1120,700,1180,660); ctx.stroke();
+  function dot(cx,cy,r,c){ const g=R(cx,cy,r,[[0,c],[1,"rgba(0,0,0,0)"]]); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill(); }
+  dot(960,540,12,"rgba(180,150,255,0.35)"); dot(1240,600,10,"rgba(255,170,110,0.35)"); dot(1860,560,12,"rgba(180,150,255,0.35)"); dot(2140,600,10,"rgba(255,170,110,0.35)"); dot(2460,560,14,"rgba(180,150,255,0.35)");
+  const f=L(0,720,0,1000,[[0,"rgba(0,0,0,0)"],[1,"rgba(0,0,0,0.6)"]]); ctx.fillStyle=f; ctx.fillRect(0,720,W,280);
+}
+render();
+document.getElementById('download').addEventListener('click', ()=>{
+  canvas.toBlob((b)=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download="pss-on-the-corner-reading-poetry-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png"; document.body.appendChild(a); a.click(); a.remove(); }, "image/png");
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "collection": "Pop Song Summer",
+  "chapter": "11",
+  "asset_title": "Heliograph: Storage Unit Ritual",
+  "filenames": {
+    "svg": "pss-ch11-heliograph-storage-unit-ritual-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+    "png": "pss-ch11-heliograph-storage-unit-ritual-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+    "canvas_demo": "pss-ch11-heliograph-storage-unit-ritual-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+  },
+  "prompt": "Night row of storage units; one half-raised door reveals a ritual heliograph rig (tripod mirror) inside. Chalk-sun and salt circle on the floor; a beam of gold light projects a sun insignia onto the corrugated slats. Amber horizon tint, keypad, and a padlock bearing the insignia.",
+  "creator": "jh",
+  "version": "v001",
+  "date": "2025-08-31",
+  "aspect_ratio": "16:9",
+  "resolution": "3840x2160",
+  "color_space": "RGB",
+  "tags": [
+    "storage unit",
+    "heliograph",
+    "insignia",
+    "ritual",
+    "beam",
+    "salt circle"
+  ],
+  "chapters_referenced": [
+    "02",
+    "03",
+    "05",
+    "11"
+  ],
+  "rights": {
+    "license": "All Rights Reserved",
+    "notes": "Internal concept artwork for Pop Song Summer. Do not redistribute without permission."
+  }
+}

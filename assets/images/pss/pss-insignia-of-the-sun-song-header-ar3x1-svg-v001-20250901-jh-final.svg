@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Insignia of the Sun — Song Header (Pop Song Summer)</title>
+  <desc id="desc">Dark, text-friendly banner with a central sun insignia: glowing core, cross rays, dashed orbits, ritual grid, and soft bokeh. Designed to carry the series motif without overpowering a heading.</desc>
+  <defs>
+    <linearGradient id="night" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0c1022"/>
+      <stop offset="60%"  stop-color="#0a0f1f"/>
+      <stop offset="100%" stop-color="#090d18"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffe789"/>
+      <stop offset="70%" stop-color="#d6af37"/>
+      <stop offset="100%" stop-color="rgba(168,122,34,0)"/>
+    </radialGradient>
+    <radialGradient id="bokehA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(180,150,255,0.35)"/>
+      <stop offset="100%" stop-color="rgba(180,150,255,0)"/>
+    </radialGradient>
+    <radialGradient id="bokehB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,180,120,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,180,120,0)"/>
+    </radialGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="3000" height="1000" fill="url(#night)"/>
+
+  <!-- Ritual grid (subtle) -->
+  <g stroke="rgba(255,255,255,0.05)" stroke-width="1">
+    <!-- verticals -->
+    <path d="M400,0 L400,1000 M800,0 L800,1000 M1200,0 L1200,1000 M1800,0 L1800,1000 M2200,0 L2200,1000 M2600,0 L2600,1000"/>
+    <!-- arcs -->
+    <path d="M1500,980 A860,860 0 0 0 1500,-720" fill="none"/>
+    <path d="M1500,960 A760,760 0 0 0 1500,-620" fill="none"/>
+    <path d="M1500,940 A660,660 0 0 0 1500,-520" fill="none"/>
+  </g>
+
+  <!-- Central insignia -->
+  <g transform="translate(1500,500)">
+    <!-- glow core -->
+    <circle cx="0" cy="0" r="110" fill="url(#sun)" filter="url(#soft)" opacity="0.95"/>
+    <!-- cross rays -->
+    <g stroke="#d6af37" stroke-linecap="round" stroke-width="12" opacity="0.95">
+      <line x1="0" y1="-170" x2="0" y2="-110"/>
+      <line x1="0" y1="110"  x2="0" y2="170"/>
+      <line x1="-170" y1="0" x2="-110" y2="0"/>
+      <line x1="110" y1="0"  x2="170" y2="0"/>
+    </g>
+    <!-- dashed orbits -->
+    <g stroke="#d6af37" stroke-width="3" opacity="0.7">
+      <circle cx="0" cy="0" r="190" fill="none" stroke-dasharray="10 14"/>
+      <circle cx="0" cy="0" r="260" fill="none" stroke-dasharray="10 14"/>
+    </g>
+  </g>
+
+  <!-- Bokeh field -->
+  <g opacity="0.8">
+    <circle cx="420" cy="540" r="16" fill="url(#bokehA)"/>
+    <circle cx="720" cy="420" r="12" fill="url(#bokehA)"/>
+    <circle cx="1100" cy="600" r="18" fill="url(#bokehB)"/>
+    <circle cx="1900" cy="460" r="12" fill="url(#bokehA)"/>
+    <circle cx="2140" cy="560" r="14" fill="url(#bokehB)"/>
+    <circle cx="2460" cy="520" r="10" fill="url(#bokehA)"/>
+  </g>
+
+  <!-- Bottom fade for legibility -->
+  <linearGradient id="fade" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="rgba(0,0,0,0)"/>
+    <stop offset="100%" stop-color="rgba(0,0,0,0.55)"/>
+  </linearGradient>
+  <rect x="0" y="700" width="3000" height="300" fill="url(#fade)"/>
+</svg>
