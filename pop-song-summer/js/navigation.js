@@ -130,6 +130,20 @@ export function setupChapterNavigation() {
     AppState.prevPanelBtn = document.getElementById('prev-panel');
     AppState.nextPanelBtn = document.getElementById('next-panel');
     
+    // Ensure panel navigation has proper z-index
+    const panelNavigation = document.querySelector('.panel-navigation');
+    if (panelNavigation) {
+        panelNavigation.style.zIndex = '40';
+        debug('Initialized panel navigation with z-index: 40');
+    }
+    
+    // Set z-index on buttons directly
+    if (AppState.prevPanelBtn && AppState.nextPanelBtn) {
+        AppState.prevPanelBtn.style.zIndex = '40';
+        AppState.nextPanelBtn.style.zIndex = '40';
+        debug('Initialized panel navigation buttons with z-index: 40');
+    }
+    
     // Panel navigation with improved event handling
     AppState.prevPanelBtn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -283,14 +297,20 @@ export function showPanel(panelIndex) {
         return;
     }
     
-    // Create a smooth transition effect
+    // Force narrative panel to be visible immediately
+    if (AppState.narrativePanel) {
+        AppState.narrativePanel.style.display = 'block';
+        debug('Forcing narrative panel display: block');
+    }
+    
+    // Create a smooth transition effect with shorter fade time
     const fadeCanvas = document.createElement('canvas');
     fadeCanvas.width = AppState.sceneCanvas.width;
     fadeCanvas.height = AppState.sceneCanvas.height;
     fadeCanvas.style.position = 'absolute';
     fadeCanvas.style.top = '0';
     fadeCanvas.style.left = '0';
-    fadeCanvas.style.zIndex = '5';
+    fadeCanvas.style.zIndex = '15';
     fadeCanvas.style.opacity = '0';
     document.querySelector('.experience-container').appendChild(fadeCanvas);
     
@@ -298,8 +318,8 @@ export function showPanel(panelIndex) {
     const fadeCtx = fadeCanvas.getContext('2d');
     fadeCtx.drawImage(AppState.sceneCanvas, 0, 0);
     
-    // Fade in the transition canvas
-    fadeCanvas.style.transition = 'opacity 0.5s ease';
+    // Fade in the transition canvas with shorter transition
+    fadeCanvas.style.transition = 'opacity 0.3s ease';
     fadeCanvas.style.opacity = '1';
     
     // Update current panel
@@ -346,26 +366,52 @@ export function showPanel(panelIndex) {
         // Make sure narrative panel is visible
         AppState.narrativePanel.style.display = 'block';
         
-        if (panel.has_burning) {
-            AppState.narrativePanel.classList.add('burning-effect');
-            // Increase z-index for burning effect to ensure text is visible
-            AppState.narrativePanel.style.zIndex = '30';
-            // Add extra background opacity for better text visibility
-            AppState.narrativePanel.style.background = 'rgba(0, 0, 0, 0.85)';
-        }
+        // Reset any previously set top property to prevent positioning issues
+        AppState.narrativePanel.style.top = '';
+        debug('Reset narrative panel top property to inherit CSS defaults');
         
-        if (panel.has_light_rays || panel.has_light_burst) {
+        // Apply only one effect with highest z-index
+        let effectApplied = false;
+        
+        // Check for special panel titles
+        if (panel.title?.toUpperCase().includes('SHE ARRIVES') || panel.title?.toUpperCase().includes('SHE COMES')) {
             AppState.narrativePanel.classList.add('light-rays');
-            // Adjust z-index for light rays
-            AppState.narrativePanel.style.zIndex = '30';
+            // Explicitly ensure top property is not set inline
+            AppState.narrativePanel.style.top = '';
+            effectApplied = true;
+            debug('Applied light-rays for SHE ARRIVES, z-index set to: 35, top property reset');
         }
         
-        if (panel.has_door) {
+        if ((panel.has_burning || panel.title?.toUpperCase().includes('BURNING')) && !effectApplied) {
+            AppState.narrativePanel.classList.add('burning-effect');
+            // Explicitly ensure top property is not set inline
+            AppState.narrativePanel.style.top = '';
+            effectApplied = true;
+            debug('Applied burning-effect, z-index set to: 35, top property reset');
+        }
+        
+        if ((panel.has_light_rays || panel.has_light_burst) && !effectApplied) {
+            AppState.narrativePanel.classList.add('light-rays');
+            // Explicitly ensure top property is not set inline
+            AppState.narrativePanel.style.top = '';
+            effectApplied = true;
+            debug('Applied light-rays, z-index set to: 35, top property reset');
+        }
+        
+        if (panel.has_door && !effectApplied) {
             AppState.narrativePanel.classList.add('door-effect');
+            // Explicitly ensure top property is not set inline
+            AppState.narrativePanel.style.top = '';
+            effectApplied = true;
+            debug('Applied door-effect, z-index set to: 35, top property reset');
         }
         
-        if (panel.epilogue) {
+        if (panel.epilogue && !effectApplied) {
             AppState.narrativePanel.classList.add('epilogue-panel');
+            // Explicitly ensure top property is not set inline
+            AppState.narrativePanel.style.top = '';
+            effectApplied = true;
+            debug('Applied epilogue-panel, z-index set to: 35, top property reset');
         }
         
         // Add a subtle animation to show the panel change
@@ -382,20 +428,32 @@ export function showPanel(panelIndex) {
         // Add visual feedback for disabled buttons
         AppState.prevPanelBtn.style.opacity = AppState.prevPanelBtn.disabled ? '0.5' : '1';
         AppState.nextPanelBtn.style.opacity = AppState.nextPanelBtn.disabled ? '0.5' : '1';
+        
+        // Ensure navigation buttons have proper z-index
+        const panelNavigation = document.querySelector('.panel-navigation');
+        if (panelNavigation) {
+            panelNavigation.style.zIndex = '40';
+            debug('Set panel navigation z-index to 40 to ensure buttons are clickable');
+        }
+        
+        // Explicitly set z-index on buttons as well
+        AppState.prevPanelBtn.style.zIndex = '40';
+        AppState.nextPanelBtn.style.zIndex = '40';
     }
     
     // Load and display assets for this panel
     loadPanelAssets(panel);
     
     // Fade out and remove the transition canvas after the new scene is ready
+    // Shorter timeout to ensure the fade clears before the burning effect settles
     setTimeout(() => {
         fadeCanvas.style.opacity = '0';
         setTimeout(() => {
             fadeCanvas.remove();
-        }, 500);
-    }, 100);
+        }, 300);
+    }, 200);
     
-    debug('Panel shown: ' + panel.title);
+    debug('Panel shown: ' + panel.title + ', Narrative panel display: ' + window.getComputedStyle(AppState.narrativePanel).display);
 }
 
 // Load and display assets for the current panel

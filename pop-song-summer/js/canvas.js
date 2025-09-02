@@ -1,6 +1,6 @@
 
 import { AppState } from './main.js';
-import { debug } from './utils.js';
+import { debug, debounce } from './utils.js';
 import { drawAudioVisualization } from './audio.js'; // Assuming audio.js exports this
 
 // Canvas functions
@@ -10,12 +10,19 @@ export function resizeCanvas() {
         return;
     }
     
-    AppState.sceneCanvas.width = window.innerWidth;
-    AppState.sceneCanvas.height = window.innerHeight;
+    const newWidth = window.innerWidth;
+    const newHeight = window.innerHeight;
     
-    // Re-render the scene
-    if (typeof drawScene === 'function') {
-        drawScene();
+    // Only resize if dimensions actually changed
+    if (AppState.sceneCanvas.width !== newWidth || AppState.sceneCanvas.height !== newHeight) {
+        AppState.sceneCanvas.width = newWidth;
+        AppState.sceneCanvas.height = newHeight;
+        debug('Canvas resized to ' + newWidth + 'x' + newHeight);
+        
+        // Re-render the scene
+        if (typeof drawScene === 'function') {
+            drawScene();
+        }
     }
 }
 
@@ -609,12 +616,17 @@ export function initCanvasScene() {
     
     let lastFrameTime = 0;
     function animate(timestamp) {
-        if (AppState.isPlaying || AppState.currentPanelAssets?.length > 0) {
-            const deltaTime = timestamp - lastFrameTime;
-            if (deltaTime > 16) { // Cap at ~60fps
-                drawScene();
-                lastFrameTime = timestamp;
+        if (!AppState.isPlaying && (!AppState.currentPanelAssets || AppState.currentPanelAssets.length === 0)) {
+            return; // Exit if idle
+        }
+        const deltaTime = timestamp - lastFrameTime;
+        if (deltaTime > 16) { // Cap at ~60fps
+            drawScene();
+            if (AppState.currentPanelAssets && AppState.currentPanelAssets.length > 0) {
+                AppState.currentPanelAssets = []; // Clear after draw
+                debug('Cleared currentPanelAssets after rendering');
             }
+            lastFrameTime = timestamp;
         }
         requestAnimationFrame(animate);
     }
@@ -623,7 +635,7 @@ export function initCanvasScene() {
     debug('Canvas scene initialized');
 }
 
-export function updateCanvasScene() {
+export const updateCanvasScene = debounce(function() {
     if (!AppState.ctx || !AppState.sceneCanvas || !AppState.chapters) {
         debug('Cannot update canvas scene: ctx, sceneCanvas, or chapters missing');
         return;
@@ -679,20 +691,64 @@ export function updateCanvasScene() {
             
             // Check if narrative panel is visible
             const narrativePanel = document.querySelector('.narrative-panel');
-            const isNarrativePanelVisible = narrativePanel &&
-                                           window.getComputedStyle(narrativePanel).display !== 'none';
+            const isNarrativePanelVisible = narrativePanel && window.getComputedStyle(narrativePanel).display !== 'none';
+            const zIndex = narrativePanel ? window.getComputedStyle(narrativePanel).zIndex : 'N/A';
+            const classes = narrativePanel ? narrativePanel.className : 'None';
+            const position = narrativePanel ? window.getComputedStyle(narrativePanel).position : 'N/A';
+            const top = narrativePanel ? window.getComputedStyle(narrativePanel).top : 'N/A';
+            debug('Rendering panel: ' + panel.title +
+                  ', Narrative panel z-index: ' + zIndex +
+                  ', Classes: ' + classes +
+                  ', Position: ' + position +
+                  ', Top: ' + top +
+                  ', Height: ' + (narrativePanel ? narrativePanel.offsetHeight : 'N/A'));
             
             // Reserve space for narrative panel - clip the canvas to avoid drawing in the panel area
             if (isNarrativePanelVisible) {
                 AppState.ctx.save();
                 
-                // Calculate the safe drawing area (bottom 70% of the screen)
-                const panelHeight = AppState.sceneCanvas.height * 0.7;
+                // Calculate the safe drawing area based on actual panel height with minimum value
+                const panelHeight = Math.max(
+                    Math.min(narrativePanel.offsetHeight || 0, AppState.sceneCanvas.height * 0.3),
+                    AppState.sceneCanvas.height * 0.1
+                ); // Min 10% to avoid zero
                 
-                // Create a clipping region for the bottom portion of the screen
-                AppState.ctx.beginPath();
-                AppState.ctx.rect(0, panelHeight, AppState.sceneCanvas.width, AppState.sceneCanvas.height - panelHeight);
-                AppState.ctx.clip();
+                // Get panel position information for better clipping decisions
+                const panelTop = parseInt(window.getComputedStyle(narrativePanel).top) || 0;
+                const hasSpecialEffect = narrativePanel.classList.contains('burning-effect') ||
+                                        narrativePanel.classList.contains('light-rays') ||
+                                        narrativePanel.classList.contains('door-effect') ||
+                                        narrativePanel.classList.contains('epilogue-panel');
+                
+                // Skip clipping for special effect panels that need to render over the entire canvas
+                const skipClipping =
+                    // Skip for burning panels unless burning-effect is properly applied
+                    (panel.title?.toUpperCase().includes('BURNING') && !narrativePanel.classList.contains('burning-effect')) ||
+                    // Skip for SHE ARRIVES/COMES panels unless light-rays is properly applied
+                    ((panel.title?.toUpperCase().includes('SHE ARRIVES') || panel.title?.toUpperCase().includes('SHE COMES')) &&
+                     !narrativePanel.classList.contains('light-rays')) ||
+                    // Skip for any panel with light effects unless properly applied
+                    ((panel.has_light_rays || panel.has_light_burst) && !narrativePanel.classList.contains('light-rays'));
+                
+                if (panelHeight > 0 && !skipClipping) {
+                    // For special effects, use a more generous clipping area
+                    if (hasSpecialEffect) {
+                        // Use bottom position for clipping instead of top
+                        const bottomPosition = AppState.sceneCanvas.height - panelHeight - 120; // 120px from bottom
+                        AppState.ctx.beginPath();
+                        AppState.ctx.rect(0, 0, AppState.sceneCanvas.width, bottomPosition);
+                        AppState.ctx.clip();
+                        debug('Applied special effect clipping with bottom position: ' + bottomPosition);
+                    } else {
+                        // Standard clipping for normal panels
+                        AppState.ctx.beginPath();
+                        AppState.ctx.rect(0, panelHeight, AppState.sceneCanvas.width, AppState.sceneCanvas.height - panelHeight);
+                        AppState.ctx.clip();
+                        debug('Applied standard clipping with panel height: ' + panelHeight);
+                    }
+                } else {
+                    debug('Skipped clipping for special effect panel: ' + panel.title);
+                }
             }
             
             // Use panel attributes for scene selection
@@ -716,10 +772,9 @@ export function updateCanvasScene() {
                 }
             } else if (panel.attributes?.includes('burning') || panel.title?.toUpperCase().includes('BURNING') || panel.title?.toUpperCase().includes('HOUSES')) {
                 try {
-                    // Use destination-over to ensure flames appear behind text
-                    if (isNarrativePanelVisible) {
-                        AppState.ctx.globalCompositeOperation = 'destination-over';
-                    }
+                    // Use source-over (default composite) for proper layering
+                    AppState.ctx.globalCompositeOperation = 'source-over';
+                    debug('Rendering panel: ' + panel.title + ', Narrative panel z-index: ' + (narrativePanel ? window.getComputedStyle(narrativePanel).zIndex : 'N/A'));
                     drawFunctions.drawBurningHouses();
                 } catch (error) {
                     debug(`Error in drawBurningHouses: ${error.message}`);
@@ -780,7 +835,7 @@ export function updateCanvasScene() {
         };
         drawScene();
     }
-}
+}, 100); // 100ms debounce
 
 export function createDefaultVisualization() {
     if (!AppState.ctx || !AppState.sceneCanvas) {

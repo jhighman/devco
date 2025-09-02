@@ -74,23 +74,49 @@ body {
     opacity: 1;
     transition: opacity 0.5s ease;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    display: block !important; /* Force display to be visible */
 }
 
 /* Enhanced styling for narrative panel with special effects */
 .narrative-panel.burning-effect {
-    background: rgba(0, 0, 0, 0.85);
+    z-index: 35 !important;
+    background: rgba(0, 0, 0, 0.9) !important;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
     border: 1px solid rgba(255, 87, 34, 0.3);
+    position: absolute; /* Keep absolute but don't change position */
+    /* No top: 0 to inherit original position */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .narrative-panel.light-rays {
+    z-index: 35 !important; /* Match burning-effect */
     background: rgba(0, 0, 0, 0.8);
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    position: absolute; /* Keep absolute but don't change position */
+    top: auto !important; /* Explicitly prevent top:0 */
+    bottom: 120px !important; /* Match original narrative-panel position */
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .narrative-panel.door-effect {
+    z-index: 35 !important; /* Match others */
     background: rgba(0, 0, 0, 0.8);
     border: 1px solid rgba(255, 193, 7, 0.3);
+    position: absolute; /* Keep absolute but don't change position */
+    /* No top: 0 to inherit original position */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.narrative-panel.epilogue-panel {
+    z-index: 35 !important; /* Match others */
+    position: absolute; /* Keep absolute but don't change position */
+    /* No top: 0 to inherit original position */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Add scrollbar styling for the narrative panel */
@@ -344,6 +370,8 @@ body {
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
+    position: relative;
+    z-index: 40 !important; /* Higher than narrative panel special effects (35) */
 }
 
 .panel-nav-button {
@@ -356,6 +384,7 @@ body {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    z-index: 40 !important; /* Ensure buttons are always clickable */
 }
 
 .panel-nav-button:hover {

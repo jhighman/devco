@@ -64,6 +64,8 @@ function initExperience() {
     AppState.nextPanelBtn = document.getElementById('next-panel') || throwError('Missing #next-panel');
     AppState.chapterNavigation = document.getElementById('chapter-navigation') || throwError('Missing #chapter-navigation');
     AppState.loadingIndicator = document.getElementById('loading') || throwError('Missing #loading');
+    
+    debug('Narrative panel initial state: display=' + window.getComputedStyle(AppState.narrativePanel).display + ', z-index=' + window.getComputedStyle(AppState.narrativePanel).zIndex);
 
     AppState.loadingIndicator.style.display = 'flex';
 
@@ -180,13 +182,14 @@ function setupDebugToggle() {
 
 // Reset panel styling without clearing content
 export function clearPanel() {
-    debug('Resetting panel styling');
+    debug('Clearing panel content');
     
     if (AppState.narrativePanel && AppState.panelTitle && AppState.panelText) {
-        // Don't clear content here - let showPanel handle content
+        AppState.panelTitle.textContent = '';
+        AppState.panelText.textContent = '';
         
         // Reset styling
-        AppState.narrativePanel.style.zIndex = '25'; // Higher than chapter card (z-index: 20)
+        AppState.narrativePanel.style.zIndex = '25'; // Default, burning will override
         AppState.narrativePanel.style.background = 'rgba(0, 0, 0, 0.7)';
         AppState.narrativePanel.style.backdropFilter = 'blur(10px)';
         AppState.narrativePanel.style.display = 'block'; // Ensure panel is visible
@@ -217,8 +220,7 @@ export function clearPanel() {
 export const updateChapterCard = debounce(function() {
     debug('Updating chapter card');
     
-    // Clear panel content first
-    clearPanel();
+    // Don't clear panel content here - it will wipe out showPanel's work
     
     const chapterTitle = document.getElementById('chapter-title') || throwError('Missing #chapter-title');
     const chapterCardImage = document.getElementById('chapter-card-image') || throwError('Missing #chapter-card-image');
