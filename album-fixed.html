@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop Song Summer - Simplified Album Experience</title>
+    <style>
+        /* Base styles */
+        :root {
+            --velvet-red: #800020;
+            --gold-thread: #FFC107;
+            --ash-gray: #4A4A4A;
+            --sodium-amber: #FF9800;
+            --horizon-orange: #FF5722;
+            --desert-blue: #1A2A44;
+            --night-black: #0a0a0a;
+            --deep-purple: #2D0A31;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+            background: var(--night-black);
+            color: #eaeaea;
+            overflow: hidden;
+        }
+        
+        /* Full-screen experience container */
+        .experience-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Canvas scene */
+        #scene-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        /* SVG overlay */
+        .svg-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+            z-index: 10;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .svg-overlay:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        
+        /* Narrative panel */
+        .narrative-panel {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            z-index: 20;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+        
+        .panel-title {
+            font-size: 1.5rem;
+            color: var(--gold-thread);
+            margin-bottom: 10px;
+        }
+        
+        .panel-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .panel-quote {
+            font-style: italic;
+            color: var(--sodium-amber);
+            border-left: 3px solid var(--horizon-orange);
+            padding-left: 15px;
+            margin: 15px 0;
+        }
+        
+        /* Audio player */
+        .audio-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 800px;
+            display: flex;
+            align-items: center;
+            background: rgba(45, 10, 49, 0.7);
+            backdrop-filter: blur(5px);
+            border-radius: 50px;
+            padding: 10px 20px;
+            z-index: 30;
+        }
+        
+        .play-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--horizon-orange);
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-right: 15px;
+            transition: background 0.3s ease;
+        }
+        
+        .play-button:hover {
+            background: var(--gold-thread);
+        }
+        
+        .progress-container {
+            flex-grow: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--gold-thread);
+            border-radius: 3px;
+            width: 0%;
+        }
+        
+        .time-display {
+            margin-left: 15px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            min-width: 80px;
+            text-align: right;
+        }
+        
+        /* Chapter navigation */
+        .chapter-navigation {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 25;
+        }
+        
+        .chapter-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .chapter-dot.active {
+            background: var(--gold-thread);
+            transform: scale(1.2);
+        }
+        
+        .chapter-dot:hover {
+            background: var(--sodium-amber);
+        }
+        
+        /* Panel navigation */
+        .panel-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .panel-nav-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .panel-nav-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Debug panel */
+        .debug-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 100;
+            font-size: 12px;
+            max-width: 300px;
+            max-height: 200px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="experience-container">
+        <!-- Main canvas for scene rendering -->
+        <canvas id="scene-canvas"></canvas>
+        
+        <!-- SVG overlay (insignia) -->
+        <div class="svg-overlay glow">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="30" fill="#800020" />
+                <circle cx="50" cy="50" r="20" fill="#FFC107" />
+            </svg>
+        </div>
+        
+        <!-- Narrative panel -->
+        <div class="narrative-panel" id="narrative-panel">
+            <h2 class="panel-title" id="panel-title">VELVET CURTAIN</h2>
+            <p class="panel-text" id="panel-text">And tucked between two shuttered bodegas is a velvet curtain. No sign, no door, just this blood-colored fabric swaying like it's breathing. Behind it, bass leaks out in subsonic pulses. It's the kind of bass that rewrites your heartbeat whether you want it or not.
+
+I push through.</p>
+            <div class="panel-navigation">
+                <button class="panel-nav-button" id="prev-panel">Previous</button>
+                <button class="panel-nav-button" id="next-panel">Next</button>
+            </div>
+        </div>
+        
+        <!-- Chapter navigation dots -->
+        <div class="chapter-navigation" id="chapter-navigation">
+            <!-- Will be populated by JavaScript -->
+        </div>
+        
+        <!-- Audio player controls -->
+        <div class="audio-controls">
+            <button class="play-button" id="play-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </button>
+            <div class="progress-container" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="time-display" id="time-display">0:00 / 8:15</div>
+        </div>
+        
+        <!-- Hidden audio element -->
+        <audio id="audio-player" preload="auto"></audio>
+        
+        <!-- Debug panel -->
+        <div class="debug-panel" id="debug-panel"></div>
+    </div>
+
+    <script>
+        // Debug function
+        function debug(message) {
+            const debugPanel = document.getElementById('debug-panel');
+            const timestamp = new Date().toLocaleTimeString();
+            debugPanel.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            debugPanel.scrollTop = debugPanel.scrollHeight;
+            console.log(message);
+        }
+
+        // Chapter data
+        const chapters = [
+            {
+                number: 1,
+                title: "Velvet Dancers",
+                music_file: "music/pss_ch01_velvet-dancers.mp3",
+                panels: [
+                    {
+                        title: "VELVET CURTAIN",
+                        text: "And tucked between two shuttered bodegas is a velvet curtain. No sign, no door, just this blood-colored fabric swaying like it's breathing. Behind it, bass leaks out in subsonic pulses. It's the kind of bass that rewrites your heartbeat whether you want it or not.\n\nI push through."
+                    },
+                    {
+                        title: "CLUB INTERIOR",
+                        text: "The air inside is thick, like the club is running on oxygen siphoned from another dimension. Lights move in lazy strobes, purple and gold, spilling over a floor that's already slick with sweat. There's no bar, no menu, just shadows that sell you what you want if they decide you're worth the bother.\n\nAnd then there are the dancers."
+                    },
+                    {
+                        title: "VELVET DANCERS",
+                        text: "Velvet on their skin, velvet in their movements, velvet like the smooth part of a blade before the edge cuts. They move as if they're running a program: flawless, slow, then impossibly fast. Every single one of them wears the same patch stitched near the shoulder — a circle with sunrays stitched in gold thread. The insignia.\n\nThey don't look at you. They look through you, like you're another light on the floor, one more pattern in the algorithm."
+                    }
+                ]
+            },
+            {
+                number: 2,
+                title: "Insignia of the Sun",
+                music_file: "music/pss_ch02_insignia-of-the-sun.mp3",
+                panels: [
+                    {
+                        title: "SUN INSIGNIA",
+                        text: "The woman in red grabs my wrist, turns my palm up. She's holding something — a patch, identical to the ones on the dancers. The sun insignia.\n\n\"Put it on,\" she says.\n\n\"What happens if I do?\"\n\nHer smile widens. \"You'll see her. You'll be part of the summer.\""
+                    },
+                    {
+                        title: "THE CHOICE",
+                        text: "I look at the patch. It's warm in my hand, like it's been sitting in the sun. The gold thread catches light that isn't there.",
+                        quote: "She comes, she comes...",
+                        text_after: "I should run. I know I should run. But there's something about the way the dancers move, something about the promise of seeing her..."
+                    }
+                ]
+            }
+        ];
+        
+        // Current state
+        let currentChapter = 0;
+        let currentPanel = 0;
+        let isPlaying = false;
+        
+        // DOM elements
+        const sceneCanvas = document.getElementById('scene-canvas');
+        const ctx = sceneCanvas.getContext('2d');
+        const audioPlayer = document.getElementById('audio-player');
+        const playButton = document.getElementById('play-button');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
+        const timeDisplay = document.getElementById('time-display');
+        const narrativePanel = document.getElementById('narrative-panel');
+        const panelTitle = document.getElementById('panel-title');
+        const panelText = document.getElementById('panel-text');
+        const prevPanelBtn = document.getElementById('prev-panel');
+        const nextPanelBtn = document.getElementById('next-panel');
+        const chapterNavigation = document.getElementById('chapter-navigation');
+        
+        // Initialize the experience
+        window.addEventListener('DOMContentLoaded', initExperience);
+        
+        function initExperience() {
+            debug('Initializing experience...');
+            
+            try {
+                // Initialize canvas scene
+                initCanvasScene();
+                
+                // Set canvas size
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+                
+                // Setup audio player
+                setupAudioPlayer();
+                
+                // Setup chapter navigation
+                setupChapterNavigation();
+                
+                // Show first panel
+                showPanel(currentPanel);
+                
+                debug('Experience initialization complete');
+                
+            } catch (error) {
+                debug('Error during experience initialization: ' + error.message);
+            }
+        }
+        
+        function resizeCanvas() {
+            sceneCanvas.width = window.innerWidth;
+            sceneCanvas.height = window.innerHeight;
+            
+            // Re-render the scene
+            if (window.drawScene) {
+                drawScene();
+            }
+        }
+        
+        function initCanvasScene() {
+            debug('Initializing canvas scene...');
+            
+            // Set up the canvas
+            sceneCanvas.width = window.innerWidth;
+            sceneCanvas.height = window.innerHeight;
+            
+            // Create the main drawScene function
+            window.drawScene = function() {
+                // Clear canvas
+                ctx.clearRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                
+                // Draw a simple gradient background
+                const gradient = ctx.createLinearGradient(0, 0, 0, sceneCanvas.height);
+                gradient.addColorStop(0, "#0b0b12");
+                gradient.addColorStop(0.55, "#0a0910");
+                gradient.addColorStop(1, "#05050a");
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                
+                // Draw a simple vignette
+                const r = Math.max(sceneCanvas.width, sceneCanvas.height) * 0.95;
+                const vignette = ctx.createRadialGradient(
+                    sceneCanvas.width/2, sceneCanvas.height/2, r * 0.55,
+                    sceneCanvas.width/2, sceneCanvas.height/2, r
+                );
+                vignette.addColorStop(0, "rgba(0,0,0,0)");
+                vignette.addColorStop(1, "rgba(0,0,0,0.75)");
+                ctx.fillStyle = vignette;
+                ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+            };
+            
+            // Initial render
+            drawScene();
+            
+            // Set up animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                drawScene();
+            }
+            animate();
+            
+            debug('Canvas scene initialized');
+        }
+        
+        function setupAudioPlayer() {
+            debug('Setting up audio player...');
+            
+            // Set initial audio source
+            audioPlayer.src = chapters[currentChapter].music_file;
+            debug('Audio source set to: ' + audioPlayer.src);
+            
+            // Play/pause button
+            playButton.addEventListener('click', togglePlay);
+            
+            // Progress bar
+            progressContainer.addEventListener('click', seek);
+            
+            // Update progress
+            audioPlayer.addEventListener('timeupdate', updateProgress);
+            
+            // When audio ends
+            audioPlayer.addEventListener('ended', () => {
+                debug('Audio ended');
+                isPlaying = false;
+                updatePlayButton();
+            });
+            
+            // Handle errors
+            audioPlayer.addEventListener('error', (e) => {
+                debug('Audio error: ' + (e.message || 'Unknown error'));
+                isPlaying = false;
+                updatePlayButton();
+            });
+            
+            debug('Audio player setup complete');
+        }
+        
+        function togglePlay() {
+            debug('Toggle play button clicked');
+            
+            try {
+                if (!audioPlayer) {
+                    debug('Audio player not found');
+                    return;
+                }
+                
+                debug('Audio player current source: ' + audioPlayer.src);
+                debug('Audio player ready state: ' + audioPlayer.readyState);
+                
+                if (isPlaying) {
+                    debug('Pausing audio');
+                    audioPlayer.pause();
+                    isPlaying = false;
+                } else {
+                    debug('Playing audio');
+                    
+                    // Make sure the audio element has a valid source
+                    if (!audioPlayer.src || audioPlayer.src === '') {
+                        debug('Setting audio source');
+                        audioPlayer.src = chapters[currentChapter].music_file;
+                    }
+                    
+                    debug('Attempting to play audio from: ' + audioPlayer.src);
+                    
+                    // Simple play
+                    audioPlayer.play()
+                        .then(() => {
+                            debug('Audio playback started successfully');
+                            isPlaying = true;
+                            updatePlayButton();
+                        })
+                        .catch(error => {
+                            debug('Error playing audio: ' + error.message);
+                        });
+                    
+                    return; // Return early to avoid updating button before promise resolves
+                }
+                
+                // Update the button appearance
+                updatePlayButton();
+                
+            } catch (error) {
+                debug('Error in togglePlay: ' + error.message);
+            }
+        }
+        
+        function updatePlayButton() {
+            playButton.innerHTML = isPlaying 
+                ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'
+                : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+        }
+        
+        function seek(e) {
+            const percent = e.offsetX / progressContainer.offsetWidth;
+            audioPlayer.currentTime = percent * audioPlayer.duration;
+            progressBar.style.width = `${percent * 100}%`;
+        }
+        
+        function updateProgress() {
+            const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            progressBar.style.width = `${percent}%`;
+            
+            // Update time display
+            const currentMinutes = Math.floor(audioPlayer.currentTime / 60);
+            const currentSeconds = Math.floor(audioPlayer.currentTime % 60);
+            const durationMinutes = Math.floor(audioPlayer.duration / 60) || 0;
+            const durationSeconds = Math.floor(audioPlayer.duration % 60) || 0;
+            
+            timeDisplay.textContent = `${currentMinutes}:${currentSeconds.toString().padStart(2, '0')} / ${durationMinutes}:${durationSeconds.toString().padStart(2, '0')}`;
+        }
+        
+        function setupChapterNavigation() {
+            debug('Setting up chapter navigation with ' + chapters.length + ' chapters');
+            
+            // Create chapter dots
+            for (let i = 0; i < chapters.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = `chapter-dot ${i === currentChapter ? 'active' : ''}`;
+                dot.setAttribute('data-chapter', i);
+                dot.addEventListener('click', () => {
+                    debug('Chapter dot ' + i + ' clicked');
+                    changeChapter(i);
+                });
+                chapterNavigation.appendChild(dot);
+            }
+            
+            // Panel navigation
+            prevPanelBtn.addEventListener('click', () => {
+                debug('Previous panel button clicked');
+                if (currentPanel > 0) {
+                    showPanel(currentPanel - 1);
+                } else {
+                    debug('Already at first panel');
+                }
+            });
+            
+            nextPanelBtn.addEventListener('click', () => {
+                debug('Next panel button clicked');
+                const currentChapterPanels = chapters[currentChapter].panels;
+                if (currentPanel < currentChapterPanels.length - 1) {
+                    showPanel(currentPanel + 1);
+                } else {
+                    debug('Already at last panel');
+                }
+            });
+        }
+        
+        function changeChapter(chapterIndex) {
+            if (chapterIndex === currentChapter) return;
+            
+            debug('Changing to chapter ' + chapterIndex + ': ' + chapters[chapterIndex].title);
+            
+            // Pause current audio
+            if (isPlaying) {
+                audioPlayer.pause();
+                isPlaying = false;
+                updatePlayButton();
+            }
+            
+            // Update current chapter
+            currentChapter = chapterIndex;
+            
+            // Update chapter dots
+            const dots = chapterNavigation.querySelectorAll('.chapter-dot');
+            dots.forEach((dot, i) => {
+                dot.className = `chapter-dot ${i === currentChapter ? 'active' : ''}`;
+            });
+            
+            // Update audio source
+            audioPlayer.src = chapters[currentChapter].music_file;
+            debug('Audio source updated to: ' + audioPlayer.src);
+            
+            // Reset panel
+            currentPanel = 0;
+            showPanel(currentPanel);
+            
+            debug('Chapter change complete');
+        }
+        
+        function showPanel(panelIndex) {
+            debug('Showing panel ' + panelIndex);
+            
+            const currentChapterPanels = chapters[currentChapter].panels;
+            
+            // Validate panel index
+            if (panelIndex < 0 || panelIndex >= currentChapterPanels.length) {
+                debug('Invalid panel index: ' + panelIndex);
+                return;
+            }
+            
+            currentPanel = panelIndex;
+            const panel = currentChapterPanels[panelIndex];
+            
+            // Update panel content
+            panelTitle.textContent = panel.title;
+            
+            let content = panel.text || '';
+            if (panel.quote) {
+                content += `<div class="panel-quote">${panel.quote}</div>`;
+            }
+            if (panel.text_after) {
+                content += panel.text_after;
+            }
+            
+            panelText.innerHTML = content;
+            
+            // Update navigation buttons
+            prevPanelBtn.disabled = currentPanel <= 0;
+            nextPanelBtn.disabled = currentPanel >= currentChapterPanels.length - 1;
+            
+            debug('Panel shown: ' + panel.title);
+        }
+    </script>
+</body>
+</html>

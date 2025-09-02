@@ -1,0 +1,258 @@
+# Pop Song Summer - Assets Mapping
+# This file maps assets to chapters and music files
+
+# Global assets used across multiple chapters
+global_assets:
+  insignia_of_the_sun:
+    title: "Insignia of the Sun (Primary Motif)"
+    description: "Macro close-up of a velvet patch stitched with a gold-thread sunburst (12 rays) catching light"
+    svg: "assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg"
+    png: "assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-4k-rgb-v001-20250831-jh-final.png"
+    canvas: "assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-4k-canvas-v001-20250831-jh-final.html"
+    metadata: "assets/images/pss/pss-chall-insignia-of-the-sun-motif-metadata-v001-20250831-jh-final.json"
+    used_in_chapters: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+  woman_in_red:
+    title: "Woman in Red (Archetype)"
+    description: "Portrait: woman in a red velvet dress/coat, sun insignia at sleeve"
+    svg: "assets/images/pss/pss-chall-woman-in-red-portrait-ar4x5-svg-v001-20250831-jh-final.svg"
+    png: "assets/images/pss/pss-chall-woman-in-red-portrait-ar4x5-4k-rgb-v001-20250831-jh-final.png"
+    canvas: "assets/images/pss/pss-chall-woman-in-red-portrait-ar4x5-4k-canvas-v001-20250831-jh-final.html"
+    metadata: "assets/images/pss/pss-chall-woman-in-red-metadata-v001-20250831-jh-final.json"
+    used_in_chapters: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+  patch_over_heart:
+    title: "Patch Over Heart (Receipt Kept)"
+    description: "Close shot: sun patch pinned over the heart"
+    svg: "assets/images/pss/pss-patch-over-heart-receipt-kept-scene-ar16x9-svg-v001-20250831-jh-final.svg"
+    png: "assets/images/pss/pss-patch-over-heart-receipt-kept-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png"
+    canvas: "assets/images/pss/pss-patch-over-heart-receipt-kept-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+    metadata: "assets/images/pss/pss-patch-over-heart-receipt-kept-metadata-v001-20250831-jh-final.json"
+    used_in_chapters: [2, 3, 4]
+
+  twelve_doors_diagram:
+    title: "Twelve Doors Diagram (Receipt)"
+    description: "Minimal graphic motif: clean circle with 12 notches"
+    svg: "assets/images/pss/pss-twelve-doors-diagram-receipt-scene-ar16x9-svg-v001-20250831-jh-final.svg"
+    png: "assets/images/pss/pss-twelve-doors-diagram-receipt-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png"
+    canvas: "assets/images/pss/pss-twelve-doors-diagram-receipt-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+    metadata: "assets/images/pss/pss-twelve-doors-diagram-receipt-metadata-v001-20250831-jh-final.json"
+    used_in_chapters: [2, 4, 5]
+
+# Chapter-specific assets and music files
+chapters:
+  - number: 1
+    title: "Velvet Dancers"
+    html_file: "chapter1.html"
+    music_file: "music/pss_ch01_velvet-dancers.mp3"
+    assets:
+      - title: "The Velvet Curtain"
+        description: "Anonymous city alley between shuttered bodegas; a blood-red velvet curtain breathes"
+        svg: "assets/images/pss/pss-ch01-velvet-curtain-scene-ar16x9-svg-v001-20250831-jh-final.svg"
+        png: "assets/images/pss/pss-ch01-velvet-curtain-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png"
+        canvas: "assets/images/pss/pss-ch01-velvet-curtain-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+        metadata: "assets/images/pss/pss-ch01-velvet-curtain-metadata-v001-20250831-jh-final.json"
+
+      - title: "Back Room: Church of Light"
+        description: "Disco-temple mood: columns of light, water-ripple floor"
+        svg: "assets/images/pss/pss-ch01-back-room-church-of-light-scene-ar16x9-svg-v001-20250831-jh-final.svg"
+        png: "assets/images/pss/pss-ch01-back-room-church-of-light-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png"
+        canvas: "assets/images/pss/pss-ch01-back-room-church-of-light-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+        metadata: "assets/images/pss/pss-ch01-back-room-church-of-light-metadata-v001-20250831-jh-final.json"
+
+      - title: "Hall of Mirrors"
+        description: "Tight corridor of warped mirrors showing the narrator as different ages/selves"
+        svg: "assets/images/pss/pss-ch01-hall-of-mirrors-scene-ar16x9-svg-v001-20250831-jh-final.svg"
+        png: "assets/images/pss/pss-ch01-hall-of-mirrors-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png"
+        canvas: "assets/images/pss/pss-ch01-hall-of-mirrors-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+        metadata: "assets/images/pss/pss-ch01-hall-of-mirrors-metadata-v001-20250831-jh-final.json"
+
+  - number: 2
+    title: "Insignia of the Sun"
+    html_file: "chapter2.html"
+    music_file: "music/pss_ch02_insignia-of-the-sun.mp3"
+    assets:
+      # Uses global assets
+
+  - number: 3
+    title: "Burning Houses (in the Distance)"
+    html_file: "chapter3.html"
+    music_file: "music/pss_ch03_burning-houses-in-the-distance.mp3"
+    assets:
+      - title: "Burning Houses on the Horizon"
+        description: "Distant suburban ridge ablaze under orange sky"
+        svg: "assets/images/pss/pss-ch03-burning-houses-horizon-panorama-ar21x9-svg-v001-20250831-jh-final.svg"
+        png: "assets/images/pss/pss-ch03-burning-houses-horizon-panorama-ar21x9-6k-rgb-v001-20250831-jh-final.png"
+        canvas: "assets/images/pss/pss-ch03-burning-houses-horizon-panorama-ar21x9-6k-canvas-v001-20250831-jh-final.html"
+        metadata: "assets/images/pss/pss-ch03-burning-houses-horizon-metadata-v001-20250831-jh-final.json"
+
+      - title: "Motel Neon Exodus"
+        description: "Roadside motel lot; neon OPEN, evac cars idling"
+        svg: "assets/images/pss/pss-ch06-motel-neon-exodus-scene-ar16x9-svg-v001-20250831-jh-final.svg"
+        png: "assets/images/pss/pss-ch06-motel-neon-exodus-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png"
+        canvas: "assets/images/pss/pss-ch06-motel-neon-exodus-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+        metadata: "assets/images/pss/pss-ch06-motel-neon-exodus-metadata-v001-20250831-jh-final.json"
+
+      - title: "Diner: Flo & the Refrain"
+        description: "Retro diner interior; pancakes + coffee, waitress FLO"
+        svg: "assets/images/pss/pss-ch07-diner-flo-and-the-refrain-scene-ar16x9-svg-v001-20250831-jh-final.svg"
+        png: "assets/images/pss/pss-ch07-diner-flo-and-the-refrain-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png"
+        canvas: "assets/images/pss/pss-ch07-diner-flo-and-the-refrain-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+        metadata: "assets/images/pss/pss-ch07-diner-flo-and-the-refrain-metadata-v001-20250831-jh-final.json"
+
+      - title: "Roller Rink Shelter"
+        description: "Rink as shelter: cots on the floor, kids on rental skates weaving between"
+        svg: "assets/images/pss/pss-ch08-roller-rink-shelter-scene-ar16x9-svg-v001-20250831-jh-final.svg"
+        png: "assets/images/pss/pss-ch08-roller-rink-shelter-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png"
+        canvas: "assets/images/pss/pss-ch08-roller-rink-shelter-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+        metadata: "assets/images/pss/pss-ch08-roller-rink-shelter-metadata-v001-20250831-jh-final.json"
+
+      - title: "Airy Radio Chorus (Car Dash)"
+        description: "Vintage-modern car dash/radio glowing; waveform soft"
+        svg: "assets/images/pss/pss-airy-radio-chorus-car-dash-scene-ar16x9-svg-v001-20250831-jh-final.svg"
+        png: "assets/images/pss/pss-airy-radio-chorus-car-dash-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png"
+        canvas: "assets/images/pss/pss-airy-radio-chorus-car-dash-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+
+  - number: 4
+    title: "On the Corner, Reading Poetry"
+    html_file: "chapter4.html"
+    music_file: "music/pss_ch04_on-the-corner-reading-poetry.mp3"
+    assets:
+      - title: "The Corner: Chalk Sun & Crate"
+        description: "City corner; chalk circle with 12 rays, a milk crate 'stage'"
+        svg: "assets/images/pss/pss-ch10-the-corner-chalk-sun-and-crate-scene-ar16x9-svg-v001-20250831-jh-final.svg"
+        png: "assets/images/pss/pss-ch10-the-corner-chalk-sun-and-crate-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png"
+        canvas: "assets/images/pss/pss-ch10-the-corner-chalk-sun-and-crate-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+        metadata: "assets/images/pss/pss-ch10-the-corner-chalk-sun-and-crate-metadata-v001-20250831-jh-final.json"
+
+      - title: "Oranges at the Perimeter"
+        description: "Overhead still life: spilled oranges like small suns stopping at the chalk circle edge"
+        svg: "assets/images/pss/pss-oranges-at-the-perimeter-scene-ar16x9-svg-v001-20250831-jh-final.svg"
+        png: "assets/images/pss/pss-oranges-at-the-perimeter-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png"
+        canvas: "assets/images/pss/pss-oranges-at-the-perimeter-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+        metadata: "assets/images/pss/pss-oranges-at-the-perimeter-metadata-v001-20250831-jh-final.json"
+
+  - number: 5
+    title: "A Blind Man Singing"
+    html_file: "chapter5.html"
+    music_file: "music/pss_ch05_a-blind-man-singing.mp3"
+    assets:
+      - title: "Blind Man Singing"
+        description: "Street or bridge scene; blind singer on a milk crate, cane nearby"
+        svg: "assets/images/pss/pss-ch05-blind-man-singing-scene-ar16x9-svg-v001-20250831-jh-final.svg"
+        png: "assets/images/pss/pss-ch05-blind-man-singing-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png"
+        canvas: "assets/images/pss/pss-ch05-blind-man-singing-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+        metadata: "assets/images/pss/pss-ch05-blind-man-singing-metadata-v001-20250831-jh-final.json"
+
+      - title: "Bridges — Exodus Chorus"
+        description: "Night bridge full of pedestrians + cars moving in rhythm"
+        svg: "assets/images/pss/pss-ch09-bridges-exodus-chorus-panorama-ar21x9-svg-v001-20250831-jh-final.svg"
+        png: "assets/images/pss/pss-ch09-bridges-exodus-chorus-panorama-ar21x9-6k-rgb-v001-20250831-jh-final.png"
+        canvas: "assets/images/pss/pss-ch09-bridges-exodus-chorus-panorama-ar21x9-6k-canvas-v001-20250831-jh-final.html"
+        metadata: "assets/images/pss/pss-ch09-bridges-exodus-chorus-metadata-v001-20250831-jh-final.json"
+
+      - title: "Sunroom Radio (Pirate Studio)"
+        description: "Tiny upstairs studio above pawn-shop neon"
+        svg: "assets/images/pss/pss-sunroom-radio-pirate-studio-scene-ar16x9-svg-v001-20250831-jh-final.svg"
+        png: "assets/images/pss/pss-sunroom-radio-pirate-studio-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png"
+        canvas: "assets/images/pss/pss-sunroom-radio-pirate-studio-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+        metadata: "assets/images/pss/pss-sunroom-radio-pirate-studio-metadata-v001-20250831-jh-final.json"
+
+      - title: "Song Header — A Blind Man Singing"
+        description: "3:1 header: warm spotlight silhouette with cane; voice arcs; faint sun-insignia halo; bottom fade"
+        svg: "assets/images/pss/pss-a-blind-man-singing-song-header-ar3x1-svg-v001-20250901-jh-final.svg"
+        png: "assets/images/pss/pss-a-blind-man-singing-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png"
+        canvas: "assets/images/pss/pss-a-blind-man-singing-song-header-ar3x1-3k-canvas-v001-20250901-jh-final.html"
+        metadata: "assets/images/pss/pss-a-blind-man-singing-song-header-metadata-v001-20250901-jh-final.json"
+
+  - number: 6
+    title: "Out to the Other Side"
+    html_file: "chapter6.html"
+    music_file: "music/pss_ch06_out-to-the-other-side.mp3"
+    assets:
+      # Uses global assets and some assets from other chapters
+      - title: "Song Header — Out to the Other Side"
+        description: "3:1 header: night-to-dawn highway to vanishing point; twin light trails; subtle sun-insignia; bottom fade"
+        svg: "assets/images/pss/pss-out-to-the-other-side-song-header-ar3x1-svg-v001-20250901-jh-final.svg"
+        png: "assets/images/pss/pss-out-to-the-other-side-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png"
+        canvas: "assets/images/pss/pss-out-to-the-other-side-song-header-ar3x1-3k-canvas-v001-20250901-jh-final.html"
+        metadata: "assets/images/pss/pss-out-to-the-other-side-song-header-metadata-v001-20250901-jh-final.json"
+
+  - number: 7
+    title: "Second Lover, Over and Under"
+    html_file: "chapter7.html"
+    music_file: "music/pss_ch07_second-lover-over-and-under.mp3"
+    assets:
+      - title: "Song Header — Second Lover, Over and Under"
+        description: "3:1 header: interlaced overpass/underpass, warm & cool light trails crossing, sun-insignia marker, bottom fade"
+        svg: "assets/images/pss/pss-second-lover-over-and-under-song-header-ar3x1-svg-v001-20250901-jh-final.svg"
+        png: "assets/images/pss/pss-second-lover-over-and-under-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png"
+        canvas: "assets/images/pss/pss-second-lover-over-and-under-song-header-ar3x1-3k-canvas-v001-20250901-jh-final.html"
+        metadata: "assets/images/pss/pss-second-lover-over-and-under-song-header-metadata-v001-20250901-jh-final.json"
+
+  - number: 8
+    title: "1985 (Disco Time Machine)"
+    html_file: "chapter8.html"
+    music_file: "music/pss_ch08_1985-disco-time-machine.mp3"
+    assets:
+      - title: "Heliograph: Storage Unit Ritual"
+        description: "Storage unit interior; 12 red candles in a circle"
+        svg: "assets/images/pss/pss-ch11-heliograph-storage-unit-ritual-scene-ar16x9-svg-v001-20250831-jh-final.svg"
+        png: "assets/images/pss/pss-ch11-heliograph-storage-unit-ritual-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png"
+        canvas: "assets/images/pss/pss-ch11-heliograph-storage-unit-ritual-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+        metadata: "assets/images/pss/pss-ch11-heliograph-storage-unit-ritual-metadata-v001-20250831-jh-final.json"
+
+      - title: "Song Header — 1985 (Disco Time Machine)"
+        description: "3:1 header: neon synth sky, perspective grid, glowing disco ball + time-ring, small sun-insignia glint, bottom fade"
+        svg: "assets/images/pss/pss-1985-disco-time-machine-song-header-ar3x1-svg-v001-20250901-jh-final.svg"
+        png: "assets/images/pss/pss-1985-disco-time-machine-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png"
+        canvas: "assets/images/pss/pss-1985-disco-time-machine-song-header-ar3x1-3k-canvas-v001-20250901-jh-final.html"
+        metadata: "assets/images/pss/pss-1985-disco-time-machine-song-header-metadata-v001-20250901-jh-final.json"
+
+  - number: 9
+    title: "Shadow Drifter"
+    html_file: "chapter9.html"
+    music_file: "music/pss_ch09_shadow-drifter.mp3"
+    assets:
+      - title: "Song Header — Shadow Drifter"
+        description: "3:1 header: warm backlight, elongated approaching shadow, rotated shoeprints, faint sun-insignia etched, bottom fade"
+        svg: "assets/images/pss/pss-shadow-drifter-song-header-ar3x1-svg-v001-20250901-jh-final.svg"
+        png: "assets/images/pss/pss-shadow-drifter-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png"
+        canvas: "assets/images/pss/pss-shadow-drifter-song-header-ar3x1-3k-canvas-v001-20250901-jh-final.html"
+        metadata: "assets/images/pss/pss-shadow-drifter-song-header-metadata-v001-20250901-jh-final.json"
+
+  - number: 10
+    title: "The End of Everything"
+    html_file: "chapter10.html"
+    music_file: "music/pss_ch10_the-end-of-everything.mp3"
+    assets:
+      - title: "Song Header — The End of Everything"
+        description: "3:1 header: dusk-to-night gradient, low city silhouettes, ember lights, jagged ground crack, eclipsed sun-insignia, bottom fade"
+        svg: "assets/images/pss/pss-the-end-of-everything-song-header-ar3x1-svg-v001-20250901-jh-final.svg"
+        png: "assets/images/pss/pss-the-end-of-everything-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png"
+        canvas: "assets/images/pss/pss-the-end-of-everything-song-header-ar3x1-3k-canvas-v001-20250901-jh-final.html"
+        metadata: "assets/images/pss/pss-the-end-of-everything-song-header-metadata-v001-20250901-jh-final.json"
+
+# Style guide for consistent visual elements
+style_guide:
+  palette:
+    - velvet_red: "#800020"
+    - gold_thread: "#FFC107"
+    - ash_gray: "#4A4A4A"
+    - sodium_amber: "#FF9800"
+    - disco_pastels: ["#FF00FF", "#00FFFF", "#FFFF00"]
+    - horizon_orange: "#FF5722"
+    - desert_blue: "#1A2A44"
+
+  textures:
+    - velvet
+    - chalk_dust
+    - scorched_concrete
+    - analog_tape_grain
+    - neon_bloom
+
+  glyph:
+    - 12_ray_sun: "Consistent across contexts (patch, chalk, brand, UI motif)"
+
+  light_language:
+    - sound_as_light: "Sound depicted as light (faint halos, lines, ripples)"

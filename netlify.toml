@@ -1,0 +1,30 @@
+[build]
+  # Build command to process Tailwind CSS and install dependencies
+  command = "npm run build && cd pop-song-summer && npm install"
+  # Publish the entire project to maintain directory structure
+  publish = "."
+  # Base directory where build command is run
+  base = "."
+
+# Handle ES6 modules correctly
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Content-Type = "text/javascript"
+
+# Redirect /pop-song-summer to the Pop Song Summer experience
+[[redirects]]
+  from = "/pop-song-summer"
+  to = "/pop-song-summer/index.html"
+  status = 200
+
+# Ensure proper handling of assets and music paths
+[[redirects]]
+  from = "/assets/*"
+  to = "/assets/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/music/*"
+  to = "/music/:splat"
+  status = 200

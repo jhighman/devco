@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop Song Summer - Simple Album Experience</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #eaeaea;
+            overflow: hidden;
+        }
+        
+        .experience-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        #scene-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .narrative-panel {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            z-index: 20;
+        }
+        
+        .panel-title {
+            font-size: 1.5rem;
+            color: #FFC107;
+            margin-bottom: 10px;
+        }
+        
+        .audio-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 800px;
+            display: flex;
+            align-items: center;
+            background: rgba(45, 10, 49, 0.7);
+            border-radius: 50px;
+            padding: 10px 20px;
+            z-index: 30;
+        }
+        
+        .play-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #FF5722;
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+        
+        .play-button:hover {
+            background: #FFC107;
+        }
+        
+        .progress-container {
+            flex-grow: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: #FFC107;
+            border-radius: 3px;
+            width: 0%;
+        }
+        
+        .time-display {
+            margin-left: 15px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            min-width: 80px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="experience-container">
+        <!-- Main canvas for scene rendering -->
+        <canvas id="scene-canvas"></canvas>
+        
+        <!-- Narrative panel -->
+        <div class="narrative-panel">
+            <h2 class="panel-title">VELVET CURTAIN</h2>
+            <p>And tucked between two shuttered bodegas is a velvet curtain. No sign, no door, just this blood-colored fabric swaying like it's breathing. Behind it, bass leaks out in subsonic pulses. It's the kind of bass that rewrites your heartbeat whether you want it or not.</p>
+        </div>
+        
+        <!-- Audio player controls -->
+        <div class="audio-controls">
+            <button class="play-button" id="play-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </button>
+            <div class="progress-container" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="time-display" id="time-display">0:00 / 8:15</div>
+        </div>
+        
+        <!-- Hidden audio element -->
+        <audio id="audio-player" preload="auto">
+            <source src="music/pss_ch01_velvet-dancers.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    
+    <script>
+        // DOM elements
+        const sceneCanvas = document.getElementById('scene-canvas');
+        const ctx = sceneCanvas.getContext('2d');
+        const audioPlayer = document.getElementById('audio-player');
+        const playButton = document.getElementById('play-button');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
+        const timeDisplay = document.getElementById('time-display');
+        
+        // State
+        let isPlaying = false;
+        
+        // Initialize
+        window.addEventListener('DOMContentLoaded', init);
+        
+        function init() {
+            console.log('Initializing...');
+            
+            // Set canvas size
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Draw scene
+            drawScene();
+            
+            // Set up animation loop
+            animate();
+            
+            // Set up audio player
+            setupAudioPlayer();
+            
+            console.log('Initialization complete');
+        }
+        
+        function resizeCanvas() {
+            sceneCanvas.width = window.innerWidth;
+            sceneCanvas.height = window.innerHeight;
+            drawScene();
+        }
+        
+        function drawScene() {
+            // Clear canvas
+            ctx.clearRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+            
+            // Draw background gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, sceneCanvas.height);
+            gradient.addColorStop(0, '#0b0b12');
+            gradient.addColorStop(0.55, '#0a0910');
+            gradient.addColorStop(1, '#05050a');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+            
+            // Draw velvet curtain
+            drawCurtain();
+            
+            // Add vignette effect
+            drawVignette();
+        }
+        
+        function drawCurtain() {
+            const x = sceneCanvas.width * 0.37;
+            const y = sceneCanvas.height * 0.11;
+            const w = sceneCanvas.width * 0.25;
+            const h = sceneCanvas.height * 0.7;
+            
+            // Main drape
+            const grd = ctx.createLinearGradient(0, y, 0, y + h);
+            grd.addColorStop(0, "#6d001c");
+            grd.addColorStop(0.6, "#4a0014");
+            grd.addColorStop(1, "#2a000b");
+            ctx.fillStyle = grd;
+            ctx.fillRect(x, y, w, h);
+            
+            // Simple animation
+            const time = Date.now() / 1000;
+            const moveX = Math.sin(time * 2) * 3;
+            
+            ctx.fillStyle = "rgba(255,255,255,0.1)";
+            ctx.fillRect(x + moveX, y, w * 0.1, h);
+        }
+        
+        function drawVignette() {
+            const r = Math.max(sceneCanvas.width, sceneCanvas.height) * 0.95;
+            const g = ctx.createRadialGradient(
+                sceneCanvas.width/2, sceneCanvas.height/2, r * 0.55,
+                sceneCanvas.width/2, sceneCanvas.height/2, r
+            );
+            g.addColorStop(0, "rgba(0,0,0,0)");
+            g.addColorStop(1, "rgba(0,0,0,0.75)");
+            ctx.fillStyle = g;
+            ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            drawScene();
+        }
+        
+        function setupAudioPlayer() {
+            console.log('Setting up audio player...');
+            
+            // Play/pause button
+            playButton.addEventListener('click', togglePlay);
+            
+            // Progress bar
+            progressContainer.addEventListener('click', seek);
+            
+            // Update progress
+            audioPlayer.addEventListener('timeupdate', updateProgress);
+            
+            // When audio ends
+            audioPlayer.addEventListener('ended', () => {
+                console.log('Audio ended');
+                isPlaying = false;
+                updatePlayButton();
+            });
+            
+            // Handle errors
+            audioPlayer.addEventListener('error', (e) => {
+                console.error('Audio error:', e);
+                alert('Error loading audio: ' + audioPlayer.src);
+            });
+            
+            console.log('Audio player setup complete');
+        }
+        
+        function togglePlay() {
+            console.log('Toggle play button clicked');
+            
+            if (isPlaying) {
+                console.log('Pausing audio');
+                audioPlayer.pause();
+                isPlaying = false;
+            } else {
+                console.log('Playing audio');
+                
+                // Play with a promise to catch errors
+                const playPromise = audioPlayer.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log('Audio playback started successfully');
+                        isPlaying = true;
+                    }).catch(error => {
+                        console.error('Error playing audio:', error);
+                        alert('Could not play audio: ' + error.message);
+                    });
+                } else {
+                    isPlaying = true;
+                }
+            }
+            
+            updatePlayButton();
+        }
+        
+        function updatePlayButton() {
+            playButton.innerHTML = isPlaying 
+                ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'
+                : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+        }
+        
+        function seek(e) {
+            const percent = e.offsetX / progressContainer.offsetWidth;
+            audioPlayer.currentTime = percent * audioPlayer.duration;
+            progressBar.style.width = `${percent * 100}%`;
+        }
+        
+        function updateProgress() {
+            const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            progressBar.style.width = `${percent}%`;
+            
+            // Update time display
+            const currentMinutes = Math.floor(audioPlayer.currentTime / 60);
+            const currentSeconds = Math.floor(audioPlayer.currentTime % 60);
+            const durationMinutes = Math.floor(audioPlayer.duration / 60) || 0;
+            const durationSeconds = Math.floor(audioPlayer.duration % 60) || 0;
+            
+            timeDisplay.textContent = `${currentMinutes}:${currentSeconds.toString().padStart(2, '0')} / ${durationMinutes}:${durationSeconds.toString().padStart(2, '0')}`;
+        }
+    </script>
+</body>
+</html>

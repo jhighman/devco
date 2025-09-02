@@ -1,0 +1,2415 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop Song Summer - Immersive Album Experience</title>
+    <style>
+        /* Base styles */
+        :root {
+            --velvet-red: #800020;
+            --gold-thread: #FFC107;
+            --ash-gray: #4A4A4A;
+            --sodium-amber: #FF9800;
+            --horizon-orange: #FF5722;
+            --desert-blue: #1A2A44;
+            --night-black: #0a0a0a;
+            --deep-purple: #2D0A31;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+            background: var(--night-black);
+            color: #eaeaea;
+            overflow: hidden;
+        }
+        
+        /* Full-screen experience container */
+        .experience-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Canvas scene */
+        #scene-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        /* SVG overlay */
+        .svg-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+            z-index: 10;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .svg-overlay:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        
+        /* Narrative panel */
+        .narrative-panel {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            z-index: 20;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+        
+        .panel-title {
+            font-size: 1.5rem;
+            color: var(--gold-thread);
+            margin-bottom: 10px;
+        }
+        
+        .panel-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .panel-quote {
+            font-style: italic;
+            color: var(--sodium-amber);
+            border-left: 3px solid var(--horizon-orange);
+            padding-left: 15px;
+            margin: 15px 0;
+        }
+        
+        /* Audio player */
+        .audio-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 800px;
+            display: flex;
+            align-items: center;
+            background: rgba(45, 10, 49, 0.7);
+            backdrop-filter: blur(5px);
+            border-radius: 50px;
+            padding: 10px 20px;
+            z-index: 30;
+        }
+        
+        .play-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--horizon-orange);
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-right: 15px;
+            transition: background 0.3s ease;
+        }
+        
+        .play-button:hover {
+            background: var(--gold-thread);
+        }
+        
+        .progress-container {
+            flex-grow: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--gold-thread);
+            border-radius: 3px;
+            width: 0%;
+        }
+        
+        .time-display {
+            margin-left: 15px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            min-width: 80px;
+            text-align: right;
+        }
+        
+        /* Chapter navigation */
+        .chapter-navigation {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 25;
+        }
+        
+        .chapter-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .chapter-dot.active {
+            background: var(--gold-thread);
+            transform: scale(1.2);
+        }
+        
+        .chapter-dot:hover {
+            background: var(--sodium-amber);
+        }
+        
+        /* Panel navigation */
+        .panel-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .panel-nav-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .panel-nav-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .panel-nav-button:active {
+            transform: scale(0.95);
+        }
+        
+        .panel-nav-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        
+        /* Loading indicator */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--gold-thread);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Animations */
+        @keyframes glow {
+            0% { filter: drop-shadow(0 0 5px rgba(255, 193, 7, 0.5)); }
+            50% { filter: drop-shadow(0 0 15px rgba(255, 193, 7, 0.8)); }
+            100% { filter: drop-shadow(0 0 5px rgba(255, 193, 7, 0.5)); }
+        }
+        
+        .glow {
+            animation: glow 3s infinite;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s forwards;
+        }
+        
+        @keyframes buttonFlash {
+            0% { background-color: rgba(255, 255, 255, 0.1); }
+            50% { background-color: rgba(255, 87, 34, 0.5); }
+            100% { background-color: rgba(255, 255, 255, 0.1); }
+        }
+        
+        .button-flash {
+            animation: buttonFlash 0.3s forwards;
+        }
+        
+        /* Debug panel */
+        .debug-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 100;
+            font-size: 12px;
+            max-width: 300px;
+            max-height: 200px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="experience-container">
+        <!-- Main canvas for scene rendering -->
+        <canvas id="scene-canvas"></canvas>
+        
+        <!-- SVG overlay (insignia) -->
+        <div class="svg-overlay glow">
+            <object id="insignia" type="image/svg+xml" data="assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg"></object>
+        </div>
+        
+        <!-- Narrative panel -->
+        <div class="narrative-panel" id="narrative-panel">
+            <h2 class="panel-title" id="panel-title">VELVET CURTAIN</h2>
+            <p class="panel-text" id="panel-text">And tucked between two shuttered bodegas is a velvet curtain. No sign, no door, just this blood-colored fabric swaying like it's breathing. Behind it, bass leaks out in subsonic pulses. It's the kind of bass that rewrites your heartbeat whether you want it or not.
+
+I push through.</p>
+            <div class="panel-navigation">
+                <button class="panel-nav-button" id="prev-panel">Previous</button>
+                <button class="panel-nav-button" id="next-panel">Next</button>
+            </div>
+        </div>
+        
+        <!-- Chapter navigation dots -->
+        <div class="chapter-navigation" id="chapter-navigation">
+            <!-- Will be populated by JavaScript -->
+        </div>
+        
+        <!-- Audio player controls -->
+        <div class="audio-controls">
+            <button class="play-button" id="play-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </button>
+            <div class="progress-container" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="time-display" id="time-display">0:00 / 8:15</div>
+        </div>
+        
+        <!-- Hidden audio element -->
+        <audio id="audio-player" preload="auto"></audio>
+        
+        <!-- Loading indicator -->
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p>Loading experience...</p>
+        </div>
+        
+        <!-- Debug panel -->
+        <div class="debug-panel" id="debug-panel"></div>
+    </div>
+
+    <script>
+        // Debug function
+        function debug(message) {
+            const debugPanel = document.getElementById('debug-panel');
+            const timestamp = new Date().toLocaleTimeString();
+            debugPanel.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            debugPanel.scrollTop = debugPanel.scrollHeight;
+            console.log(message);
+        }
+
+        // Asset manager for loading and caching assets
+        class AssetManager {
+            constructor() {
+                this.assets = {
+                    global: {},
+                    chapters: {}
+                };
+                this.loaded = false;
+                this.loadingPromises = [];
+            }
+
+            // Load assets mapping from YAML file
+            async loadAssetMapping() {
+                try {
+                    debug('Loading assets mapping...');
+                    
+                    // Skip fetch attempt and use hardcoded asset mapping directly
+                    // In a production environment, you would fetch and parse the YAML file
+                    this.parseAssetMapping("");
+                    
+                    debug('Assets mapping loaded successfully (using hardcoded data)');
+                    return this.assets;
+                } catch (error) {
+                    debug(`Error loading assets mapping: ${error.message}`);
+                    throw error;
+                }
+            }
+
+            // Parse YAML text into a structured object (simplified version)
+            parseAssetMapping(yamlText) {
+                // This is a simplified implementation
+                // In a real application, you would use a proper YAML parser
+                
+                // For now, we'll use the hardcoded asset structure
+                this.assets = {
+                    global: {
+                        insignia_of_the_sun: {
+                            title: "Insignia of the Sun (Primary Motif)",
+                            svg: "assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg",
+                            png: "assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-4k-rgb-v001-20250831-jh-final.png",
+                            canvas: "assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-4k-canvas-v001-20250831-jh-final.html",
+                            used_in_chapters: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                        },
+                        woman_in_red: {
+                            title: "Woman in Red (Archetype)",
+                            svg: "assets/images/pss/pss-chall-woman-in-red-portrait-ar4x5-svg-v001-20250831-jh-final.svg",
+                            png: "assets/images/pss/pss-chall-woman-in-red-portrait-ar4x5-4k-rgb-v001-20250831-jh-final.png",
+                            canvas: "assets/images/pss/pss-chall-woman-in-red-portrait-ar4x5-4k-canvas-v001-20250831-jh-final.html",
+                            used_in_chapters: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                        }
+                    },
+                    chapters: {
+                        1: {
+                            title: "Velvet Dancers",
+                            assets: [
+                                {
+                                    title: "The Velvet Curtain",
+                                    svg: "assets/images/pss/pss-ch01-velvet-curtain-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+                                    png: "assets/images/pss/pss-ch01-velvet-curtain-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+                                    canvas: "assets/images/pss/pss-ch01-velvet-curtain-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+                                },
+                                {
+                                    title: "Back Room: Church of Light",
+                                    svg: "assets/images/pss/pss-ch01-back-room-church-of-light-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+                                    png: "assets/images/pss/pss-ch01-back-room-church-of-light-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+                                    canvas: "assets/images/pss/pss-ch01-back-room-church-of-light-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+                                },
+                                {
+                                    title: "Hall of Mirrors",
+                                    svg: "assets/images/pss/pss-ch01-hall-of-mirrors-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+                                    png: "assets/images/pss/pss-ch01-hall-of-mirrors-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+                                    canvas: "assets/images/pss/pss-ch01-hall-of-mirrors-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+                                }
+                            ]
+                        },
+                        3: {
+                            title: "Burning Houses (in the Distance)",
+                            assets: [
+                                {
+                                    title: "Burning Houses on the Horizon",
+                                    svg: "assets/images/pss/pss-ch03-burning-houses-horizon-panorama-ar21x9-svg-v001-20250831-jh-final.svg",
+                                    png: "assets/images/pss/pss-ch03-burning-houses-horizon-panorama-ar21x9-6k-rgb-v001-20250831-jh-final.png",
+                                    canvas: "assets/images/pss/pss-ch03-burning-houses-horizon-panorama-ar21x9-6k-canvas-v001-20250831-jh-final.html"
+                                }
+                            ]
+                        },
+                        5: {
+                            title: "A Blind Man Singing",
+                            assets: [
+                                {
+                                    title: "Blind Man Singing",
+                                    svg: "assets/images/pss/pss-ch05-blind-man-singing-scene-ar16x9-svg-v001-20250831-jh-final.svg",
+                                    png: "assets/images/pss/pss-ch05-blind-man-singing-scene-ar16x9-4k-rgb-v001-20250831-jh-final.png",
+                                    canvas: "assets/images/pss/pss-ch05-blind-man-singing-scene-ar16x9-4k-canvas-v001-20250831-jh-final.html"
+                                }
+                            ]
+                        }
+                    }
+                };
+            }
+
+            // Preload assets for a specific chapter
+            async preloadChapterAssets(chapterNumber) {
+                debug(`Preloading assets for chapter ${chapterNumber}...`);
+                
+                // Clear previous loading promises
+                this.loadingPromises = [];
+                
+                // Preload global assets used in this chapter
+                for (const [key, asset] of Object.entries(this.assets.global)) {
+                    if (asset.used_in_chapters && asset.used_in_chapters.includes(chapterNumber)) {
+                        this.loadingPromises.push(this.preloadImage(asset.png));
+                    }
+                }
+                
+                // Preload chapter-specific assets
+                if (this.assets.chapters[chapterNumber]) {
+                    const chapterAssets = this.assets.chapters[chapterNumber].assets || [];
+                    for (const asset of chapterAssets) {
+                        this.loadingPromises.push(this.preloadImage(asset.png));
+                    }
+                }
+                
+                try {
+                    await Promise.all(this.loadingPromises);
+                    debug(`Assets for chapter ${chapterNumber} preloaded successfully`);
+                } catch (error) {
+                    debug(`Error preloading assets: ${error.message}`);
+                }
+            }
+            
+            // Preload an image
+            preloadImage(src) {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.onload = () => resolve(img);
+                    img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
+                    img.src = src;
+                });
+            }
+            
+            // Get asset by title for a specific chapter
+            getAssetByTitle(chapterNumber, title) {
+                // Check chapter-specific assets
+                if (this.assets.chapters[chapterNumber]) {
+                    const chapterAssets = this.assets.chapters[chapterNumber].assets || [];
+                    const asset = chapterAssets.find(a => a.title === title);
+                    if (asset) return asset;
+                }
+                
+                // Check global assets
+                for (const [key, asset] of Object.entries(this.assets.global)) {
+                    if (asset.title === title && asset.used_in_chapters && asset.used_in_chapters.includes(chapterNumber)) {
+                        return asset;
+                    }
+                }
+                
+                return null;
+            }
+            
+            // Get all assets for a specific chapter
+            getChapterAssets(chapterNumber) {
+                const assets = [];
+                
+                // Add global assets used in this chapter
+                for (const [key, asset] of Object.entries(this.assets.global)) {
+                    if (asset.used_in_chapters && asset.used_in_chapters.includes(chapterNumber)) {
+                        assets.push({...asset, global: true});
+                    }
+                }
+                
+                // Add chapter-specific assets
+                if (this.assets.chapters[chapterNumber]) {
+                    const chapterAssets = this.assets.chapters[chapterNumber].assets || [];
+                    assets.push(...chapterAssets.map(asset => ({...asset, global: false})));
+                }
+                
+                return assets;
+            }
+        }
+
+        // Chapter data
+        const chapters = [
+            {
+                number: 1,
+                title: "Velvet Dancers",
+                music_file: "music/pss_ch01_velvet-dancers.mp3",
+                panels: [
+                    {
+                        title: "VELVET CURTAIN",
+                        text: "And tucked between two shuttered bodegas is a velvet curtain. No sign, no door, just this blood-colored fabric swaying like it's breathing. Behind it, bass leaks out in subsonic pulses. It's the kind of bass that rewrites your heartbeat whether you want it or not.\n\nI push through."
+                    },
+                    {
+                        title: "CLUB INTERIOR",
+                        text: "The air inside is thick, like the club is running on oxygen siphoned from another dimension. Lights move in lazy strobes, purple and gold, spilling over a floor that's already slick with sweat. There's no bar, no menu, just shadows that sell you what you want if they decide you're worth the bother.\n\nAnd then there are the dancers."
+                    },
+                    {
+                        title: "VELVET DANCERS",
+                        text: "Velvet on their skin, velvet in their movements, velvet like the smooth part of a blade before the edge cuts. They move as if they're running a program: flawless, slow, then impossibly fast. Every single one of them wears the same patch stitched near the shoulder — a circle with sunrays stitched in gold thread. The insignia.\n\nThey don't look at you. They look through you, like you're another light on the floor, one more pattern in the algorithm."
+                    }
+                ]
+            },
+            {
+                number: 2,
+                title: "Insignia of the Sun",
+                music_file: "music/pss_ch02_insignia-of-the-sun.mp3",
+                panels: [
+                    {
+                        title: "SUN INSIGNIA",
+                        text: "The woman in red grabs my wrist, turns my palm up. She's holding something — a patch, identical to the ones on the dancers. The sun insignia.\n\n\"Put it on,\" she says.\n\n\"What happens if I do?\"\n\nHer smile widens. \"You'll see her. You'll be part of the summer.\""
+                    },
+                    {
+                        title: "THE CHOICE",
+                        text: "I look at the patch. It's warm in my hand, like it's been sitting in the sun. The gold thread catches light that isn't there.",
+                        quote: "She comes, she comes...",
+                        text_after: "I should run. I know I should run. But there's something about the way the dancers move, something about the promise of seeing her..."
+                    }
+                ]
+            },
+            {
+                number: 3,
+                title: "Burning Houses (in the Distance)",
+                music_file: "music/pss_ch03_burning-houses-in-the-distance.mp3",
+                panels: [
+                    {
+                        title: "BURNING HOUSES",
+                        text: "The walls dissolve into horizon. Burning houses flicker in the distance. I know it isn't real — but my body doesn't care. Every nerve screams run.\n\nI back up, trip, catch myself against the edge of the circle. It's hot, too hot, like touching the rim of the sun."
+                    }
+                ]
+            },
+            {
+                number: 4,
+                title: "On the Corner, Reading Poetry",
+                music_file: "music/pss_ch04_on-the-corner-reading-poetry.mp3",
+                panels: [
+                    {
+                        title: "THE CORNER",
+                        text: "On the corner, a group has gathered. They're reading poetry from tattered books, passing them around like contraband. The words glow as they're spoken, hanging in the air like neon."
+                    }
+                ]
+            },
+            {
+                number: 5,
+                title: "A Blind Man Singing",
+                music_file: "music/pss_ch05_a-blind-man-singing.mp3",
+                panels: [
+                    {
+                        title: "BLIND SINGER",
+                        text: "In the corner, a blind man sings. No mic, no amp, just raw voice cut against the bass. He's chanting words like they're half-forgotten scripture, or maybe the last pirate broadcast before the collapse:",
+                        quote: "She comes, she comes… burning houses in the distance. Lights up the night. She comes.",
+                        text_after: "Nobody claps. Nobody even reacts. The crowd moves in sync, eyes half-lidded, as though they're hypnotized. Like they already know the words. Like they were born knowing."
+                    }
+                ]
+            },
+            {
+                number: 6,
+                title: "Out to the Other Side",
+                music_file: "music/pss_ch06_out-to-the-other-side.mp3",
+                panels: [
+                    {
+                        title: "THE DOOR",
+                        text: "The air splits open. There's no other way to describe it. Like someone took a knife to reality and cut a door-shaped hole. Through it, I can see... something else. Not the club, not the city. Something golden and endless.",
+                        quote: "The key fits the door. The door leads to summer. Will you come?",
+                        text_after: "I look at the woman in red. \"What's on the other side?\"\n\nShe shrugs. \"I've never gone through. I just bring people to her. That's my job.\"\n\nThe key burns hotter in my palm. The patch on my shoulder pulses like a second heart."
+                    }
+                ]
+            },
+            {
+                number: 7,
+                title: "Second Lover, Over and Under",
+                music_file: "music/pss_ch07_second-lover-over-and-under.mp3",
+                panels: [
+                    {
+                        title: "DINER SCENE",
+                        text: "The diner is all chrome and neon, frozen in time somewhere between the 50s and never. She sits across from me, stirring coffee she doesn't drink. Her eyes reflect nothing, like black mirrors."
+                    }
+                ]
+            },
+            {
+                number: 8,
+                title: "1985 (Disco Time Machine)",
+                music_file: "music/pss_ch08_1985-disco-time-machine.mp3",
+                panels: [
+                    {
+                        title: "ROLLER RINK",
+                        text: "The roller rink is a time capsule. Disco balls spinning fractured light across faces that look too young to remember 1985, but somehow they're all singing along to songs that died before they were born."
+                    }
+                ]
+            },
+            {
+                number: 9,
+                title: "Shadow Drifter",
+                music_file: "music/pss_ch09_shadow-drifter.mp3",
+                panels: [
+                    {
+                        title: "BRIDGES",
+                        text: "The bridges stretch out like skeletal fingers over water that reflects nothing. I walk between worlds, a shadow drifting through places that shouldn't exist but somehow do."
+                    }
+                ]
+            },
+            {
+                number: 10,
+                title: "The End of Everything",
+                music_file: "music/pss_ch10_the-end-of-everything.mp3",
+                panels: [
+                    {
+                        title: "THRESHOLD",
+                        text: "The door swings open. Light floods out, so bright it erases the club, the dancers, the woman in red. Everything.\n\nI step through.\n\nThe last thing I hear is the blind man's voice, no longer chanting but laughing, joyful:",
+                        quote: "Pop song summer begins!",
+                        text_after: "And then I'm gone."
+                    }
+                ]
+            }
+        ];
+        
+        // Current state
+        let currentChapter = 0;
+        let currentPanel = 0;
+        let isPlaying = false;
+        let assetManager = new AssetManager();
+        let currentPanelAssets = [];
+        
+        // DOM elements
+        const sceneCanvas = document.getElementById('scene-canvas');
+        const ctx = sceneCanvas.getContext('2d');
+        const audioPlayer = document.getElementById('audio-player');
+        const playButton = document.getElementById('play-button');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
+        const timeDisplay = document.getElementById('time-display');
+        const narrativePanel = document.getElementById('narrative-panel');
+        const panelTitle = document.getElementById('panel-title');
+        const panelText = document.getElementById('panel-text');
+        let prevPanelBtn = document.getElementById('prev-panel');
+        let nextPanelBtn = document.getElementById('next-panel');
+        const chapterNavigation = document.getElementById('chapter-navigation');
+        const loadingIndicator = document.getElementById('loading');
+        
+        // Initialize the experience
+        window.addEventListener('DOMContentLoaded', initExperience);
+        
+        function initExperience() {
+            debug('Initializing experience...');
+            loadingIndicator.style.display = 'flex';
+            
+            try {
+                // Initialize asset manager
+                assetManager.loadAssetMapping()
+                    .then(() => {
+                        debug('Asset mapping loaded');
+                        return assetManager.preloadChapterAssets(currentChapter);
+                    })
+                    .then(() => {
+                        // Initialize canvas scene
+                        initCanvasScene();
+                        
+                        // Set canvas size
+                        resizeCanvas();
+                        window.addEventListener('resize', resizeCanvas);
+                        
+                        // Setup audio player
+                        setupAudioPlayer();
+                        
+                        // Setup chapter navigation
+                        setupChapterNavigation();
+                        
+                        // Show first panel
+                        showPanel(currentPanel);
+                        
+                        // Hide loading indicator
+                        loadingIndicator.style.display = 'none';
+                        
+                        debug('Experience initialization complete');
+                    })
+                    .catch(error => {
+                        debug('Error during asset loading: ' + error.message);
+                        // Continue with initialization even if asset loading fails
+                        debug('Continuing with initialization despite asset loading error');
+                        
+                        // Initialize canvas scene
+                        initCanvasScene();
+                        
+                        // Set canvas size
+                        resizeCanvas();
+                        window.addEventListener('resize', resizeCanvas);
+                        
+                        // Setup audio player
+                        setupAudioPlayer();
+                        
+                        // Setup chapter navigation
+                        setupChapterNavigation();
+                        
+                        // Show first panel
+                        showPanel(currentPanel);
+                        
+                        // Hide loading indicator
+                        loadingIndicator.style.display = 'none';
+                        
+                        debug('Experience initialization complete (with fallback)');
+                    });
+                
+            } catch (error) {
+                debug('Error during experience initialization: ' + error.message);
+                // Show error message to user
+                loadingIndicator.innerHTML = `
+                    <div class="loading-spinner"></div>
+                    <p>Error loading experience: ${error.message}</p>
+                    <p>Please refresh the page to try again.</p>
+                `;
+                loadingIndicator.style.display = 'flex';
+            }
+        }
+        
+        function resizeCanvas() {
+            sceneCanvas.width = window.innerWidth;
+            sceneCanvas.height = window.innerHeight;
+            
+            // Re-render the scene
+            if (window.drawScene) {
+                drawScene();
+            }
+        }
+        
+        function initCanvasScene() {
+            debug('Initializing canvas scene...');
+            
+            // Set up the canvas
+            sceneCanvas.width = window.innerWidth;
+            sceneCanvas.height = window.innerHeight;
+            
+            // Define helper functions for drawing and make them globally available
+            window.fillLinearGradient = function(x0, y0, x1, y1, stops) {
+                const g = ctx.createLinearGradient(x0, y0, x1, y1);
+                for (const [o, c] of stops) g.addColorStop(o, c);
+                ctx.fillStyle = g;
+                ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+            };
+            
+            window.drawNoise = function(alpha = 0.18) {
+                const t = document.createElement('canvas');
+                const s = 256;
+                t.width = t.height = s;
+                const c = t.getContext('2d');
+                const img = c.createImageData(s, s);
+                for (let i = 0; i < img.data.length; i += 4) {
+                    const v = 32 + Math.random() * 32;
+                    img.data[i] = img.data[i+1] = img.data[i+2] = v;
+                    img.data[i+3] = 255;
+                }
+                c.putImageData(img, 0, 0);
+                const p = ctx.createPattern(t, 'repeat');
+                ctx.save();
+                ctx.globalAlpha = alpha;
+                ctx.globalCompositeOperation = 'overlay';
+                ctx.fillStyle = p;
+                ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                ctx.restore();
+            };
+            
+            // Define scene-specific drawing functions based on the current chapter and make them globally available
+            window.drawAlley = function() {
+                fillLinearGradient(0, 0, 0, sceneCanvas.height, [
+                    [0, "#0b0b12"], [0.55, "#0a0910"], [1, "#05050a"]
+                ]);
+                drawNoise(0.18);
+                
+                // Neon spill
+                const r = Math.max(sceneCanvas.width, sceneCanvas.height) * 0.8;
+                const left = ctx.createRadialGradient(0, sceneCanvas.height/2, 0, 0, sceneCanvas.height/2, r);
+                left.addColorStop(0, "rgba(255,0,180,0.35)");
+                left.addColorStop(1, "rgba(255,0,180,0)");
+                ctx.fillStyle = left;
+                ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                
+                const right = ctx.createRadialGradient(sceneCanvas.width, sceneCanvas.height/2, 0, sceneCanvas.width, sceneCanvas.height/2, r);
+                right.addColorStop(0, "rgba(255,190,70,0.32)");
+                right.addColorStop(1, "rgba(255,190,70,0)");
+                ctx.fillStyle = right;
+                ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+            };
+            
+            window.drawCurtain = function() {
+                const x = sceneCanvas.width * 0.37;
+                const y = sceneCanvas.height * 0.11;
+                const w = sceneCanvas.width * 0.25;
+                const h = sceneCanvas.height * 0.7;
+                
+                // Rail shadow
+                ctx.fillStyle = "rgba(0,0,0,0.5)";
+                ctx.fillRect(x - 20, y - 10, w + 40, 24);
+                
+                // Main drape
+                const grd = ctx.createLinearGradient(0, y, 0, y + h);
+                grd.addColorStop(0, "#6d001c");
+                grd.addColorStop(0.6, "#4a0014");
+                grd.addColorStop(1, "#2a000b");
+                ctx.fillStyle = grd;
+                ctx.fillRect(x, y, w, h);
+                
+                // Folds
+                const fold = ctx.createLinearGradient(0, y, 0, y + h);
+                fold.addColorStop(0, "rgba(255,120,160,0.45)");
+                fold.addColorStop(0.5, "rgba(255,120,160,0.08)");
+                fold.addColorStop(1, "rgba(0,0,0,0)");
+                ctx.save();
+                ctx.globalAlpha = 0.65;
+                
+                const foldCount = 12;
+                for (let i = 0; i < foldCount; i++) {
+                    const fx = x + (i / foldCount) * w;
+                    const fw = w / foldCount * 0.5;
+                    ctx.fillStyle = fold;
+                    ctx.fillRect(fx, y, fw, h);
+                }
+                ctx.restore();
+                
+                // Bottom sweep shadow
+                ctx.fillStyle = "rgba(0,0,0,0.55)";
+                ctx.beginPath();
+                const cx = x + w/2;
+                const cy = y + h + 10;
+                const rx = w * 0.52;
+                const ry = h * 0.034;
+                ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Simple animation when playing
+                if (isPlaying) {
+                    // Use a time-based animation instead of audio analysis
+                    const time = Date.now() / 1000;
+                    const moveX = Math.sin(time * 2) * 3;
+                    
+                    // Subtle movement
+                    ctx.save();
+                    ctx.fillStyle = "rgba(255,255,255,0.1)";
+                    ctx.fillRect(x + moveX, y, w * 0.1, h);
+                    ctx.restore();
+                }
+            };
+            
+            window.drawPuddle = function() {
+                const cx = sceneCanvas.width * 0.5;
+                const cy = sceneCanvas.height * 0.88;
+                const rx = sceneCanvas.width * 0.19;
+                const ry = sceneCanvas.height * 0.08;
+                
+                const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(rx, ry));
+                g.addColorStop(0, "rgba(140,60,90,0.5)");
+                g.addColorStop(1, "rgba(20,10,20,0)");
+                ctx.fillStyle = g;
+                ctx.beginPath();
+                ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Ripples
+                ctx.strokeStyle = "rgba(255,160,190,0.35)";
+                ctx.lineWidth = 2;
+                
+                // Animate ripples with time-based animation
+                if (isPlaying) {
+                    const time = Date.now() / 1000;
+                    const rippleCount = 3;
+                    
+                    for (let i = 0; i < rippleCount; i++) {
+                        const baseSize = (0.3 + i * 0.3);
+                        // Add a subtle pulsing effect based on time
+                        const pulseFactor = Math.sin(time * (1 + i * 0.2)) * 0.1 + 1;
+                        const rippleSize = baseSize * rx * pulseFactor;
+                        
+                        ctx.beginPath();
+                        ctx.ellipse(cx, cy, rippleSize, rippleSize * 0.233, 0, 0, Math.PI * 2);
+                        ctx.stroke();
+                    }
+                } else {
+                    // Static ripples when not playing
+                    const rippleSizes = [0.3, 0.6, 0.9];
+                    for (const size of rippleSizes) {
+                        ctx.beginPath();
+                        ctx.ellipse(cx, cy, size * rx, size * rx * 0.233, 0, 0, Math.PI * 2);
+                        ctx.stroke();
+                    }
+                }
+            };
+            
+            window.vignette = function() {
+                const r = Math.max(sceneCanvas.width, sceneCanvas.height) * 0.95;
+                const g = ctx.createRadialGradient(
+                    sceneCanvas.width/2, sceneCanvas.height/2, r * 0.55,
+                    sceneCanvas.width/2, sceneCanvas.height/2, r
+                );
+                g.addColorStop(0, "rgba(0,0,0,0)");
+                g.addColorStop(1, "rgba(0,0,0,0.75)");
+                ctx.fillStyle = g;
+                ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+            };
+            
+            // Create the main drawScene function
+            window.drawScene = function() {
+                // Clear canvas
+                ctx.clearRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                
+                // Draw a simple gradient background
+                const gradient = ctx.createLinearGradient(0, 0, 0, sceneCanvas.height);
+                gradient.addColorStop(0, "#0b0b12");
+                gradient.addColorStop(0.5, "#0a0910");
+                gradient.addColorStop(1, "#05050a");
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                
+                // Add a simple vignette effect
+                const r = Math.max(sceneCanvas.width, sceneCanvas.height) * 0.95;
+                const vignetteGradient = ctx.createRadialGradient(
+                    sceneCanvas.width/2, sceneCanvas.height/2, r * 0.55,
+                    sceneCanvas.width/2, sceneCanvas.height/2, r
+                );
+                vignetteGradient.addColorStop(0, "rgba(0,0,0,0)");
+                vignetteGradient.addColorStop(1, "rgba(0,0,0,0.75)");
+                ctx.fillStyle = vignetteGradient;
+                ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+            };
+            
+            // Initial render
+            drawScene();
+            
+            // Set up animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                drawScene();
+            }
+            animate();
+            
+            debug('Canvas scene initialized');
+        }
+        
+        function setupAudioPlayer() {
+            debug('Setting up audio player...');
+            
+            // Set initial audio source
+            audioPlayer.src = chapters[currentChapter].music_file;
+            debug('Audio source set to: ' + audioPlayer.src);
+            
+            // Play/pause button
+            playButton.addEventListener('click', togglePlay);
+            
+            // Progress bar
+            progressContainer.addEventListener('click', seek);
+            
+            // Update progress
+            audioPlayer.addEventListener('timeupdate', updateProgress);
+            
+            // When audio ends
+            audioPlayer.addEventListener('ended', () => {
+                debug('Audio ended');
+                isPlaying = false;
+                updatePlayButton();
+            });
+            
+            // Handle errors
+            audioPlayer.addEventListener('error', (e) => {
+                debug('Audio error: ' + (e.message || 'Unknown error'));
+                isPlaying = false;
+                updatePlayButton();
+            });
+            
+            debug('Audio player setup complete');
+        }
+        
+        function togglePlay() {
+            debug('Toggle play button clicked');
+            
+            try {
+                if (!audioPlayer) {
+                    debug('Audio player not found');
+                    return;
+                }
+                
+                debug('Audio player current source: ' + audioPlayer.src);
+                debug('Audio player ready state: ' + audioPlayer.readyState);
+                
+                if (isPlaying) {
+                    debug('Pausing audio');
+                    audioPlayer.pause();
+                    isPlaying = false;
+                    
+                    // Add visual feedback for pause
+                    playButton.classList.add('button-flash');
+                    setTimeout(() => playButton.classList.remove('button-flash'), 300);
+                } else {
+                    debug('Playing audio');
+                    
+                    // Make sure the audio element has a valid source
+                    if (!audioPlayer.src || audioPlayer.src === '') {
+                        debug('Setting audio source');
+                        audioPlayer.src = chapters[currentChapter].music_file;
+                    }
+                    
+                    debug('Attempting to play audio from: ' + audioPlayer.src);
+                    
+                    // Add visual feedback for play
+                    playButton.classList.add('button-flash');
+                    setTimeout(() => playButton.classList.remove('button-flash'), 300);
+                    
+                    // Simple play
+                    audioPlayer.play()
+                        .then(() => {
+                            debug('Audio playback started successfully');
+                            isPlaying = true;
+                            updatePlayButton();
+                            
+                            // Trigger a redraw to update any audio-reactive visuals
+                            if (window.drawScene) {
+                                drawScene();
+                            }
+                        })
+                        .catch(error => {
+                            debug('Error playing audio: ' + error.message);
+                            // Show error message to user
+                            const errorMsg = document.createElement('div');
+                            errorMsg.className = 'audio-error';
+                            errorMsg.textContent = 'Could not play audio. Please try again.';
+                            errorMsg.style.position = 'absolute';
+                            errorMsg.style.bottom = '80px';
+                            errorMsg.style.left = '50%';
+                            errorMsg.style.transform = 'translateX(-50%)';
+                            errorMsg.style.background = 'rgba(255, 0, 0, 0.7)';
+                            errorMsg.style.color = 'white';
+                            errorMsg.style.padding = '10px 20px';
+                            errorMsg.style.borderRadius = '5px';
+                            errorMsg.style.zIndex = '100';
+                            document.querySelector('.experience-container').appendChild(errorMsg);
+                            
+                            // Remove error message after 3 seconds
+                            setTimeout(() => {
+                                errorMsg.remove();
+                            }, 3000);
+                        });
+                    
+                    return; // Return early to avoid updating button before promise resolves
+                }
+                
+                // Update the button appearance
+                updatePlayButton();
+                
+            } catch (error) {
+                debug('Error in togglePlay: ' + error.message);
+            }
+        }
+        
+        function updatePlayButton() {
+            playButton.innerHTML = isPlaying
+                ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'
+                : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+        }
+        
+        function seek(e) {
+            const percent = e.offsetX / progressContainer.offsetWidth;
+            audioPlayer.currentTime = percent * audioPlayer.duration;
+            progressBar.style.width = `${percent * 100}%`;
+        }
+        
+        function updateProgress() {
+            const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            progressBar.style.width = `${percent}%`;
+            
+            // Update time display
+            const currentMinutes = Math.floor(audioPlayer.currentTime / 60);
+            const currentSeconds = Math.floor(audioPlayer.currentTime % 60);
+            const durationMinutes = Math.floor(audioPlayer.duration / 60) || 0;
+            const durationSeconds = Math.floor(audioPlayer.duration % 60) || 0;
+            
+            timeDisplay.textContent = `${currentMinutes}:${currentSeconds.toString().padStart(2, '0')} / ${durationMinutes}:${durationSeconds.toString().padStart(2, '0')}`;
+        }
+        
+        function setupChapterNavigation() {
+            debug('Setting up chapter navigation with ' + chapters.length + ' chapters');
+            
+            // Create chapter dots
+            for (let i = 0; i < chapters.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = `chapter-dot ${i === currentChapter ? 'active' : ''}`;
+                dot.setAttribute('data-chapter', i);
+                dot.addEventListener('click', () => {
+                    debug('Chapter dot ' + i + ' clicked');
+                    changeChapter(i);
+                });
+                chapterNavigation.appendChild(dot);
+            }
+            
+            // Remove any existing event listeners by cloning and replacing the buttons
+            const newPrevBtn = prevPanelBtn.cloneNode(true);
+            const newNextBtn = nextPanelBtn.cloneNode(true);
+            prevPanelBtn.parentNode.replaceChild(newPrevBtn, prevPanelBtn);
+            nextPanelBtn.parentNode.replaceChild(newNextBtn, nextPanelBtn);
+            
+            // Update references to the new buttons
+            prevPanelBtn = document.getElementById('prev-panel');
+            nextPanelBtn = document.getElementById('next-panel');
+            
+            // Panel navigation with improved event handling
+            prevPanelBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                debug('Previous panel button clicked');
+                
+                if (currentPanel > 0) {
+                    showPanel(currentPanel - 1);
+                } else {
+                    debug('Already at first panel');
+                    // Visual feedback
+                    prevPanelBtn.classList.add('button-flash');
+                    setTimeout(() => prevPanelBtn.classList.remove('button-flash'), 300);
+                }
+            });
+            
+            nextPanelBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                debug('Next panel button clicked');
+                
+                const currentChapterPanels = chapters[currentChapter].panels;
+                if (currentPanel < currentChapterPanels.length - 1) {
+                    showPanel(currentPanel + 1);
+                } else {
+                    debug('Already at last panel');
+                    // Visual feedback
+                    nextPanelBtn.classList.add('button-flash');
+                    setTimeout(() => nextPanelBtn.classList.remove('button-flash'), 300);
+                }
+            });
+        }
+        
+        function changeChapter(chapterIndex) {
+            if (chapterIndex === currentChapter) return;
+            
+            debug('Changing to chapter ' + chapterIndex + ': ' + chapters[chapterIndex].title);
+            
+            // Show loading indicator
+            loadingIndicator.style.display = 'flex';
+            
+            // Pause current audio
+            if (isPlaying) {
+                audioPlayer.pause();
+                isPlaying = false;
+                updatePlayButton();
+            }
+            
+            // Update current chapter
+            currentChapter = chapterIndex;
+            
+            // Update chapter dots
+            const dots = chapterNavigation.querySelectorAll('.chapter-dot');
+            dots.forEach((dot, i) => {
+                dot.className = `chapter-dot ${i === currentChapter ? 'active' : ''}`;
+            });
+            
+            // Update audio source
+            audioPlayer.src = chapters[currentChapter].music_file;
+            debug('Audio source updated to: ' + audioPlayer.src);
+            
+            // Preload assets for the new chapter
+            assetManager.preloadChapterAssets(currentChapter)
+                .then(() => {
+                    // Reset panel
+                    currentPanel = 0;
+                    showPanel(currentPanel);
+                    
+                    // Hide loading indicator
+                    loadingIndicator.style.display = 'none';
+                    
+                    debug('Chapter change complete');
+                })
+                .catch(error => {
+                    debug('Error preloading assets for chapter: ' + error.message);
+                    // Continue with chapter change even if asset loading fails
+                    debug('Continuing with chapter change despite asset loading error');
+                    
+                    // Reset panel
+                    currentPanel = 0;
+                    showPanel(currentPanel);
+                    
+                    // Hide loading indicator
+                    loadingIndicator.style.display = 'none';
+                    
+                    debug('Chapter change complete (with fallback)');
+                });
+        }
+        
+        function showPanel(panelIndex) {
+            debug('Showing panel ' + panelIndex);
+            
+            const currentChapterPanels = chapters[currentChapter].panels;
+            
+            // Validate panel index
+            if (panelIndex < 0 || panelIndex >= currentChapterPanels.length) {
+                debug('Invalid panel index: ' + panelIndex);
+                return;
+            }
+            
+            // Create a smooth transition effect
+            const fadeCanvas = document.createElement('canvas');
+            fadeCanvas.width = sceneCanvas.width;
+            fadeCanvas.height = sceneCanvas.height;
+            fadeCanvas.style.position = 'absolute';
+            fadeCanvas.style.top = '0';
+            fadeCanvas.style.left = '0';
+            fadeCanvas.style.zIndex = '5';
+            fadeCanvas.style.opacity = '0';
+            document.querySelector('.experience-container').appendChild(fadeCanvas);
+            
+            // Capture current scene
+            const fadeCtx = fadeCanvas.getContext('2d');
+            fadeCtx.drawImage(sceneCanvas, 0, 0);
+            
+            // Fade in the transition canvas
+            fadeCanvas.style.transition = 'opacity 0.5s ease';
+            fadeCanvas.style.opacity = '1';
+            
+            // Update current panel
+            currentPanel = panelIndex;
+            const panel = currentChapterPanels[panelIndex];
+            
+            // Update panel content
+            panelTitle.textContent = panel.title;
+            
+            let content = panel.text || '';
+            if (panel.quote) {
+                content += `<div class="panel-quote">${panel.quote}</div>`;
+            }
+            if (panel.text_after) {
+                content += panel.text_after;
+            }
+            
+            panelText.innerHTML = content;
+            
+            // Update navigation buttons
+            prevPanelBtn.disabled = currentPanel <= 0;
+            nextPanelBtn.disabled = currentPanel >= currentChapterPanels.length - 1;
+            
+            // Add visual feedback for disabled buttons
+            prevPanelBtn.style.opacity = prevPanelBtn.disabled ? '0.5' : '1';
+            nextPanelBtn.style.opacity = nextPanelBtn.disabled ? '0.5' : '1';
+            
+            // Add a subtle animation to show the panel change
+            narrativePanel.classList.remove('fade-in');
+            void narrativePanel.offsetWidth; // Force reflow
+            narrativePanel.classList.add('fade-in');
+            
+            // Load and display assets for this panel
+            loadPanelAssets(panel);
+            
+            // Fade out and remove the transition canvas after the new scene is ready
+            setTimeout(() => {
+                fadeCanvas.style.opacity = '0';
+                setTimeout(() => {
+                    fadeCanvas.remove();
+                }, 500);
+            }, 100);
+            
+            debug('Panel shown: ' + panel.title);
+        }
+        
+        // Load and display assets for the current panel
+        function loadPanelAssets(panel) {
+            debug('Loading assets for panel: ' + panel.title);
+            
+            // Clear current panel assets
+            currentPanelAssets = [];
+            
+            try {
+                // Add panel-specific attributes to the panel object based on title
+                // This ensures we show the right visuals even if the YAML doesn't have these attributes
+                if (panel.title === "SUN INSIGNIA" || panel.title.includes("INSIGNIA")) {
+                    panel.has_insignia = true;
+                    panel.large_insignia = true;
+                }
+                
+                if (panel.title === "BURNING HOUSES" || panel.title.includes("BURNING")) {
+                    panel.has_burning = true;
+                }
+                
+                if (panel.title === "THE DOOR" || panel.title.includes("DOOR")) {
+                    panel.has_door = true;
+                }
+                
+                if (panel.title === "THRESHOLD" || panel.title.includes("LIGHT")) {
+                    panel.has_light_burst = true;
+                }
+                
+                if (panel.title === "DESERT ROAD" || panel.title.includes("ROAD")) {
+                    panel.has_road = true;
+                }
+                
+                // Determine which assets to show based on panel attributes
+                if (panel.has_insignia) {
+                    const insigniaAsset = assetManager.getAssetByTitle(currentChapter, "Insignia of the Sun (Primary Motif)");
+                    if (insigniaAsset) {
+                        currentPanelAssets.push(insigniaAsset);
+                        // Update the SVG overlay with the insignia
+                        const insigniaObj = document.getElementById('insignia');
+                        if (insigniaObj) {
+                            insigniaObj.data = insigniaAsset.svg;
+                            document.querySelector('.svg-overlay').style.display = 'block';
+                            document.querySelector('.svg-overlay').classList.add('glow');
+                        }
+                    } else {
+                        // Add a hardcoded insignia asset if not found in the asset manager
+                        currentPanelAssets.push({
+                            title: "Insignia of the Sun (Primary Motif)",
+                            svg: "assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg",
+                            png: "assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-4k-rgb-v001-20250831-jh-final.png"
+                        });
+                        document.querySelector('.svg-overlay').style.display = 'block';
+                        document.querySelector('.svg-overlay').classList.add('glow');
+                    }
+                } else {
+                    // Hide insignia if not needed for this panel
+                    document.querySelector('.svg-overlay').style.display = 'none';
+                }
+                
+                // Handle other special panel attributes
+                if (panel.has_burning) {
+                    const burningAsset = assetManager.getAssetByTitle(currentChapter, "Burning Houses on the Horizon");
+                    if (burningAsset) {
+                        currentPanelAssets.push(burningAsset);
+                    } else {
+                        // Add a hardcoded burning houses asset if not found in the asset manager
+                        currentPanelAssets.push({
+                            title: "Burning Houses on the Horizon",
+                            type: "burning"
+                        });
+                    }
+                }
+                
+                if (panel.has_door) {
+                    // Add door-related assets or effects
+                    currentPanelAssets.push({
+                        title: "Door",
+                        type: "door"
+                    });
+                }
+                
+                if (panel.has_light_rays || panel.has_light_burst) {
+                    // Add light ray effects
+                    currentPanelAssets.push({
+                        title: "Light Rays",
+                        type: "light"
+                    });
+                }
+                
+                if (panel.has_road) {
+                    // Add road-related assets
+                    currentPanelAssets.push({
+                        title: "Desert Road",
+                        type: "road"
+                    });
+                }
+                
+                // Match panel title with available assets
+                const chapterAssets = assetManager.getChapterAssets(currentChapter);
+                for (const asset of chapterAssets) {
+                    // Check if asset title contains panel title keywords
+                    if (asset.title && panel.title &&
+                        (asset.title.includes(panel.title) ||
+                         panel.title.includes(asset.title.split(':')[0]) ||
+                         asset.title.toLowerCase().includes(panel.title.toLowerCase()))) {
+                        currentPanelAssets.push(asset);
+                    }
+                }
+                
+                // Add default assets based on panel title if no assets were found
+                if (currentPanelAssets.length === 0) {
+                    if (panel.title === "VELVET CURTAIN") {
+                        currentPanelAssets.push({
+                            title: "The Velvet Curtain",
+                            type: "curtain"
+                        });
+                    } else if (panel.title === "CLUB INTERIOR") {
+                        currentPanelAssets.push({
+                            title: "Club Interior",
+                            type: "club"
+                        });
+                    }
+                }
+                
+                // Update the canvas scene based on the current assets
+                updateCanvasScene();
+                
+                debug(`Loaded ${currentPanelAssets.length} assets for panel`);
+            } catch (error) {
+                debug(`Error loading panel assets: ${error.message}`);
+                // Fallback to default scene - use a simple gradient background
+                window.drawScene = function() {
+                    // Clear canvas
+                    ctx.clearRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                    
+                    // Draw a simple gradient background
+                    const gradient = ctx.createLinearGradient(0, 0, 0, sceneCanvas.height);
+                    gradient.addColorStop(0, "#0b0b12");
+                    gradient.addColorStop(0.5, "#0a0910");
+                    gradient.addColorStop(1, "#05050a");
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                    
+                    // Add a simple vignette effect
+                    const r = Math.max(sceneCanvas.width, sceneCanvas.height) * 0.95;
+                    const vignetteGradient = ctx.createRadialGradient(
+                        sceneCanvas.width/2, sceneCanvas.height/2, r * 0.55,
+                        sceneCanvas.width/2, sceneCanvas.height/2, r
+                    );
+                    vignetteGradient.addColorStop(0, "rgba(0,0,0,0)");
+                    vignetteGradient.addColorStop(1, "rgba(0,0,0,0.75)");
+                    ctx.fillStyle = vignetteGradient;
+                    ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                };
+                
+                // Hide insignia as fallback
+                document.querySelector('.svg-overlay').style.display = 'none';
+                
+                // Trigger a redraw
+                if (window.drawScene) {
+                    drawScene();
+                }
+            }
+        }
+        
+        // Update the canvas scene based on current panel assets
+        function updateCanvasScene() {
+            try {
+                // Get references to the drawing functions from initCanvasScene
+                const drawFunctions = {
+                    drawGradientBackground: function() {
+                        // Draw a simple gradient background
+                        const gradient = ctx.createLinearGradient(0, 0, 0, sceneCanvas.height);
+                        gradient.addColorStop(0, "#0b0b12");
+                        gradient.addColorStop(0.5, "#0a0910");
+                        gradient.addColorStop(1, "#05050a");
+                        ctx.fillStyle = gradient;
+                        ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                    },
+                    drawVignette: function() {
+                        // Add a simple vignette effect
+                        const r = Math.max(sceneCanvas.width, sceneCanvas.height) * 0.95;
+                        const vignetteGradient = ctx.createRadialGradient(
+                            sceneCanvas.width/2, sceneCanvas.height/2, r * 0.55,
+                            sceneCanvas.width/2, sceneCanvas.height/2, r
+                        );
+                        vignetteGradient.addColorStop(0, "rgba(0,0,0,0)");
+                        vignetteGradient.addColorStop(1, "rgba(0,0,0,0.75)");
+                        ctx.fillStyle = vignetteGradient;
+                        ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                    }
+                };
+                
+                // Modify the drawScene function to use the current panel assets and advanced drawing functions
+                window.drawScene = function() {
+                    // Clear canvas
+                    ctx.clearRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                    
+                    // Draw background based on panel attributes
+                    const panel = chapters[currentChapter].panels[currentPanel];
+                    
+                    // Draw a default gradient background first
+                    drawFunctions.drawGradientBackground();
+                    
+                    // Helper functions are now defined globally in initCanvasScene
+                    
+                    // Add panel-specific visual elements based on title or attributes
+                    if (panel.title === "VELVET CURTAIN") {
+                        try {
+                            // Directly call the drawCurtain function
+                            drawCurtain();
+                        } catch (error) {
+                            debug(`Error in drawCurtain: ${error.message}`);
+                            // Fallback to simple curtain effect
+                            const x = sceneCanvas.width * 0.37;
+                            const y = sceneCanvas.height * 0.11;
+                            const w = sceneCanvas.width * 0.25;
+                            const h = sceneCanvas.height * 0.7;
+                            
+                            // Main drape
+                            const grd = ctx.createLinearGradient(0, y, 0, y + h);
+                            grd.addColorStop(0, "#6d001c");
+                            grd.addColorStop(0.6, "#4a0014");
+                            grd.addColorStop(1, "#2a000b");
+                            ctx.fillStyle = grd;
+                            ctx.fillRect(x, y, w, h);
+                        }
+                    } else if (panel.title === "VELVET DANCERS") {
+                        try {
+                            // Directly call the drawVelvetDancers function
+                            drawVelvetDancers();
+                        } catch (error) {
+                            debug(`Error in drawVelvetDancers: ${error.message}`);
+                            // Fallback to default visualization
+                            createDefaultVisualization();
+                        }
+                    } else if (panel.title === "CLUB INTERIOR") {
+                        try {
+                            // Directly call the drawClubInterior function
+                            drawClubInterior();
+                        } catch (error) {
+                            debug(`Error in drawClubInterior: ${error.message}`);
+                            // Fallback to simple light beams
+                            const beamCount = 5;
+                            ctx.save();
+                            ctx.globalAlpha = 0.3;
+                            ctx.globalCompositeOperation = 'screen';
+                            
+                            for (let i = 0; i < beamCount; i++) {
+                                const x = sceneCanvas.width * (0.1 + 0.8 * (i / (beamCount - 1)));
+                                const width = sceneCanvas.width * 0.05;
+                                const height = sceneCanvas.height * 1.2;
+                                
+                                const gradient = ctx.createLinearGradient(0, 0, 0, sceneCanvas.height);
+                                
+                                if (i % 2 === 0) {
+                                    // Purple beam
+                                    gradient.addColorStop(0, "rgba(180, 70, 220, 0)");
+                                    gradient.addColorStop(0.5, "rgba(180, 70, 220, 0.15)");
+                                    gradient.addColorStop(1, "rgba(180, 70, 220, 0)");
+                                } else {
+                                    // Gold beam
+                                    gradient.addColorStop(0, "rgba(255, 215, 0, 0)");
+                                    gradient.addColorStop(0.5, "rgba(255, 215, 0, 0.15)");
+                                    gradient.addColorStop(1, "rgba(255, 215, 0, 0)");
+                                }
+                                
+                                ctx.fillStyle = gradient;
+                                ctx.fillRect(x - width/2, -height/2, width, height);
+                            }
+                            ctx.restore();
+                        }
+                    } else if (panel.has_burning) {
+                        try {
+                            // Directly call the drawBurningHouses function
+                            drawBurningHouses();
+                        } catch (error) {
+                            debug(`Error in drawBurningHouses: ${error.message}`);
+                            // Fallback to simple red-orange glow
+                            const horizonY = sceneCanvas.height * 0.6;
+                            ctx.fillStyle = "rgba(255, 69, 0, 0.3)";
+                            ctx.fillRect(0, 0, sceneCanvas.width, horizonY);
+                        }
+                    } else if (panel.has_insignia && panel.large_insignia) {
+                        try {
+                            // Directly call the drawLargeInsignia function
+                            drawLargeInsignia();
+                        } catch (error) {
+                            debug(`Error in drawLargeInsignia: ${error.message}`);
+                            // Fallback to simple sun insignia
+                            const centerX = sceneCanvas.width / 2;
+                            const centerY = sceneCanvas.height / 2;
+                            const radius = Math.min(sceneCanvas.width, sceneCanvas.height) * 0.2;
+                            
+                            ctx.fillStyle = "#FFC107";
+                            ctx.beginPath();
+                            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                    } else if (panel.has_door) {
+                        try {
+                            // Directly call the drawDoor function
+                            drawDoor();
+                        } catch (error) {
+                            debug(`Error in drawDoor: ${error.message}`);
+                            // Fallback to simple door outline
+                            const doorWidth = sceneCanvas.width * 0.2;
+                            const doorHeight = sceneCanvas.height * 0.6;
+                            const doorX = (sceneCanvas.width - doorWidth) / 2;
+                            const doorY = (sceneCanvas.height - doorHeight) / 2;
+                            
+                            ctx.strokeStyle = "#FFC107";
+                            ctx.lineWidth = 3;
+                            ctx.strokeRect(doorX, doorY, doorWidth, doorHeight);
+                        }
+                    } else if (panel.has_light_burst) {
+                        try {
+                            // Directly call the drawLightBurst function
+                            drawLightBurst();
+                        } catch (error) {
+                            debug(`Error in drawLightBurst: ${error.message}`);
+                            // Fallback to simple light burst
+                            const centerX = sceneCanvas.width / 2;
+                            const centerY = sceneCanvas.height / 2;
+                            const radius = Math.max(sceneCanvas.width, sceneCanvas.height) * 0.5;
+                            
+                            const burstGradient = ctx.createRadialGradient(
+                                centerX, centerY, 0,
+                                centerX, centerY, radius
+                            );
+                            burstGradient.addColorStop(0, "rgba(255, 255, 255, 0.8)");
+                            burstGradient.addColorStop(1, "rgba(255, 193, 7, 0)");
+                            
+                            ctx.fillStyle = burstGradient;
+                            ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                        }
+                    } else if (panel.has_road) {
+                        try {
+                            // Directly call the drawDesertRoad function
+                            drawDesertRoad();
+                        } catch (error) {
+                            debug(`Error in drawDesertRoad: ${error.message}`);
+                            // Fallback to simple road
+                            const horizonY = sceneCanvas.height * 0.4;
+                            const roadWidth = sceneCanvas.width * 0.3;
+                            
+                            ctx.fillStyle = "#333333";
+                            ctx.beginPath();
+                            ctx.moveTo(sceneCanvas.width / 2 - roadWidth / 8, sceneCanvas.height);
+                            ctx.lineTo(sceneCanvas.width / 2 - roadWidth / 2, horizonY);
+                            ctx.lineTo(sceneCanvas.width / 2 + roadWidth / 2, horizonY);
+                            ctx.lineTo(sceneCanvas.width / 2 + roadWidth / 8, sceneCanvas.height);
+                            ctx.closePath();
+                            ctx.fill();
+                        }
+                    } else if (panel.title === "THE CORNER") {
+                        // Create a specific visualization for "THE CORNER" panel
+                        // Urban corner with poetry readers
+                        try {
+                            // Draw urban background
+                            fillLinearGradient(0, 0, 0, sceneCanvas.height, [
+                                [0, "#1A2A44"], [0.5, "#2D2D2D"], [1, "#1A1A1A"]
+                            ]);
+                            drawNoise(0.2);
+                            
+                            // Draw street corner
+                            const cornerX = sceneCanvas.width * 0.7;
+                            const cornerY = sceneCanvas.height * 0.6;
+                            const buildingWidth = sceneCanvas.width * 0.4;
+                            const buildingHeight = sceneCanvas.height * 0.7;
+                            
+                            // Building 1
+                            ctx.fillStyle = "#333333";
+                            ctx.fillRect(cornerX - buildingWidth, cornerY - buildingHeight, buildingWidth, buildingHeight);
+                            
+                            // Building 2
+                            ctx.fillStyle = "#222222";
+                            ctx.fillRect(cornerX, cornerY - buildingHeight * 0.8, buildingWidth, buildingHeight * 0.8);
+                            
+                            // Sidewalk
+                            ctx.fillStyle = "#555555";
+                            ctx.fillRect(0, cornerY, sceneCanvas.width, sceneCanvas.height * 0.05);
+                            
+                            // Street
+                            ctx.fillStyle = "#111111";
+                            ctx.fillRect(0, cornerY + sceneCanvas.height * 0.05, sceneCanvas.width, sceneCanvas.height);
+                            
+                            // Streetlight
+                            ctx.fillStyle = "#333333";
+                            ctx.fillRect(cornerX - 5, cornerY - buildingHeight * 0.6, 10, buildingHeight * 0.6);
+                            
+                            // Light
+                            const lightX = cornerX;
+                            const lightY = cornerY - buildingHeight * 0.6;
+                            const lightRadius = 15;
+                            
+                            const lightGradient = ctx.createRadialGradient(
+                                lightX, lightY, 0,
+                                lightX, lightY, lightRadius * 5
+                            );
+                            lightGradient.addColorStop(0, "rgba(255, 255, 200, 0.8)");
+                            lightGradient.addColorStop(0.2, "rgba(255, 255, 200, 0.3)");
+                            lightGradient.addColorStop(1, "rgba(255, 255, 200, 0)");
+                            
+                            ctx.fillStyle = lightGradient;
+                            ctx.beginPath();
+                            ctx.arc(lightX, lightY, lightRadius * 5, 0, Math.PI * 2);
+                            ctx.fill();
+                            
+                            // Group of people
+                            const peopleCount = 5;
+                            const centerX = sceneCanvas.width * 0.4;
+                            const centerY = cornerY - sceneCanvas.height * 0.1;
+                            const radius = sceneCanvas.width * 0.1;
+                            
+                            for (let i = 0; i < peopleCount; i++) {
+                                const angle = (i / peopleCount) * Math.PI * 1.5;
+                                const x = centerX + Math.cos(angle) * radius;
+                                const y = centerY + Math.sin(angle) * radius * 0.5;
+                                
+                                // Person
+                                ctx.fillStyle = "#000000";
+                                ctx.beginPath();
+                                ctx.arc(x, y - 15, 8, 0, Math.PI * 2); // Head
+                                ctx.fill();
+                                
+                                ctx.beginPath();
+                                ctx.moveTo(x, y - 7);
+                                ctx.lineTo(x, y + 15); // Body
+                                ctx.stroke();
+                                
+                                // Glowing words/poetry
+                                if (isPlaying) {
+                                    const time = Date.now() / 1000;
+                                    const wordCount = 3;
+                                    
+                                    ctx.save();
+                                    ctx.globalAlpha = 0.7 + 0.3 * Math.sin(time + i);
+                                    ctx.fillStyle = "#FFC107";
+                                    
+                                    for (let j = 0; j < wordCount; j++) {
+                                        const wordX = x + 15 + j * 10;
+                                        const wordY = y - 10 + j * 5;
+                                        const wordWidth = 15 + Math.random() * 20;
+                                        const wordHeight = 3;
+                                        
+                                        ctx.fillRect(wordX, wordY, wordWidth, wordHeight);
+                                    }
+                                    ctx.restore();
+                                }
+                            }
+                        } catch (error) {
+                            debug(`Error in THE CORNER visualization: ${error.message}`);
+                            createDefaultVisualization();
+                        }
+                    } else {
+                        // Default visualization for panels without specific visuals
+                        createDefaultVisualization();
+                    }
+                    
+                    // Always add vignette
+                    drawFunctions.drawVignette();
+                    
+                    // Add subtle noise texture to all scenes for visual richness
+                    drawNoise(0.05);
+                };
+                
+                // Define the createDefaultVisualization function
+                window.createDefaultVisualization = function() {
+                    // Create a rich, abstract visualization based on audio reactivity
+                    const time = Date.now() / 1000;
+                    
+                    // Create a dynamic background with shifting colors
+                    const hue1 = (time * 10) % 360;
+                    const hue2 = (hue1 + 180) % 360;
+                    
+                    // Create a gradient background
+                    const gradient = ctx.createLinearGradient(0, 0, sceneCanvas.width, sceneCanvas.height);
+                    gradient.addColorStop(0, `hsla(${hue1}, 70%, 20%, 1)`);
+                    gradient.addColorStop(1, `hsla(${hue2}, 70%, 10%, 1)`);
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                    
+                    // Add floating particles
+                    const particleCount = 30;
+                    ctx.save();
+                    ctx.globalAlpha = 0.6;
+                    ctx.globalCompositeOperation = 'screen';
+                    
+                    for (let i = 0; i < particleCount; i++) {
+                        const size = 5 + Math.sin(time + i) * 3;
+                        const x = sceneCanvas.width * (0.1 + 0.8 * ((i / particleCount) + 0.1 * Math.sin(time + i)));
+                        const y = sceneCanvas.height * (0.1 + 0.8 * ((i / particleCount) + 0.1 * Math.cos(time + i * 0.7)));
+                        
+                        ctx.fillStyle = `hsla(${(hue1 + i * 10) % 360}, 100%, 70%, 0.7)`;
+                        ctx.beginPath();
+                        ctx.arc(x, y, size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                    
+                    // Add dynamic wave patterns
+                    ctx.save();
+                    ctx.globalAlpha = 0.3;
+                    ctx.strokeStyle = `hsla(${hue2}, 100%, 70%, 0.5)`;
+                    ctx.lineWidth = 2;
+                    
+                    const waveCount = 3;
+                    for (let w = 0; w < waveCount; w++) {
+                        ctx.beginPath();
+                        for (let x = 0; x < sceneCanvas.width; x += 5) {
+                            const amplitude = sceneCanvas.height * 0.1 * (1 + 0.5 * Math.sin(time * 0.5 + w));
+                            const frequency = 0.01 * (1 + 0.5 * Math.cos(time * 0.3 + w));
+                            const y = sceneCanvas.height * (0.3 + 0.4 * w) +
+                                     amplitude * Math.sin(x * frequency + time * (1 + w * 0.5));
+                            
+                            if (x === 0) {
+                                ctx.moveTo(x, y);
+                            } else {
+                                ctx.lineTo(x, y);
+                            }
+                        }
+                        ctx.stroke();
+                    }
+                    ctx.restore();
+                };
+                
+                // Trigger a redraw
+                if (window.drawScene) {
+                    drawScene();
+                }
+            } catch (error) {
+                debug(`Error updating canvas scene: ${error.message}`);
+                
+                // Fallback to a very simple scene
+                window.drawScene = function() {
+                    // Clear canvas
+                    ctx.clearRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                    
+                    // Draw a simple gradient background
+                    const gradient = ctx.createLinearGradient(0, 0, 0, sceneCanvas.height);
+                    gradient.addColorStop(0, "#0b0b12");
+                    gradient.addColorStop(0.5, "#0a0910");
+                    gradient.addColorStop(1, "#05050a");
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                    
+                    // Add a simple vignette effect
+                    const r = Math.max(sceneCanvas.width, sceneCanvas.height) * 0.95;
+                    const vignetteGradient = ctx.createRadialGradient(
+                        sceneCanvas.width/2, sceneCanvas.height/2, r * 0.55,
+                        sceneCanvas.width/2, sceneCanvas.height/2, r
+                    );
+                    vignetteGradient.addColorStop(0, "rgba(0,0,0,0)");
+                    vignetteGradient.addColorStop(1, "rgba(0,0,0,0.75)");
+                    ctx.fillStyle = vignetteGradient;
+                    ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+                };
+                
+                // Trigger a redraw
+                if (window.drawScene) {
+                    drawScene();
+                }
+            }
+        }
+        
+        // Make the createDefaultVisualization function globally available
+        window.createDefaultVisualization = function() {
+            if (!ctx) return;
+            
+            // Create a rich, abstract visualization based on time
+            const time = Date.now() / 1000;
+            
+            // Create a dynamic background with shifting colors
+            const hue1 = (time * 10) % 360;
+            const hue2 = (hue1 + 180) % 360;
+            
+            // Create a gradient background
+            const gradient = ctx.createLinearGradient(0, 0, sceneCanvas.width, sceneCanvas.height);
+            gradient.addColorStop(0, `hsla(${hue1}, 70%, 20%, 1)`);
+            gradient.addColorStop(1, `hsla(${hue2}, 70%, 10%, 1)`);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+            
+            // Add floating particles
+            const particleCount = 30;
+            ctx.save();
+            ctx.globalAlpha = 0.6;
+            ctx.globalCompositeOperation = 'screen';
+            
+            for (let i = 0; i < particleCount; i++) {
+                const size = 5 + Math.sin(time + i) * 3;
+                const x = sceneCanvas.width * (0.1 + 0.8 * ((i / particleCount) + 0.1 * Math.sin(time + i)));
+                const y = sceneCanvas.height * (0.1 + 0.8 * ((i / particleCount) + 0.1 * Math.cos(time + i * 0.7)));
+                
+                ctx.fillStyle = `hsla(${(hue1 + i * 10) % 360}, 100%, 70%, 0.7)`;
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.restore();
+            
+            // Add dynamic wave patterns
+            ctx.save();
+            ctx.globalAlpha = 0.3;
+            ctx.strokeStyle = `hsla(${hue2}, 100%, 70%, 0.5)`;
+            ctx.lineWidth = 2;
+            
+            const waveCount = 3;
+            for (let w = 0; w < waveCount; w++) {
+                ctx.beginPath();
+                for (let x = 0; x < sceneCanvas.width; x += 5) {
+                    const amplitude = sceneCanvas.height * 0.1 * (1 + 0.5 * Math.sin(time * 0.5 + w));
+                    const frequency = 0.01 * (1 + 0.5 * Math.cos(time * 0.3 + w));
+                    const y = sceneCanvas.height * (0.3 + 0.4 * w) +
+                             amplitude * Math.sin(x * frequency + time * (1 + w * 0.5));
+                    
+                    if (x === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                ctx.stroke();
+            }
+            ctx.restore();
+        };
+        
+        // Additional scene drawing functions - make them globally available
+        window.drawClubInterior = function() {
+            // Draw club interior with purple and gold lights
+            fillLinearGradient(0, 0, 0, sceneCanvas.height, [
+                [0, "#2D0A31"], [0.5, "#1A0E25"], [1, "#2D0A31"]
+            ]);
+            drawNoise(0.2);
+            
+            // Add light beams
+            const beamCount = 5;
+            ctx.save();
+            ctx.globalAlpha = 0.3;
+            ctx.globalCompositeOperation = 'screen';
+            
+            for (let i = 0; i < beamCount; i++) {
+                const x = sceneCanvas.width * (0.1 + 0.8 * (i / (beamCount - 1)));
+                const width = sceneCanvas.width * 0.05;
+                const height = sceneCanvas.height * 1.2;
+                
+                const gradient = ctx.createLinearGradient(0, 0, 0, sceneCanvas.height);
+                
+                if (i % 2 === 0) {
+                    // Purple beam
+                    gradient.addColorStop(0, "rgba(180, 70, 220, 0)");
+                    gradient.addColorStop(0.5, "rgba(180, 70, 220, 0.15)");
+                    gradient.addColorStop(1, "rgba(180, 70, 220, 0)");
+                } else {
+                    // Gold beam
+                    gradient.addColorStop(0, "rgba(255, 215, 0, 0)");
+                    gradient.addColorStop(0.5, "rgba(255, 215, 0, 0.15)");
+                    gradient.addColorStop(1, "rgba(255, 215, 0, 0)");
+                }
+                
+                ctx.fillStyle = gradient;
+                ctx.fillRect(x - width/2, -height/2, width, height);
+            }
+            ctx.restore();
+            
+            // Add floor reflection
+            ctx.fillStyle = "rgba(100, 50, 150, 0.2)";
+            ctx.fillRect(0, sceneCanvas.height * 0.7, sceneCanvas.width, sceneCanvas.height * 0.3);
+        };
+        
+        window.drawBurningHouses = function() {
+            // Draw horizon with burning houses
+            fillLinearGradient(0, 0, 0, sceneCanvas.height, [
+                [0, "#800020"], [0.5, "#FF3300"], [1, "#800020"]
+            ]);
+            drawNoise(0.15);
+            
+            // Draw horizon line
+            const horizonY = sceneCanvas.height * 0.6;
+            ctx.fillStyle = "#000000";
+            ctx.fillRect(0, horizonY, sceneCanvas.width, sceneCanvas.height - horizonY);
+            
+            // Draw burning houses silhouettes
+            ctx.fillStyle = "#000000";
+            const houseCount = 8;
+            
+            for (let i = 0; i < houseCount; i++) {
+                const x = sceneCanvas.width * (0.1 + 0.8 * (i / (houseCount - 1)));
+                const width = sceneCanvas.width * 0.06;
+                const height = sceneCanvas.height * 0.08;
+                
+                // House silhouette
+                ctx.beginPath();
+                ctx.moveTo(x - width/2, horizonY);
+                ctx.lineTo(x - width/2, horizonY - height * 0.7);
+                ctx.lineTo(x, horizonY - height);
+                ctx.lineTo(x + width/2, horizonY - height * 0.7);
+                ctx.lineTo(x + width/2, horizonY);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Flames
+                if (isPlaying) {
+                    const time = Date.now() / 1000;
+                    const flameHeight = height * (0.3 + 0.2 * Math.sin(time * 3 + i));
+                    
+                    const flameGradient = ctx.createLinearGradient(0, horizonY - height, 0, horizonY - height - flameHeight);
+                    flameGradient.addColorStop(0, "rgba(255, 165, 0, 0.8)");
+                    flameGradient.addColorStop(1, "rgba(255, 69, 0, 0)");
+                    
+                    ctx.fillStyle = flameGradient;
+                    ctx.beginPath();
+                    ctx.moveTo(x - width/4, horizonY - height);
+                    ctx.quadraticCurveTo(x, horizonY - height - flameHeight, x + width/4, horizonY - height);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+            }
+        };
+        
+        window.drawLargeInsignia = function() {
+            // Draw background
+            fillLinearGradient(0, 0, 0, sceneCanvas.height, [
+                [0, "#1A2A44"], [0.5, "#FFC107"], [1, "#1A2A44"]
+            ]);
+            drawNoise(0.1);
+            
+            // Draw large insignia
+            const centerX = sceneCanvas.width / 2;
+            const centerY = sceneCanvas.height / 2;
+            const radius = Math.min(sceneCanvas.width, sceneCanvas.height) * 0.3;
+            
+            // Draw sun circle
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            const circleGradient = ctx.createRadialGradient(
+                centerX, centerY, radius * 0.7,
+                centerX, centerY, radius
+            );
+            circleGradient.addColorStop(0, "#FFC107");
+            circleGradient.addColorStop(1, "#FF8F00");
+            ctx.fillStyle = circleGradient;
+            ctx.fill();
+            
+            // Draw rays
+            const rayCount = 12;
+            const rayLength = radius * 0.5;
+            const innerRadius = radius * 1.05;
+            
+            ctx.strokeStyle = "#FFC107";
+            ctx.lineWidth = 5;
+            
+            for (let i = 0; i < rayCount; i++) {
+                const angle = (i / rayCount) * Math.PI * 2;
+                const startX = centerX + Math.cos(angle) * innerRadius;
+                const startY = centerY + Math.sin(angle) * innerRadius;
+                const endX = centerX + Math.cos(angle) * (innerRadius + rayLength);
+                const endY = centerY + Math.sin(angle) * (innerRadius + rayLength);
+                
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(endX, endY);
+                ctx.stroke();
+            }
+            
+            // Add glow effect
+            ctx.shadowColor = "#FFC107";
+            ctx.shadowBlur = 20;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+        };
+        
+        window.drawDoor = function() {
+            // Draw background
+            fillLinearGradient(0, 0, 0, sceneCanvas.height, [
+                [0, "#1A2A44"], [0.5, "#000000"], [1, "#1A2A44"]
+            ]);
+            drawNoise(0.2);
+            
+            // Draw door frame
+            const doorWidth = sceneCanvas.width * 0.2;
+            const doorHeight = sceneCanvas.height * 0.6;
+            const doorX = (sceneCanvas.width - doorWidth) / 2;
+            const doorY = (sceneCanvas.height - doorHeight) / 2;
+            
+            // Door frame
+            ctx.strokeStyle = "#FFC107";
+            ctx.lineWidth = 3;
+            ctx.strokeRect(doorX, doorY, doorWidth, doorHeight);
+            
+            // Door light
+            const lightGradient = ctx.createLinearGradient(
+                doorX, doorY,
+                doorX + doorWidth, doorY + doorHeight
+            );
+            lightGradient.addColorStop(0, "rgba(255, 193, 7, 0.1)");
+            lightGradient.addColorStop(0.5, "rgba(255, 193, 7, 0.3)");
+            lightGradient.addColorStop(1, "rgba(255, 193, 7, 0.1)");
+            
+            ctx.fillStyle = lightGradient;
+            ctx.fillRect(doorX, doorY, doorWidth, doorHeight);
+            
+            // Key hole
+            const keyHoleX = doorX + doorWidth * 0.8;
+            const keyHoleY = doorY + doorHeight * 0.5;
+            
+            ctx.fillStyle = "#000";
+            ctx.beginPath();
+            ctx.arc(keyHoleX, keyHoleY, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillRect(keyHoleX - 1, keyHoleY, 2, 10);
+        };
+        
+        window.drawLightBurst = function() {
+            // Draw light burst background
+            fillLinearGradient(0, 0, 0, sceneCanvas.height, [
+                [0, "#FFC107"], [0.5, "#FFFFFF"], [1, "#FFC107"]
+            ]);
+            
+            // Add radial light burst
+            const centerX = sceneCanvas.width / 2;
+            const centerY = sceneCanvas.height / 2;
+            const radius = Math.max(sceneCanvas.width, sceneCanvas.height);
+            
+            const burstGradient = ctx.createRadialGradient(
+                centerX, centerY, 0,
+                centerX, centerY, radius
+            );
+            burstGradient.addColorStop(0, "rgba(255, 255, 255, 1)");
+            burstGradient.addColorStop(0.3, "rgba(255, 255, 255, 0.8)");
+            burstGradient.addColorStop(0.6, "rgba(255, 193, 7, 0.5)");
+            burstGradient.addColorStop(1, "rgba(255, 87, 34, 0.2)");
+            
+            ctx.fillStyle = burstGradient;
+            ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+            
+            // Add rays of light
+            if (isPlaying) {
+                const time = Date.now() / 1000;
+                const rayCount = 24;
+                
+                ctx.save();
+                ctx.globalAlpha = 0.4 + 0.2 * Math.sin(time);
+                ctx.globalCompositeOperation = 'overlay';
+                
+                for (let i = 0; i < rayCount; i++) {
+                    const angle = (i / rayCount) * Math.PI * 2;
+                    const length = radius * (0.7 + 0.3 * Math.sin(time * 2 + i));
+                    
+                    ctx.strokeStyle = "#FFFFFF";
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(centerX, centerY);
+                    ctx.lineTo(
+                        centerX + Math.cos(angle) * length,
+                        centerY + Math.sin(angle) * length
+                    );
+                    ctx.stroke();
+                }
+                ctx.restore();
+            }
+        };
+        
+        window.drawDesertRoad = function() {
+            // Draw desert background
+            fillLinearGradient(0, 0, 0, sceneCanvas.height, [
+                [0, "#FFC107"], [0.5, "#FF9800"], [1, "#FFC107"]
+            ]);
+            drawNoise(0.1);
+            
+            // Draw horizon line
+            const horizonY = sceneCanvas.height * 0.4;
+            
+            // Draw sky
+            const skyGradient = ctx.createLinearGradient(0, 0, 0, horizonY);
+            skyGradient.addColorStop(0, "#1A2A44");
+            skyGradient.addColorStop(1, "#FF9800");
+            ctx.fillStyle = skyGradient;
+            ctx.fillRect(0, 0, sceneCanvas.width, horizonY);
+            
+            // Draw sun
+            const sunX = sceneCanvas.width * 0.7;
+            const sunY = horizonY * 0.5;
+            const sunRadius = sceneCanvas.width * 0.08;
+            
+            const sunGradient = ctx.createRadialGradient(
+                sunX, sunY, 0,
+                sunX, sunY, sunRadius
+            );
+            sunGradient.addColorStop(0, "#FFFFFF");
+            sunGradient.addColorStop(0.2, "#FFC107");
+            sunGradient.addColorStop(1, "#FF5722");
+            
+            ctx.fillStyle = sunGradient;
+            ctx.beginPath();
+            ctx.arc(sunX, sunY, sunRadius, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw road
+            const roadWidth = sceneCanvas.width * 0.3;
+            const roadTop = horizonY;
+            const roadBottom = sceneCanvas.height;
+            
+            ctx.beginPath();
+            ctx.moveTo(sceneCanvas.width / 2 - roadWidth / 8, roadBottom);
+            ctx.lineTo(sceneCanvas.width / 2 - roadWidth / 2, roadTop);
+            ctx.lineTo(sceneCanvas.width / 2 + roadWidth / 2, roadTop);
+            ctx.lineTo(sceneCanvas.width / 2 + roadWidth / 8, roadBottom);
+            ctx.closePath();
+            
+            const roadGradient = ctx.createLinearGradient(0, roadTop, 0, roadBottom);
+            roadGradient.addColorStop(0, "#333333");
+            roadGradient.addColorStop(1, "#111111");
+            ctx.fillStyle = roadGradient;
+            ctx.fill();
+            
+            // Draw road markings
+            ctx.strokeStyle = "#FFFFFF";
+            ctx.lineWidth = 2;
+            ctx.setLineDash([20, 20]);
+            ctx.beginPath();
+            ctx.moveTo(sceneCanvas.width / 2, roadBottom);
+            ctx.lineTo(sceneCanvas.width / 2, roadTop);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw figure on road if playing
+            if (isPlaying) {
+                const time = Date.now() / 1000;
+                const figureX = sceneCanvas.width / 2;
+                const figureY = roadBottom - (roadBottom - roadTop) * (0.2 + 0.05 * Math.sin(time));
+                const figureHeight = sceneCanvas.height * 0.1;
+                
+                ctx.fillStyle = "#000000";
+                ctx.beginPath();
+                ctx.ellipse(figureX, figureY, 5, figureHeight / 2, 0, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        };
+        
+        // Add a specific visualization for VELVET DANCERS panel
+        window.drawVelvetDancers = function() {
+            // Draw club background
+            fillLinearGradient(0, 0, 0, sceneCanvas.height, [
+                [0, "#2D0A31"], [0.5, "#1A0E25"], [1, "#2D0A31"]
+            ]);
+            drawNoise(0.2);
+            
+            // Add light beams
+            const beamCount = 5;
+            ctx.save();
+            ctx.globalAlpha = 0.3;
+            ctx.globalCompositeOperation = 'screen';
+            
+            for (let i = 0; i < beamCount; i++) {
+                const x = sceneCanvas.width * (0.1 + 0.8 * (i / (beamCount - 1)));
+                const width = sceneCanvas.width * 0.05;
+                const height = sceneCanvas.height * 1.2;
+                
+                const gradient = ctx.createLinearGradient(0, 0, 0, sceneCanvas.height);
+                
+                if (i % 2 === 0) {
+                    // Purple beam
+                    gradient.addColorStop(0, "rgba(180, 70, 220, 0)");
+                    gradient.addColorStop(0.5, "rgba(180, 70, 220, 0.15)");
+                    gradient.addColorStop(1, "rgba(180, 70, 220, 0)");
+                } else {
+                    // Gold beam
+                    gradient.addColorStop(0, "rgba(255, 215, 0, 0)");
+                    gradient.addColorStop(0.5, "rgba(255, 215, 0, 0.15)");
+                    gradient.addColorStop(1, "rgba(255, 215, 0, 0)");
+                }
+                
+                ctx.fillStyle = gradient;
+                ctx.fillRect(x - width/2, -height/2, width, height);
+            }
+            ctx.restore();
+            
+            // Add floor reflection
+            ctx.fillStyle = "rgba(100, 50, 150, 0.2)";
+            ctx.fillRect(0, sceneCanvas.height * 0.7, sceneCanvas.width, sceneCanvas.height * 0.3);
+            
+            // Draw dancers
+            const dancerCount = isPlaying ? 7 : 5;
+            const time = Date.now() / 1000;
+            
+            for (let i = 0; i < dancerCount; i++) {
+                // Position dancers in a semi-circle
+                const angle = Math.PI * (0.2 + 0.6 * (i / (dancerCount - 1)));
+                const radius = sceneCanvas.width * 0.3;
+                const x = sceneCanvas.width / 2 + Math.cos(angle) * radius;
+                const y = sceneCanvas.height * 0.7;
+                
+                // Dancer body
+                const dancerHeight = sceneCanvas.height * 0.25;
+                const dancerWidth = dancerHeight * 0.3;
+                
+                // Animation based on time and audio
+                const animationOffset = time * (1 + i * 0.1);
+                const moveY = Math.sin(animationOffset * 2) * 10;
+                const moveX = Math.cos(animationOffset * 1.5) * 5;
+                
+                // Draw dancer silhouette
+                ctx.save();
+                ctx.fillStyle = "#000000";
+                
+                // Body
+                ctx.beginPath();
+                ctx.ellipse(
+                    x + moveX,
+                    y + moveY,
+                    dancerWidth / 2,
+                    dancerHeight / 2,
+                    Math.sin(animationOffset) * 0.2,
+                    0, Math.PI * 2
+                );
+                ctx.fill();
+                
+                // Add velvet texture/color overlay
+                ctx.globalCompositeOperation = 'source-atop';
+                const velvetGradient = ctx.createLinearGradient(
+                    x - dancerWidth, y - dancerHeight,
+                    x + dancerWidth, y + dancerHeight
+                );
+                velvetGradient.addColorStop(0, "#800020");
+                velvetGradient.addColorStop(0.5, "#600020");
+                velvetGradient.addColorStop(1, "#400020");
+                
+                ctx.fillStyle = velvetGradient;
+                ctx.fillRect(
+                    x - dancerWidth,
+                    y - dancerHeight,
+                    dancerWidth * 2,
+                    dancerHeight * 2
+                );
+                
+                // Add insignia on shoulder
+                ctx.globalCompositeOperation = 'source-over';
+                const insigniaX = x + dancerWidth * 0.3;
+                const insigniaY = y - dancerHeight * 0.3;
+                const insigniaSize = dancerWidth * 0.4;
+                
+                // Insignia circle
+                ctx.fillStyle = "#FFC107";
+                ctx.beginPath();
+                ctx.arc(insigniaX, insigniaY, insigniaSize, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Insignia rays
+                ctx.strokeStyle = "#FFC107";
+                ctx.lineWidth = 2;
+                const rayCount = 8;
+                
+                for (let j = 0; j < rayCount; j++) {
+                    const rayAngle = (j / rayCount) * Math.PI * 2;
+                    const innerRadius = insigniaSize * 1.1;
+                    const outerRadius = insigniaSize * 1.5;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(
+                        insigniaX + Math.cos(rayAngle) * innerRadius,
+                        insigniaY + Math.sin(rayAngle) * innerRadius
+                    );
+                    ctx.lineTo(
+                        insigniaX + Math.cos(rayAngle) * outerRadius,
+                        insigniaY + Math.sin(rayAngle) * outerRadius
+                    );
+                    ctx.stroke();
+                }
+                
+                ctx.restore();
+            }
+            
+            // Add subtle fog effect
+            ctx.save();
+            ctx.globalAlpha = 0.2;
+            ctx.globalCompositeOperation = 'screen';
+            
+            const fogGradient = ctx.createRadialGradient(
+                sceneCanvas.width / 2, sceneCanvas.height * 0.7, 0,
+                sceneCanvas.width / 2, sceneCanvas.height * 0.7, sceneCanvas.width * 0.7
+            );
+            fogGradient.addColorStop(0, "rgba(180, 100, 200, 0.3)");
+            fogGradient.addColorStop(1, "rgba(180, 100, 200, 0)");
+            
+            ctx.fillStyle = fogGradient;
+            ctx.fillRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+            ctx.restore();
+        };
+    </script>
+            
