@@ -1,0 +1,19 @@
+{
+  "name": "pop-song-summer",
+  "version": "1.0.0",
+  "description": "Immersive album experience for Pop Song Summer",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "immersive",
+    "album",
+    "experience",
+    "canvas",
+    "audio"
+  ],
+  "author": "",
+  "license": "MIT"
+}

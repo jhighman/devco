@@ -1,0 +1,446 @@
+/* Base styles */
+:root {
+    --velvet-red: #800020;
+    --gold-thread: #FFC107;
+    --ash-gray: #4A4A4A;
+    --sodium-amber: #FF9800;
+    --horizon-orange: #FF5722;
+    --desert-blue: #1A2A44;
+    --night-black: #0a0a0a;
+    --deep-purple: #2D0A31;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: var(--night-black);
+    color: #eaeaea;
+    overflow: hidden;
+}
+
+/* Full-screen experience container */
+.experience-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Canvas scene */
+#scene-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* SVG overlay */
+.svg-overlay {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 80px;
+    height: 80px;
+    z-index: 10;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.svg-overlay:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Narrative panel */
+.narrative-panel {
+    position: absolute;
+    bottom: 120px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    max-width: 800px;
+    max-height: 50vh;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    z-index: 25;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Enhanced styling for narrative panel with special effects */
+.narrative-panel.burning-effect {
+    background: rgba(0, 0, 0, 0.85);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 87, 34, 0.3);
+}
+
+.narrative-panel.light-rays {
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+.narrative-panel.door-effect {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+/* Add scrollbar styling for the narrative panel */
+.narrative-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.narrative-panel::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.narrative-panel::-webkit-scrollbar-thumb {
+    background: var(--gold-thread);
+    border-radius: 4px;
+}
+
+.narrative-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--sodium-amber);
+}
+
+/* Chapter card */
+.chapter-card {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    max-width: 900px;
+    background: transparent;
+    border-radius: 8px;
+    padding: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.chapter-card-image {
+    width: 100%;
+    height: 180px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.chapter-title {
+    position: absolute;
+    bottom: 20px;
+    font-size: 2.2rem;
+    color: var(--gold-thread);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
+
+.panel-title {
+    font-size: 1.5rem;
+    color: var(--gold-thread);
+    margin-bottom: 10px;
+}
+
+.panel-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.panel-quote {
+    font-style: italic;
+    color: var(--sodium-amber);
+    border-left: 3px solid var(--horizon-orange);
+    padding-left: 15px;
+    margin: 15px 0;
+}
+
+/* Audio player */
+.audio-controls {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    max-width: 800px;
+    display: flex;
+    align-items: center;
+    background: rgba(45, 10, 49, 0.7);
+    backdrop-filter: blur(5px);
+    border-radius: 50px;
+    padding: 10px 20px;
+    z-index: 30;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.play-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--horizon-orange);
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: background 0.3s ease;
+}
+
+.play-button:hover {
+    background: var(--gold-thread);
+}
+
+.progress-container {
+    flex-grow: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--gold-thread);
+    border-radius: 3px;
+    width: 0%;
+}
+
+.time-display {
+    margin-left: 15px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    min-width: 80px;
+    text-align: right;
+}
+
+/* Chapter navigation */
+.chapter-navigation {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    z-index: 25;
+    padding: 15px 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Chapter buttons */
+.chapter-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.chapter-btn svg {
+    width: 22px;
+    height: 22px;
+    transition: transform 0.3s ease, color 0.3s ease;
+    fill: currentColor;
+}
+
+.chapter-btn:hover {
+    border-color: var(--secondary-color);
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.chapter-btn:hover svg {
+    color: var(--secondary-color);
+    transform: scale(1.2);
+}
+
+.chapter-btn.active {
+    border-color: var(--secondary-color);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 10px var(--glow-color);
+    transform: scale(1.15) translateX(5px);
+    z-index: 2;
+}
+
+.chapter-btn.active svg {
+    color: var(--secondary-color);
+    filter: drop-shadow(0 0 3px var(--glow-color));
+}
+
+/* Fix for first chapter button to highlight it as default */
+.chapter-btn:first-child {
+    border-color: var(--secondary-color);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 10px var(--glow-color);
+    transform: translateX(5px);
+}
+
+.chapter-btn:first-child svg {
+    color: var(--secondary-color);
+}
+
+.chapter-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.chapter-dot.active {
+    background: var(--gold-thread);
+    transform: scale(1.2);
+}
+
+.chapter-dot:hover {
+    background: var(--sodium-amber);
+}
+
+/* Panel navigation */
+.panel-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.panel-nav-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.panel-nav-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.panel-nav-button:active {
+    transform: scale(0.95);
+}
+
+.panel-nav-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Loading indicator */
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--gold-thread);
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Animations */
+@keyframes glow {
+    0% { filter: drop-shadow(0 0 5px rgba(255, 193, 7, 0.5)); }
+    50% { filter: drop-shadow(0 0 15px rgba(255, 193, 7, 0.8)); }
+    100% { filter: drop-shadow(0 0 5px rgba(255, 193, 7, 0.5)); }
+}
+
+.glow {
+    animation: glow 3s infinite;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes buttonFlash {
+    0% { background-color: rgba(255, 255, 255, 0.1); }
+    50% { background-color: rgba(255, 87, 34, 0.5); }
+    100% { background-color: rgba(255, 255, 255, 0.1); }
+}
+
+.button-flash {
+    animation: buttonFlash 0.3s forwards;
+}
+
+/* Debug panel */
+.debug-panel {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+    font-size: 12px;
+    max-width: 300px;
+    max-height: 200px;
+    overflow: auto;
+}

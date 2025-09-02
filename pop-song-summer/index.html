@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop Song Summer - Immersive Album Experience</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <style>
+        /* Force chapter navigation to left side */
+        .chapter-navigation {
+            position: fixed !important;
+            top: 50% !important;
+            left: 20px !important;
+            right: auto !important;
+            transform: translateY(-50%) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 10px !important;
+            z-index: 100 !important;
+            background: rgba(0, 0, 0, 0.5) !important;
+            padding: 15px 10px !important;
+            border-radius: 20px !important;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5) !important;
+            margin: 0 !important;
+            width: auto !important;
+            max-width: none !important;
+        }
+        
+        /* Debug panel styling */
+        .debug-panel {
+            position: fixed !important;
+            top: 20px !important;
+            right: -300px !important; /* Start off-screen */
+            width: 280px !important;
+            max-height: 80vh !important;
+            background: rgba(0, 0, 0, 0.8) !important;
+            color: #eaeaea !important;
+            padding: 15px !important;
+            border-radius: 10px 0 0 10px !important;
+            font-size: 12px !important;
+            overflow-y: auto !important;
+            transition: right 0.3s ease !important;
+            z-index: 1000 !important;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5) !important;
+        }
+        
+        .debug-panel.visible {
+            right: 0 !important;
+        }
+        
+        .debug-toggle {
+            position: fixed !important;
+            top: 20px !important;
+            right: 20px !important;
+            background: rgba(0, 0, 0, 0.7) !important;
+            color: #eaeaea !important;
+            border: 1px solid #555 !important;
+            border-radius: 5px !important;
+            padding: 5px 10px !important;
+            cursor: pointer !important;
+            z-index: 1001 !important;
+            font-size: 12px !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .debug-toggle:hover {
+            background: rgba(50, 50, 50, 0.8) !important;
+        }
+    </style>
+</head>
+<body data-chapter="0">
+    <div class="experience-container">
+        <!-- Main canvas for scene rendering -->
+        <canvas id="scene-canvas"></canvas>
+        
+        <!-- SVG overlay (insignia) -->
+        <div class="svg-overlay glow">
+            <object id="insignia" type="image/svg+xml" data=""></object>
+        </div>
+        
+        <!-- Chapter title card -->
+        <div class="chapter-card" id="chapter-card">
+            <div class="chapter-card-image" id="chapter-card-image"></div>
+            <h1 class="chapter-title" id="chapter-title">VELVET DANCERS</h1>
+        </div>
+        
+        <!-- Narrative panel -->
+        <div class="narrative-panel" id="narrative-panel">
+            <h2 class="panel-title" id="panel-title">VELVET CURTAIN</h2>
+            <p class="panel-text" id="panel-text">And tucked between two shuttered bodegas is a velvet curtain. No sign, no door, just this blood-colored fabric swaying like it's breathing. Behind it, bass leaks out in subsonic pulses. It's the kind of bass that rewrites your heartbeat whether you want it or not.
+
+I push through.</p>
+            <div class="panel-navigation">
+                <button class="panel-nav-button" id="prev-panel">Previous</button>
+                <button class="panel-nav-button" id="next-panel">Next</button>
+            </div>
+        </div>
+        
+        <!-- Chapter navigation dots -->
+        <div class="chapter-navigation" id="chapter-navigation">
+            <!-- Will be populated by JavaScript -->
+        </div>
+        
+        <!-- Audio player controls -->
+        <div class="audio-controls">
+            <button class="play-button" id="play-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </button>
+            <div class="progress-container" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="time-display" id="time-display">0:00 / 8:15</div>
+        </div>
+        
+        <!-- Hidden audio element -->
+        <audio id="audio-player" preload="auto"></audio>
+        
+        <!-- Loading indicator -->
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p>Loading experience...</p>
+        </div>
+        
+        <!-- Debug panel with toggle button -->
+        <div class="debug-panel" id="debug-panel"></div>
+        <button id="debug-toggle" class="debug-toggle">Debug</button>
+    </div>
+
+    <!-- Load scripts in the correct order -->
+    <script type="module" src="js/utils.js"></script>
+    <script type="module" src="js/chapterIcons.js"></script>
+    <script type="module" src="js/data.js"></script>
+    <script type="module" src="js/assetManager.js"></script>
+    <script type="module" src="js/canvas.js"></script>
+    <script type="module" src="js/audio.js"></script>
+    <script type="module" src="js/navigation.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

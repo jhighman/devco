@@ -1,0 +1,486 @@
+/* Theme CSS for Pop Song Summer Experience */
+
+/* Chapter-specific color schemes */
+:root {
+    /* Base colors */
+    --velvet-red: #800020;
+    --gold-thread: #FFC107;
+    --ash-gray: #4A4A4A;
+    --sodium-amber: #FF9800;
+    --horizon-orange: #FF5722;
+    --desert-blue: #1A2A44;
+    --night-black: #0a0a0a;
+    --deep-purple: #2D0A31;
+    --neon-teal: #00CED1;
+    --disco-pink: #FF1493;
+    --shadow-blue: #1E3A5F;
+    
+    /* Default theme (Velvet Dancers) */
+    --primary-color: var(--velvet-red);
+    --secondary-color: var(--gold-thread);
+    --accent-color: var(--deep-purple);
+    --text-color: #eaeaea;
+    --background-color: var(--night-black);
+    --glow-color: rgba(255, 193, 7, 0.8);
+    --quote-color: var(--sodium-amber);
+    --quote-border: var(--horizon-orange);
+}
+
+/* Chapter-specific themes */
+body[data-chapter="0"] {
+    /* Velvet Dancers */
+    --primary-color: var(--velvet-red);
+    --secondary-color: var(--gold-thread);
+    --accent-color: var(--deep-purple);
+    --glow-color: rgba(128, 0, 32, 0.8);
+}
+
+body[data-chapter="1"] {
+    /* Insignia of the Sun */
+    --primary-color: var(--gold-thread);
+    --secondary-color: var(--velvet-red);
+    --accent-color: var(--night-black);
+    --glow-color: rgba(255, 193, 7, 0.8);
+}
+
+body[data-chapter="2"] {
+    /* Burning Houses */
+    --primary-color: var(--horizon-orange);
+    --secondary-color: var(--sodium-amber);
+    --accent-color: var(--ash-gray);
+    --glow-color: rgba(255, 87, 34, 0.8);
+}
+
+body[data-chapter="3"] {
+    /* On the Corner, Reading Poetry */
+    --primary-color: var(--sodium-amber);
+    --secondary-color: var(--gold-thread);
+    --accent-color: var(--night-black);
+    --glow-color: rgba(255, 152, 0, 0.8);
+}
+
+body[data-chapter="4"] {
+    /* A Blind Man Singing */
+    --primary-color: var(--neon-teal);
+    --secondary-color: var(--gold-thread);
+    --accent-color: var(--night-black);
+    --glow-color: rgba(0, 206, 209, 0.8);
+}
+
+body[data-chapter="5"] {
+    /* Out to the Other Side */
+    --primary-color: var(--desert-blue);
+    --secondary-color: var(--horizon-orange);
+    --accent-color: var(--night-black);
+    --glow-color: rgba(26, 42, 68, 0.8);
+}
+
+body[data-chapter="6"] {
+    /* Second Lover, Over and Under */
+    --primary-color: var(--deep-purple);
+    --secondary-color: var(--gold-thread);
+    --accent-color: var(--velvet-red);
+    --glow-color: rgba(45, 10, 49, 0.8);
+}
+
+body[data-chapter="7"] {
+    /* 1985 (Disco Time Machine) */
+    --primary-color: var(--disco-pink);
+    --secondary-color: var(--neon-teal);
+    --accent-color: var(--night-black);
+    --glow-color: rgba(255, 20, 147, 0.8);
+}
+
+body[data-chapter="8"] {
+    /* Shadow Drifter */
+    --primary-color: var(--shadow-blue);
+    --secondary-color: var(--gold-thread);
+    --accent-color: var(--night-black);
+    --glow-color: rgba(30, 58, 95, 0.8);
+}
+
+body[data-chapter="9"] {
+    /* The End of Everything */
+    --primary-color: var(--ash-gray);
+    --secondary-color: var(--horizon-orange);
+    --accent-color: var(--night-black);
+    --glow-color: rgba(74, 74, 74, 0.8);
+}
+
+/* Dynamic elements */
+.chapter-title {
+    color: var(--secondary-color);
+    text-shadow: 0 0 10px var(--glow-color);
+    transition: color 0.5s ease, text-shadow 0.5s ease;
+}
+
+.panel-title {
+    color: var(--secondary-color);
+    transition: color 0.5s ease;
+}
+
+.play-button {
+    background: var(--primary-color);
+    transition: background 0.3s ease;
+}
+
+.play-button:hover {
+    background: var(--secondary-color);
+}
+
+.progress-bar {
+    background: var(--secondary-color);
+    transition: background 0.3s ease;
+}
+
+.chapter-dot.active {
+    background: var(--secondary-color);
+    box-shadow: 0 0 8px var(--glow-color);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Neon title effects */
+.neon-title {
+    text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+    animation: neonPulse 2s infinite;
+}
+
+.neon-red {
+    color: var(--velvet-red);
+}
+
+.neon-gold {
+    color: var(--gold-thread);
+}
+
+.neon-teal {
+    color: var(--neon-teal);
+}
+
+@keyframes neonPulse {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.8; }
+}
+
+/* Quote styling */
+.panel-quote {
+    font-style: italic;
+    color: var(--quote-color);
+    border-left: 3px solid var(--quote-border);
+    padding-left: 15px;
+    margin: 15px 0;
+    transition: color 0.5s ease, border-left 0.5s ease;
+}
+
+/* Special quote styling for "She comes..." */
+.panel-quote:contains("She comes") {
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: var(--secondary-color);
+}
+
+/* Insignia styling */
+.svg-overlay {
+    filter: drop-shadow(0 0 5px var(--glow-color));
+    transition: filter 0.5s ease, opacity 0.3s ease;
+}
+
+.svg-overlay.glow {
+    animation: customGlow 3s infinite;
+}
+
+@keyframes customGlow {
+    0% { filter: drop-shadow(0 0 5px var(--glow-color)); }
+    50% { filter: drop-shadow(0 0 15px var(--glow-color)); }
+    100% { filter: drop-shadow(0 0 5px var(--glow-color)); }
+}
+
+/* Panel transitions */
+.fade-in {
+    animation: customFadeIn 1s forwards;
+}
+
+@keyframes customFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Epilogue styling */
+.epilogue-panel {
+    border-top: 2px solid var(--secondary-color);
+    padding-top: 15px;
+}
+
+/* Burning effect for burning houses panels */
+.burning-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.burning-effect::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(0deg, var(--horizon-orange) 0%, transparent 100%);
+    opacity: 0.3;
+    animation: flicker 3s infinite alternate;
+}
+
+/* Burning text effect */
+.burning-text {
+    color: var(--horizon-orange);
+    text-shadow: 0 0 5px var(--horizon-orange), 0 0 10px rgba(255, 87, 34, 0.5);
+    animation: textFlicker 4s infinite alternate;
+}
+
+@keyframes textFlicker {
+    0%, 100% { opacity: 1; }
+    25% { opacity: 0.9; }
+    50% { opacity: 1; }
+    75% { opacity: 0.95; }
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 0.3; }
+    25% { opacity: 0.2; }
+    50% { opacity: 0.4; }
+    75% { opacity: 0.3; }
+}
+
+/* Light rays effect */
+.light-rays {
+    position: relative;
+    overflow: hidden;
+}
+
+.light-rays::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, var(--secondary-color) 0%, transparent 70%);
+    opacity: 0.2;
+    animation: pulse 4s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.3; }
+}
+
+/* Door effect */
+.door-effect {
+    position: relative;
+}
+
+.door-effect::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: var(--secondary-color);
+    opacity: 0.1;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s ease, height 0.5s ease;
+}
+
+.door-effect:hover::after {
+    width: 100px;
+    height: 200px;
+}
+
+/* Door image special styling */
+.door-image {
+    transition: transform 1s ease;
+    cursor: pointer;
+}
+
+.door-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px var(--glow-color);
+}
+
+/* Insignia image interactive styling */
+.insignia-image {
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.insignia-image.interactive {
+    animation: subtlePulse 3s infinite;
+}
+
+.insignia-image.activated {
+    filter: brightness(1.5) saturate(1.5);
+    animation: rotateGlow 4s infinite;
+}
+
+@keyframes subtlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+@keyframes rotateGlow {
+    0% { filter: brightness(1.5) saturate(1.5) hue-rotate(0deg); }
+    50% { filter: brightness(1.8) saturate(1.8) hue-rotate(30deg); }
+    100% { filter: brightness(1.5) saturate(1.5) hue-rotate(0deg); }
+}
+
+/* She comes quote special styling */
+.she-comes-quote {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--secondary-color);
+    text-shadow: 0 0 5px var(--glow-color);
+    letter-spacing: 1px;
+    text-align: center;
+    margin: 20px 0;
+    padding: 10px;
+    border-left: none;
+    border-top: 1px solid var(--secondary-color);
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+/* Epilogue text styling */
+.epilogue-text {
+    font-style: italic;
+    color: var(--secondary-color);
+    border-top: 1px solid var(--secondary-color);
+    padding-top: 15px;
+    margin-top: 20px;
+    font-size: 0.95em;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+}
+
+/* Light rays for activated elements */
+.light-rays {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at center, var(--secondary-color) 0%, transparent 70%);
+    opacity: 0;
+    animation: raysFadeIn 3s forwards;
+    z-index: 10;
+}
+
+@keyframes raysFadeIn {
+    0% { opacity: 0; }
+    10% { opacity: 0.5; }
+    30% { opacity: 0.3; }
+    100% { opacity: 0; }
+}
+
+/* Chapter navigation buttons with icons */
+.chapter-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    margin: 0 auto;
+    max-width: 90%;
+}
+
+.chapter-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.chapter-btn svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.chapter-btn:hover {
+    border-color: var(--secondary-color);
+    transform: scale(1.1);
+}
+
+.chapter-btn:hover svg {
+    color: var(--secondary-color);
+    transform: scale(1.2);
+}
+
+.chapter-btn.active {
+    border-color: var(--secondary-color);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 10px var(--glow-color);
+    transform: scale(1.15);
+    z-index: 2;
+}
+
+.chapter-btn.active svg {
+    color: var(--secondary-color);
+    filter: drop-shadow(0 0 3px var(--glow-color));
+}
+
+/* Fix for first chapter button to highlight it as default */
+.chapter-btn:first-child {
+    border-color: var(--secondary-color);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 10px var(--glow-color);
+}
+
+.chapter-btn:first-child svg {
+    color: var(--secondary-color);
+}
+
+/* Chapter-specific button effects */
+body[data-chapter="2"] .chapter-btn.active {
+    /* Burning effect for Chapter 3 */
+    box-shadow: 0 0 15px var(--horizon-orange);
+}
+
+body[data-chapter="4"] .chapter-btn.active {
+    /* Blind man singing effect for Chapter 5 */
+    animation: pulseGlow 2s infinite;
+}
+
+body[data-chapter="7"] .chapter-btn.active {
+    /* Disco effect for Chapter 8 */
+    animation: discoColors 3s infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 5px var(--glow-color); }
+    50% { box-shadow: 0 0 15px var(--glow-color); }
+}
+
+@keyframes discoColors {
+    0% { border-color: var(--disco-pink); box-shadow: 0 0 10px var(--disco-pink); }
+    33% { border-color: var(--neon-teal); box-shadow: 0 0 10px var(--neon-teal); }
+    66% { border-color: var(--gold-thread); box-shadow: 0 0 10px var(--gold-thread); }
+    100% { border-color: var(--disco-pink); box-shadow: 0 0 10px var(--disco-pink); }
+}
