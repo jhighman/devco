@@ -39,6 +39,9 @@ export function initMobile() {
         
         // Adjust layout for mobile
         adjustMobileLayout();
+        
+        // Fix mobile-specific issues
+        fixMobileIssues();
     } else {
         debug('Desktop device detected');
         document.body.classList.add('desktop-device');
@@ -58,15 +61,36 @@ export function initMobile() {
 function addTouchHandlers() {
     debug('Adding touch event handlers');
     
-    // Prevent default touch behavior on certain elements
-    const interactiveElements = document.querySelectorAll('.chapter-btn, .panel-nav-button, .play-button');
+    // Fix touch behavior on interactive elements
+    const interactiveElements = document.querySelectorAll('.chapter-btn, .panel-nav-button, .play-button, .debug-toggle');
+    
     interactiveElements.forEach(element => {
-        element.addEventListener('touchstart', function(e) {
+        // Remove any existing event listeners
+        const newElement = element.cloneNode(true);
+        element.parentNode.replaceChild(newElement, element);
+        
+        // Add touchstart event listener
+        newElement.addEventListener('touchstart', function(e) {
+            debug(`Touch start on ${this.className}`);
             // Don't prevent default on form elements
             if (!['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) {
                 e.preventDefault();
             }
-        });
+        }, { passive: false });
+        
+        // Add touchend event listener that triggers click
+        newElement.addEventListener('touchend', function(e) {
+            debug(`Touch end on ${this.className}`);
+            e.preventDefault();
+            
+            // Simulate a click event
+            const clickEvent = new MouseEvent('click', {
+                view: window,
+                bubbles: true,
+                cancelable: true
+            });
+            this.dispatchEvent(clickEvent);
+        }, { passive: false });
     });
     
     // Add swipe handlers for panel navigation
@@ -178,9 +202,193 @@ function adjustMobileLayout() {
     }
 }
 
+// Fix mobile-specific issues
+function fixMobileIssues() {
+    debug('Fixing mobile-specific issues');
+    
+    // Fix play button
+    const playButton = document.getElementById('play-button');
+    if (playButton) {
+        debug('Fixing play button');
+        
+        // Remove existing event listeners
+        const newPlayButton = playButton.cloneNode(true);
+        playButton.parentNode.replaceChild(newPlayButton, playButton);
+        
+        // Add new event listeners
+        newPlayButton.addEventListener('click', function(e) {
+            debug('Play button clicked');
+            
+            // Get the audio player
+            const audioPlayer = document.getElementById('audio-player');
+            if (audioPlayer) {
+                if (audioPlayer.paused) {
+                    debug('Starting audio playback');
+                    audioPlayer.play().catch(error => {
+                        debug(`Error playing audio: ${error.message}`);
+                    });
+                } else {
+                    debug('Pausing audio playback');
+                    audioPlayer.pause();
+                }
+                
+                // Update play button state
+                updatePlayButtonState();
+            }
+        });
+        
+        // Add touch event listeners
+        newPlayButton.addEventListener('touchstart', function(e) {
+            debug('Play button touch start');
+            e.preventDefault();
+        }, { passive: false });
+        
+        newPlayButton.addEventListener('touchend', function(e) {
+            debug('Play button touch end');
+            e.preventDefault();
+            
+            // Simulate a click event
+            const clickEvent = new MouseEvent('click', {
+                view: window,
+                bubbles: true,
+                cancelable: true
+            });
+            this.dispatchEvent(clickEvent);
+        }, { passive: false });
+    }
+    
+    // Fix debug button
+    const debugToggle = document.getElementById('debug-toggle');
+    const debugPanel = document.getElementById('debug-panel');
+    
+    if (debugToggle && debugPanel) {
+        debug('Fixing debug button');
+        
+        // Remove existing event listeners
+        const newDebugToggle = debugToggle.cloneNode(true);
+        debugToggle.parentNode.replaceChild(newDebugToggle, debugToggle);
+        
+        // Add new event listeners
+        newDebugToggle.addEventListener('click', function(e) {
+            debug('Debug toggle clicked');
+            debugPanel.classList.toggle('visible');
+            
+            // Save state to localStorage with error handling
+            const isVisible = debugPanel.classList.contains('visible');
+            try {
+                localStorage.setItem('debugPanelVisible', isVisible ? 'true' : 'false');
+            } catch (e) {
+                debug('localStorage unavailable: ' + e.message);
+            }
+        });
+        
+        // Add touch event listeners
+        newDebugToggle.addEventListener('touchstart', function(e) {
+            debug('Debug toggle touch start');
+            e.preventDefault();
+        }, { passive: false });
+        
+        newDebugToggle.addEventListener('touchend', function(e) {
+            debug('Debug toggle touch end');
+            e.preventDefault();
+            
+            // Simulate a click event
+            const clickEvent = new MouseEvent('click', {
+                view: window,
+                bubbles: true,
+                cancelable: true
+            });
+            this.dispatchEvent(clickEvent);
+        }, { passive: false });
+    }
+    
+    // Fix chapter navigation
+    const chapterNavigation = document.getElementById('chapter-navigation');
+    if (chapterNavigation) {
+        debug('Fixing chapter navigation');
+        
+        // Ensure chapter navigation is visible
+        chapterNavigation.style.display = 'flex';
+        chapterNavigation.style.visibility = 'visible';
+        chapterNavigation.style.opacity = '1';
+        
+        // Fix chapter buttons
+        const chapterButtons = chapterNavigation.querySelectorAll('.chapter-btn');
+        chapterButtons.forEach((button, index) => {
+            debug(`Fixing chapter button ${index + 1}`);
+            
+            // Remove existing event listeners
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
+            
+            // Add new event listeners
+            newButton.addEventListener('click', function(e) {
+                debug(`Chapter button ${index + 1} clicked`);
+                
+                // Change chapter
+                if (AppState && typeof AppState.currentChapter !== 'undefined') {
+                    if (index !== AppState.currentChapter) {
+                        debug(`Changing to chapter ${index + 1}`);
+                        
+                        // Import the changeChapter function dynamically
+                        import('./navigation.js').then(module => {
+                            if (module.changeChapter) {
+                                module.changeChapter(index);
+                            }
+                        }).catch(error => {
+                            debug(`Error importing navigation module: ${error.message}`);
+                        });
+                    }
+                }
+            });
+            
+            // Add touch event listeners
+            newButton.addEventListener('touchstart', function(e) {
+                debug(`Chapter button ${index + 1} touch start`);
+                e.preventDefault();
+            }, { passive: false });
+            
+            newButton.addEventListener('touchend', function(e) {
+                debug(`Chapter button ${index + 1} touch end`);
+                e.preventDefault();
+                
+                // Simulate a click event
+                const clickEvent = new MouseEvent('click', {
+                    view: window,
+                    bubbles: true,
+                    cancelable: true
+                });
+                this.dispatchEvent(clickEvent);
+            }, { passive: false });
+        });
+    }
+}
+
+// Update play button state
+function updatePlayButtonState() {
+    const playButton = document.getElementById('play-button');
+    const audioPlayer = document.getElementById('audio-player');
+    
+    if (playButton && audioPlayer) {
+        // Get the SVG inside the play button
+        const svg = playButton.querySelector('svg');
+        
+        if (svg) {
+            if (audioPlayer.paused) {
+                // Show play icon
+                svg.innerHTML = '<path d="M8 5v14l11-7z"/>';
+            } else {
+                // Show pause icon
+                svg.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+            }
+        }
+    }
+}
+
 // Export functions for use in main.js
 export default {
     initMobile,
     isMobile,
-    adjustResponsiveLayout
+    adjustResponsiveLayout,
+    fixMobileIssues
 };

@@ -3,6 +3,7 @@ import { AppState } from './main.js';
 import { updatePlayButton, togglePlay } from './audio.js';
 import { updateChapterCard, clearPanel } from './main.js';
 import { updateCanvasScene } from './canvas.js';
+import { isMobile } from './mobile.js';
 
 // Navigation functions
 export function setupChapterNavigation() {
@@ -109,10 +110,29 @@ export function setupChapterNavigation() {
         // Remove title attribute to avoid conflict with custom tooltip
         chapterBtn.removeAttribute('title');
         
-        chapterBtn.addEventListener('click', () => {
+        // Remove existing event listeners by cloning and replacing
+        const newChapterBtn = chapterBtn.cloneNode(true);
+        chapterBtn.parentNode.replaceChild(newChapterBtn, chapterBtn);
+        
+        // Add click event listener
+        newChapterBtn.addEventListener('click', () => {
             debug('Chapter button ' + i + ' clicked');
             changeChapter(i);
         });
+        
+        // Add touch event listeners for mobile
+        if (isMobile.any()) {
+            newChapterBtn.addEventListener('touchstart', function(e) {
+                debug('Chapter button ' + i + ' touch start');
+                e.preventDefault();
+            }, { passive: false });
+            
+            newChapterBtn.addEventListener('touchend', function(e) {
+                debug('Chapter button ' + i + ' touch end');
+                e.preventDefault();
+                changeChapter(i);
+            }, { passive: false });
+        }
         
         AppState.chapterNavigation.appendChild(chapterContainer);
     }

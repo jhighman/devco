@@ -1,5 +1,6 @@
 import { debug } from './utils.js';
 import { AppState } from './main.js';
+import { isMobile } from './mobile.js';
 
 // Audio player functions
 export function setupAudioPlayer() {
@@ -10,8 +11,25 @@ export function setupAudioPlayer() {
     AppState.audioPlayer.src = assets.audio;
     debug('Audio source set to: ' + AppState.audioPlayer.src);
     
+    // Remove any existing event listeners by cloning and replacing
+    const newPlayButton = AppState.playButton.cloneNode(true);
+    AppState.playButton.parentNode.replaceChild(newPlayButton, AppState.playButton);
+    AppState.playButton = newPlayButton;
+    
     // Play/pause button
     AppState.playButton.addEventListener('click', togglePlay);
+    
+    // Add touch-specific event listeners for mobile
+    AppState.playButton.addEventListener('touchstart', function(e) {
+        debug('Play button touch start');
+        e.preventDefault();
+    }, { passive: false });
+    
+    AppState.playButton.addEventListener('touchend', function(e) {
+        debug('Play button touch end');
+        e.preventDefault();
+        togglePlay();
+    }, { passive: false });
     
     // Progress bar
     AppState.progressContainer.addEventListener('click', seek);

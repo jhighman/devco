@@ -4,7 +4,7 @@ import { AssetManager } from './assetManager.js';
 import { initCanvasScene, resizeCanvas } from './canvas.js';
 import { setupChapterNavigation, showPanel } from './navigation.js';
 import { setupAudioPlayer } from './audio.js';
-import { initMobile, adjustResponsiveLayout } from './mobile.js';
+import { initMobile, adjustResponsiveLayout, fixMobileIssues } from './mobile.js';
 
 // Log environment information for debugging
 debug(`Initializing with environment: ${currentEnvironment}`);
@@ -116,6 +116,11 @@ function initExperience() {
                 
                 // Initialize mobile functionality
                 initMobile();
+                
+                // Apply mobile-specific fixes
+                setTimeout(() => {
+                    fixMobileIssues();
+                }, 500);
             })
             .catch(error => {
                 debug('Error during asset loading: ' + error.message);
@@ -151,6 +156,11 @@ function initExperience() {
                 
                 // Initialize mobile functionality even with fallback
                 initMobile();
+                
+                // Apply mobile-specific fixes even with fallback
+                setTimeout(() => {
+                    fixMobileIssues();
+                }, 500);
             });
         
     } catch (error) {
@@ -173,7 +183,13 @@ function setupDebugToggle() {
     // Ensure debug panel is collapsed initially
     debugPanel.classList.remove('visible');
     
-    debugToggle.addEventListener('click', () => {
+    // Remove existing event listeners by cloning and replacing
+    const newDebugToggle = debugToggle.cloneNode(true);
+    debugToggle.parentNode.replaceChild(newDebugToggle, debugToggle);
+    
+    // Add click event listener
+    newDebugToggle.addEventListener('click', () => {
+        debug('Debug toggle clicked');
         debugPanel.classList.toggle('visible');
         
         // Save state to localStorage with error handling
@@ -184,6 +200,28 @@ function setupDebugToggle() {
             debug('localStorage unavailable: ' + e.message);
         }
     });
+    
+    // Add touch event listeners for mobile
+    newDebugToggle.addEventListener('touchstart', function(e) {
+        debug('Debug toggle touch start');
+        e.preventDefault();
+    }, { passive: false });
+    
+    newDebugToggle.addEventListener('touchend', function(e) {
+        debug('Debug toggle touch end');
+        e.preventDefault();
+        
+        // Toggle debug panel
+        debugPanel.classList.toggle('visible');
+        
+        // Save state to localStorage with error handling
+        const isVisible = debugPanel.classList.contains('visible');
+        try {
+            localStorage.setItem('debugPanelVisible', isVisible ? 'true' : 'false');
+        } catch (e) {
+            debug('localStorage unavailable: ' + e.message);
+        }
+    }, { passive: false });
     
     // We're intentionally ignoring the saved state to ensure the debug panel
     // is always collapsed on initial load as requested
