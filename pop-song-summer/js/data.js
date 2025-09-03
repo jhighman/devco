@@ -7,8 +7,11 @@ export const currentEnvironment = window.location.hostname === 'localhost' ? 'de
 // Base URL configuration for different environments
 export const baseUrl = {
     development: '',  // Empty string for development since server.js now handles parent directory paths
-    production: '/pop-song-summer'
+    production: ''    // Empty string for production as well to match the actual server configuration
 };
+
+// Debug the current environment and base URL
+console.log(`Current environment: ${currentEnvironment}, Base URL: ${baseUrl[currentEnvironment]}`);
 
 // Chapter data with full panel content from YAML files
 export const chapters = [

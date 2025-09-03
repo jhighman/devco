@@ -248,15 +248,36 @@ export const updateChapterCard = debounce(function() {
         // Get the header image path from the assets
         const headerImage = AppState.assetManager.getAssetPath(assets.headerImage);
         
+        // Generate additional fallback paths
+        const fallbackPaths = [headerImage];
+        
+        // Add path without /pop-song-summer prefix if it exists
+        if (headerImage.includes('/pop-song-summer/')) {
+            fallbackPaths.push(headerImage.replace('/pop-song-summer/', '/'));
+        }
+        
+        // Add path with leading slash removed if it exists
+        if (headerImage.startsWith('/') && !headerImage.startsWith('//')) {
+            fallbackPaths.push(headerImage.substring(1));
+        }
+        
+        // Add a direct path to the assets directory
+        fallbackPaths.push(`assets/images/pss/pss-${AppState.chapters[AppState.currentChapter]?.title.toLowerCase().replace(/\s+/g, '-')}-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`);
+        
+        debug(`Trying image paths: ${fallbackPaths.join(', ')}`);
+        
         // Use the loadImageWithFallback utility to handle image loading with proper fallbacks
         loadImageWithFallback(
             imgElement,
-            [headerImage],
+            fallbackPaths,
             () => {
                 // Fallback function if all image paths fail
                 debug('Image loading failed, using minimal fallback');
                 // Use a more subtle fallback that doesn't duplicate the title
-                chapterCardImage.innerHTML = `<div style="color: white; text-align: center; padding: 40px 20px; font-size: 1rem;">Image not available</div>`;
+                chapterCardImage.innerHTML = `<div style="color: white; text-align: center; padding: 40px 20px; font-size: 1rem;">
+                    <div style="font-weight: bold; margin-bottom: 10px;">Chapter ${AppState.currentChapter + 1}: ${AppState.chapters[AppState.currentChapter]?.title || 'Unknown'}</div>
+                    <div>Image not available</div>
+                </div>`;
             }
         );
         
@@ -266,10 +287,35 @@ export const updateChapterCard = debounce(function() {
     // Update SVG overlay with fallback
     const svgOverlay = document.querySelector('.svg-overlay object');
     if (svgOverlay) {
-        svgOverlay.data = AppState.assetManager.getAssetPath(assets.svg);
+        const svgPath = AppState.assetManager.getAssetPath(assets.svg);
+        svgOverlay.data = svgPath;
+        
+        // Generate fallback paths for SVG
+        const svgFallbackPaths = [svgPath];
+        
+        if (svgPath.includes('/pop-song-summer/')) {
+            const altPath = svgPath.replace('/pop-song-summer/', '/');
+            debug(`Added alternative SVG path: ${altPath}`);
+            
+            // Create a fallback image element to try the alternative path
+            const fallbackImg = new Image();
+            fallbackImg.src = altPath;
+            fallbackImg.onload = () => {
+                debug(`Alternative SVG path successful: ${altPath}`);
+                svgOverlay.data = altPath;
+            };
+        }
+        
         svgOverlay.onerror = () => {
-            debug('SVG loading failed: ' + assets.svg);
-            svgOverlay.style.display = 'none';
+            debug('SVG loading failed: ' + svgPath);
+            // Try without the prefix
+            if (svgPath.startsWith('/')) {
+                const altPath = svgPath.substring(1);
+                debug(`Trying alternative SVG path: ${altPath}`);
+                svgOverlay.data = altPath;
+            } else {
+                svgOverlay.style.display = 'none';
+            }
         };
     }
     

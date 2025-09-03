@@ -42,15 +42,39 @@ export function loadImageWithFallback(imgElement, paths, fallbackFn) {
     // Keep track of the current path index
     let currentIndex = 0;
     
+    // Generate additional fallback paths
+    const enhancedPaths = [];
+    
+    // Add original paths
+    paths.forEach(path => {
+        enhancedPaths.push(path);
+        
+        // Add path without /pop-song-summer prefix if it exists
+        if (path.includes('/pop-song-summer/')) {
+            const altPath = path.replace('/pop-song-summer/', '/');
+            enhancedPaths.push(altPath);
+            debug(`Added alternative path without prefix: ${altPath}`);
+        }
+        
+        // Add path with leading slash removed if it exists
+        if (path.startsWith('/') && !path.startsWith('//')) {
+            const altPath = path.substring(1);
+            enhancedPaths.push(altPath);
+            debug(`Added alternative path without leading slash: ${altPath}`);
+        }
+    });
+    
+    debug(`Enhanced paths for image loading: ${enhancedPaths.join(', ')}`);
+    
     // Try to load the image from the current path
     const tryLoadImage = () => {
-        if (currentIndex >= paths.length) {
+        if (currentIndex >= enhancedPaths.length) {
             debug('All image paths failed, using fallback');
             if (fallbackFn) fallbackFn();
             return;
         }
         
-        const path = paths[currentIndex];
+        const path = enhancedPaths[currentIndex];
         debug(`Trying to load image from: ${path}`);
         
         // Set up error handler for this attempt
@@ -58,6 +82,11 @@ export function loadImageWithFallback(imgElement, paths, fallbackFn) {
             debug(`Failed to load image from: ${path}`);
             currentIndex++;
             tryLoadImage(); // Try the next path
+        };
+        
+        // Set up load handler to confirm success
+        imgElement.onload = () => {
+            debug(`Successfully loaded image from: ${path}`);
         };
         
         // Set the source to trigger loading

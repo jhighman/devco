@@ -18,7 +18,19 @@ export class AssetManager {
             return '';
         }
         
+        // Log the original path for debugging
+        debug(`Processing asset path: ${path}`);
+        
         // Add CDN or caching logic here if needed
+        
+        // Check if the path starts with a slash and remove it if needed
+        // This helps with relative paths in production
+        if (path.startsWith('/') && !path.startsWith('//')) {
+            const newPath = path.substring(1);
+            debug(`Modified asset path: ${newPath}`);
+            return newPath;
+        }
+        
         return path;
     }
 
@@ -70,22 +82,48 @@ export class AssetManager {
      */
     async preloadImage(src) {
         if (this.cache.has(src)) {
+            debug(`Using cached image: ${src}`);
             return this.cache.get(src);
         }
         
         return new Promise((resolve, reject) => {
             const img = new Image();
-            img.src = this.getAssetPath(src);
+            const processedSrc = this.getAssetPath(src);
+            
+            debug(`Attempting to preload image: ${processedSrc}`);
+            img.src = processedSrc;
             
             img.onload = () => {
                 this.cache.set(src, img);
-                debug(`Preloaded image: ${src}`);
+                debug(`Successfully preloaded image: ${processedSrc}`);
                 resolve(img);
             };
             
-            img.onerror = () => {
-                debug(`Failed to preload image: ${src}`);
-                reject(new Error(`Failed to preload image: ${src}`));
+            img.onerror = (error) => {
+                debug(`Failed to preload image: ${processedSrc}`);
+                debug(`Image error details: ${error ? JSON.stringify(error) : 'No error details available'}`);
+                
+                // Try an alternative path as fallback (without the /pop-song-summer prefix)
+                if (processedSrc.includes('/pop-song-summer/')) {
+                    const altPath = processedSrc.replace('/pop-song-summer/', '/');
+                    debug(`Trying alternative path: ${altPath}`);
+                    
+                    const altImg = new Image();
+                    altImg.src = altPath;
+                    
+                    altImg.onload = () => {
+                        debug(`Alternative path successful: ${altPath}`);
+                        this.cache.set(src, altImg);
+                        resolve(altImg);
+                    };
+                    
+                    altImg.onerror = () => {
+                        debug(`Alternative path also failed: ${altPath}`);
+                        reject(new Error(`Failed to preload image: ${processedSrc}`));
+                    };
+                } else {
+                    reject(new Error(`Failed to preload image: ${processedSrc}`));
+                }
             };
         });
     }
