@@ -42,40 +42,20 @@ export function loadImageWithFallback(imgElement, paths, fallbackFn) {
     // Keep track of the current path index
     let currentIndex = 0;
     
-    // Generate additional fallback paths
-    const enhancedPaths = [];
-    
-    // Add original paths
-    paths.forEach(path => {
-        enhancedPaths.push(path);
-        
-        // Add path without /pop-song-summer prefix if it exists
-        if (path.includes('/pop-song-summer/')) {
-            const altPath = path.replace('/pop-song-summer/', '/');
-            enhancedPaths.push(altPath);
-            debug(`Added alternative path without prefix: ${altPath}`);
-        }
-        
-        // Add path with leading slash removed if it exists
-        if (path.startsWith('/') && !path.startsWith('//')) {
-            const altPath = path.substring(1);
-            enhancedPaths.push(altPath);
-            debug(`Added alternative path without leading slash: ${altPath}`);
-        }
-    });
-    
-    debug(`Enhanced paths for image loading: ${enhancedPaths.join(', ')}`);
+    // Remove duplicates from paths array
+    const uniquePaths = [...new Set(paths)];
+    debug(`Trying ${uniquePaths.length} unique image paths`);
     
     // Try to load the image from the current path
     const tryLoadImage = () => {
-        if (currentIndex >= enhancedPaths.length) {
+        if (currentIndex >= uniquePaths.length) {
             debug('All image paths failed, using fallback');
             if (fallbackFn) fallbackFn();
             return;
         }
         
-        const path = enhancedPaths[currentIndex];
-        debug(`Trying to load image from: ${path}`);
+        const path = uniquePaths[currentIndex];
+        debug(`Trying to load image from (${currentIndex + 1}/${uniquePaths.length}): ${path}`);
         
         // Set up error handler for this attempt
         imgElement.onerror = () => {
@@ -95,6 +75,60 @@ export function loadImageWithFallback(imgElement, paths, fallbackFn) {
     
     // Start the loading process
     tryLoadImage();
+}
+
+/**
+ * Utility function to generate all possible variations of a path
+ * @param {string} path - The original path
+ * @returns {string[]} - Array of path variations
+ */
+export function generatePathVariations(path) {
+    if (!path) return [];
+    
+    const variations = [path];
+    
+    // Add path without /pop-song-summer prefix if it exists
+    if (path.includes('/pop-song-summer/')) {
+        variations.push(path.replace('/pop-song-summer/', '/'));
+    }
+    
+    // Add path with /pop-song-summer prefix if it doesn't exist
+    if (!path.includes('/pop-song-summer/') && !path.startsWith('http')) {
+        if (path.startsWith('/')) {
+            variations.push('/pop-song-summer' + path);
+        } else {
+            variations.push('/pop-song-summer/' + path);
+        }
+    }
+    
+    // Add path with leading slash removed if it exists
+    if (path.startsWith('/') && !path.startsWith('//')) {
+        variations.push(path.substring(1));
+    }
+    
+    // Add path with leading slash added if it doesn't exist
+    if (!path.startsWith('/') && !path.startsWith('http')) {
+        variations.push('/' + path);
+    }
+    
+    // Add path with domain for production
+    if (!path.startsWith('http')) {
+        if (path.startsWith('/')) {
+            variations.push('https://devco.band' + path);
+        } else {
+            variations.push('https://devco.band/' + path);
+        }
+    }
+    
+    // Try with just the filename
+    const filename = path.split('/').pop();
+    if (filename) {
+        variations.push(filename);
+        variations.push('/assets/images/pss/' + filename);
+        variations.push('assets/images/pss/' + filename);
+    }
+    
+    return [...new Set(variations)]; // Remove duplicates
 }
 
 /**

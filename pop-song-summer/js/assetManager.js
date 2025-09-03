@@ -1,5 +1,5 @@
-import { chapterAssets, globalAssets } from './data.js';
-import { debug } from './utils.js';
+import { chapterAssets, globalAssets, currentEnvironment, isSubdirectory, assetPathPrefix } from './data.js';
+import { debug, generatePathVariations } from './utils.js';
 
 // Asset manager for loading and caching assets
 export class AssetManager {
@@ -21,17 +21,87 @@ export class AssetManager {
         // Log the original path for debugging
         debug(`Processing asset path: ${path}`);
         
-        // Add CDN or caching logic here if needed
+        // Generate multiple possible paths for the asset
+        const possiblePaths = [];
         
-        // Check if the path starts with a slash and remove it if needed
-        // This helps with relative paths in production
-        if (path.startsWith('/') && !path.startsWith('//')) {
-            const newPath = path.substring(1);
-            debug(`Modified asset path: ${newPath}`);
-            return newPath;
+        // Add the original path
+        possiblePaths.push(path);
+        
+        // If we're in production and the path includes the full domain, try without it
+        if (currentEnvironment === 'production' && path.includes('https://devco.band')) {
+            possiblePaths.push(path.replace('https://devco.band', ''));
         }
         
+        // If the path includes /pop-song-summer/ but we're not in a subdirectory, try without it
+        if (path.includes('/pop-song-summer/') && !isSubdirectory) {
+            possiblePaths.push(path.replace('/pop-song-summer/', '/'));
+        }
+        
+        // If the path doesn't include /pop-song-summer/ but we are in a subdirectory, try with it
+        if (!path.includes('/pop-song-summer/') && isSubdirectory) {
+            // Check if the path starts with a slash
+            if (path.startsWith('/')) {
+                possiblePaths.push('/pop-song-summer' + path);
+            } else {
+                possiblePaths.push('/pop-song-summer/' + path);
+            }
+        }
+        
+        // If the path starts with a slash, try without it
+        if (path.startsWith('/') && !path.startsWith('//')) {
+            possiblePaths.push(path.substring(1));
+        }
+        
+        // If the path doesn't start with a slash or http, try with it
+        if (!path.startsWith('/') && !path.startsWith('http')) {
+            possiblePaths.push('/' + path);
+        }
+        
+        // Log all possible paths for debugging
+        debug(`Generated possible asset paths: ${possiblePaths.join(', ')}`);
+        
+        // Return the original path - we'll try the alternatives in the preload functions
         return path;
+    }
+    
+    /**
+     * Get all possible paths for an asset
+     * @param {string} path - The original asset path
+     * @returns {string[]} - Array of possible paths to try
+     */
+    getAllPossiblePaths(path) {
+        if (!path) {
+            return [];
+        }
+        
+        // Use our utility function to generate all possible path variations
+        const variations = generatePathVariations(path);
+        
+        // Add environment-specific paths
+        const possiblePaths = [...variations];
+        
+        // If we're in production and the path includes the full domain, try without it
+        if (currentEnvironment === 'production' && path.includes('https://devco.band')) {
+            possiblePaths.push(path.replace('https://devco.band', ''));
+        }
+        
+        // If the path includes /pop-song-summer/ but we're not in a subdirectory, try without it
+        if (path.includes('/pop-song-summer/') && !isSubdirectory) {
+            possiblePaths.push(path.replace('/pop-song-summer/', '/'));
+        }
+        
+        // If the path doesn't include /pop-song-summer/ but we are in a subdirectory, try with it
+        if (!path.includes('/pop-song-summer/') && isSubdirectory) {
+            // Check if the path starts with a slash
+            if (path.startsWith('/')) {
+                possiblePaths.push('/pop-song-summer' + path);
+            } else {
+                possiblePaths.push('/pop-song-summer/' + path);
+            }
+        }
+        
+        // Remove duplicates and return
+        return [...new Set(possiblePaths)];
     }
 
     /**
@@ -86,46 +156,45 @@ export class AssetManager {
             return this.cache.get(src);
         }
         
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            const processedSrc = this.getAssetPath(src);
+        // Get all possible paths for this asset
+        const possiblePaths = this.getAllPossiblePaths(src);
+        debug(`Trying to preload image with paths: ${possiblePaths.join(', ')}`);
+        
+        // Try each path in sequence
+        for (let i = 0; i < possiblePaths.length; i++) {
+            const path = possiblePaths[i];
+            debug(`Attempting to preload image (${i+1}/${possiblePaths.length}): ${path}`);
             
-            debug(`Attempting to preload image: ${processedSrc}`);
-            img.src = processedSrc;
-            
-            img.onload = () => {
-                this.cache.set(src, img);
-                debug(`Successfully preloaded image: ${processedSrc}`);
-                resolve(img);
-            };
-            
-            img.onerror = (error) => {
-                debug(`Failed to preload image: ${processedSrc}`);
-                debug(`Image error details: ${error ? JSON.stringify(error) : 'No error details available'}`);
+            try {
+                const img = await new Promise((resolve, reject) => {
+                    const imgElement = new Image();
+                    
+                    imgElement.onload = () => {
+                        debug(`Successfully preloaded image: ${path}`);
+                        resolve(imgElement);
+                    };
+                    
+                    imgElement.onerror = (error) => {
+                        debug(`Failed to preload image: ${path}`);
+                        debug(`Image error details: ${error ? JSON.stringify(error) : 'No error details available'}`);
+                        reject(new Error(`Failed to preload image: ${path}`));
+                    };
+                    
+                    imgElement.src = path;
+                });
                 
-                // Try an alternative path as fallback (without the /pop-song-summer prefix)
-                if (processedSrc.includes('/pop-song-summer/')) {
-                    const altPath = processedSrc.replace('/pop-song-summer/', '/');
-                    debug(`Trying alternative path: ${altPath}`);
-                    
-                    const altImg = new Image();
-                    altImg.src = altPath;
-                    
-                    altImg.onload = () => {
-                        debug(`Alternative path successful: ${altPath}`);
-                        this.cache.set(src, altImg);
-                        resolve(altImg);
-                    };
-                    
-                    altImg.onerror = () => {
-                        debug(`Alternative path also failed: ${altPath}`);
-                        reject(new Error(`Failed to preload image: ${processedSrc}`));
-                    };
-                } else {
-                    reject(new Error(`Failed to preload image: ${processedSrc}`));
-                }
-            };
-        });
+                // If we get here, the image loaded successfully
+                this.cache.set(src, img);
+                return img;
+            } catch (error) {
+                // This path failed, try the next one
+                debug(`Path ${path} failed, trying next alternative if available`);
+            }
+        }
+        
+        // If we get here, all paths failed
+        debug(`All paths failed for image: ${src}`);
+        throw new Error(`Failed to preload image: ${src}`);
     }
 
     /**
@@ -135,24 +204,61 @@ export class AssetManager {
      */
     async preloadAudio(src) {
         if (this.cache.has(src)) {
+            debug(`Using cached audio: ${src}`);
             return this.cache.get(src);
         }
         
-        return new Promise((resolve, reject) => {
-            const audio = new Audio();
-            audio.src = this.getAssetPath(src);
+        // Get all possible paths for this asset
+        const possiblePaths = this.getAllPossiblePaths(src);
+        debug(`Trying to preload audio with paths: ${possiblePaths.join(', ')}`);
+        
+        // Try each path in sequence
+        for (let i = 0; i < possiblePaths.length; i++) {
+            const path = possiblePaths[i];
+            debug(`Attempting to preload audio (${i+1}/${possiblePaths.length}): ${path}`);
             
-            audio.oncanplaythrough = () => {
+            try {
+                const audio = await new Promise((resolve, reject) => {
+                    const audioElement = new Audio();
+                    
+                    audioElement.oncanplaythrough = () => {
+                        debug(`Successfully preloaded audio: ${path}`);
+                        resolve(audioElement);
+                    };
+                    
+                    audioElement.onerror = (error) => {
+                        debug(`Failed to preload audio: ${path}`);
+                        debug(`Audio error details: ${error ? JSON.stringify(error) : 'No error details available'}`);
+                        reject(new Error(`Failed to preload audio: ${path}`));
+                    };
+                    
+                    // Set a timeout in case oncanplaythrough never fires
+                    setTimeout(() => {
+                        if (audioElement.readyState >= 3) {
+                            debug(`Audio preload timed out but is playable: ${path}`);
+                            resolve(audioElement);
+                        } else {
+                            debug(`Audio preload timed out and is not playable: ${path}`);
+                            reject(new Error(`Audio preload timed out: ${path}`));
+                        }
+                    }, 5000);
+                    
+                    audioElement.src = path;
+                    audioElement.load();
+                });
+                
+                // If we get here, the audio loaded successfully
                 this.cache.set(src, audio);
-                debug(`Preloaded audio: ${src}`);
-                resolve(audio);
-            };
-            
-            audio.onerror = () => {
-                debug(`Failed to preload audio: ${src}`);
-                reject(new Error(`Failed to preload audio: ${src}`));
-            };
-        });
+                return audio;
+            } catch (error) {
+                // This path failed, try the next one
+                debug(`Path ${path} failed for audio, trying next alternative if available`);
+            }
+        }
+        
+        // If we get here, all paths failed
+        debug(`All paths failed for audio: ${src}`);
+        throw new Error(`Failed to preload audio: ${src}`);
     }
 
     /**

@@ -1,9 +1,15 @@
-import { chapters, chapterAssets, chapterIcons, baseUrl, currentEnvironment, globalAssets } from './data.js';
+import { chapters, chapterAssets, chapterIcons, baseUrl, currentEnvironment, globalAssets, assetPathPrefix, isSubdirectory } from './data.js';
 import { loadImageWithFallback, debug, throwError, debounce } from './utils.js';
 import { AssetManager } from './assetManager.js';
 import { initCanvasScene, resizeCanvas } from './canvas.js';
 import { setupChapterNavigation, showPanel } from './navigation.js';
 import { setupAudioPlayer } from './audio.js';
+
+// Log environment information for debugging
+debug(`Initializing with environment: ${currentEnvironment}`);
+debug(`Base URL: ${baseUrl[currentEnvironment]}`);
+debug(`Asset Path Prefix: ${assetPathPrefix}`);
+debug(`Is Subdirectory: ${isSubdirectory}`);
 
 // Create AppState object to encapsulate all state variables
 export const AppState = {
@@ -245,31 +251,28 @@ export const updateChapterCard = debounce(function() {
         // Add the image element to the container
         chapterCardImage.appendChild(imgElement);
         
-        // Get the header image path from the assets
-        const headerImage = AppState.assetManager.getAssetPath(assets.headerImage);
+        // Get all possible paths for the header image
+        const headerImagePaths = AppState.assetManager.getAllPossiblePaths(assets.headerImage);
         
-        // Generate additional fallback paths
-        const fallbackPaths = [headerImage];
-        
-        // Add path without /pop-song-summer prefix if it exists
-        if (headerImage.includes('/pop-song-summer/')) {
-            fallbackPaths.push(headerImage.replace('/pop-song-summer/', '/'));
+        // Add a direct path to the assets directory based on chapter title
+        if (AppState.chapters[AppState.currentChapter]?.title) {
+            const chapterTitle = AppState.chapters[AppState.currentChapter].title.toLowerCase().replace(/\s+/g, '-');
+            headerImagePaths.push(`assets/images/pss/pss-${chapterTitle}-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`);
+            headerImagePaths.push(`/assets/images/pss/pss-${chapterTitle}-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`);
+            
+            // Try with the full domain for production
+            if (currentEnvironment === 'production') {
+                headerImagePaths.push(`https://devco.band/assets/images/pss/pss-${chapterTitle}-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`);
+                headerImagePaths.push(`https://devco.band/pop-song-summer/assets/images/pss/pss-${chapterTitle}-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`);
+            }
         }
         
-        // Add path with leading slash removed if it exists
-        if (headerImage.startsWith('/') && !headerImage.startsWith('//')) {
-            fallbackPaths.push(headerImage.substring(1));
-        }
-        
-        // Add a direct path to the assets directory
-        fallbackPaths.push(`assets/images/pss/pss-${AppState.chapters[AppState.currentChapter]?.title.toLowerCase().replace(/\s+/g, '-')}-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`);
-        
-        debug(`Trying image paths: ${fallbackPaths.join(', ')}`);
+        debug(`Trying image paths: ${headerImagePaths.join(', ')}`);
         
         // Use the loadImageWithFallback utility to handle image loading with proper fallbacks
         loadImageWithFallback(
             imgElement,
-            fallbackPaths,
+            headerImagePaths,
             () => {
                 // Fallback function if all image paths fail
                 debug('Image loading failed, using minimal fallback');
@@ -281,42 +284,47 @@ export const updateChapterCard = debounce(function() {
             }
         );
         
-        debug('Added header image: ' + headerImage);
+        debug('Added header image paths: ' + headerImagePaths.join(', '));
     }
     
     // Update SVG overlay with fallback
     const svgOverlay = document.querySelector('.svg-overlay object');
     if (svgOverlay) {
-        const svgPath = AppState.assetManager.getAssetPath(assets.svg);
-        svgOverlay.data = svgPath;
+        // Get all possible paths for the SVG
+        const svgPaths = AppState.assetManager.getAllPossiblePaths(assets.svg);
+        debug(`Generated SVG paths: ${svgPaths.join(', ')}`);
         
-        // Generate fallback paths for SVG
-        const svgFallbackPaths = [svgPath];
+        // Try each path in sequence
+        let svgLoaded = false;
         
-        if (svgPath.includes('/pop-song-summer/')) {
-            const altPath = svgPath.replace('/pop-song-summer/', '/');
-            debug(`Added alternative SVG path: ${altPath}`);
-            
-            // Create a fallback image element to try the alternative path
-            const fallbackImg = new Image();
-            fallbackImg.src = altPath;
-            fallbackImg.onload = () => {
-                debug(`Alternative SVG path successful: ${altPath}`);
-                svgOverlay.data = altPath;
-            };
-        }
-        
-        svgOverlay.onerror = () => {
-            debug('SVG loading failed: ' + svgPath);
-            // Try without the prefix
-            if (svgPath.startsWith('/')) {
-                const altPath = svgPath.substring(1);
-                debug(`Trying alternative SVG path: ${altPath}`);
-                svgOverlay.data = altPath;
-            } else {
-                svgOverlay.style.display = 'none';
+        // Function to try loading SVG from a path
+        const trySvgPath = (index) => {
+            if (index >= svgPaths.length || svgLoaded) {
+                if (!svgLoaded) {
+                    debug('All SVG paths failed, hiding SVG overlay');
+                    svgOverlay.style.display = 'none';
+                }
+                return;
             }
+            
+            const path = svgPaths[index];
+            debug(`Trying SVG path (${index + 1}/${svgPaths.length}): ${path}`);
+            
+            svgOverlay.data = path;
+            svgOverlay.onerror = () => {
+                debug(`SVG path failed: ${path}`);
+                trySvgPath(index + 1);
+            };
+            
+            svgOverlay.onload = () => {
+                debug(`SVG loaded successfully from: ${path}`);
+                svgLoaded = true;
+                svgOverlay.style.display = 'block';
+            };
         };
+        
+        // Start trying paths
+        trySvgPath(0);
     }
     
     debug('Chapter card updated');

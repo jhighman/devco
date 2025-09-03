@@ -1,17 +1,44 @@
 // Import chapter icons from chapterIcons.js
 import { chapterIcons } from './chapterIcons.js';
 
-// Environment detection
-export const currentEnvironment = window.location.hostname === 'localhost' ? 'development' : 'production';
+// Environment detection with more robust checks
+export const currentEnvironment = (() => {
+    // Check if we're running on localhost
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return 'development';
+    }
+    
+    // Check if we're on the devco.band domain
+    if (window.location.hostname.includes('devco.band')) {
+        return 'production';
+    }
+    
+    // Default to production for any other domain
+    return 'production';
+})();
 
 // Base URL configuration for different environments
 export const baseUrl = {
-    development: '',  // Empty string for development since server.js now handles parent directory paths
-    production: ''    // Empty string for production as well to match the actual server configuration
+    development: '',  // Empty string for development since server.js handles parent directory paths
+    production: 'https://devco.band'  // Full URL for production to ensure absolute paths
 };
 
-// Debug the current environment and base URL
-console.log(`Current environment: ${currentEnvironment}, Base URL: ${baseUrl[currentEnvironment]}`);
+// Detect if we're in a subdirectory structure
+export const isSubdirectory = window.location.pathname.includes('/pop-song-summer/');
+
+// Asset path prefix for the current environment
+export const assetPathPrefix = (() => {
+    if (currentEnvironment === 'development') {
+        return '';
+    } else if (isSubdirectory) {
+        return '/pop-song-summer';
+    } else {
+        return '';
+    }
+})();
+
+// Debug the current environment and path configuration
+console.log(`Current environment: ${currentEnvironment}, Base URL: ${baseUrl[currentEnvironment]}, Asset Path Prefix: ${assetPathPrefix}, Is Subdirectory: ${isSubdirectory}`);
 
 // Chapter data with full panel content from YAML files
 export const chapters = [
@@ -1054,59 +1081,59 @@ export const chapters = [
 // Centralized chapter assets including images, SVGs, and audio
 export const chapterAssets = {
     0: {
-        headerImage: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-velvet-dancers-song-header-ar3x1-3k-rgb-v001-20250831-jh-final.png`,
-        svg: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
-        audio: `${baseUrl[currentEnvironment]}/music/pss_ch01_velvet-dancers.mp3`
+        headerImage: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-velvet-dancers-song-header-ar3x1-3k-rgb-v001-20250831-jh-final.png`,
+        svg: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
+        audio: `${baseUrl[currentEnvironment]}${assetPathPrefix}/music/pss_ch01_velvet-dancers.mp3`
     },
     1: {
-        headerImage: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-insignia-of-the-sun-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
-        svg: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
-        audio: `${baseUrl[currentEnvironment]}/music/pss_ch02_insignia-of-the-sun.mp3`
+        headerImage: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-insignia-of-the-sun-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
+        svg: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
+        audio: `${baseUrl[currentEnvironment]}${assetPathPrefix}/music/pss_ch02_insignia-of-the-sun.mp3`
     },
     2: {
-        headerImage: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-burning-houses-in-the-distance-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
-        svg: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
-        audio: `${baseUrl[currentEnvironment]}/music/pss_ch03_burning-houses-in-the-distance.mp3`
+        headerImage: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-burning-houses-in-the-distance-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
+        svg: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
+        audio: `${baseUrl[currentEnvironment]}${assetPathPrefix}/music/pss_ch03_burning-houses-in-the-distance.mp3`
     },
     3: {
-        headerImage: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-on-the-corner-reading-poetry-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
-        svg: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
-        audio: `${baseUrl[currentEnvironment]}/music/pss_ch04_on-the-corner-reading-poetry.mp3`
+        headerImage: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-on-the-corner-reading-poetry-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
+        svg: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
+        audio: `${baseUrl[currentEnvironment]}${assetPathPrefix}/music/pss_ch04_on-the-corner-reading-poetry.mp3`
     },
     4: {
-        headerImage: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-a-blind-man-singing-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
-        svg: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
-        audio: `${baseUrl[currentEnvironment]}/music/pss_ch05_a-blind-man-singing.mp3`
+        headerImage: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-a-blind-man-singing-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
+        svg: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
+        audio: `${baseUrl[currentEnvironment]}${assetPathPrefix}/music/pss_ch05_a-blind-man-singing.mp3`
     },
     5: {
-        headerImage: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-out-to-the-other-side-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
-        svg: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
-        audio: `${baseUrl[currentEnvironment]}/music/pss_ch06_out-to-the-other-side.mp3`
+        headerImage: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-out-to-the-other-side-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
+        svg: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
+        audio: `${baseUrl[currentEnvironment]}${assetPathPrefix}/music/pss_ch06_out-to-the-other-side.mp3`
     },
     6: {
-        headerImage: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-second-lover-over-and-under-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
-        svg: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
-        audio: `${baseUrl[currentEnvironment]}/music/pss_ch07_second-lover-over-and-under.mp3`
+        headerImage: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-second-lover-over-and-under-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
+        svg: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
+        audio: `${baseUrl[currentEnvironment]}${assetPathPrefix}/music/pss_ch07_second-lover-over-and-under.mp3`
     },
     7: {
-        headerImage: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-1985-disco-time-machine-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
-        svg: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
-        audio: `${baseUrl[currentEnvironment]}/music/pss_ch08_1985-disco-time-machine.mp3`
+        headerImage: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-1985-disco-time-machine-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
+        svg: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
+        audio: `${baseUrl[currentEnvironment]}${assetPathPrefix}/music/pss_ch08_1985-disco-time-machine.mp3`
     },
     8: {
-        headerImage: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-shadow-drifter-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
-        svg: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
-        audio: `${baseUrl[currentEnvironment]}/music/pss_ch09_shadow-drifter.mp3`
+        headerImage: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-shadow-drifter-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
+        svg: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
+        audio: `${baseUrl[currentEnvironment]}${assetPathPrefix}/music/pss_ch09_shadow-drifter.mp3`
     },
     9: {
-        headerImage: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-the-end-of-everything-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
-        svg: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
-        audio: `${baseUrl[currentEnvironment]}/music/pss_ch10_the-end-of-everything.mp3`
+        headerImage: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-the-end-of-everything-song-header-ar3x1-3k-rgb-v001-20250901-jh-final.png`,
+        svg: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
+        audio: `${baseUrl[currentEnvironment]}${assetPathPrefix}/music/pss_ch10_the-end-of-everything.mp3`
     },
     default: {
-        headerImage: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-velvet-dancers-song-header-ar3x1-3k-rgb-v001-20250831-jh-final.png`,
-        svg: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
-        audio: `${baseUrl[currentEnvironment]}/music/pss_ch01_velvet-dancers.mp3`
+        headerImage: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-velvet-dancers-song-header-ar3x1-3k-rgb-v001-20250831-jh-final.png`,
+        svg: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
+        audio: `${baseUrl[currentEnvironment]}${assetPathPrefix}/music/pss_ch01_velvet-dancers.mp3`
     }
 };
 
@@ -1114,55 +1141,55 @@ export const chapterAssets = {
 export const globalAssets = {
     insignia_of_the_sun: {
         title: "Insignia of the Sun (Primary Motif)",
-        svg: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
-        png: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-4k-rgb-v001-20250831-jh-final.png`,
+        svg: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-svg-v001-20250831-jh-final.svg`,
+        png: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-chall-insignia-of-the-sun-motif-ar1x1-4k-rgb-v001-20250831-jh-final.png`,
         used_in_chapters: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     },
     woman_in_red: {
         title: "Woman in Red (Archetype)",
-        svg: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-chall-woman-in-red-portrait-ar4x5-svg-v001-20250831-jh-final.svg`,
-        png: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-chall-woman-in-red-portrait-ar4x5-4k-rgb-v001-20250831-jh-final.png`,
+        svg: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-chall-woman-in-red-portrait-ar4x5-svg-v001-20250831-jh-final.svg`,
+        png: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-chall-woman-in-red-portrait-ar4x5-4k-rgb-v001-20250831-jh-final.png`,
         used_in_chapters: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     },
     burning_houses: {
         title: "Burning Houses on the Horizon",
-        png: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-burning-houses-horizon-ar16x9-4k-rgb-v001-20250902-jh-final.png`,
+        png: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-burning-houses-horizon-ar16x9-4k-rgb-v001-20250902-jh-final.png`,
         type: "burning",
         used_in_chapters: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     },
     door: {
         title: "Door",
-        png: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-door-ar16x9-4k-rgb-v001-20250902-jh-final.png`,
+        png: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-door-ar16x9-4k-rgb-v001-20250902-jh-final.png`,
         type: "door",
         used_in_chapters: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     },
     light_rays: {
         title: "Light Rays",
-        png: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-light-rays-ar16x9-4k-rgb-v001-20250902-jh-final.png`,
+        png: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-light-rays-ar16x9-4k-rgb-v001-20250902-jh-final.png`,
         type: "light",
         used_in_chapters: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     },
     desert_road: {
         title: "Desert Road",
-        png: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-desert-road-ar16x9-4k-rgb-v001-20250902-jh-final.png`,
+        png: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-desert-road-ar16x9-4k-rgb-v001-20250902-jh-final.png`,
         type: "road",
         used_in_chapters: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     },
     velvet_curtain: {
         title: "The Velvet Curtain",
-        png: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-velvet-curtain-ar16x9-4k-rgb-v001-20250902-jh-final.png`,
+        png: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-velvet-curtain-ar16x9-4k-rgb-v001-20250902-jh-final.png`,
         type: "curtain",
         used_in_chapters: [1]
     },
     club_interior: {
         title: "Club Interior",
-        png: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-club-interior-ar16x9-4k-rgb-v001-20250902-jh-final.png`,
+        png: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-club-interior-ar16x9-4k-rgb-v001-20250902-jh-final.png`,
         type: "club",
         used_in_chapters: [1]
     },
     velvet_dancers: {
         title: "Velvet Dancers",
-        png: `${baseUrl[currentEnvironment]}/assets/images/pss/pss-velvet-dancers-ar16x9-4k-rgb-v001-20250902-jh-final.png`,
+        png: `${baseUrl[currentEnvironment]}${assetPathPrefix}/assets/images/pss/pss-velvet-dancers-ar16x9-4k-rgb-v001-20250902-jh-final.png`,
         type: "dancers",
         used_in_chapters: [1]
     }
