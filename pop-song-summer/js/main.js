@@ -222,15 +222,11 @@ export const updateChapterCard = debounce(function() {
     
     // Don't clear panel content here - it will wipe out showPanel's work
     
-    const chapterTitle = document.getElementById('chapter-title') || throwError('Missing #chapter-title');
+    // Chapter card image is required, but title is now optional (removed from HTML)
     const chapterCardImage = document.getElementById('chapter-card-image') || throwError('Missing #chapter-card-image');
     
     // Get the assets for the current chapter
     const assets = AppState.chapterAssets[AppState.currentChapter] || AppState.chapterAssets.default;
-    
-    if (chapterTitle && AppState.chapters && AppState.chapters[AppState.currentChapter]) {
-        chapterTitle.textContent = AppState.chapters[AppState.currentChapter].title;
-    }
     
     if (chapterCardImage) {
         // Clear any existing content
@@ -258,8 +254,9 @@ export const updateChapterCard = debounce(function() {
             [headerImage],
             () => {
                 // Fallback function if all image paths fail
-                debug('Image loading failed, using text fallback');
-                chapterCardImage.innerHTML = `<div style="color: white; text-align: center; padding: 40px 20px; font-weight: bold; font-size: 1.5rem;">Chapter ${AppState.currentChapter + 1}: ${AppState.chapters[AppState.currentChapter]?.title || 'Unknown'}</div>`;
+                debug('Image loading failed, using minimal fallback');
+                // Use a more subtle fallback that doesn't duplicate the title
+                chapterCardImage.innerHTML = `<div style="color: white; text-align: center; padding: 40px 20px; font-size: 1rem;">Image not available</div>`;
             }
         );
         

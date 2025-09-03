@@ -1,6 +1,6 @@
 import { debug } from './utils.js';
 import { AppState } from './main.js';
-import { updatePlayButton } from './audio.js';
+import { updatePlayButton, togglePlay } from './audio.js';
 import { updateChapterCard, clearPanel } from './main.js';
 import { updateCanvasScene } from './canvas.js';
 
@@ -25,8 +25,15 @@ export function setupChapterNavigation() {
     AppState.chapterNavigation.style.borderRadius = '20px';
     AppState.chapterNavigation.style.boxShadow = '0 0 15px rgba(0, 0, 0, 0.5)';
     
-    // Create chapter buttons with icons
+    // Create chapter buttons with icons and visible labels
     for (let i = 0; i < AppState.chapters.length; i++) {
+        const chapterContainer = document.createElement('div');
+        chapterContainer.className = 'chapter-container';
+        chapterContainer.style.display = 'flex';
+        chapterContainer.style.alignItems = 'center';
+        chapterContainer.style.gap = '10px';
+        chapterContainer.style.margin = '5px 0';
+        
         const chapterBtn = document.createElement('button');
         chapterBtn.className = `chapter-btn ${i === AppState.currentChapter ? 'active' : ''}`;
         chapterBtn.setAttribute('data-chapter', i);
@@ -46,6 +53,32 @@ export function setupChapterNavigation() {
         }
         
         chapterBtn.innerHTML = iconContent;
+        
+        // Create label for chapter title
+        const chapterLabel = document.createElement('span');
+        chapterLabel.className = 'chapter-label';
+        chapterLabel.textContent = AppState.chapters[i].title || `Chapter ${i + 1}`;
+        chapterLabel.style.color = 'var(--text-color)';
+        chapterLabel.style.fontSize = '12px';
+        chapterLabel.style.whiteSpace = 'nowrap';
+        chapterLabel.style.opacity = '0';
+        chapterLabel.style.transition = 'opacity 0.3s ease';
+        chapterLabel.style.position = 'absolute';
+        chapterLabel.style.left = '45px';
+        chapterLabel.style.pointerEvents = 'none';
+        
+        // Add hover effect to show label
+        chapterBtn.addEventListener('mouseenter', () => {
+            chapterLabel.style.opacity = '1';
+        });
+        
+        chapterBtn.addEventListener('mouseleave', () => {
+            chapterLabel.style.opacity = '0';
+        });
+        
+        // Add button and label to container
+        chapterContainer.appendChild(chapterBtn);
+        chapterContainer.appendChild(chapterLabel);
         
         // Debug SVG icon rendering
         debug(`Setting icon for chapter ${i + 1}: ${iconContent.substring(0, 50)}...`);
@@ -71,14 +104,17 @@ export function setupChapterNavigation() {
             });
         }
         
-        chapterBtn.title = AppState.chapters[i].title || `Chapter ${i + 1}`;
+        // Set data-title attribute for custom tooltip styling
+        chapterBtn.setAttribute('data-title', AppState.chapters[i].title || `Chapter ${i + 1}`);
+        // Remove title attribute to avoid conflict with custom tooltip
+        chapterBtn.removeAttribute('title');
         
         chapterBtn.addEventListener('click', () => {
             debug('Chapter button ' + i + ' clicked');
             changeChapter(i);
         });
         
-        AppState.chapterNavigation.appendChild(chapterBtn);
+        AppState.chapterNavigation.appendChild(chapterContainer);
     }
     
     // Add a small delay to check if SVG elements are properly rendered
@@ -235,6 +271,10 @@ export function changeChapter(chapterIndex) {
             btn.innerHTML = iconContent;
             debug(`Recreated SVG for chapter ${i + 1}`);
         }
+        
+        // Ensure data-title attribute is set and title attribute is removed
+        btn.setAttribute('data-title', AppState.chapters[i].title || `Chapter ${i + 1}`);
+        btn.removeAttribute('title');
     });
     
     // Update data-chapter attribute for theme styling
@@ -260,6 +300,12 @@ export function changeChapter(chapterIndex) {
             // Hide loading indicator
             AppState.loadingIndicator.style.display = 'none';
             
+            // Start playing the audio for the new chapter
+            if (!AppState.isPlaying) {
+                debug('Starting audio playback for new chapter');
+                togglePlay();
+            }
+            
             debug('Chapter change complete');
         })
         .catch(error => {
@@ -278,6 +324,12 @@ export function changeChapter(chapterIndex) {
             
             // Hide loading indicator
             AppState.loadingIndicator.style.display = 'none';
+            
+            // Start playing the audio for the new chapter even with fallback
+            if (!AppState.isPlaying) {
+                debug('Starting audio playback for new chapter (with fallback)');
+                togglePlay();
+            }
             
             debug('Chapter change complete (with fallback)');
         });
@@ -366,9 +418,9 @@ export function showPanel(panelIndex) {
         // Make sure narrative panel is visible
         AppState.narrativePanel.style.display = 'block';
         
-        // Reset any previously set top property to prevent positioning issues
-        AppState.narrativePanel.style.top = '';
-        debug('Reset narrative panel top property to inherit CSS defaults');
+        // Set top property to match our CSS positioning
+        AppState.narrativePanel.style.top = '240px';
+        debug('Set narrative panel top property to 240px for consistent positioning');
         
         // Apply only one effect with highest z-index
         let effectApplied = false;
@@ -376,40 +428,40 @@ export function showPanel(panelIndex) {
         // Check for special panel titles
         if (panel.title?.toUpperCase().includes('SHE ARRIVES') || panel.title?.toUpperCase().includes('SHE COMES')) {
             AppState.narrativePanel.classList.add('light-rays');
-            // Explicitly ensure top property is not set inline
-            AppState.narrativePanel.style.top = '';
+            // Set top property to match our CSS positioning
+            AppState.narrativePanel.style.top = '240px';
             effectApplied = true;
             debug('Applied light-rays for SHE ARRIVES, z-index set to: 35, top property reset');
         }
         
         if ((panel.has_burning || panel.title?.toUpperCase().includes('BURNING')) && !effectApplied) {
             AppState.narrativePanel.classList.add('burning-effect');
-            // Explicitly ensure top property is not set inline
-            AppState.narrativePanel.style.top = '';
+            // Set top property to match our CSS positioning
+            AppState.narrativePanel.style.top = '240px';
             effectApplied = true;
             debug('Applied burning-effect, z-index set to: 35, top property reset');
         }
         
         if ((panel.has_light_rays || panel.has_light_burst) && !effectApplied) {
             AppState.narrativePanel.classList.add('light-rays');
-            // Explicitly ensure top property is not set inline
-            AppState.narrativePanel.style.top = '';
+            // Set top property to match our CSS positioning
+            AppState.narrativePanel.style.top = '240px';
             effectApplied = true;
             debug('Applied light-rays, z-index set to: 35, top property reset');
         }
         
         if (panel.has_door && !effectApplied) {
             AppState.narrativePanel.classList.add('door-effect');
-            // Explicitly ensure top property is not set inline
-            AppState.narrativePanel.style.top = '';
+            // Set top property to match our CSS positioning
+            AppState.narrativePanel.style.top = '240px';
             effectApplied = true;
             debug('Applied door-effect, z-index set to: 35, top property reset');
         }
         
         if (panel.epilogue && !effectApplied) {
             AppState.narrativePanel.classList.add('epilogue-panel');
-            // Explicitly ensure top property is not set inline
-            AppState.narrativePanel.style.top = '';
+            // Set top property to match our CSS positioning
+            AppState.narrativePanel.style.top = '240px';
             effectApplied = true;
             debug('Applied epilogue-panel, z-index set to: 35, top property reset');
         }

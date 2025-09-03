@@ -41,7 +41,7 @@ body {
 .svg-overlay {
     position: absolute;
     top: 20px;
-    left: 20px;
+    right: 20px; /* Changed from left to right to move to top right corner */
     width: 80px;
     height: 80px;
     z-index: 10;
@@ -57,13 +57,14 @@ body {
 /* Narrative panel */
 .narrative-panel {
     position: absolute;
-    bottom: 120px;
+    top: 240px; /* Position from top instead of bottom to start higher on the page */
     left: 0;
     right: 0;
     margin-left: auto;
     margin-right: auto;
     width: 80%;
     max-width: 800px;
+    min-height: 200px; /* Ensure minimum height even with little content */
     max-height: 50vh;
     overflow-y: auto;
     background: rgba(0, 0, 0, 0.7);
@@ -72,8 +73,8 @@ body {
     padding: 20px;
     z-index: 25;
     opacity: 1;
-    transition: opacity 0.5s ease;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: opacity 0.5s ease, top 0.3s ease; /* Add transition for top position */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.3); /* Enhanced shadow for focus */
     display: block !important; /* Force display to be visible */
 }
 
@@ -81,10 +82,10 @@ body {
 .narrative-panel.burning-effect {
     z-index: 35 !important;
     background: rgba(0, 0, 0, 0.9) !important;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255, 87, 34, 0.2);
     border: 1px solid rgba(255, 87, 34, 0.3);
     position: absolute; /* Keep absolute but don't change position */
-    /* No top: 0 to inherit original position */
+    top: 240px !important; /* Match the new top position */
     width: 100%;
     box-sizing: border-box;
 }
@@ -94,8 +95,8 @@ body {
     background: rgba(0, 0, 0, 0.8);
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
     position: absolute; /* Keep absolute but don't change position */
-    top: auto !important; /* Explicitly prevent top:0 */
-    bottom: 120px !important; /* Match original narrative-panel position */
+    top: 240px !important; /* Match the new top position */
+    bottom: auto !important; /* Remove bottom positioning */
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
@@ -106,7 +107,7 @@ body {
     background: rgba(0, 0, 0, 0.8);
     border: 1px solid rgba(255, 193, 7, 0.3);
     position: absolute; /* Keep absolute but don't change position */
-    /* No top: 0 to inherit original position */
+    top: 240px !important; /* Match the new top position */
     width: 100%;
     box-sizing: border-box;
 }
@@ -114,7 +115,7 @@ body {
 .narrative-panel.epilogue-panel {
     z-index: 35 !important; /* Match others */
     position: absolute; /* Keep absolute but don't change position */
-    /* No top: 0 to inherit original position */
+    top: 240px !important; /* Match the new top position */
     width: 100%;
     box-sizing: border-box;
 }
@@ -188,6 +189,23 @@ body {
     font-size: 1.5rem;
     color: var(--gold-thread);
     margin-bottom: 10px;
+    font-weight: bold;
+    text-shadow:
+        0 0 2px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 0.9),
+        0 0 6px rgba(0, 0, 0, 0.8);
+    letter-spacing: 0.8px;
+    /* Enhanced background for better contrast */
+    background: rgba(0, 0, 0, 0.5);
+    padding: 6px 12px;
+    border-radius: 4px;
+    display: inline-block;
+    /* Add subtle border for better definition */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    /* Add white outline for better contrast */
+    -webkit-text-stroke: 0.2px rgba(255, 255, 255, 0.3);
+    /* Add box shadow for better visibility */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .panel-text {

@@ -110,13 +110,51 @@ body[data-chapter="9"] {
 /* Dynamic elements */
 .chapter-title {
     color: var(--secondary-color);
-    text-shadow: 0 0 10px var(--glow-color);
+    text-shadow:
+        0 0 1px #000,
+        0 0 2px #000,
+        0 0 4px #000,
+        0 0 10px var(--glow-color);
     transition: color 0.5s ease, text-shadow 0.5s ease;
+    font-weight: bold;
+    /* Add a semi-transparent background to improve contrast */
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 15px;
+    border-radius: 4px;
+    display: inline-block;
+    /* Add a subtle border for better definition */
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .panel-title {
     color: var(--secondary-color);
     transition: color 0.5s ease;
+    /* Enhance base panel title readability */
+    text-shadow:
+        0 0 1px #000,
+        0 0 2px #000,
+        0 0 4px rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    /* Add subtle border for better definition */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Add white outline for better contrast */
+    -webkit-text-stroke: 0.2px rgba(255, 255, 255, 0.3);
+}
+
+/* Special styling for specific panel titles that need better readability */
+.panel-title:contains("MORGUE"),
+.panel-title:contains("PHOTO FLASH") {
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    text-shadow:
+        0 0 2px #000,
+        0 0 4px #000,
+        0 0 6px rgba(0, 0, 0, 0.9);
+    -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .play-button {
@@ -139,28 +177,64 @@ body[data-chapter="9"] {
     transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Neon title effects */
+/* Neon title effects with improved readability */
 .neon-title {
-    text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
-    animation: neonPulse 2s infinite;
+    text-shadow:
+        0 0 2px #000,
+        0 0 4px #000,
+        0 0 6px currentColor,
+        0 0 10px currentColor,
+        0 0 15px currentColor;
+    animation: neonPulse 3s infinite;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 6px 12px;
+    border-radius: 4px;
+    display: inline-block;
+    /* Add subtle border for better definition */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    /* Add box shadow for better visibility */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
 .neon-red {
     color: var(--velvet-red);
+    /* Enhanced white outline for better contrast */
+    -webkit-text-stroke: 0.7px rgba(255, 255, 255, 0.5);
+    /* Add stronger text shadow for better visibility */
+    text-shadow:
+        0 0 2px #000,
+        0 0 4px #000,
+        0 0 6px var(--velvet-red),
+        0 0 10px var(--velvet-red),
+        0 0 15px var(--velvet-red);
+    /* Add background with gradient for better contrast */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8));
+    /* Add subtle border */
+    border: 1px solid rgba(128, 0, 32, 0.4);
+    /* Add box shadow for glow effect */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 5px rgba(128, 0, 32, 0.3);
+    /* Increase letter spacing for better readability */
+    letter-spacing: 1px;
 }
 
 .neon-gold {
     color: var(--gold-thread);
+    /* Add dark outline for better contrast */
+    -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.5);
 }
 
 .neon-teal {
     color: var(--neon-teal);
+    /* Add dark outline for better contrast */
+    -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.5);
 }
 
 @keyframes neonPulse {
-    0% { opacity: 0.8; }
+    0% { opacity: 0.9; }
     50% { opacity: 1; }
-    100% { opacity: 0.8; }
+    100% { opacity: 0.9; }
 }
 
 /* Quote styling */
@@ -334,19 +408,26 @@ body[data-chapter="9"] {
     100% { filter: brightness(1.5) saturate(1.5) hue-rotate(0deg); }
 }
 
-/* She comes quote special styling */
+/* She comes quote special styling with improved readability */
 .she-comes-quote {
     font-size: 1.2em;
     font-weight: bold;
     color: var(--secondary-color);
-    text-shadow: 0 0 5px var(--glow-color);
+    text-shadow:
+        0 0 1px #000,
+        0 0 2px #000,
+        0 0 5px var(--glow-color);
     letter-spacing: 1px;
     text-align: center;
     margin: 20px 0;
-    padding: 10px;
+    padding: 15px;
     border-left: none;
     border-top: 1px solid var(--secondary-color);
     border-bottom: 1px solid var(--secondary-color);
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+    /* Add a subtle outline for better text definition */
+    -webkit-text-stroke: 0.2px rgba(255, 255, 255, 0.2);
 }
 
 /* Epilogue text styling */
@@ -385,17 +466,46 @@ body[data-chapter="9"] {
 /* Chapter navigation buttons with icons */
 .chapter-navigation {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
-    padding: 10px 0;
-    width: 100%;
-    position: relative;
-    z-index: 10;
-    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    width: auto;
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 20px;
-    margin: 0 auto;
-    max-width: 90%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Chapter container styling */
+.chapter-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Chapter label styling */
+.chapter-label {
+    position: absolute;
+    left: 45px;
+    color: var(--text-color);
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 3px 8px;
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: 101;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--primary-color);
 }
 
 .chapter-btn {
@@ -483,4 +593,40 @@ body[data-chapter="7"] .chapter-btn.active {
     33% { border-color: var(--neon-teal); box-shadow: 0 0 10px var(--neon-teal); }
     66% { border-color: var(--gold-thread); box-shadow: 0 0 10px var(--gold-thread); }
     100% { border-color: var(--disco-pink); box-shadow: 0 0 10px var(--disco-pink); }
+}
+
+/* Custom tooltip for chapter navigation */
+.chapter-btn {
+    position: relative;
+}
+
+/* Custom tooltip using data-title attribute */
+.chapter-btn:hover::after {
+    content: attr(data-title);
+    position: absolute;
+    left: 45px;
+    transform: none;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--secondary-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 0 5px var(--glow-color);
+    border: 1px solid var(--primary-color);
+    pointer-events: none;
+    animation: fadeInRight 0.3s ease;
+}
+
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateY(-50%) translateX(-10px); }
+    to { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(5px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
