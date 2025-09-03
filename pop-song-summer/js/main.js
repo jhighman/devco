@@ -163,6 +163,9 @@ function setupDebugToggle() {
     const debugPanel = document.getElementById('debug-panel') || throwError('Missing #debug-panel');
     const debugToggle = document.getElementById('debug-toggle') || throwError('Missing #debug-toggle');
     
+    // Ensure debug panel is collapsed initially
+    debugPanel.classList.remove('visible');
+    
     debugToggle.addEventListener('click', () => {
         debugPanel.classList.toggle('visible');
         
@@ -175,12 +178,11 @@ function setupDebugToggle() {
         }
     });
     
-    // Check localStorage for saved state with error handling
+    // We're intentionally ignoring the saved state to ensure the debug panel
+    // is always collapsed on initial load as requested
     try {
-        const savedState = localStorage.getItem('debugPanelVisible');
-        if (savedState === 'true') {
-            debugPanel.classList.add('visible');
-        }
+        // Clear any existing saved state
+        localStorage.setItem('debugPanelVisible', 'false');
     } catch (e) {
         debug('localStorage unavailable: ' + e.message);
     }
