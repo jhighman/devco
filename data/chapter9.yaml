@@ -1,0 +1,63 @@
+# Chapter 9: Shadow Drifter - Story Content
+title: "Shadow Drifter"
+subtitle: "Pop Song Summer, Track 9"
+intro_quote: "She comes, like a shadow drifting between worlds."
+audio_file: "music/pss_ch09_shadow-drifter.mp3"
+audio_duration: 525 # Estimated 8.75 minutes
+
+panels:
+  - id: 1
+    title: "BRIDGE CROSSING"
+    background: "bg-gradient-to-b from-[#2D2D2D] via-[#1A1A1A] to-[#2D2D2D]"
+    text: "The bridges stretch out like skeletal fingers over water that reflects nothing. I walk between worlds, a shadow drifting through places that shouldn't exist but somehow do. My footsteps echo twice—once beneath me, once beside me, where my shadow walks upright, independent. It's been this way since the storage unit, since the patch, since she came. The city behind me burns slowly, not with fire but with forgetting. Ahead, twelve bridges span to twelve shores, each promising a different return. A chalk sunburst marks the entrance to each, twelve rays perfectly spaced."
+    has_insignia: true
+    has_burning: true
+
+  - id: 2
+    title: "SHADOW COMPANION"
+    background: "bg-gradient-to-b from-[#1A2A44] via-[#000000] to-[#1A2A44]"
+    text: "My shadow turns to face me, its edges blurring in the half-light. 'You're early,' it says with my voice, but older. 'Or late. Either works.' I've stopped being surprised by impossible things. 'Which bridge?' I ask. It points to the seventh, where a woman in red stands midway, her coat catching non-existent wind. 'She's waiting,' my shadow says. 'She's always waiting.' I touch the sunburst patch on my shoulder, feeling thread bite skin. 'What am I returning?' My shadow smiles with teeth I can't see. 'Everything you borrowed. Nothing you earned.'"
+    has_insignia: true
+    neon_title: true
+    neon_color: "gold"
+
+  - id: 3
+    title: "SEVENTH BRIDGE"
+    background: "bg-gradient-to-b from-[#4A4A4A] via-[#2D2D2D] to-[#4A4A4A]"
+    text: "The seventh bridge creaks beneath my feet, metal singing like memory. Halfway across, the woman in red waits, her sunburst patch pulsing with my heartbeat. 'You've been collecting,' she says, nodding to my shadow. 'It happens when you cross too many times.' Below, the river flows in both directions simultaneously. A blind man stands at the far end, tapping his cane in rhythm with the bridge's song. 'He's counting,' she explains. 'Every crossing changes something.' My shadow stretches between us, touching both but belonging to neither. 'I don't remember crossing before,' I admit. She smiles. 'That's the toll.'"
+    has_insignia: true
+    neon_title: true
+    neon_color: "red"
+
+  - id: 4
+    title: "RIVER REFLECTION"
+    background: "bg-gradient-to-b from-[#800020] via-[#4A0000] to-[#800020]"
+    text: "We lean over the railing, looking down at water that should show our faces but instead reveals other bridges, other crossings. I see myself in a roller rink, in a diner, in a storage unit with candles. 'Echoes,' the woman in red explains. 'Every choice creates them.' My shadow points to one reflection where I'm burning, another where I'm singing. 'Which is real?' I ask. 'All of them,' she says. 'None of them.' The blind man's song reaches us: *She comes, like a shadow drifting between worlds.* The water ripples with the melody, bridges shifting like cards being shuffled. 'It's time to choose,' she says. 'Which return?'"
+    has_insignia: true
+    has_burning: true
+
+  - id: 5
+    title: "BRIDGE TOLL"
+    background: "bg-gradient-to-b from-[#2D0A31] via-[#1A0E25] to-[#2D0A31]"
+    text: "At the center of the bridge, a toll booth appears that wasn't there before. Inside, a child with chalk-stained fingers holds out a hand. 'The fee,' he says. My shadow reaches into my pocket, removing a name I'd written on a napkin, a key to a blue sedan, a cassette tape labeled 'For When the Wind Finds You.' The child takes them, nodding. 'And the last?' The woman in red touches my patch. 'He keeps that,' she says. 'It's a receipt, not a payment.' The child stamps my hand with a sunburst, twelve rays plus one that shouldn't fit but does. 'You may proceed,' he says. 'To the chorus.'"
+    has_insignia: true
+    has_burning: true
+
+  - id: 6
+    title: "CHORUS BRIDGE"
+    background: "bg-gradient-to-b from-[#1A2A44] via-[#FFC107] to-[#1A2A44]"
+    text: "As we walk, the bridge fills with others—the DJ with her white-label record, the painter with his canvas, Flo from the diner, the lemonade girl from the fair. Each bears a sunburst, each walks with a shadow that isn't quite right. 'The chorus,' the woman in red explains. 'We're all returning together.' The blind man's song grows louder, joined by voices I recognize from radio, from corners, from dreams. *She comes, burning houses in the distance. Lights up the night.* My shadow stretches ahead, becoming a path of its own. The woman takes my hand. 'Don't be afraid,' she says. 'You've done this before.'"
+    has_insignia: true
+    has_burning: true
+    neon_title: true
+    neon_color: "gold"
+
+  - id: 7
+    title: "FINAL CROSSING"
+    background: "bg-gradient-to-b from-[#FFC107] via-[#FF3300] to-[#FFC107]"
+    text: "The far shore glows with a light that isn't sunrise or sunset but something older. My shadow rejoins me as we reach the end, melding back but leaving memories that weren't mine before. The blind man nods as we pass, still singing. The chorus disperses, each taking a different path into the light. 'Where do we go?' I ask the woman in red. 'Forward,' she says. 'Always forward.' She points to a fairground in the distance, a ferris wheel turning against a sky that shouldn't exist. 'The end of everything,' she says. 'The beginning of returns.' My patch pulses one final time as we step off the bridge, shadows stretching behind us like promises kept."
+    has_insignia: true
+    has_burning: true
+    epilogue: true
+    neon_title: true
+    neon_color: "red"

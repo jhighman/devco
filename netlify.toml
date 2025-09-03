@@ -1,6 +1,6 @@
 [build]
-  # Build command to process Tailwind CSS and install dependencies
-  command = "npm run build && cd pop-song-summer && npm install"
+  # Build command to process Tailwind CSS for main site and install dependencies for pop-song-summer
+  command = "npm install && npm run build:css && npm run minify:css && cd pop-song-summer && npm install"
   # Publish the entire project to maintain directory structure
   publish = "."
   # Base directory where build command is run

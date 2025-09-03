@@ -1,0 +1,62 @@
+# Chapter 7: Second Lover, Over and Under - Story Content
+title: "Second Lover, Over and Under"
+subtitle: "Pop Song Summer, Track 7"
+intro_quote: "She comes, like a memory you can't quite place."
+audio_file: "music/pss_ch07_second-lover-over-and-under.mp3"
+audio_duration: 525 # Estimated 8.75 minutes
+
+panels:
+  - id: 1
+    title: "DINER BOOTH"
+    background: "bg-gradient-to-b from-[#2D2D2D] via-[#1A1A1A] to-[#2D2D2D]"
+    text: "The diner's neon sign flickers, casting a red glow over the parking lot. Inside, Flo pours coffee without asking, her sunburst patch catching the light. Across from me, she sits—not the woman in red, but someone familiar. Her eyes reflect nothing, like black mirrors. 'You don't remember me,' she says, stirring coffee she doesn't drink. I don't, but my body does—a phantom ache, like a missing limb. The jukebox plays a song about horizons and second chances. Outside, a blind man taps his cane three times on the sidewalk, and the ground seems to shift beneath us."
+    has_insignia: true
+
+  - id: 2
+    title: "MEMORY FRAGMENTS"
+    background: "bg-gradient-to-b from-[#1A2A44] via-[#000000] to-[#1A2A44]"
+    text: "She slides a photograph across the table—us, standing by a ferris wheel, my arm around her waist. The date stamp says 1985, but I wasn't born then. 'That's not possible,' I say. She smiles. 'Time isn't what you think.' Her fingers trace a pattern on the table—a sunburst with twelve rays. 'You were my second lover, over and under the wheel of time.' The coffee tastes like ash. Through the window, I see houses burning on the horizon, though the news reports no fires. 'What did you return?' she asks. I don't know what she means, but my mouth answers: 'Light.'"
+    has_insignia: true
+    has_burning: true
+
+  - id: 3
+    title: "UNDER THE TABLE"
+    background: "bg-gradient-to-b from-[#4A4A4A] via-[#2D2D2D] to-[#4A4A4A]"
+    text: "A child crawls under the next table, drawing a chalk sunburst on the floor. Twelve rays, then a thirteenth that shouldn't fit but does. 'He's one of us,' she says. 'We all are, when we remember.' The jukebox skips, playing a song that hasn't been released yet. Flo winks at me, tapping her patch. 'The receipt is coming due,' she says, refilling cups that aren't empty. My companion reaches across the table, her fingers cold against mine. 'You promised to meet me here, thirty-seven years ago. You're late.' The diner shifts around us, chrome becoming brass, then plastic, then something I don't have a name for."
+    has_insignia: true
+    neon_title: true
+    neon_color: "gold"
+
+  - id: 4
+    title: "MIRROR BOOTH"
+    background: "bg-gradient-to-b from-[#800020] via-[#4A0000] to-[#800020]"
+    text: "The booth's vinyl seat cracks under my weight, revealing a mirror beneath. In it, I see myself—younger, older, wearing clothes I've never owned. She watches me see. 'The first time we met, you were running from the fire. The second time, you were running toward it.' Outside, the woman in red walks past, her coat a climate. She doesn't look in, but raises a hand in greeting. My companion nods back. 'She finds the doors. I help people remember why they need them.' The mirror-me mouths words I can't hear. The blind man's song drifts in: *She comes, like a memory you can't quite place.*"
+    has_insignia: true
+    has_burning: true
+    neon_title: true
+    neon_color: "red"
+
+  - id: 5
+    title: "COFFEE RIPPLES"
+    background: "bg-gradient-to-b from-[#2D0A31] via-[#1A0E25] to-[#2D0A31]"
+    text: "She touches her coffee, and ripples spread outward, defying physics. The liquid shows scenes: a roller rink, a storage unit, a bridge with exodus traffic. 'You've been busy,' she says. 'Following the signs.' I see myself in each scene, though I've only lived some of them. 'Time isn't linear,' she explains. 'It's a wheel, and we're all spokes, connected at the hub.' The ripples reach the cup's edge and continue across the table, across my skin. The diner patrons freeze mid-motion, except for Flo and the child with chalk. 'What happens when the wheel stops?' I ask. 'It never does,' she says. 'But sometimes, it changes direction.'"
+    has_insignia: true
+    has_burning: true
+
+  - id: 6
+    title: "BILL AND RECEIPT"
+    background: "bg-gradient-to-b from-[#1A2A44] via-[#FFC107] to-[#1A2A44]"
+    text: "Flo brings the check—not for the coffee, but for 'Time Borrowed: 37 years, 4 months, 12 days.' My companion slides a sunburst patch across the table. 'Your payment.' I pin it to my jacket, feeling thread bite skin. The patch burns, then cools, leaving a mark I know will never fade. 'Now we're even,' she says, standing. 'Until the next cycle.' She walks to the door, pausing to whisper something to the child. Outside, a blue sedan waits, engine running. The woman in red holds the passenger door open. 'Where are they going?' I ask Flo. She points to the horizon. 'Out. To the other side.'"
+    has_insignia: true
+    neon_title: true
+    neon_color: "gold"
+
+  - id: 7
+    title: "DINER DEPARTURE"
+    background: "bg-gradient-to-b from-[#FFC107] via-[#FF3300] to-[#FFC107]"
+    text: "I leave a tip—not money, but a name written on a napkin. It feels right, though I don't know why. Outside, the air smells like summer and smoke. The blind man stands at the corner, singing about horizons and returns. The child's chalk drawing has spread beyond the diner, marking a path down the street. I follow it, each step aligning with a memory I'm only now receiving. The jukebox plays one last song as the door swings shut behind me: *She comes, second lover, over and under.* My patch pulses with my heartbeat, a receipt for time borrowed and returned. Ahead, the horizon burns with promise."
+    has_insignia: true
+    has_burning: true
+    epilogue: true
+    neon_title: true
+    neon_color: "red"
