@@ -1,0 +1,360 @@
+/* Responsive styles for Pop Song Summer Experience */
+
+/* Base mobile styles - applied to all screen sizes first */
+@media screen and (max-width: 1024px) {
+    /* Reduce padding and margins for smaller screens */
+    body {
+        font-size: 16px;
+    }
+    
+    /* Make SVG overlay smaller on medium screens */
+    .svg-overlay {
+        width: 60px;
+        height: 60px;
+    }
+    
+    /* Adjust narrative panel width */
+    .narrative-panel {
+        width: 90%;
+        max-width: 700px;
+    }
+    
+    /* Adjust audio controls */
+    .audio-controls {
+        width: 90%;
+    }
+}
+
+/* Tablet styles */
+@media screen and (max-width: 768px) {
+    /* Further reduce SVG overlay size */
+    .svg-overlay {
+        width: 50px;
+        height: 50px;
+        top: 15px;
+        right: 15px;
+    }
+    
+    /* Adjust chapter card */
+    .chapter-card {
+        width: 95%;
+        top: 30px;
+    }
+    
+    .chapter-card-image {
+        height: 150px;
+    }
+    
+    /* Adjust narrative panel */
+    .narrative-panel {
+        top: 200px;
+        max-height: 45vh;
+    }
+    
+    /* Adjust panel title and text */
+    .panel-title {
+        font-size: 1.3rem;
+    }
+    
+    .panel-text {
+        font-size: 1rem;
+    }
+    
+    /* Adjust audio controls */
+    .audio-controls {
+        padding: 8px 15px;
+    }
+    
+    .time-display {
+        min-width: 70px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Mobile styles with progressive degradation */
+@media screen and (max-width: 480px) {
+    /* Hide chapter card (header section) on small screens */
+    .chapter-card {
+        display: none;
+    }
+    
+    /* Reposition SVG overlay */
+    .svg-overlay {
+        width: 40px;
+        height: 40px;
+        top: 10px;
+        right: 10px;
+    }
+    
+    /* Reposition chapter navigation to the left edge */
+    .chapter-navigation {
+        left: 5px;
+        padding: 8px 5px;
+        border-radius: 15px;
+    }
+    
+    /* Make chapter buttons smaller */
+    .chapter-btn {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .chapter-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+    
+    /* Position narrative panel to the right of chapter navigation */
+    .narrative-panel {
+        left: 50px;
+        right: 5px;
+        margin-left: 0;
+        margin-right: 0;
+        width: calc(100% - 60px);
+        top: 50%;
+        transform: translateY(-50%);
+        max-height: 80vh;
+        padding: 15px;
+    }
+    
+    /* Adjust special effect panels */
+    .narrative-panel.burning-effect,
+    .narrative-panel.light-rays,
+    .narrative-panel.door-effect,
+    .narrative-panel.epilogue-panel {
+        left: 50px;
+        right: 5px;
+        margin-left: 0;
+        margin-right: 0;
+        width: calc(100% - 60px);
+        top: 50% !important;
+        transform: translateY(-50%);
+    }
+    
+    /* Adjust panel title and text */
+    .panel-title {
+        font-size: 1.1rem;
+        padding: 4px 8px;
+    }
+    
+    .panel-text {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    /* Position audio controls to the right of chapter navigation at the bottom */
+    .audio-controls {
+        left: 50px;
+        right: 5px;
+        margin-left: 0;
+        margin-right: 0;
+        width: calc(100% - 60px);
+        bottom: 10px;
+        padding: 5px 10px;
+        border-radius: 25px;
+    }
+    
+    .play-button {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+    }
+    
+    .time-display {
+        min-width: 60px;
+        font-size: 0.7rem;
+    }
+    
+    /* Adjust panel navigation buttons */
+    .panel-navigation {
+        margin-top: 10px;
+    }
+    
+    .panel-nav-button {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+    }
+    
+    /* Adjust loading indicator */
+    .loading {
+        width: 80%;
+        padding: 15px;
+    }
+    
+    .loading-spinner {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* Very small screens */
+@media screen and (max-width: 320px) {
+    /* Further adjustments for very small screens */
+    .chapter-navigation {
+        left: 2px;
+        padding: 5px 3px;
+    }
+    
+    .chapter-btn {
+        width: 25px;
+        height: 25px;
+    }
+    
+    .chapter-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+    
+    /* Adjust narrative panel */
+    .narrative-panel {
+        left: 35px;
+        width: calc(100% - 40px);
+        padding: 10px;
+    }
+    
+    .narrative-panel.burning-effect,
+    .narrative-panel.light-rays,
+    .narrative-panel.door-effect,
+    .narrative-panel.epilogue-panel {
+        left: 35px;
+        width: calc(100% - 40px);
+    }
+    
+    /* Adjust audio controls */
+    .audio-controls {
+        left: 35px;
+        width: calc(100% - 40px);
+    }
+    
+    .play-button {
+        width: 25px;
+        height: 25px;
+    }
+    
+    .time-display {
+        min-width: 50px;
+        font-size: 0.6rem;
+    }
+}
+
+/* Landscape orientation adjustments */
+@media screen and (max-height: 480px) and (orientation: landscape) {
+    /* Hide chapter card in landscape on small screens */
+    .chapter-card {
+        display: none;
+    }
+    
+    /* Adjust chapter navigation to be horizontal at the top */
+    .chapter-navigation {
+        flex-direction: row;
+        top: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 5px 10px;
+    }
+    
+    /* Adjust narrative panel */
+    .narrative-panel {
+        top: 60px;
+        left: 10px;
+        right: 10px;
+        width: calc(100% - 20px);
+        max-height: calc(100vh - 120px);
+    }
+    
+    .narrative-panel.burning-effect,
+    .narrative-panel.light-rays,
+    .narrative-panel.door-effect,
+    .narrative-panel.epilogue-panel {
+        top: 60px !important;
+        left: 10px;
+        right: 10px;
+        width: calc(100% - 20px);
+    }
+    
+    /* Adjust audio controls */
+    .audio-controls {
+        bottom: 5px;
+        left: 10px;
+        right: 10px;
+        width: calc(100% - 20px);
+    }
+    
+    /* Adjust SVG overlay */
+    .svg-overlay {
+        top: 5px;
+        right: 5px;
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* High-DPI screens (Retina displays) */
+@media screen and (-webkit-min-device-pixel-ratio: 2), 
+       screen and (min-resolution: 192dpi) {
+    /* Enhance text rendering for high-DPI displays */
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* Increase shadow intensity for better visibility */
+    .narrative-panel {
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.6), 0 0 50px rgba(0, 0, 0, 0.4);
+    }
+    
+    .panel-title {
+        text-shadow: 
+            0 0 2px rgba(0, 0, 0, 1),
+            0 0 5px rgba(0, 0, 0, 0.9),
+            0 0 8px rgba(0, 0, 0, 0.8);
+    }
+}
+
+/* Print styles - for accessibility and fallback */
+@media print {
+    body {
+        background: white;
+        color: black;
+        font-size: 12pt;
+    }
+    
+    .experience-container {
+        position: static;
+        overflow: visible;
+    }
+    
+    #scene-canvas, .svg-overlay, .audio-controls, .chapter-navigation, .debug-panel, .debug-toggle, .loading {
+        display: none !important;
+    }
+    
+    .chapter-card, .narrative-panel {
+        position: static;
+        width: 100%;
+        margin: 20px 0;
+        padding: 0;
+        background: none;
+        box-shadow: none;
+        border: 1px solid #ccc;
+        page-break-inside: avoid;
+    }
+    
+    .panel-title {
+        color: black;
+        text-shadow: none;
+        background: none;
+        border: none;
+        font-size: 14pt;
+        margin-bottom: 10px;
+    }
+    
+    .panel-text {
+        color: black;
+        font-size: 12pt;
+    }
+    
+    .panel-quote {
+        color: #333;
+        border-left: 2px solid #666;
+    }
+}

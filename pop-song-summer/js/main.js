@@ -4,6 +4,7 @@ import { AssetManager } from './assetManager.js';
 import { initCanvasScene, resizeCanvas } from './canvas.js';
 import { setupChapterNavigation, showPanel } from './navigation.js';
 import { setupAudioPlayer } from './audio.js';
+import { initMobile, adjustResponsiveLayout } from './mobile.js';
 
 // Log environment information for debugging
 debug(`Initializing with environment: ${currentEnvironment}`);
@@ -112,6 +113,9 @@ function initExperience() {
                 
                 // Setup debug panel toggle
                 setupDebugToggle();
+                
+                // Initialize mobile functionality
+                initMobile();
             })
             .catch(error => {
                 debug('Error during asset loading: ' + error.message);
@@ -144,6 +148,9 @@ function initExperience() {
                 
                 // Setup debug panel toggle
                 setupDebugToggle();
+                
+                // Initialize mobile functionality even with fallback
+                initMobile();
             });
         
     } catch (error) {
