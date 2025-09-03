@@ -72,7 +72,9 @@
 }
 
 /* Mobile styles with progressive degradation */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 480px),
+       screen and (max-device-width: 480px),
+       screen and (hover: none) and (pointer: coarse) {
     /* Hide chapter card (header section) on small screens */
     .chapter-card {
         display: none;
@@ -88,7 +90,7 @@
     }
     
     /* Ensure chapter navigation is visible and properly positioned */
-    .chapter-navigation {
+    .mobile-device .chapter-navigation {
         display: flex !important;
         position: fixed !important;
         left: 5px !important;
@@ -102,7 +104,7 @@
     }
     
     /* Make chapter buttons smaller but ensure they're visible */
-    .chapter-btn {
+    .mobile-device .chapter-btn {
         width: 30px;
         height: 30px;
         opacity: 1 !important;
@@ -112,7 +114,7 @@
         justify-content: center;
     }
     
-    .chapter-btn svg {
+    .mobile-device .chapter-btn svg {
         width: 16px;
         height: 16px;
         opacity: 1 !important;
@@ -121,7 +123,7 @@
     }
     
     /* Position narrative panel to the right of chapter navigation */
-    .narrative-panel {
+    .mobile-device .narrative-panel {
         left: 50px;
         right: 5px;
         margin-left: 0;
@@ -135,10 +137,10 @@
     }
     
     /* Adjust special effect panels */
-    .narrative-panel.burning-effect,
-    .narrative-panel.light-rays,
-    .narrative-panel.door-effect,
-    .narrative-panel.epilogue-panel {
+    .mobile-device .narrative-panel.burning-effect,
+    .mobile-device .narrative-panel.light-rays,
+    .mobile-device .narrative-panel.door-effect,
+    .mobile-device .narrative-panel.epilogue-panel {
         left: 50px;
         right: 5px;
         margin-left: 0;
@@ -160,7 +162,7 @@
     }
     
     /* Position audio controls to the right of chapter navigation at the bottom */
-    .audio-controls {
+    .mobile-device .audio-controls {
         display: flex !important;
         position: fixed !important;
         left: 50px !important;
@@ -175,7 +177,7 @@
         background: rgba(45, 10, 49, 0.8) !important;
     }
     
-    .play-button {
+    .mobile-device .play-button {
         width: 30px !important;
         height: 30px !important;
         margin-right: 10px;
@@ -220,7 +222,7 @@
     }
     
     /* Ensure debug toggle is visible and accessible */
-    .debug-toggle {
+    .mobile-device .debug-toggle {
         position: fixed !important;
         top: 10px !important;
         right: 60px !important;
@@ -233,58 +235,60 @@
     }
     
     /* Adjust debug panel for mobile */
-    .debug-panel {
+    .mobile-device .debug-panel {
         width: 80% !important;
         max-height: 60vh !important;
         right: -80% !important;
         font-size: 10px !important;
     }
     
-    .debug-panel.visible {
+    .mobile-device .debug-panel.visible {
         right: 0 !important;
     }
 }
 
 /* Very small screens */
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 320px),
+       screen and (max-device-width: 320px),
+       screen and (hover: none) and (pointer: coarse) and (max-width: 320px) {
     /* Further adjustments for very small screens */
-    .chapter-navigation {
+    .mobile-device .chapter-navigation {
         left: 2px;
         padding: 5px 3px;
     }
     
-    .chapter-btn {
+    .mobile-device .chapter-btn {
         width: 25px;
         height: 25px;
     }
     
-    .chapter-btn svg {
+    .mobile-device .chapter-btn svg {
         width: 14px;
         height: 14px;
     }
     
     /* Adjust narrative panel */
-    .narrative-panel {
+    .mobile-device .narrative-panel {
         left: 35px;
         width: calc(100% - 40px);
         padding: 10px;
     }
     
-    .narrative-panel.burning-effect,
-    .narrative-panel.light-rays,
-    .narrative-panel.door-effect,
-    .narrative-panel.epilogue-panel {
+    .mobile-device .narrative-panel.burning-effect,
+    .mobile-device .narrative-panel.light-rays,
+    .mobile-device .narrative-panel.door-effect,
+    .mobile-device .narrative-panel.epilogue-panel {
         left: 35px;
         width: calc(100% - 40px);
     }
     
     /* Adjust audio controls */
-    .audio-controls {
+    .mobile-device .audio-controls {
         left: 35px;
         width: calc(100% - 40px);
     }
     
-    .play-button {
+    .mobile-device .play-button {
         width: 25px;
         height: 25px;
     }
@@ -296,14 +300,16 @@
 }
 
 /* Landscape orientation adjustments */
-@media screen and (max-height: 480px) and (orientation: landscape) {
+@media screen and (max-height: 480px) and (orientation: landscape),
+       screen and (max-device-height: 480px) and (orientation: landscape),
+       screen and (hover: none) and (pointer: coarse) and (orientation: landscape) {
     /* Hide chapter card in landscape on small screens */
     .chapter-card {
         display: none;
     }
     
     /* Adjust chapter navigation to be horizontal at the top */
-    .chapter-navigation {
+    .mobile-device .chapter-navigation {
         flex-direction: row;
         top: 5px;
         left: 50%;
@@ -312,7 +318,7 @@
     }
     
     /* Adjust narrative panel */
-    .narrative-panel {
+    .mobile-device .narrative-panel {
         top: 60px;
         left: 10px;
         right: 10px;
@@ -320,10 +326,10 @@
         max-height: calc(100vh - 120px);
     }
     
-    .narrative-panel.burning-effect,
-    .narrative-panel.light-rays,
-    .narrative-panel.door-effect,
-    .narrative-panel.epilogue-panel {
+    .mobile-device .narrative-panel.burning-effect,
+    .mobile-device .narrative-panel.light-rays,
+    .mobile-device .narrative-panel.door-effect,
+    .mobile-device .narrative-panel.epilogue-panel {
         top: 60px !important;
         left: 10px;
         right: 10px;
@@ -331,7 +337,7 @@
     }
     
     /* Adjust audio controls */
-    .audio-controls {
+    .mobile-device .audio-controls {
         bottom: 5px;
         left: 10px;
         right: 10px;
@@ -339,7 +345,7 @@
     }
     
     /* Adjust SVG overlay */
-    .svg-overlay {
+    .mobile-device .svg-overlay {
         top: 5px;
         right: 5px;
         width: 30px;

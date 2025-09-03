@@ -4,7 +4,7 @@ import { debug } from './utils.js';
 import { AppState } from './main.js';
 
 // Detect if we're on a mobile device
-export const isMobile = {
+const isMobile = {
     Android: function() {
         return navigator.userAgent.match(/Android/i);
     },
@@ -21,30 +21,67 @@ export const isMobile = {
         return navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i);
     },
     any: function() {
-        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+        const isMobileDevice = (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+        debug('Is mobile device (from user agent):', isMobileDevice);
+        return isMobileDevice;
     }
 };
 
 // Initialize mobile-specific functionality
-export function initMobile() {
+function initMobile() {
     debug('Initializing mobile functionality');
     
+    // Set up mobile toggle button
+    debug('Setting up mobile toggle button');
+    setupMobileToggle();
+    
     // Check if we're on a mobile device
-    if (isMobile.any()) {
-        debug('Mobile device detected');
+    const isMobileDevice = isMobile.any();
+    debug('Is mobile device (from user agent): ' + isMobileDevice);
+    
+    // Check if mobile mode is forced via toggle
+    let isMobileModeForced = false;
+    try {
+        const storedValue = localStorage.getItem('mobileModeActive');
+        debug('Mobile mode in localStorage: ' + storedValue);
+        isMobileModeForced = storedValue === 'true';
+        debug('Is mobile mode forced: ' + isMobileModeForced);
+    } catch (e) {
+        debug('localStorage unavailable: ' + e.message);
+    }
+    
+    debug('Current body classes before applying mobile/desktop: ' + document.body.className);
+    
+    if (isMobileDevice || isMobileModeForced) {
+        debug('Mobile device detected or mobile mode forced');
         document.body.classList.add('mobile-device');
+        document.body.classList.remove('desktop-device');
+        
+        debug('Body classes after applying mobile: ' + document.body.className);
         
         // Add touch-specific event handlers
+        debug('Adding touch event handlers');
         addTouchHandlers();
         
         // Adjust layout for mobile
+        debug('Adjusting layout for mobile');
         adjustMobileLayout();
         
         // Fix mobile-specific issues
+        debug('Fixing mobile-specific issues');
         fixMobileIssues();
     } else {
         debug('Desktop device detected');
         document.body.classList.add('desktop-device');
+        document.body.classList.remove('mobile-device');
+        
+        debug('Body classes after applying desktop: ' + document.body.className);
+        
+        // Ensure mobile-specific styles are not applied
+        debug('Removing mobile-specific styles');
+        document.querySelectorAll('.chapter-navigation, .play-button, .debug-toggle, .audio-controls').forEach(el => {
+            el.removeAttribute('style');
+        });
     }
     
     // Add orientation change handler
@@ -55,6 +92,131 @@ export function initMobile() {
     
     // Initial layout adjustment
     adjustResponsiveLayout();
+}
+
+// Setup mobile toggle button
+function setupMobileToggle() {
+    debug('Setting up mobile toggle button');
+    
+    const mobileToggle = document.getElementById('mobile-toggle');
+    if (!mobileToggle) {
+        debug('Mobile toggle button not found');
+        return;
+    }
+    
+    debug('Mobile toggle button found: ' + mobileToggle.outerHTML);
+    
+    // Check if mobile mode is saved in localStorage
+    let isMobileModeActive = false;
+    try {
+        const storedValue = localStorage.getItem('mobileModeActive');
+        debug('Mobile mode in localStorage: ' + storedValue);
+        isMobileModeActive = storedValue === 'true';
+        debug('Is mobile mode active: ' + isMobileModeActive);
+    } catch (e) {
+        debug('localStorage unavailable: ' + e.message);
+    }
+    
+    // Apply initial state
+    if (isMobileModeActive) {
+        debug('Applying initial mobile mode state (active)');
+        document.body.classList.add('mobile-device');
+        document.body.classList.remove('desktop-device');
+        mobileToggle.classList.add('active');
+        
+        debug('Body classes after initialization: ' + document.body.className);
+        debug('Mobile toggle classes after initialization: ' + mobileToggle.className);
+        
+        // Apply mobile fixes
+        debug('Applying mobile layout adjustments during initialization');
+        adjustMobileLayout();
+        
+        debug('Applying mobile-specific fixes during initialization');
+        fixMobileIssues();
+    } else {
+        debug('Mobile mode not active in localStorage, using default state');
+        document.body.classList.remove('mobile-device');
+        document.body.classList.add('desktop-device');
+        mobileToggle.classList.remove('active');
+    }
+    
+    // Add click event listener
+    mobileToggle.addEventListener('click', toggleMobileMode);
+    
+    // Add touch event listeners for mobile
+    mobileToggle.addEventListener('touchstart', function(e) {
+        debug('Mobile toggle touch start');
+        e.preventDefault();
+    }, { passive: false });
+    
+    mobileToggle.addEventListener('touchend', function(e) {
+        debug('Mobile toggle touch end');
+        e.preventDefault();
+        toggleMobileMode.call(this);
+    }, { passive: false });
+    
+    // Function to toggle mobile mode
+    function toggleMobileMode() {
+        debug('Mobile toggle clicked');
+        
+        // Toggle mobile mode
+        const isActive = this.classList.contains('active');
+        debug('Toggle button is currently active: ' + isActive);
+        
+        if (isActive) {
+            // Disable mobile mode
+            debug('Disabling mobile mode');
+            document.body.classList.remove('mobile-device');
+            document.body.classList.add('desktop-device');
+            this.classList.remove('active');
+            
+            // Save state to localStorage
+            try {
+                localStorage.setItem('mobileModeActive', 'false');
+                debug('Saved mobile mode as false to localStorage');
+            } catch (e) {
+                debug('localStorage unavailable: ' + e.message);
+            }
+            
+            // Remove mobile-specific styles
+            debug('Removing mobile-specific styles');
+            document.querySelectorAll('.chapter-navigation, .play-button, .debug-toggle, .audio-controls').forEach(el => {
+                el.removeAttribute('style');
+            });
+            
+            // Force a layout adjustment
+            debug('Forcing layout adjustment for desktop');
+            adjustResponsiveLayout();
+        } else {
+            // Enable mobile mode
+            debug('Enabling mobile mode');
+            document.body.classList.add('mobile-device');
+            document.body.classList.remove('desktop-device');
+            this.classList.add('active');
+            
+            // Save state to localStorage
+            try {
+                localStorage.setItem('mobileModeActive', 'true');
+                debug('Saved mobile mode as true to localStorage');
+                
+                // Verify the value was set correctly
+                const savedValue = localStorage.getItem('mobileModeActive');
+                debug('Verified localStorage value: ' + savedValue);
+            } catch (e) {
+                debug('localStorage unavailable: ' + e.message);
+            }
+            
+            // Apply mobile fixes
+            debug('Applying mobile layout adjustments');
+            adjustMobileLayout();
+            
+            debug('Applying mobile-specific fixes');
+            fixMobileIssues();
+        }
+        
+        debug('Mobile mode is now: ' + (isActive ? 'disabled' : 'enabled'));
+        debug('Body classes after toggle: ' + document.body.className);
+    }
 }
 
 // Add touch-specific event handlers
@@ -170,41 +332,115 @@ function adjustResponsiveLayout() {
         document.body.classList.remove('landscape');
     }
     
-    // Adjust narrative panel position for mobile
-    adjustMobileLayout();
+    debug('Current body classes after screen size and orientation: ' + document.body.className);
+    
+    // Check if mobile mode is forced via toggle
+    let isMobileModeForced = false;
+    try {
+        const storedValue = localStorage.getItem('mobileModeActive');
+        debug('Mobile mode in localStorage (in adjustResponsiveLayout): ' + storedValue);
+        isMobileModeForced = storedValue === 'true';
+        debug('Is mobile mode forced (in adjustResponsiveLayout): ' + isMobileModeForced);
+    } catch (e) {
+        debug('localStorage unavailable: ' + e.message);
+    }
+    
+    // Check if we're on a mobile device
+    const isMobileDevice = isMobile.any();
+    debug('Is mobile device (in adjustResponsiveLayout): ' + isMobileDevice);
+    
+    // Only adjust mobile layout if on a mobile device or mobile mode is forced
+    if (isMobileDevice || isMobileModeForced) {
+        debug('Adjusting mobile layout from adjustResponsiveLayout');
+        // Adjust narrative panel position for mobile
+        adjustMobileLayout();
+    } else {
+        debug('Not adjusting mobile layout - not a mobile device and mobile mode not forced');
+    }
 }
 
 // Adjust layout specifically for mobile devices
 function adjustMobileLayout() {
     const width = window.innerWidth;
+    debug('Adjusting mobile layout, screen width: ' + width);
     
-    // Only apply these adjustments on small screens
-    if (width <= 480) {
+    // Check if mobile mode is forced via toggle
+    let isMobileModeForced = false;
+    try {
+        const storedValue = localStorage.getItem('mobileModeActive');
+        debug('Mobile mode in localStorage (in adjustMobileLayout): ' + storedValue);
+        isMobileModeForced = storedValue === 'true';
+        debug('Is mobile mode forced (in adjustMobileLayout): ' + isMobileModeForced);
+    } catch (e) {
+        debug('localStorage unavailable: ' + e.message);
+    }
+    
+    // Check if we're on a mobile device
+    const isMobileDevice = isMobile.any();
+    debug('Is mobile device (in adjustMobileLayout): ' + isMobileDevice);
+    debug('Current body classes (in adjustMobileLayout): ' + document.body.className);
+    
+    // Only apply these adjustments on small screens AND mobile devices (or if mobile mode is forced)
+    if ((width <= 480 && isMobileDevice) || isMobileModeForced) {
         debug('Applying mobile-specific layout adjustments');
         
         // Ensure narrative panel is visible
         if (AppState && AppState.narrativePanel) {
+            debug('Setting narrative panel display to block');
             AppState.narrativePanel.style.display = 'block';
+        } else {
+            debug('AppState or narrativePanel not available');
         }
         
         // Adjust SVG overlay position
         const svgOverlay = document.querySelector('.svg-overlay');
         if (svgOverlay) {
+            debug('Adjusting SVG overlay position');
             svgOverlay.style.top = '10px';
             svgOverlay.style.right = '10px';
+        } else {
+            debug('SVG overlay not found');
         }
         
         // Ensure chapter navigation is visible
         const chapterNavigation = document.getElementById('chapter-navigation');
         if (chapterNavigation) {
+            debug('Setting chapter navigation display to flex');
             chapterNavigation.style.display = 'flex';
+        } else {
+            debug('Chapter navigation not found');
         }
+    } else {
+        debug('Not applying mobile-specific layout adjustments - not a small screen mobile device and mobile mode not forced');
     }
 }
 
 // Fix mobile-specific issues
 function fixMobileIssues() {
     debug('Fixing mobile-specific issues');
+    
+    // Check if mobile mode is forced via toggle
+    let isMobileModeForced = false;
+    try {
+        isMobileModeForced = localStorage.getItem('mobileModeActive') === 'true';
+        debug('Mobile mode forced via localStorage: ' + isMobileModeForced);
+    } catch (e) {
+        debug('localStorage unavailable: ' + e.message);
+    }
+    
+    // Check if we're on a mobile device
+    const isMobileDevice = isMobile.any();
+    debug('Is mobile device: ' + isMobileDevice);
+    debug('Is mobile mode forced: ' + isMobileModeForced);
+    debug('Mobile device class present: ' + document.body.classList.contains('mobile-device'));
+    
+    // Only apply fixes if on a mobile device or mobile mode is forced
+    if (!isMobileDevice && !isMobileModeForced) {
+        debug('Not a mobile device and mobile mode not forced, skipping mobile fixes');
+        return;
+    }
+    
+    debug('Applying mobile fixes');
     
     // Fix play button
     const playButton = document.getElementById('play-button');
@@ -386,7 +622,7 @@ function updatePlayButtonState() {
 }
 
 // Export functions for use in main.js
-export default {
+export {
     initMobile,
     isMobile,
     adjustResponsiveLayout,
