@@ -5,6 +5,8 @@ import { initCanvasScene, resizeCanvas } from './canvas.js';
 import { setupChapterNavigation, showPanel } from './navigation.js';
 import { setupAudioPlayer } from './audio.js';
 import { initMobile, adjustResponsiveLayout, fixMobileIssues } from './mobile.js';
+import { initDebugAlignment, checkAlignment } from './debug-alignment.js';
+import { initResolutionTests } from './test-resolutions.js';
 
 // Log environment information for debugging
 debug(`Initializing with environment: ${currentEnvironment}`);
@@ -121,6 +123,12 @@ function initExperience() {
                 setTimeout(() => {
                     fixMobileIssues();
                 }, 500);
+                
+                // Initialize debug alignment tools
+                initDebugAlignment();
+                
+                // Initialize resolution tests
+                initResolutionTests();
             })
             .catch(error => {
                 debug('Error during asset loading: ' + error.message);
@@ -161,6 +169,12 @@ function initExperience() {
                 setTimeout(() => {
                     fixMobileIssues();
                 }, 500);
+                
+                // Initialize debug alignment tools even with fallback
+                initDebugAlignment();
+                
+                // Initialize resolution tests even with fallback
+                initResolutionTests();
             });
         
     } catch (error) {
@@ -242,8 +256,8 @@ export function clearPanel() {
         AppState.panelText.textContent = '';
         
         // Reset styling
-        AppState.narrativePanel.style.zIndex = '25'; // Default, burning will override
-        AppState.narrativePanel.style.background = 'rgba(0, 0, 0, 0.7)';
+        AppState.narrativePanel.style.zIndex = '100'; // Use Z_INDICES.NARRATIVE_PANEL
+        AppState.narrativePanel.style.background = 'rgba(0, 0, 0, 0.85)';
         AppState.narrativePanel.style.backdropFilter = 'blur(10px)';
         AppState.narrativePanel.style.display = 'block'; // Ensure panel is visible
         
@@ -263,6 +277,22 @@ export function clearPanel() {
             'neon-gold',
             'neon-teal'
         );
+        
+        // Ensure panel navigation is visible and clickable
+        const panelNavigation = AppState.narrativePanel.querySelector('.panel-navigation');
+        if (panelNavigation) {
+            panelNavigation.style.position = 'relative';
+            panelNavigation.style.zIndex = '150';
+            panelNavigation.style.pointerEvents = 'auto';
+            
+            // Ensure buttons are clickable
+            const buttons = panelNavigation.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.style.position = 'relative';
+                button.style.zIndex = '150';
+                button.style.pointerEvents = 'auto';
+            });
+        }
     }
     
     debug('Panel styling reset');

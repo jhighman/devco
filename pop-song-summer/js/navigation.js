@@ -13,14 +13,14 @@ export function setupChapterNavigation() {
     AppState.chapterNavigation.innerHTML = '';
     
     // Set the style directly on the element
-    AppState.chapterNavigation.style.position = 'absolute';
+    AppState.chapterNavigation.style.position = 'fixed';
     AppState.chapterNavigation.style.top = '50%';
     AppState.chapterNavigation.style.left = '20px';
     AppState.chapterNavigation.style.transform = 'translateY(-50%)';
     AppState.chapterNavigation.style.display = 'flex';
     AppState.chapterNavigation.style.flexDirection = 'column';
     AppState.chapterNavigation.style.gap = '10px';
-    AppState.chapterNavigation.style.zIndex = '100';
+    AppState.chapterNavigation.style.zIndex = '300';
     AppState.chapterNavigation.style.background = 'rgba(0, 0, 0, 0.5)';
     AppState.chapterNavigation.style.padding = '15px 10px';
     AppState.chapterNavigation.style.borderRadius = '20px';
@@ -32,12 +32,21 @@ export function setupChapterNavigation() {
         chapterContainer.className = 'chapter-container';
         chapterContainer.style.display = 'flex';
         chapterContainer.style.alignItems = 'center';
+        chapterContainer.style.justifyContent = 'flex-start';
         chapterContainer.style.gap = '10px';
         chapterContainer.style.margin = '5px 0';
+        chapterContainer.style.width = '100%';
         
         const chapterBtn = document.createElement('button');
         chapterBtn.className = `chapter-btn ${i === AppState.currentChapter ? 'active' : ''}`;
         chapterBtn.setAttribute('data-chapter', i);
+        chapterBtn.style.position = 'relative';
+        chapterBtn.style.display = 'flex';
+        chapterBtn.style.alignItems = 'center';
+        chapterBtn.style.justifyContent = 'center';
+        chapterBtn.style.margin = '0';
+        chapterBtn.style.marginLeft = '0';
+        chapterBtn.style.marginRight = '0';
         
         // Modify SVG content to include inline styles
         let iconContent = '';
@@ -46,11 +55,11 @@ export function setupChapterNavigation() {
             const svgContent = AppState.chapterIcons[i].trim();
             const colorStyle = i === AppState.currentChapter ? 'var(--secondary-color)' : 'var(--text-color)';
             
-            // Add inline style to SVG tag
-            iconContent = svgContent.replace('<svg', `<svg style="color: ${colorStyle}; fill: currentColor;"`)
+            // Add inline style to SVG tag with explicit alignment
+            iconContent = svgContent.replace('<svg', `<svg style="color: ${colorStyle}; fill: currentColor; display: block; margin: 0 auto;"`)
                                    .replace('fill="currentColor"', `fill="currentColor" style="fill: currentColor;"`);
         } else {
-            iconContent = `<span style="color: white; font-size: 16px; font-weight: bold;">${i + 1}</span>`;
+            iconContent = `<span style="color: white; font-size: 16px; font-weight: bold; display: block; margin: 0 auto;">${i + 1}</span>`;
         }
         
         chapterBtn.innerHTML = iconContent;
@@ -183,21 +192,29 @@ export function setupChapterNavigation() {
     AppState.nextPanelBtn.parentNode.replaceChild(newNextBtn, AppState.nextPanelBtn);
     
     // Update references to the new buttons
-    AppState.prevPanelBtn = document.getElementById('prev-panel');
-    AppState.nextPanelBtn = document.getElementById('next-panel');
+    AppState.prevPanelBtn = newPrevBtn;
+    AppState.nextPanelBtn = newNextBtn;
     
     // Ensure panel navigation has proper z-index
     const panelNavigation = document.querySelector('.panel-navigation');
     if (panelNavigation) {
-        panelNavigation.style.zIndex = '40';
-        debug('Initialized panel navigation with z-index: 40');
+        panelNavigation.style.position = 'relative';
+        panelNavigation.style.zIndex = '150';
+        panelNavigation.style.pointerEvents = 'auto';
+        debug('Initialized panel navigation with z-index: 150 and pointer-events: auto');
     }
     
     // Set z-index on buttons directly
     if (AppState.prevPanelBtn && AppState.nextPanelBtn) {
-        AppState.prevPanelBtn.style.zIndex = '40';
-        AppState.nextPanelBtn.style.zIndex = '40';
-        debug('Initialized panel navigation buttons with z-index: 40');
+        AppState.prevPanelBtn.style.position = 'relative';
+        AppState.prevPanelBtn.style.zIndex = '150';
+        AppState.prevPanelBtn.style.pointerEvents = 'auto';
+        
+        AppState.nextPanelBtn.style.position = 'relative';
+        AppState.nextPanelBtn.style.zIndex = '150';
+        AppState.nextPanelBtn.style.pointerEvents = 'auto';
+        
+        debug('Initialized panel navigation buttons with z-index: 150 and pointer-events: auto');
     }
     
     // Panel navigation with improved event handling
@@ -372,7 +389,8 @@ export function showPanel(panelIndex) {
     // Force narrative panel to be visible immediately
     if (AppState.narrativePanel) {
         AppState.narrativePanel.style.display = 'block';
-        debug('Forcing narrative panel display: block');
+        AppState.narrativePanel.style.top = '240px';
+        debug('Forcing narrative panel display: block and setting top to 240px');
     }
     
     // Create a smooth transition effect with shorter fade time
@@ -438,52 +456,39 @@ export function showPanel(panelIndex) {
         // Make sure narrative panel is visible
         AppState.narrativePanel.style.display = 'block';
         
-        // Set top property to match our CSS positioning
-        AppState.narrativePanel.style.top = '240px';
-        debug('Set narrative panel top property to 240px for consistent positioning');
-        
         // Apply only one effect with highest z-index
+        AppState.narrativePanel.classList.remove('burning-effect', 'light-rays', 'door-effect', 'epilogue-panel');
         let effectApplied = false;
         
         // Check for special panel titles
         if (panel.title?.toUpperCase().includes('SHE ARRIVES') || panel.title?.toUpperCase().includes('SHE COMES')) {
             AppState.narrativePanel.classList.add('light-rays');
-            // Set top property to match our CSS positioning
-            AppState.narrativePanel.style.top = '240px';
             effectApplied = true;
-            debug('Applied light-rays for SHE ARRIVES, z-index set to: 35, top property reset');
+            debug('Applied light-rays for SHE ARRIVES');
         }
         
         if ((panel.has_burning || panel.title?.toUpperCase().includes('BURNING')) && !effectApplied) {
             AppState.narrativePanel.classList.add('burning-effect');
-            // Set top property to match our CSS positioning
-            AppState.narrativePanel.style.top = '240px';
             effectApplied = true;
-            debug('Applied burning-effect, z-index set to: 35, top property reset');
+            debug('Applied burning-effect');
         }
         
         if ((panel.has_light_rays || panel.has_light_burst) && !effectApplied) {
             AppState.narrativePanel.classList.add('light-rays');
-            // Set top property to match our CSS positioning
-            AppState.narrativePanel.style.top = '240px';
             effectApplied = true;
-            debug('Applied light-rays, z-index set to: 35, top property reset');
+            debug('Applied light-rays');
         }
         
         if (panel.has_door && !effectApplied) {
             AppState.narrativePanel.classList.add('door-effect');
-            // Set top property to match our CSS positioning
-            AppState.narrativePanel.style.top = '240px';
             effectApplied = true;
-            debug('Applied door-effect, z-index set to: 35, top property reset');
+            debug('Applied door-effect');
         }
         
         if (panel.epilogue && !effectApplied) {
             AppState.narrativePanel.classList.add('epilogue-panel');
-            // Set top property to match our CSS positioning
-            AppState.narrativePanel.style.top = '240px';
             effectApplied = true;
-            debug('Applied epilogue-panel, z-index set to: 35, top property reset');
+            debug('Applied epilogue-panel');
         }
         
         // Add a subtle animation to show the panel change
@@ -492,25 +497,76 @@ export function showPanel(panelIndex) {
         AppState.narrativePanel.classList.add('fade-in');
     }
     
-    // Update navigation buttons
+    // Update navigation buttons with complete inline styles
     if (AppState.prevPanelBtn && AppState.nextPanelBtn) {
         AppState.prevPanelBtn.disabled = AppState.currentPanel <= 0;
         AppState.nextPanelBtn.disabled = AppState.currentPanel >= currentChapterPanels.length - 1;
         
-        // Add visual feedback for disabled buttons
-        AppState.prevPanelBtn.style.opacity = AppState.prevPanelBtn.disabled ? '0.5' : '1';
-        AppState.nextPanelBtn.style.opacity = AppState.nextPanelBtn.disabled ? '0.5' : '1';
-        
-        // Ensure navigation buttons have proper z-index
+        // Apply complete inline styles to panel navigation
         const panelNavigation = document.querySelector('.panel-navigation');
         if (panelNavigation) {
-            panelNavigation.style.zIndex = '40';
-            debug('Set panel navigation z-index to 40 to ensure buttons are clickable');
+            const navStyle = `
+                position: relative !important;
+                z-index: 150 !important;
+                pointer-events: auto !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                margin-top: 15px !important;
+                width: 100% !important;
+            `;
+            
+            panelNavigation.setAttribute('style', navStyle);
+            debug('Set panel navigation with complete inline style');
         }
         
-        // Explicitly set z-index on buttons as well
-        AppState.prevPanelBtn.style.zIndex = '40';
-        AppState.nextPanelBtn.style.zIndex = '40';
+        // Apply complete inline styles to previous button
+        const prevBtnStyle = `
+            position: relative !important;
+            z-index: 150 !important;
+            pointer-events: auto !important;
+            height: 36px !important;
+            min-width: 80px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 5px !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: none !important;
+            color: white !important;
+            padding: 8px 15px !important;
+            border-radius: 5px !important;
+            cursor: ${AppState.prevPanelBtn.disabled ? 'not-allowed' : 'pointer'} !important;
+            opacity: ${AppState.prevPanelBtn.disabled ? '0.5' : '1'} !important;
+        `;
+        AppState.prevPanelBtn.setAttribute('style', prevBtnStyle);
+        
+        // Apply complete inline styles to next button
+        const nextBtnStyle = `
+            position: relative !important;
+            z-index: 150 !important;
+            pointer-events: auto !important;
+            height: 36px !important;
+            min-width: 80px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 5px !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: none !important;
+            color: white !important;
+            padding: 8px 15px !important;
+            border-radius: 5px !important;
+            cursor: ${AppState.nextPanelBtn.disabled ? 'not-allowed' : 'pointer'} !important;
+            opacity: ${AppState.nextPanelBtn.disabled ? '0.5' : '1'} !important;
+        `;
+        AppState.nextPanelBtn.setAttribute('style', nextBtnStyle);
+        
+        // Force a reflow to ensure styles are applied
+        void panelNavigation.offsetHeight;
+        void AppState.prevPanelBtn.offsetHeight;
+        void AppState.nextPanelBtn.offsetHeight;
+        
+        debug('Navigation buttons styled with complete inline styles');
     }
     
     // Load and display assets for this panel

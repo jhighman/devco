@@ -186,8 +186,8 @@ Example:
   icon: "spotify"
   enabled: true
   content:
-    post: "Stream our latest track 'Digital Dystopia' on Spotify now! #DevCo #NewRelease"
-    link: "https://open.spotify.com/track/digital-dystopia"
+    post: "Stream our latest track 'Pop Song Summer' on Spotify now! #DevCo #NewRelease"
+    link: "https://open.spotify.com/track/4jCgwrDW7OgTbbD9zfwSRn"
     media: "./assets/audio/teaser-1.mp3"
 ```
 
@@ -219,8 +219,8 @@ sub_features:
     url: "https://instagram.com/devco/reels"
     enabled: true
     content:
-      post: "Quick hit of 'Digital Dystopia' on Reels! #DevCo #Reels"
-      link: "https://instagram.com/devco/reels/digital-dystopia"
+      post: "Quick hit of 'Pop Song Summer' on Reels! #DevCo #Reels"
+      link: "https://instagram.com/devco/reels/pop-song-summer"
       media: "./assets/videos/reels-teaser.webm"
 ```
 
@@ -259,8 +259,8 @@ Example:
   icon: "itunes"
   enabled: true
   content:
-    post: "Download 'Digital Dystopia' on iTunes now! #DevCo #NewMusic"
-    link: "https://music.apple.com/track/digital-dystopia"
+    post: "Download 'Pop Song Summer' on iTunes now! #DevCo #NewMusic"
+    link: "https://music.apple.com/track/pop-song-summer"
     media: "./assets/audio/teaser-1.mp3"
 ```
 
@@ -275,7 +275,7 @@ Example:
   icon: "peloton"
   enabled: true
   content:
-    post: "Ride to 'Digital Dystopia' on Peloton! #DevCo #WorkoutVibes"
+    post: "Ride to 'Pop Song Summer' on Peloton! #DevCo #WorkoutVibes"
     link: "https://onepeloton.com/class/devco-workout"
     media: "./assets/audio/teaser-1.mp3"
 ```

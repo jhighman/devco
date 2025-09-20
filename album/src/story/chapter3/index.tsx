@@ -1,0 +1,79 @@
+import { Chapter } from '../../types';
+
+// Empty export to ensure TypeScript treats this as a module
+export {};
+
+// Chapter 3: Burning Houses (in the Distance)
+const chapter3: Chapter = {
+  id: "ch3",
+  number: 3,
+  title: "Burning Houses (in the Distance)",
+  audioUrl: `/music/pss_ch03_burning-houses-in-the-distance.mp3`,
+  panels: [
+    {
+      id: "1",
+      title: "MOTEL ESCAPE",
+      background: "bg-gradient-to-b from-[#4A0000] via-[#1A1A1A] to-[#4A0000]",
+      text: "The night we decided to run, the horizon burned with real flames chewing the suburbs. The motel parking lot smelled of pine resin, drywall, gasoline, and denial. Cars idled like nervous animals, the ice machine died, and a CASH ONLY sign hung on the vending machine. She sat on the curb, red coat fraying, flicking ash toward the glow. 'We could stay,' I said. 'That's what everybody says before they burn,' she replied, tugging my sleeve. We packed toothbrushes, socks, water, pretzels, and a metal box with cash, a half-used gift card, and two gold-thread sunburst patches. She pinned one to her coat, handed me the other. 'It's not a club,' she said. 'It's a receipt for light.'",
+      has_insignia: true,
+      has_burning: true
+    },
+    {
+      id: "2",
+      title: "ROAD AND RADIO",
+      background: "bg-gradient-to-b from-[#1A2A44] via-[#000000] to-[#1A2A44]",
+      text: "The freeway was a parking lot, so we took side streets where houses held their breath and sprinklers made useless halos. In the rearview, smoke rose like a theater curtain. At a four-way stop, a woman in a bathrobe glared, teens pushed a cart of water and dog food, and the radio crackled to life with a woman's voice singing about horizons and burning houses, disco bones under velvet neon. Gas cost a miracle, the terminal OFFLINE. She stood under the floodlight, patch glowing, and told a man the wind had already shifted. Ash fell like soft lies, smearing gray streaks on the windshield. 'I left the photo,' she said, of her mother on a beach. 'Memory is a copy of a copy. Fire is an eraser.'",
+      has_insignia: true,
+      has_burning: true
+    },
+    {
+      id: "3",
+      title: "SPACESHIP DINER",
+      background: "bg-gradient-to-b from-[#4A4A4A] via-[#2D2D2D] to-[#4A4A4A]",
+      text: "We stopped at a diner shaped like a spaceship, its open sign glowing with plastic optimism. Waitresses moved like marathoners, serving coffee and calm. We ordered pancakes—round things for the end of the world. Flo, the waitress, eyed our patches but didn't blink. 'You two headed where?' 'Out,' I said. In the corner, a blind man sang against the radio: *She comes, burning houses in the distance. Lights up the night.* A kid drew a chalk sunburst with twelve rays under a table. 'Ready to return?' he asked me, grave as a judge. The blind man warned, 'Leave before the wind changes.' Outside, the sky turned a color without a name, and she kissed me hard. 'For luck,' she said.",
+      has_insignia: true,
+      has_burning: true,
+      neon_title: true,
+      neon_color: "red"
+    },
+    {
+      id: "4",
+      title: "HIGHWAY FLIGHT",
+      background: "bg-gradient-to-b from-[#800020] via-[#FFC107] to-[#800020]",
+      text: "Highway south, traffic darted like fish or stampeded. We passed an overturned camper, its owner in a smoking jacket waving an apology. Sirens wove a new music, emergency crawlers contradicting each other: *Do Not Use This Route. Use Only This Route.* On a hill, we saw a neighborhood burn, houses like they'd stored up fire. 'Fire is the truest currency,' she said. 'You give it anything, it gives you heat and light. Until it takes it all.' A culvert bore a spray-painted sunburst: WE RETURN WHAT WE TAKE. My phone rang, a voice saying, 'You're early or late. You already joined.' She smirked. 'Heliograph?' 'Everything's a door if it keeps you from burning.'",
+      has_insignia: true,
+      has_burning: true,
+      neon_title: true,
+      neon_color: "gold"
+    },
+    {
+      id: "5",
+      title: "CHECKPOINT AND CROSSING",
+      background: "bg-gradient-to-b from-[#2D2D2D] via-[#1A1A1A] to-[#2D2D2D]",
+      text: "At the county line, a checkpoint of cones and uniformed men stopped us. A deputy saw her patch. 'Friends of the sun?' 'Borrowers,' she said. 'Remain on County 12. No promises past the bridge.' We crossed, the river below moving like a spine, a canoe with two silhouettes and a dog gliding beneath. On the other side, trees lay like pickup sticks, a billboard advertised a boiled waterpark, and the radio replayed the horizon song. We passed a roller rink turned shelter, kids skating between cots, a mascot's grin pleading. The sign read TONIGHT: ADULTS ONLY, with WITH CHILDREN added in duct tape.",
+      has_insignia: true,
+      has_burning: true
+    },
+    {
+      id: "6",
+      title: "DESERT BAR",
+      background: "bg-gradient-to-b from-[#2D0A31] via-[#1A0E25] to-[#2D0A31]",
+      text: "Past midnight, we hit a forgotten town with a gas station, a bar, and a church that skipped weekdays. The bar's neon OPEN lied. Inside, four men stared at a TV painting the world orange. She ordered water and something brown. A man noticed her patch. 'My sister said pin it and pray in a storage unit.' 'It's a receipt,' she said, 'for what you keep.' The bartender handed me water bottles. 'Return what isn't yours.' Outside, she blessed the car's hood like a casket. 'One more push,' she said. 'Up.' The wind carried smoke south, the sun hid in ash, and a deer, charred at the edges, crossed our path, betrayed by evolution.",
+      has_insignia: true,
+      has_burning: true
+    },
+    {
+      id: "7",
+      title: "OUT TO THE OTHER SIDE",
+      background: "bg-gradient-to-b from-[#FFC107] via-[#FF3300] to-[#FFC107]",
+      text: "We climbed switchbacks to a crest where the world unrolled: north, an orange bruise; south, a black morning waiting for the right ticket. 'You said I looked like trouble,' she said. 'And I said you could carry it.' We laughed, her pulse against my ribs, the air smelling of sage and dust. She'd once lit a match at eleven, burning her father's junk, the smoke making a new sky. Now, the fireline redrew itself below, a strict calligraphy. 'It stops being yours,' she said of fire. The radio sang *She comes, burning houses in the distance.* We drove south, patches heavy, into a morning that insisted on itself, the road writing its song in fading lines.",
+      has_insignia: true,
+      has_burning: true,
+      epilogue: true,
+      neon_title: true,
+      neon_color: "red"
+    }
+  ]
+};
+
+export default chapter3;

@@ -1,0 +1,15 @@
+This is a placeholder for the Velvet Dancers chapter header image.
+
+In a production environment, you would place a PNG or JPG image file here with the following specifications:
+- Filename: velvet-dancers-header.png
+- Aspect ratio: 3:1 (landscape)
+- Resolution: At least 1500x500 pixels
+- Format: PNG with transparency or JPG with solid background
+
+The image should depict a scene related to the "Velvet Dancers" chapter, possibly showing:
+- A city skyline at night with LED lights
+- A velvet curtain entrance to a club
+- Club interior with dancers
+
+For development purposes, you can use a placeholder image service like:
+https://via.placeholder.com/1500x500/800020/FFFFFF?text=Velvet+Dancers

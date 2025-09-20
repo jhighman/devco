@@ -15,7 +15,16 @@
     <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
-        /* Force chapter navigation to left side */
+        /* Experience container */
+        .experience-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        
+        /* Chapter navigation */
         .chapter-navigation {
             position: fixed !important;
             top: 50% !important;
@@ -25,14 +34,40 @@
             display: flex !important;
             flex-direction: column !important;
             gap: 10px !important;
-            z-index: 100 !important;
+            z-index: 300 !important;
             background: rgba(0, 0, 0, 0.5) !important;
             padding: 15px 10px !important;
             border-radius: 20px !important;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5) !important;
             margin: 0 !important;
-            width: auto !important;
+            width: 200px !important;
             max-width: none !important;
+        }
+        
+        /* Narrative panel */
+        .narrative-panel {
+            position: absolute !important;
+            left: 260px !important;
+            right: 40px !important;
+            max-width: calc(100% - 300px) !important;
+            z-index: 100 !important;
+            background: rgba(0, 0, 0, 0.85) !important;
+            padding: 15px !important;
+            border-radius: 10px !important;
+            box-sizing: border-box !important;
+        }
+        
+        /* Audio controls */
+        .audio-controls {
+            position: absolute !important;
+            left: 260px !important;
+            right: 40px !important;
+            max-width: calc(100% - 300px) !important;
+            z-index: 200 !important;
+            background: rgba(45, 10, 49, 0.95) !important;
+            padding: 10px !important;
+            border-radius: 25px !important;
+            box-sizing: border-box !important;
         }
         
         /* Debug panel styling */
@@ -99,9 +134,9 @@
             <p class="panel-text" id="panel-text">And tucked between two shuttered bodegas is a velvet curtain. No sign, no door, just this blood-colored fabric swaying like it's breathing. Behind it, bass leaks out in subsonic pulses. It's the kind of bass that rewrites your heartbeat whether you want it or not.
 
 I push through.</p>
-            <div class="panel-navigation" style="position: relative; z-index: 40;">
-                <button class="panel-nav-button" id="prev-panel" style="z-index: 40;">Previous</button>
-                <button class="panel-nav-button" id="next-panel" style="z-index: 40;">Next</button>
+            <div class="panel-navigation">
+                <button class="panel-nav-button" id="prev-panel">Previous</button>
+                <button class="panel-nav-button" id="next-panel">Next</button>
             </div>
         </div>
         
@@ -111,8 +146,8 @@ I push through.</p>
         </div>
         
         <!-- Audio player controls -->
-        <div class="audio-controls">
-            <button class="play-button" id="play-button">
+        <div class="audio-controls" style="display: flex !important; visibility: visible !important; opacity: 1 !important; position: absolute !important; left: 260px !important; right: 40px !important; max-width: calc(100% - 300px) !important; z-index: 200 !important; background: rgba(45, 10, 49, 0.95) !important; padding: 10px !important; border-radius: 25px !important;">
+            <button class="play-button" id="play-button" style="display: flex !important; visibility: visible !important; opacity: 1 !important; width: 40px !important; height: 40px !important; border-radius: 50% !important; background: var(--horizon-orange) !important; border: none !important; color: white !important; align-items: center !important; justify-content: center !important; cursor: pointer !important; margin-right: 15px !important; z-index: 201 !important;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M8 5v14l11-7z"/>
                 </svg>
@@ -148,6 +183,36 @@ I push through.</p>
     <script type="module" src="js/navigation.js"></script>
     <script type="module" src="js/mobile.js"></script>
     <script type="module" src="js/main.js"></script>
-    <script src="js/mobile-fix.js"></script>
+    <script type="module" src="js/mobile-fix.js"></script>
+    
+    <!-- Direct script to add a new play button -->
+    <script src="js/play-button-fix.js"></script>
+    
+    <!-- Script to ensure play button is visible -->
+    <script>
+        // Wait for the page to fully load
+        window.addEventListener('load', function() {
+            // Force play button to be visible
+            setTimeout(function() {
+                const playButton = document.getElementById('play-button');
+                if (playButton) {
+                    playButton.style.setProperty('display', 'flex', 'important');
+                    playButton.style.setProperty('visibility', 'visible', 'important');
+                    playButton.style.setProperty('opacity', '1', 'important');
+                    playButton.style.setProperty('z-index', '201', 'important');
+                    console.log('Play button visibility enforced');
+                }
+                
+                const audioControls = document.querySelector('.audio-controls');
+                if (audioControls) {
+                    audioControls.style.setProperty('display', 'flex', 'important');
+                    audioControls.style.setProperty('visibility', 'visible', 'important');
+                    audioControls.style.setProperty('opacity', '1', 'important');
+                    audioControls.style.setProperty('z-index', '200', 'important');
+                    console.log('Audio controls visibility enforced');
+                }
+            }, 1000); // Delay to ensure other scripts have run
+        });
+    </script>
 </body>
 </html>

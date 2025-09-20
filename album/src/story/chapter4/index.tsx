@@ -1,0 +1,80 @@
+import { Chapter } from '../../types';
+
+// Empty export to ensure TypeScript treats this as a module
+export {};
+
+// Chapter 4: On the Corner, Reading Poetry
+const chapter4: Chapter = {
+  id: "ch4",
+  number: 4,
+  title: "On the Corner, Reading Poetry",
+  audioUrl: `/music/pss_ch04_on-the-corner-reading-poetry.mp3`,
+  panels: [
+    {
+      id: "1",
+      title: "CHALK CIRCLE",
+      background: "bg-gradient-to-b from-[#2D2D2D] via-[#1A1A1A] to-[#2D2D2D]",
+      text: "I pick the corner for its honesty: four directions, one promise. Crosswalk chirps like a toy apocalypse, buses sigh like fat dragons. I set the milk crate down, chalk a sunburst with twelve rays on the concrete, and climb up to be taller than I am. 'Good evening,' I say to the city. 'There will be a test.' People pass, phones glowing, selecting the least painful world. A woman with groceries slows, then hurries on. Two teenagers on scooters hover, curious. A man in a suit scowls at the word poetry. I read: *Inventory at Sundown*—sun pinned like a receipt, twelve doors ajar, houses burning politely. *She comes, like a rumor with shoes on.* Coins clink into my hat.",
+      has_insignia: true,
+      has_burning: true
+    },
+    {
+      id: "2",
+      title: "SUNBURST REFLECTION",
+      background: "bg-gradient-to-b from-[#1A2A44] via-[#000000] to-[#1A2A44]",
+      text: "Across the street, the glass tower splits the city: one chilled inside, one dusted with ash out here. The low sun copies my chalk sunburst, making me think I drew the sky. A kid kneels, drawing a smaller twelve-ray circle with bright chalk, tongue out for accuracy. 'Receipt for the sun,' he says. 'My mom. And the other one.' A scooter kid with a sunburst patch on his sleeve asks for requests. 'No,' I say, 'but stay.' He does. A woman in a red coat, gold-thread sunburst on her cuff, watches without tipping, her gaze more costly. The dog at the bike rack sleeps through the city's lullaby.",
+      has_insignia: true,
+      neon_title: true,
+      neon_color: "gold"
+    },
+    {
+      id: "3",
+      title: "POETRY AND POLICE",
+      background: "bg-gradient-to-b from-[#4A4A4A] via-[#2D2D2D] to-[#4A4A4A]",
+      text: "I read: *Urban Survival Guide, Verse Edition*—carry water, receipts, don't argue with wind. *She comes—you do not have to open the door. She is the door.* A bus unloads commuters. A girl in a floral mask drops a dollar, a painter exhales his day. Two cops in sunglasses ask for a permit. 'Five-oh-one,' I say. 'Freedom of speech, polite decibels.' They eye the chalk sunburst. 'Just math,' I say. 'Wheel of the year's little brother.' The red-coat woman grades the exchange, her patch brighter. 'Move along after ten,' the cop says, tipping two fingers. The corner collects us, doesn't promise to keep us.",
+      has_insignia: true,
+      has_burning: true
+    },
+    {
+      id: "4",
+      title: "BLIND MAN'S SONG",
+      background: "bg-gradient-to-b from-[#800020] via-[#4A0000] to-[#800020]",
+      text: "The blind man arrives, taps the chalk circle with his cane, and sits on his crate. 'Evening,' I say. He sings, braiding my poem: *She comes, burning houses in the distance—lights up the night.* The scooter kids chime in, delighted. The red-coat woman's patch pulses. The tower's reflection shows a burning horizon. A man at the bus stop asks if this is art or warning. 'Both,' I say. Another asks if I write the flyers with the number. 'Sometimes me, sometimes the sun.' His laugh is nervous. The blind man's song makes a woman cry without permission, the melody slipping into a corridor of notes.",
+      has_insignia: true,
+      has_burning: true,
+      neon_title: true,
+      neon_color: "red"
+    },
+    {
+      id: "5",
+      title: "ORANGES AND ANGER",
+      background: "bg-gradient-to-b from-[#2D0A31] via-[#1A0E25] to-[#2D0A31]",
+      text: "A drone drops a bag of oranges, spilling like small suns at the red-coat woman's feet. 'Leave them,' she says, and they stop at the chalk circle's edge. A man mutters about devil circles, eats half a flyer, then confesses his brother's house burned last summer. 'We watched it like a show,' he says, eyes wet, leaving the unchewed flyer in my hat. I read: *Call & Answer*—who keeps the ledger? Not the bank. What burns slowest? Memory. *She comes. Make room.* The kid with chalk nods at my circle. A woman with a sign—RETURN WHAT ISN'T YOURS—chews a marker, staring at traffic.",
+      has_insignia: true,
+      has_burning: true
+    },
+    {
+      id: "6",
+      title: "RETURN ROLL CALL",
+      background: "bg-gradient-to-b from-[#1A2A44] via-[#FFC107] to-[#1A2A44]",
+      text: "The red-coat woman kneels, one palm in the circle, one out, asking, 'What do you return?' 'Name,' I say, wincing as it leaves. The blind man says, 'Light,' removing his glasses, eyes quivering. The kid says, 'Body,' patting his ribs. Her smile cools the air. Sirens pass, not for us. I hand out *Return Slip* zines, cheap and smudging, taken like communion. The cop across the street points at his watch: ten. I call, 'Last one,' and read: *Twelve Doors*—names, light, bodies, luck, ashes, receipts. *She comes. We make room.* Silence is my applause, four seconds before the city resumes.",
+      has_insignia: true,
+      has_burning: true,
+      neon_title: true,
+      neon_color: "gold"
+    },
+    {
+      id: "7",
+      title: "DRIVING THE OTHER SIDE",
+      background: "bg-gradient-to-b from-[#FFC107] via-[#FF3300] to-[#FFC107]",
+      text: "The red-coat woman presses a car key into my hand, sunburst on its head. 'You'll be returning it to motion,' she says, nodding to a blue sedan. 'I have a bike,' I argue. 'You have a corner,' she counters, then vanishes. I pack the crate, wipe the chalk, leaving a ghost sun. The sedan's engine catches, a map on the seat marked OUT TO THE OTHER SIDE. 'Ready?' her voice hums in the corner. 'To return,' it says. I drive, the horizon bruising behind, the road promising what it can't keep. *She comes,* the city whispers, into the pop song summer.",
+      has_insignia: true,
+      has_burning: true,
+      epilogue: true,
+      neon_title: true,
+      neon_color: "red"
+    }
+  ]
+};
+
+export default chapter4;

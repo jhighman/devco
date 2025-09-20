@@ -1,0 +1,201 @@
+import { Chapter } from '../../types';
+
+// Empty export to ensure TypeScript treats this as a module
+export {};
+
+// Chapter 1: Velvet Dancers
+const chapter1: Chapter = {
+  id: "ch1",
+  number: 1,
+  title: "Velvet Dancers",
+  audioUrl: `/music/pss_ch01_velvet-dancers.mp3`,
+  panels: [
+    {
+      id: "1",
+      title: "CITY SKYLINE",
+      background: "bg-gradient-to-b from-black-void via-navy to-black-void",
+      text: "The city is a cancer of glass and LED, and tonight it hums like a broken amp. Down on 14th, the traffic's jammed with rideshare drones and guys selling knockoff pills out of the hoods of parked cars. Everybody's tuned into their own soundtrack, little earbuds whispering Top 40 like prayers to gods who died in the eighties. The skyline flickers in glitches, as if reality itself is buffering."
+    },
+    {
+      id: "2",
+      title: "VELVET CURTAIN",
+      background: "bg-gradient-to-b from-[#4A0000] via-[#800020] to-[#4A0000]",
+      text: "And tucked between two shuttered bodegas is a velvet curtain. No sign, no door, just this blood-colored fabric swaying like it's breathing. Behind it, bass leaks out in subsonic pulses. It's the kind of bass that rewrites your heartbeat whether you want it or not.\n\nI push through.",
+      neon_title: true,
+      neon_color: "red"
+    },
+    {
+      id: "3",
+      title: "CLUB INTERIOR",
+      background: "bg-gradient-to-r from-[#2D0A31] via-[#1A0E25] to-[#2D0A31]",
+      text: "The air inside is thick, like the club is running on oxygen siphoned from another dimension. Lights move in lazy strobes, purple and gold, spilling over a floor that's already slick with sweat. There's no bar, no menu, just shadows that sell you what you want if they decide you're worth the bother.\n\nAnd then there are the dancers."
+    },
+    {
+      id: "4",
+      title: "VELVET DANCERS",
+      background: "bg-gradient-to-b from-[#1A0E25] via-[#2D0A31] to-[#1A0E25]",
+      text: "Velvet on their skin, velvet in their movements, velvet like the smooth part of a blade before the edge cuts. They move as if they're running a program: flawless, slow, then impossibly fast. Every single one of them wears the same patch stitched near the shoulder — a circle with sunrays stitched in gold thread. The insignia.\n\nThey don't look at you. They look through you, like you're another light on the floor, one more pattern in the algorithm.",
+      has_insignia: true
+    },
+    {
+      id: "5",
+      title: "BLIND SINGER",
+      background: "bg-gradient-to-b from-[#000000] via-[#1A0E25] to-[#000000]",
+      text: "In the corner, a blind man sings. No mic, no amp, just raw voice cut against the bass. He's chanting words like they're half-forgotten scripture, or maybe the last pirate broadcast before the collapse:",
+      quote: "She comes, she comes… burning houses in the distance. Lights up the night. She comes.",
+      text_after: "Nobody claps. Nobody even reacts. The crowd moves in sync, eyes half-lidded, as though they're hypnotized. Like they already know the words. Like they were born knowing."
+    },
+    {
+      id: "6",
+      title: "WOMAN IN RED",
+      background: "bg-gradient-to-b from-[#4A0000] via-[#800020] to-[#4A0000]",
+      text: "That's when I see her.\n\nShe's in red. Not neon red, not digital red — real red, the kind that stains. Her dress is cut from velvet so dark it looks wet. Same sun insignia stitched into the fabric. She's not one of the dancers, though. She moves against the rhythm, like she's inside her own soundtrack. And when she locks eyes with me, it feels less like attraction and more like conscription.\n\nShe doesn't ask. She just takes my hand.",
+      has_insignia: true,
+      neon_title: true,
+      neon_color: "red"
+    },
+    {
+      id: "7",
+      title: "MIRROR HALLWAY",
+      background: "bg-gradient-to-r from-[#1A2A44] via-[#000000] to-[#1A2A44]",
+      text: "Her fingers are cold, but not corpse cold — cold like the first second of an ice cube against skin, the kind that burns after. She pulls me through the moving bodies. Deeper. Back through a hallway lined with mirrors that don't reflect right. In one, I'm younger. In another, I'm someone else entirely.\n\n\"Where are we going?\" I ask.\n\nShe doesn't answer.",
+      has_hall_of_mirrors: true
+    },
+    {
+      id: "8",
+      title: "BLIND PROPHET",
+      background: "bg-gradient-to-b from-[#000000] via-[#1A0E25] to-[#000000]",
+      text: "Behind us, the blind man's voice climbs a register. He's in full prophecy mode now:",
+      quote: "Pop song summer. Velvet dancers. Insignia of the sun.",
+      text_after: "The hallway splits into three. She doesn't hesitate, pulls me left. The music distorts here — like cassette tape warping, like turntables melting under too much heat. Smells like ozone and perfume, a cocktail that says you're too far in to walk back.",
+      neon_title: true,
+      neon_color: "teal",
+      has_blind_man_singing: true,
+      has_hall_of_mirrors: true
+    },
+    {
+      id: "9",
+      title: "RITUAL CHAMBER",
+      background: "bg-gradient-to-b from-[#1A0E25] via-[#2D0A31] to-[#1A0E25]",
+      text: "And then we're in the back room.\n\nIt looks like a church, if the architects were high on disco and conspiracy theory. Columns of light instead of stone, a floor that ripples under your feet like water. At the center: a circle, burned into the ground, glowing faint red.\n\nThe dancers are here too. More of them. Moving slower now, almost ritualistic. The insignia on their clothes glows like it's alive.\n\nI pull my hand free. \"What is this?\"\n\nShe finally speaks, voice low, like someone reading a poem to the apocalypse.\n\n\"This is where she comes.\"\n\n\"Who's she?\"\n\nHer smile is too sharp to be warm. \"You'll see.\"",
+      has_insignia: true,
+      has_light_rays: true,
+      has_church_of_light: true
+    },
+    {
+      id: "10",
+      title: "PULSING FLOOR",
+      background: "bg-gradient-to-b from-[#2D0A31] via-[#4A0000] to-[#2D0A31]",
+      text: "And then the floor pulses. Once, twice, syncing with my heartbeat. The dancers accelerate, spinning faster than physics should allow, velvet blurring into streaks of blood and shadow.\n\nThe blind man's voice isn't in the room, but I still hear it. Inside my skull:",
+      quote: "She comes. Out to the other side. Into the pop song summer.",
+      text_after: "",
+      has_church_of_light: true
+    },
+    {
+      id: "11",
+      title: "BURNING HOUSES",
+      background: "bg-gradient-to-b from-[#800020] via-[#FF3300] to-[#800020]",
+      text: "The walls dissolve into horizon. Burning houses flicker in the distance. I know it isn't real — but my body doesn't care. Every nerve screams run.\n\nI back up, trip, catch myself against the edge of the circle. It's hot, too hot, like touching the rim of the sun.",
+      has_burning: true,
+      has_church_of_light: true
+    },
+    {
+      id: "12",
+      title: "SUN INSIGNIA",
+      background: "bg-gradient-to-b from-[#1A2A44] via-[#FFC107] to-[#1A2A44]",
+      text: "The woman in red grabs my wrist, turns my palm up. She's holding something — a patch, identical to the ones on the dancers. The sun insignia.\n\n\"Put it on,\" she says.\n\n\"What happens if I do?\"\n\nHer smile widens. \"You'll see her. You'll be part of the summer.\"",
+      has_insignia: true,
+      large_insignia: true,
+      neon_title: true,
+      neon_color: "gold"
+    },
+    {
+      id: "13",
+      title: "THE CHOICE",
+      background: "bg-gradient-to-b from-[#1A2A44] via-[#2D0A31] to-[#1A2A44]",
+      text: "I look at the patch. It's warm in my hand, like it's been sitting in the sun. The gold thread catches light that isn't there.\n\nThe blind man's voice is still in my head:",
+      quote: "She comes, she comes...",
+      text_after: "I should run. I know I should run. But there's something about the way the dancers move, something about the promise of seeing her...",
+      split_screen: true
+    },
+    {
+      id: "14",
+      title: "THE DECISION",
+      background: "bg-gradient-to-b from-[#1A2A44] via-[#26A69A] to-[#1A2A44]",
+      text: "\"Fine,\" I say, and take the patch. It's heavier than it looks. I press it against my shoulder, and it burns through my shirt, fusing to skin. I gasp, but the pain is gone as quickly as it came.\n\nThe woman in red steps back. \"Now you're one of us.\"\n\nThe dancers stop. All at once. They turn to look at me, and for the first time, I see their eyes clearly. They're normal eyes. Human eyes. But they're all looking at something beyond me.",
+      has_insignia: true
+    },
+    {
+      id: "15",
+      title: "SHE ARRIVES",
+      background: "bg-gradient-to-b from-[#FFC107] via-[#FF3300] to-[#FFC107]",
+      text: "The circle on the floor cracks open. Light pours out, not like stage lights or LEDs, but like sunlight through stained glass. It's too bright to look at directly, but I can't look away.\n\nAnd then she's there.\n\nI can't describe her face. It shifts too fast, like flipping through radio stations. But she's beautiful in a way that hurts. She's wearing a dress made of summer itself — the kind of summer you remember from childhood, all endless days and popsicle-stained fingers.\n\nThe dancers bow. The woman in red bows. I find myself bowing too, though I didn't mean to.\n\nShe speaks, and her voice is a pop song I've heard a thousand times but can never remember the name of:",
+      quote: "The houses are burning. The old world is dying. Are you ready for summer?",
+      text_after: "",
+      has_light_rays: true,
+      has_light_burst: true
+    },
+    {
+      id: "16",
+      title: "THE ANSWER",
+      background: "bg-gradient-to-b from-[#1A2A44] via-[#26A69A] to-[#1A2A44]",
+      text: "I find my voice. \"Yes.\"\n\nShe smiles, and it's like watching the sun rise over a world that's never seen daylight before. She extends her hand, and there's a key in it. Old brass, worn smooth from use.\n\n\"Then take this. Find the door.\"\n\nI take the key. It's hot, like the patch was, but I don't drop it.",
+      has_key: true
+    },
+    {
+      id: "17",
+      title: "TRANSFORMATION",
+      background: "bg-gradient-to-b from-[#2D0A31] via-[#1A0E25] to-[#2D0A31]",
+      text: "The dancers begin to move again, but differently now. Their movements are sharper, more urgent. The velvet of their clothes ripples like it's alive. Their patches glow brighter, pulsing in time with mine.\n\nThe woman in red is watching me, her eyes reflecting the light from the circle. \"It's starting,\" she says. \"The pop song summer.\"\n\nThe blind man's voice rises again, but now it's coming from everywhere:",
+      quote: "Burning houses in the distance. Lights up the night.",
+      text_after: "",
+      has_insignia: true,
+      has_burning: true
+    },
+    {
+      id: "18",
+      title: "THE DOOR",
+      background: "bg-gradient-to-b from-[#1A2A44] via-[#000000] to-[#1A2A44]",
+      text: "The air splits open. There's no other way to describe it. Like someone took a knife to reality and cut a door-shaped hole. Through it, I can see... something else. Not the club, not the city. Something golden and endless.\n\nShe — the woman from the circle, the one made of summer — is gone. But her voice lingers:",
+      quote: "The key fits the door. The door leads to summer. Will you come?",
+      text_after: "I look at the woman in red. \"What's on the other side?\"\n\nShe shrugs. \"I've never gone through. I just bring people to her. That's my job.\"\n\nThe key burns hotter in my palm. The patch on my shoulder pulses like a second heart.",
+      has_door: true
+    },
+    {
+      id: "19",
+      title: "DECISION POINT",
+      background: "bg-gradient-to-b from-[#1A2A44] via-[#26A69A] to-[#1A2A44]",
+      text: "I look back at the club behind me. Through the door, I can still see the dancers, the blind man, the city beyond. My old life.\n\nI look at the key in my hand. At the door in front of me. At whatever waits on the other side.\n\nThe woman in red watches me, her face unreadable. \"Choose,\" she says.",
+      split_screen: true
+    },
+    {
+      id: "20",
+      title: "KEY TURNS",
+      background: "bg-gradient-to-b from-[#FFC107] via-[#1A2A44] to-[#FFC107]",
+      text: "I step forward. Insert the key into the lock. It fits perfectly, like it was made for this moment. For me.\n\nI turn it.\n\nThe sound it makes isn't a click. It's a chord — the perfect final chord of a pop song you've been waiting your whole life to hear.",
+      has_key: true
+    },
+    {
+      id: "21",
+      title: "THRESHOLD",
+      background: "bg-gradient-to-b from-[#FFC107] via-[#FFFFFF] to-[#FFC107]",
+      text: "The door swings open. Light floods out, so bright it erases the club, the dancers, the woman in red. Everything.\n\nI step through.\n\nThe last thing I hear is the blind man's voice, no longer chanting but laughing, joyful:",
+      quote: "Pop song summer begins!",
+      text_after: "And then I'm gone.",
+      has_light_burst: true
+    },
+    {
+      id: "22",
+      title: "DESERT ROAD",
+      background: "bg-gradient-to-b from-[#FFC107] via-[#FF9800] to-[#FFC107]",
+      text: "Somewhere, on a desert highway, under a sun that never sets, a figure walks. The asphalt shimmers with heat. In the distance, a city burns, but the figure doesn't look back.\n\nOn their shoulder: a patch with the sun insignia.\n\nIn their ears: the perfect pop song, playing on repeat.\n\nIt's summer. It's always summer now.\n\nAnd she is coming.",
+      has_road: true,
+      has_sun: true,
+      has_burning: true,
+      has_insignia: true,
+      epilogue: true
+    }
+  ]
+};
+
+export default chapter1;

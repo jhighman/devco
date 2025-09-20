@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Velvet Dancers — Song Header (Pop Song Summer)</title>
+  <desc id="desc">Quiet, text-friendly header: deep night gradient with a velvet arc, airy chorus waveform, soft bokeh, and a faint sun-insignia motif.</desc>
+  <defs>
+    <linearGradient id="night" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0c1022"/>
+      <stop offset="60%"  stop-color="#0b0f1e"/>
+      <stop offset="100%" stop-color="#0a0c16"/>
+    </linearGradient>
+    <radialGradient id="bokeh1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(180,150,255,0.35)"/>
+      <stop offset="100%" stop-color="rgba(180,150,255,0)"/>
+    </radialGradient>
+    <radialGradient id="bokeh2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,180,120,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,180,120,0)"/>
+    </radialGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffe789"/>
+      <stop offset="70%" stop-color="#d6af37"/>
+      <stop offset="100%" stop-color="rgba(168,122,34,0)"/>
+    </radialGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+  <rect width="3000" height="1000" fill="url(#night)"/>
+  <path d="M0,340 C700,120 1300,100 1800,260 C2300,420 2700,420 3000,300 L3000,0 L0,0 Z"
+        fill="#11162c" opacity="0.66"/>
+  <g transform="translate(0,660)" stroke-linecap="round">
+    <path d="M0,0 C150, -24 300,24 450,0 C600,-24 750,24 900,0 C1050,-24 1200,24 1350,0 C1500,-24 1650,24 1800,0 C1950,-24 2100,24 2250,0 C2400,-24 2550,24 2700,0 C2850,-24 3000,24 3150,0"
+          fill="none" stroke="#7fc7ff" opacity="0.85" stroke-width="6"/>
+    <path d="M0,18 C150, -2 300,38 450,18 C600,-2 750,38 900,18 C1050,-2 1200,38 1350,18 C1500,-2 1650,38 1800,18 C1950,-2 2100,38 2250,18 C2400,-2 2550,38 2700,18 C2850,-2 3000,38 3150,18"
+          fill="none" stroke="#ffd58a" opacity="0.55" stroke-width="4"/>
+  </g>
+  <g opacity="0.7">
+    <circle cx="340" cy="520" r="14" fill="url(#bokeh1)"/>
+    <circle cx="620" cy="420" r="10" fill="url(#bokeh1)"/>
+    <circle cx="980" cy="580" r="16" fill="url(#bokeh2)"/>
+    <circle cx="1320" cy="460" r="12" fill="url(#bokeh1)"/>
+    <circle cx="1680" cy="520" r="14" fill="url(#bokeh2)"/>
+    <circle cx="2100" cy="600" r="10" fill="url(#bokeh1)"/>
+    <circle cx="2460" cy="520" r="18" fill="url(#bokeh2)"/>
+  </g>
+  <g transform="translate(210,300)" opacity="0.28">
+    <circle cx="0" cy="0" r="82" fill="url(#sun)" filter="url(#soft)"/>
+    <g stroke="#d6af37" stroke-width="8" stroke-linecap="round" opacity="0.9">
+      <line x1="0" y1="-120" x2="0" y2="-76"/>
+      <line x1="0" y1="76"  x2="0" y2="120"/>
+      <line x1="-120" y1="0" x2="-76" y2="0"/>
+      <line x1="76" y1="0"  x2="120" y2="0"/>
+    </g>
+    <circle cx="0" cy="0" r="98" fill="none" stroke="#d6af37" stroke-width="2" stroke-dasharray="10 14" opacity="0.55"/>
+  </g>
+  <linearGradient id="fade" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="rgba(0,0,0,0)"/>
+    <stop offset="100%" stop-color="rgba(0,0,0,0.55)"/>
+  </linearGradient>
+  <rect x="0" y="700" width="3000" height="300" fill="url(#fade)"/>
+</svg>
