@@ -370,10 +370,16 @@
    * Update the latest release teaser in the hero section
    */
   function updateLatestReleaseTeaser() {
-    // Find the latest release (first item in the releases array)
+    // Find the featured release (first item with featured flag set to true)
     if (!config.music || !config.music.releases || config.music.releases.length === 0) return;
     
-    const latestRelease = config.music.releases[0];
+    // Look for a release with featured flag set to true
+    let featuredRelease = config.music.releases.find(release => release.featured === true);
+    
+    // If no featured release is found, fall back to the first release
+    if (!featuredRelease) {
+      featuredRelease = config.music.releases[0];
+    }
     
     // Update the teaser content
     const titleElement = document.getElementById('latest-release-title');
@@ -383,27 +389,27 @@
     const spotifyLink = document.getElementById('latest-release-spotify');
     const appleLink = document.getElementById('latest-release-apple');
     
-    if (titleElement) titleElement.textContent = latestRelease.title;
-    if (descriptionElement) descriptionElement.textContent = latestRelease.description;
+    if (titleElement) titleElement.textContent = featuredRelease.title;
+    if (descriptionElement) descriptionElement.textContent = featuredRelease.description;
     
     // Update audio source
-    if (audioSourceElement && latestRelease.file) {
-      audioSourceElement.setAttribute('src', latestRelease.file);
+    if (audioSourceElement && featuredRelease.file) {
+      audioSourceElement.setAttribute('src', featuredRelease.file);
     }
     
     // Update image if it's a video type with thumbnail
     if (imageElement) {
-      if (latestRelease.type === 'video' && latestRelease.thumbnail) {
-        imageElement.setAttribute('src', latestRelease.thumbnail);
-      } else if (latestRelease.type === 'audio') {
+      if (featuredRelease.type === 'video' && featuredRelease.thumbnail) {
+        imageElement.setAttribute('src', featuredRelease.thumbnail);
+      } else if (featuredRelease.type === 'audio') {
         // For audio, we could use a default image or generate one
         // Here we'll just keep the default from the HTML
       }
     }
     
     // Update links
-    if (latestRelease.links && latestRelease.links.length > 0) {
-      latestRelease.links.forEach(link => {
+    if (featuredRelease.links && featuredRelease.links.length > 0) {
+      featuredRelease.links.forEach(link => {
         if (link.platform === 'Spotify' && spotifyLink) {
           spotifyLink.setAttribute('href', link.url);
         } else if (link.platform === 'Apple Music' && appleLink) {
@@ -416,6 +422,12 @@
     const audioElement = document.getElementById('latest-release-audio');
     if (audioElement) {
       audioElement.load();
+    }
+    
+    // Update the section title to indicate it's a featured release
+    const teaserTitle = document.querySelector('.latest-release-teaser h2');
+    if (teaserTitle) {
+      teaserTitle.textContent = "Featured Release";
     }
   }
 
@@ -951,4 +963,51 @@
         }
       }
     }
+  
+    /**
+     * Initialize featured release thumbnail click to show video
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+      const thumbnailView = document.getElementById('thumbnail-view');
+      const videoView = document.getElementById('video-view');
+      const youtubeIframe = document.getElementById('youtube-iframe');
+      
+      if (thumbnailView && videoView && youtubeIframe) {
+        thumbnailView.addEventListener('click', function() {
+          // Hide the thumbnail view
+          thumbnailView.classList.add('hidden');
+          
+          // Show the video view
+          videoView.classList.remove('hidden');
+          
+          // Update the iframe src to include autoplay=1
+          const currentSrc = youtubeIframe.src;
+          youtubeIframe.src = currentSrc.replace('autoplay=0', 'autoplay=1');
+        });
+      }
+    });
+  
+    /**
+     * Initialize video thumbnail click to play YouTube video
+     * This is added to handle the featured release video thumbnail
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+      const videoThumbnail = document.getElementById('video-thumbnail');
+      const youtubePlayer = document.getElementById('youtube-player');
+      const youtubeIframe = document.getElementById('youtube-iframe');
+      
+      if (videoThumbnail && youtubePlayer && youtubeIframe) {
+        videoThumbnail.addEventListener('click', function() {
+          // Hide the thumbnail
+          videoThumbnail.classList.add('hidden');
+          
+          // Show the YouTube player
+          youtubePlayer.classList.remove('hidden');
+          
+          // Update the iframe src to include autoplay=1
+          const currentSrc = youtubeIframe.src;
+          youtubeIframe.src = currentSrc.replace('autoplay=0', 'autoplay=1');
+        });
+      }
+    });
   }
